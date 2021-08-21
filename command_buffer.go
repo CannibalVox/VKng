@@ -6,6 +6,7 @@ package VKng
 */
 import "C"
 import (
+	"github.com/CannibalVox/cgoalloc"
 	"github.com/palantir/stacktrace"
 	"unsafe"
 )
@@ -20,7 +21,7 @@ func (b *CommandPoolBuilder) GraphicsQueueFamilyIndex(index uint32) *CommandPool
 	return b
 }
 
-func (b *CommandPoolBuilder) Build(allocator Allocator) (*CommandPool, error) {
+func (b *CommandPoolBuilder) Build(allocator cgoalloc.Allocator) (*CommandPool, error) {
 	if b.graphicsQueueFamily == 0xFFFFFFFF {
 		return nil, stacktrace.NewError("attempted to create a command pool without setting GraphicsQueueFamilyIndex")
 	}
@@ -77,7 +78,7 @@ func (b *CommandBufferBuilder) Level(l CommandBufferLevel) *CommandBufferBuilder
 	return b
 }
 
-func (b *CommandBufferBuilder) Build(allocator Allocator, count uint32) ([]*CommandBuffer, error) {
+func (b *CommandBufferBuilder) Build(allocator cgoalloc.Allocator, count int) ([]*CommandBuffer, error) {
 	if b.level == Unset {
 		return nil, stacktrace.NewError("attempted to create command buffers without setting Level")
 	}
@@ -85,7 +86,7 @@ func (b *CommandBufferBuilder) Build(allocator Allocator, count uint32) ([]*Comm
 		return nil, stacktrace.NewError("attempted to create 0 command buffers")
 	}
 
-	commandBufferPtr := allocator.Malloc(uint(count) * uint(unsafe.Sizeof([1]C.VkCommandBuffer{})))
+	commandBufferPtr := allocator.Malloc(count * int(unsafe.Sizeof([1]C.VkCommandBuffer{})))
 	defer allocator.Free(commandBufferPtr)
 
 	cmdBufferCreate := &C.VkCommandBufferAllocateInfo {
@@ -103,7 +104,7 @@ func (b *CommandBufferBuilder) Build(allocator Allocator, count uint32) ([]*Comm
 
 	commandBufferArray := (*[1<<30]C.VkCommandBuffer)(commandBufferPtr)
 	var result []*CommandBuffer
-	for i := uint32(0); i < count; i++ {
+	for i := 0; i < count; i++ {
 		result = append(result, &CommandBuffer{handle: commandBufferArray[i]})
 	}
 

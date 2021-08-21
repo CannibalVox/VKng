@@ -1,3 +1,5 @@
+github.com/CannibalVox/cgoalloc v1.2.0 h1:Dom+bs3nQ+2uu/O7oRufQ21sZfpmS2JmZevQfYHvCDM=
+github.com/CannibalVox/cgoalloc v1.2.0/go.mod h1:/O2DJI63phdTMjYasQIv7ib3XAi29LEM6BXS+plQJic=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/palantir/stacktrace v0.0.0-20161112013806-78658fd2d177 h1:nRlQD0u1871kaznCnn1EvYiMbum36v7hw1DLPEjds4o=

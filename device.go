@@ -6,6 +6,7 @@ package VKng
  */
 import "C"
 import (
+	"github.com/CannibalVox/cgoalloc"
 	"github.com/palantir/stacktrace"
 	"unsafe"
 )
@@ -14,7 +15,7 @@ type PhysicalDevice struct {
 	handle C.VkPhysicalDevice
 }
 
-func (d *PhysicalDevice) QueueFamilyProperties(allocator Allocator) ([]*QueueFamily, error) {
+func (d *PhysicalDevice) QueueFamilyProperties(allocator cgoalloc.Allocator) ([]*QueueFamily, error) {
 	count := C.uint32_t(0)
 	C.vkGetPhysicalDeviceQueueFamilyProperties(d.handle, &count, nil)
 
@@ -22,7 +23,7 @@ func (d *PhysicalDevice) QueueFamilyProperties(allocator Allocator) ([]*QueueFam
 		return nil, nil
 	}
 
-	allocatedHandles := allocator.Malloc(uint(count)*uint(C.size_t(unsafe.Sizeof(C.VkQueueFamilyProperties{}))))
+	allocatedHandles := allocator.Malloc(count*unsafe.Sizeof(C.VkQueueFamilyProperties{}))
 	defer allocator.Free(allocatedHandles)
 	familyProperties := (*[1<<30]C.VkQueueFamilyProperties)(allocatedHandles)
 
@@ -80,12 +81,12 @@ func (b *DeviceBuilder) AddQueueFamily(familyIndex uint32) *QueueFamilyBuilder {
 	}
 }
 
-func (b *DeviceBuilder) Build(allocator Allocator) (*Device, error) {
+func (b *DeviceBuilder) Build(allocator cgoalloc.Allocator) (*Device, error) {
 	if len(b.queueFamilies) == 0 {
 		return nil, stacktrace.NewError("building a vulkan device before adding queue families")
 	}
 
-	queueFamilyPtr := allocator.Malloc(uint(len(b.queueFamilies))*uint(unsafe.Sizeof([1]C.VkDeviceQueueCreateInfo{})))
+	queueFamilyPtr := allocator.Malloc(len(b.queueFamilies)*int(unsafe.Sizeof([1]C.VkDeviceQueueCreateInfo{})))
 	defer allocator.Free(queueFamilyPtr)
 	queueFamilyArray := (*[1<<30]C.VkDeviceQueueCreateInfo)(queueFamilyPtr)
 
@@ -94,7 +95,7 @@ func (b *DeviceBuilder) Build(allocator Allocator) (*Device, error) {
 			return nil, stacktrace.NewError("building vulkan device: queue family %d had no queue priorities", queueFamily.queueFamilyIndex)
 		}
 
-		prioritiesPtr := allocator.Malloc(uint(len(queueFamily.queuePriorities))*uint(unsafe.Sizeof(C.float(0))))
+		prioritiesPtr := allocator.Malloc(len(queueFamily.queuePriorities)*int(unsafe.Sizeof(C.float(0))))
 		defer allocator.Free(prioritiesPtr)
 		prioritiesArray := (*[1<<30]C.float)(prioritiesPtr)
 		for idx, priority := range queueFamily.queuePriorities {

@@ -5,7 +5,10 @@ package VKng
 #include "vulkan/vulkan.h"
 */
 import "C"
-import "unsafe"
+import (
+	"github.com/CannibalVox/cgoalloc"
+	"unsafe"
+)
 
 type InstanceBuilder struct {
 	applicationName    string
@@ -38,9 +41,9 @@ func (b *InstanceBuilder) EngineVersion(major, minor, patch uint32) *InstanceBui
 	return b
 }
 
-func (b *InstanceBuilder) Build(allocator Allocator) (*Instance, error) {
-	cApplication := allocator.CString(b.applicationName)
-	cEngine := allocator.CString(b.engineName)
+func (b *InstanceBuilder) Build(allocator cgoalloc.Allocator) (*Instance, error) {
+	cApplication := cgoalloc.CString(allocator, b.applicationName)
+	cEngine := cgoalloc.CString(allocator, b.engineName)
 	appInfo := &C.VkApplicationInfo{
 		pApplicationName:   (*C.char)(cApplication),
 		applicationVersion: C.uint32_t(b.applicationVersion),
@@ -76,7 +79,7 @@ func (i *Instance) Destroy() {
 	C.vkDestroyInstance(i.handle, nil)
 }
 
-func (i *Instance) PhysicalDevices(allocator Allocator) ([]*PhysicalDevice, error) {
+func (i *Instance) PhysicalDevices(allocator cgoalloc.Allocator) ([]*PhysicalDevice, error) {
 	count := C.uint32_t(0)
 	res := C.vkEnumeratePhysicalDevices(i.handle, &count, nil)
 	err := VKResult(res).ToError()
@@ -88,7 +91,7 @@ func (i *Instance) PhysicalDevices(allocator Allocator) ([]*PhysicalDevice, erro
 		return nil, nil
 	}
 
-	allocatedHandles := allocator.Malloc(uint(count)*uint(unsafe.Sizeof([1]C.VkPhysicalDevice{})))
+	allocatedHandles := allocator.Malloc(count*int(unsafe.Sizeof([1]C.VkPhysicalDevice{})))
 	defer allocator.Free(allocatedHandles)
 	deviceHandles := (*[1<<30]C.VkPhysicalDevice)(allocatedHandles)
 	res = C.vkEnumeratePhysicalDevices(i.handle, &count, (*C.VkPhysicalDevice)(allocatedHandles))
