@@ -24,6 +24,14 @@ func (d *Device) Destroy() {
 	C.vkDestroyDevice(d.handle, nil)
 }
 
+func (d *Device) GetQueue(queueFamilyIndex int, queueIndex int) (*Queue, error) {
+	var queueHandle C.VkQueue
+
+	C.vkGetDeviceQueue(d.handle, C.uint32_t(queueFamilyIndex), C.uint32_t(queueIndex), &queueHandle)
+
+	return &Queue{handle:queueHandle}, nil
+}
+
 func (d *Device) CreateCommandPool(allocator cgoalloc.Allocator, o *creation.CommandPoolOptions) (*CommandPool, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
