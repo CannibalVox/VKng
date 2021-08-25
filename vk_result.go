@@ -6,50 +6,50 @@ package VKng
 import "C"
 import "github.com/palantir/stacktrace"
 
-type VKResult int
+type Result int
 
 const (
-	VKSuccess                                  VKResult = C.VK_SUCCESS
-	VKNotReady                                 VKResult = C.VK_NOT_READY
-	VKTimeout                                  VKResult = C.VK_TIMEOUT
-	VKEventSet                                 VKResult = C.VK_EVENT_SET
-	VKEventReset                               VKResult = C.VK_EVENT_RESET
-	VKIncomplete                               VKResult = C.VK_INCOMPLETE
-	VKErrorOutOfHostMemory                     VKResult = C.VK_ERROR_OUT_OF_HOST_MEMORY
-	VKErrorOutOfDeviceMemory                   VKResult = C.VK_ERROR_OUT_OF_DEVICE_MEMORY
-	VKErrorInitializationFailed                VKResult = C.VK_ERROR_INITIALIZATION_FAILED
-	VKErrorDeviceLost                          VKResult = C.VK_ERROR_DEVICE_LOST
-	VKErrorMemoryMapFailed                     VKResult = C.VK_ERROR_MEMORY_MAP_FAILED
-	VKErrorLayerNotPresent                     VKResult = C.VK_ERROR_LAYER_NOT_PRESENT
-	VKErrorExtensionNotPresent                 VKResult = C.VK_ERROR_EXTENSION_NOT_PRESENT
-	VKErrorFeatureNotPresent                   VKResult = C.VK_ERROR_FEATURE_NOT_PRESENT
-	VKErrorIncompatibleDriver                  VKResult = C.VK_ERROR_INCOMPATIBLE_DRIVER
-	VKErrorTooManyObjects                      VKResult = C.VK_ERROR_TOO_MANY_OBJECTS
-	VKErrorFormatNotSupported                  VKResult = C.VK_ERROR_FORMAT_NOT_SUPPORTED
-	VKErrorFragmentedPool                      VKResult = C.VK_ERROR_FRAGMENTED_POOL
-	VKErrorUnknown                             VKResult = C.VK_ERROR_UNKNOWN
-	VKErrorOutOfPoolMemory                     VKResult = C.VK_ERROR_OUT_OF_POOL_MEMORY_KHR
-	VKErrorInvalidExternalHandle               VKResult = C.VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR
-	VKErrorFragmentation                       VKResult = C.VK_ERROR_FRAGMENTATION_EXT
-	VKErrorInvalidDeviceAddress                VKResult = C.VK_ERROR_INVALID_DEVICE_ADDRESS_EXT
-	VKErrorSurfaceLost                         VKResult = C.VK_ERROR_SURFACE_LOST_KHR
-	VKErrorNativeWindowInUse                   VKResult = C.VK_ERROR_NATIVE_WINDOW_IN_USE_KHR
-	VKSuboptimal                               VKResult = C.VK_SUBOPTIMAL_KHR
-	VKErrorOutOfDate                           VKResult = C.VK_ERROR_OUT_OF_DATE_KHR
-	VKErrorIncompatibleDisplay                 VKResult = C.VK_ERROR_INCOMPATIBLE_DISPLAY_KHR
-	VKErrorValidationFailed                    VKResult = C.VK_ERROR_VALIDATION_FAILED_EXT
-	VKErrorInvalidShader                       VKResult = C.VK_ERROR_INVALID_SHADER_NV
-	VKErrorInvalidDRMFormatModifierPlaneLayout VKResult = C.VK_ERROR_INVALID_DRM_FORMAT_MODIFIER_PLANE_LAYOUT_EXT
-	VKErrorNotPermitted                        VKResult = C.VK_ERROR_NOT_PERMITTED_EXT
-	VKErrorFullScreenExclusiveModeLost         VKResult = C.VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT
-	VKThreadIdle                               VKResult = C.VK_THREAD_IDLE_KHR
-	VKThreadDone                               VKResult = C.VK_THREAD_DONE_KHR
-	VKOperationDeferred                        VKResult = C.VK_OPERATION_DEFERRED_KHR
-	VKOperationNotDeferred                     VKResult = C.VK_OPERATION_NOT_DEFERRED_KHR
-	VKPipelineCompileRequired                  VKResult = C.VK_PIPELINE_COMPILE_REQUIRED_EXT
+	VKSuccess                                  Result = C.VK_SUCCESS
+	VKNotReady                                 Result = C.VK_NOT_READY
+	VKTimeout                                  Result = C.VK_TIMEOUT
+	VKEventSet                                 Result = C.VK_EVENT_SET
+	VKEventReset                               Result = C.VK_EVENT_RESET
+	VKIncomplete                               Result = C.VK_INCOMPLETE
+	VKErrorOutOfHostMemory                     Result = C.VK_ERROR_OUT_OF_HOST_MEMORY
+	VKErrorOutOfDeviceMemory                   Result = C.VK_ERROR_OUT_OF_DEVICE_MEMORY
+	VKErrorInitializationFailed                Result = C.VK_ERROR_INITIALIZATION_FAILED
+	VKErrorDeviceLost                          Result = C.VK_ERROR_DEVICE_LOST
+	VKErrorMemoryMapFailed                     Result = C.VK_ERROR_MEMORY_MAP_FAILED
+	VKErrorLayerNotPresent                     Result = C.VK_ERROR_LAYER_NOT_PRESENT
+	VKErrorExtensionNotPresent                 Result = C.VK_ERROR_EXTENSION_NOT_PRESENT
+	VKErrorFeatureNotPresent                   Result = C.VK_ERROR_FEATURE_NOT_PRESENT
+	VKErrorIncompatibleDriver                  Result = C.VK_ERROR_INCOMPATIBLE_DRIVER
+	VKErrorTooManyObjects                      Result = C.VK_ERROR_TOO_MANY_OBJECTS
+	VKErrorFormatNotSupported                  Result = C.VK_ERROR_FORMAT_NOT_SUPPORTED
+	VKErrorFragmentedPool                      Result = C.VK_ERROR_FRAGMENTED_POOL
+	VKErrorUnknown                             Result = C.VK_ERROR_UNKNOWN
+	VKErrorOutOfPoolMemory                     Result = C.VK_ERROR_OUT_OF_POOL_MEMORY_KHR
+	VKErrorInvalidExternalHandle               Result = C.VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR
+	VKErrorFragmentation                       Result = C.VK_ERROR_FRAGMENTATION_EXT
+	VKErrorInvalidDeviceAddress                Result = C.VK_ERROR_INVALID_DEVICE_ADDRESS_EXT
+	VKErrorSurfaceLost                         Result = C.VK_ERROR_SURFACE_LOST_KHR
+	VKErrorNativeWindowInUse                   Result = C.VK_ERROR_NATIVE_WINDOW_IN_USE_KHR
+	VKSuboptimal                               Result = C.VK_SUBOPTIMAL_KHR
+	VKErrorOutOfDate                           Result = C.VK_ERROR_OUT_OF_DATE_KHR
+	VKErrorIncompatibleDisplay                 Result = C.VK_ERROR_INCOMPATIBLE_DISPLAY_KHR
+	VKErrorValidationFailed                    Result = C.VK_ERROR_VALIDATION_FAILED_EXT
+	VKErrorInvalidShader                       Result = C.VK_ERROR_INVALID_SHADER_NV
+	VKErrorInvalidDRMFormatModifierPlaneLayout Result = C.VK_ERROR_INVALID_DRM_FORMAT_MODIFIER_PLANE_LAYOUT_EXT
+	VKErrorNotPermitted                        Result = C.VK_ERROR_NOT_PERMITTED_EXT
+	VKErrorFullScreenExclusiveModeLost         Result = C.VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT
+	VKThreadIdle                               Result = C.VK_THREAD_IDLE_KHR
+	VKThreadDone                               Result = C.VK_THREAD_DONE_KHR
+	VKOperationDeferred                        Result = C.VK_OPERATION_DEFERRED_KHR
+	VKOperationNotDeferred                     Result = C.VK_OPERATION_NOT_DEFERRED_KHR
+	VKPipelineCompileRequired                  Result = C.VK_PIPELINE_COMPILE_REQUIRED_EXT
 )
 
-var vkResultToString = map[VKResult]string{
+var vkResultToString = map[Result]string{
 	VKSuccess:                                  "Success",
 	VKNotReady:                                 "Not Ready",
 	VKTimeout:                                  "Timeout",
@@ -90,11 +90,11 @@ var vkResultToString = map[VKResult]string{
 	VKPipelineCompileRequired:                  "Pipeline Compile Required",
 }
 
-func (r VKResult) String() string {
+func (r Result) String() string {
 	return vkResultToString[r]
 }
 
-func (r VKResult) ToError() error {
+func (r Result) ToError() error {
 	if r >= 0 {
 		// All VKError* are <0
 		return nil
