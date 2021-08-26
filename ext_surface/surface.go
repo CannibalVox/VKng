@@ -12,13 +12,14 @@ import (
 	"unsafe"
 )
 
+type SurfaceHandle C.VkSurfaceKHR
 type Surface struct {
 	instance C.VkInstance
 	handle C.VkSurfaceKHR
 }
 
-func (s *Surface) Handle() uintptr {
-	return uintptr(unsafe.Pointer(s.handle))
+func (s *Surface) Handle() SurfaceHandle {
+	return SurfaceHandle(s.handle)
 }
 
 func (s *Surface) Destroy() {

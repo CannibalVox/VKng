@@ -29,6 +29,7 @@ import (
 	"unsafe"
 )
 
+type MessengerHandle C.VkDebugUtilsMessengerEXT
 type Messenger struct {
 	instance C.VkInstance
 	handle C.VkDebugUtilsMessengerEXT
@@ -38,7 +39,7 @@ func CreateMessenger(allocator cgoalloc.Allocator, instance *objects.Instance, o
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
-	instanceHandle := (C.VkInstance)(unsafe.Pointer(instance.Handle()))
+	instanceHandle := C.VkInstance(unsafe.Pointer(instance.Handle()))
 	createInfo, err := options.AllocForC(arena)
 	if err != nil {
 		return nil, err
@@ -58,6 +59,6 @@ func (m *Messenger) Destroy() {
 	C.vkDestroyDebugUtilsMessengerEXT(m.instance, m.handle, nil)
 }
 
-func (m *Messenger) Handle() uintptr {
-	return uintptr(unsafe.Pointer(m.handle))
+func (m *Messenger) Handle() MessengerHandle {
+	return MessengerHandle(m.handle)
 }

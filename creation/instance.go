@@ -11,11 +11,20 @@ import (
 	"unsafe"
 )
 
+type APIVersion uint32
+
+const (
+	Vulkan1_0 APIVersion = C.VK_API_VERSION_1_0
+	Vulkan1_1 APIVersion = C.VK_API_VERSION_1_1
+	Vulkan1_2 APIVersion = C.VK_API_VERSION_1_2
+)
+
 type InstanceOptions struct {
 	ApplicationName    string
 	ApplicationVersion VKng.Version
 	EngineName         string
 	EngineVersion      VKng.Version
+	VulkanVersion APIVersion
 
 	ExtensionNames []string
 	LayerNames []string
@@ -34,7 +43,7 @@ func (o *InstanceOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.
 	appInfo.pEngineName = (*C.char)(cEngine)
 	appInfo.applicationVersion = C.uint32_t(o.ApplicationVersion)
 	appInfo.engineVersion = C.uint32_t(o.EngineVersion)
-	appInfo.apiVersion = C.VK_API_VERSION_1_2
+	appInfo.apiVersion = C.uint32_t(o.VulkanVersion)
 
 	createInfo := (*C.VkInstanceCreateInfo)(allocator.Malloc(int(unsafe.Sizeof(C.VkInstanceCreateInfo{}))))
 

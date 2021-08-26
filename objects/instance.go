@@ -36,12 +36,13 @@ func CreateInstance(allocator cgoalloc.Allocator, options *creation.InstanceOpti
 	}, nil
 }
 
+type InstanceHandle C.VkInstance
 type Instance struct {
 	handle C.VkInstance
 }
 
-func (i *Instance) Handle() uintptr {
-	return uintptr(unsafe.Pointer(i.handle))
+func (i *Instance) Handle() C.VkInstance {
+	return i.handle
 }
 
 func (i *Instance) Destroy() {

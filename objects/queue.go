@@ -6,6 +6,11 @@ package objects
 */
 import "C"
 
+type QueueHandle C.VkQueue
 type Queue struct {
-	handle C.VkQueue
+	handle QueueHandle
+}
+
+func (q *Queue) Handle() QueueHandle {
+	return q.handle
 }

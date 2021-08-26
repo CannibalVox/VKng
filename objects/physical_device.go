@@ -12,12 +12,13 @@ import (
 	"unsafe"
 )
 
+type PhysicalDeviceHandle C.VkPhysicalDevice
 type PhysicalDevice struct {
 	handle C.VkPhysicalDevice
 }
 
-func (d *PhysicalDevice) Handle() uintptr {
-	return uintptr(unsafe.Pointer(d.handle))
+func (d *PhysicalDevice) Handle() PhysicalDeviceHandle {
+	return PhysicalDeviceHandle(d.handle)
 }
 
 func (d *PhysicalDevice) QueueFamilyProperties(allocator cgoalloc.Allocator) ([]*VKng.QueueFamily, error) {

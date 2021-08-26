@@ -12,12 +12,13 @@ import (
 	"unsafe"
 )
 
+type DeviceHandle C.VkDevice
 type Device struct {
 	handle C.VkDevice
 }
 
-func (d *Device) Handle() uintptr {
-	return uintptr(unsafe.Pointer(d.handle))
+func (d *Device) Handle() DeviceHandle {
+	return DeviceHandle(d.handle)
 }
 
 func (d *Device) Destroy() {
@@ -29,7 +30,7 @@ func (d *Device) GetQueue(queueFamilyIndex int, queueIndex int) (*Queue, error) 
 
 	C.vkGetDeviceQueue(d.handle, C.uint32_t(queueFamilyIndex), C.uint32_t(queueIndex), &queueHandle)
 
-	return &Queue{handle:queueHandle}, nil
+	return &Queue{handle:QueueHandle(queueHandle)}, nil
 }
 
 func (d *Device) CreateCommandPool(allocator cgoalloc.Allocator, o *creation.CommandPoolOptions) (*CommandPool, error) {
