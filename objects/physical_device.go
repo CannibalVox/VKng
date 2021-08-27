@@ -75,7 +75,7 @@ func (d *PhysicalDevice) CreateDevice(allocator cgoalloc.Allocator, options *cre
 	return &Device{handle: deviceHandle}, nil
 }
 
-func (d *PhysicalDevice) GetProperties(allocator cgoalloc.Allocator) (*PhysicalDeviceProperties, error) {
+func (d *PhysicalDevice) Properties(allocator cgoalloc.Allocator) (*PhysicalDeviceProperties, error) {
 	properties := (*C.VkPhysicalDeviceProperties)(allocator.Malloc(int(unsafe.Sizeof([1]C.VkPhysicalDeviceProperties{}))))
 	defer allocator.Free(unsafe.Pointer(properties))
 
@@ -84,11 +84,51 @@ func (d *PhysicalDevice) GetProperties(allocator cgoalloc.Allocator) (*PhysicalD
 	return createPhysicalDeviceProperties(properties)
 }
 
-func (d *PhysicalDevice) GetFeatures(allocator cgoalloc.Allocator) (*VKng.PhysicalDeviceFeatures, error) {
+func (d *PhysicalDevice) Features(allocator cgoalloc.Allocator) (*VKng.PhysicalDeviceFeatures, error) {
 	features := (*C.VkPhysicalDeviceFeatures)(allocator.Malloc(int(unsafe.Sizeof([1]C.VkPhysicalDeviceFeatures{}))))
 	defer allocator.Free(unsafe.Pointer(features))
 
 	C.vkGetPhysicalDeviceFeatures(d.handle, features)
 
 	return createPhysicalDeviceFeatures(features), nil
+}
+
+func (d *PhysicalDevice) AvailableExtensions(allocator cgoalloc.Allocator) (map[string]*VKng.ExtensionProperties, error) {
+	extensionCountPtr := allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0))))
+	defer allocator.Free(extensionCountPtr)
+
+	extensionCount := (*C.uint32_t)(extensionCountPtr)
+
+	C.vkEnumerateDeviceExtensionProperties(d.handle, nil, extensionCount, nil)
+
+	if *extensionCount == 0 {
+		return nil, nil
+	}
+
+	extensionTotal := int(*extensionCount)
+	extensionsPtr := allocator.Malloc(extensionTotal * int(unsafe.Sizeof([1]C.VkExtensionProperties{})))
+	defer allocator.Free(extensionsPtr)
+
+	typedExtensionsPtr := (*C.VkExtensionProperties)(extensionsPtr)
+	C.vkEnumerateDeviceExtensionProperties(d.handle, nil, extensionCount, typedExtensionsPtr)
+
+	retVal := make(map[string]*VKng.ExtensionProperties)
+	extensionSlice := ([]C.VkExtensionProperties)(unsafe.Slice(typedExtensionsPtr, extensionTotal))
+
+	for i := 0; i < extensionTotal; i++ {
+		extension := extensionSlice[i]
+
+		outExtension := &VKng.ExtensionProperties{
+			ExtensionName: C.GoString((*C.char)(&extension.extensionName[0])),
+			SpecVersion:   VKng.Version(extension.specVersion),
+		}
+
+		existingExtension, ok := retVal[outExtension.ExtensionName]
+		if ok && existingExtension.SpecVersion >= outExtension.SpecVersion {
+			continue
+		}
+		retVal[outExtension.ExtensionName] = outExtension
+	}
+
+	return retVal, nil
 }

@@ -12,12 +12,12 @@ import (
 	"unsafe"
 )
 
-type VKExtensionProperties struct {
+type ExtensionProperties struct {
 	ExtensionName string
 	SpecVersion   Version
 }
 
-func AvailableExtensions(alloc cgoalloc.Allocator) (map[string]*VKExtensionProperties, error) {
+func AvailableExtensions(alloc cgoalloc.Allocator) (map[string]*ExtensionProperties, error) {
 	extensionCount := (*C.uint32_t)(alloc.Malloc(int(unsafe.Sizeof(C.uint32_t(0)))))
 	defer alloc.Free(unsafe.Pointer(extensionCount))
 
@@ -42,11 +42,11 @@ func AvailableExtensions(alloc cgoalloc.Allocator) (map[string]*VKExtensionPrope
 
 	intExtensionCount := int(*extensionCount)
 	extensionArray := ([]C.VkExtensionProperties)(unsafe.Slice(extensions, intExtensionCount))
-	outExtensions := make(map[string]*VKExtensionProperties)
+	outExtensions := make(map[string]*ExtensionProperties)
 	for i := 0; i < intExtensionCount; i++ {
 		extension := extensionArray[i]
 
-		outExtension := &VKExtensionProperties{
+		outExtension := &ExtensionProperties{
 			ExtensionName: C.GoString((*C.char)(&extension.extensionName[0])),
 			SpecVersion:   Version(extension.specVersion),
 		}
