@@ -21,7 +21,7 @@ type CommandBufferOptions struct {
 }
 
 func (o *CommandBufferOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {
-	if o.Level == core.Unset {
+	if o.Level == core.LevelUnset {
 		return nil, stacktrace.NewError("attempted to create command buffers without setting Level")
 	}
 	if o.BufferCount == 0 {

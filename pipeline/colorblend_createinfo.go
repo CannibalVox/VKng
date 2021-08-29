@@ -6,15 +6,15 @@ import "github.com/CannibalVox/VKng/core"
 type ColorBlendAttachment struct {
 	BlendEnabled bool
 
-	SrcColor     BlendFactor
-	DstColor     BlendFactor
-	ColorBlendOp BlendOp
+	SrcColor     core.BlendFactor
+	DstColor     core.BlendFactor
+	ColorBlendOp core.BlendOp
 
-	SrcAlpha     BlendFactor
-	DstAlpha     BlendFactor
-	AlphaBlendOp BlendOp
+	SrcAlpha     core.BlendFactor
+	DstAlpha     core.BlendFactor
+	AlphaBlendOp core.BlendOp
 
-	WriteMask ColorComponents
+	WriteMask core.ColorComponents
 }
 
 type ColorBlendOptions struct {
