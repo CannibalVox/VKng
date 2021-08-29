@@ -32,7 +32,7 @@ type RasterizationOptions struct {
 	RasterizerDiscard bool
 
 	PolygonMode PolygonMode
-	CullMode    core.CullMode
+	CullMode    core.CullModes
 	FrontFace   core.FrontFace
 
 	DepthBias              bool

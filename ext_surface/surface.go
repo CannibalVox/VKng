@@ -19,7 +19,7 @@ const ExtensionName = C.VK_KHR_SURFACE_EXTENSION_NAME
 type Handle C.VkSurfaceKHR
 type Surface struct {
 	instance C.VkInstance
-	handle C.VkSurfaceKHR
+	handle   C.VkSurfaceKHR
 }
 
 func (s *Surface) Handle() Handle {
@@ -54,24 +54,24 @@ func (s *Surface) Capabilities(allocator cgoalloc.Allocator, device *VKng.Physic
 		MinImageCount: uint32(cCapabilities.minImageCount),
 		MaxImageCount: uint32(cCapabilities.maxImageCount),
 		CurrentExtent: core.Extent2D{
-			Width: uint32(cCapabilities.currentExtent.width),
+			Width:  uint32(cCapabilities.currentExtent.width),
 			Height: uint32(cCapabilities.currentExtent.height),
 		},
 		MinImageExtent: core.Extent2D{
-			Width: uint32(cCapabilities.minImageExtent.width),
+			Width:  uint32(cCapabilities.minImageExtent.width),
 			Height: uint32(cCapabilities.minImageExtent.height),
 		},
 		MaxImageExtent: core.Extent2D{
-			Width: uint32(cCapabilities.maxImageExtent.width),
+			Width:  uint32(cCapabilities.maxImageExtent.width),
 			Height: uint32(cCapabilities.maxImageExtent.height),
 		},
 		MaxImageArrayLayers: uint32(cCapabilities.maxImageArrayLayers),
 
 		SupportedTransforms: SurfaceTransforms(cCapabilities.supportedTransforms),
-		CurrentTransform: SurfaceTransforms(cCapabilities.currentTransform),
+		CurrentTransform:    SurfaceTransforms(cCapabilities.currentTransform),
 
 		SupportedCompositeAlpha: CompositeAlphaModes(cCapabilities.supportedCompositeAlpha),
-		SupportedImageUsage:     core.ImageUsage(cCapabilities.supportedUsageFlags),
+		SupportedImageUsage:     core.ImageUsages(cCapabilities.supportedUsageFlags),
 	}, nil
 }
 
@@ -135,7 +135,7 @@ func (s *Surface) PresentModes(allocator cgoalloc.Allocator, device *VKng.Physic
 
 	modesPtr := allocator.Malloc(count * int(unsafe.Sizeof(C.VkPresentModeKHR(0))))
 	defer allocator.Free(modesPtr)
-	
+
 	presentModes := (*C.VkPresentModeKHR)(modesPtr)
 
 	res = C.vkGetPhysicalDeviceSurfacePresentModesKHR(deviceHandle, s.handle, modeCount, presentModes)

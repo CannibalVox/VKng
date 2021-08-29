@@ -23,7 +23,7 @@ type CreationOptions struct {
 	ImageColorSpace  ext_surface.ColorSpace
 	ImageExtent      core.Extent2D
 	ImageArrayLayers uint32
-	ImageUsage       core.ImageUsage
+	ImageUsage       core.ImageUsages
 
 	SharingMode        core.SharingMode
 	QueueFamilyIndices []int
