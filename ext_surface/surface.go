@@ -9,7 +9,7 @@ package ext_surface
 import "C"
 import (
 	"github.com/CannibalVox/VKng"
-	"github.com/CannibalVox/VKng/objects"
+	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/cgoalloc"
 	"unsafe"
 )
@@ -30,7 +30,7 @@ func (s *Surface) Destroy() {
 	C.vkDestroySurfaceKHR(s.instance, s.handle, nil)
 }
 
-func (s *Surface) SupportsDevice(physicalDevice *objects.PhysicalDevice, queueFamilyIndex int) bool {
+func (s *Surface) SupportsDevice(physicalDevice *VKng.PhysicalDevice, queueFamilyIndex int) bool {
 	deviceHandle := (C.VkPhysicalDevice)(unsafe.Pointer(physicalDevice.Handle()))
 	var canPresent C.VkBool32
 	C.vkGetPhysicalDeviceSurfaceSupportKHR(deviceHandle, C.uint(queueFamilyIndex), s.handle, &canPresent)
@@ -38,14 +38,14 @@ func (s *Surface) SupportsDevice(physicalDevice *objects.PhysicalDevice, queueFa
 	return canPresent != C.VK_FALSE
 }
 
-func (s *Surface) Capabilities(allocator cgoalloc.Allocator, device *objects.PhysicalDevice) (*Capabilities, error) {
+func (s *Surface) Capabilities(allocator cgoalloc.Allocator, device *VKng.PhysicalDevice) (*Capabilities, error) {
 	capabilitiesPtr := allocator.Malloc(int(unsafe.Sizeof([1]C.VkSurfaceCapabilitiesKHR{})))
 	defer allocator.Free(capabilitiesPtr)
 
 	cCapabilities := (*C.VkSurfaceCapabilitiesKHR)(capabilitiesPtr)
 
 	res := C.vkGetPhysicalDeviceSurfaceCapabilitiesKHR((C.VkPhysicalDevice)(unsafe.Pointer(device.Handle())), s.handle, cCapabilities)
-	err := VKng.Result(res).ToError()
+	err := core.Result(res).ToError()
 	if err != nil {
 		return nil, err
 	}
@@ -53,15 +53,15 @@ func (s *Surface) Capabilities(allocator cgoalloc.Allocator, device *objects.Phy
 	return &Capabilities{
 		MinImageCount: uint32(cCapabilities.minImageCount),
 		MaxImageCount: uint32(cCapabilities.maxImageCount),
-		CurrentExtent: VKng.Extent2D{
+		CurrentExtent: core.Extent2D{
 			Width: uint32(cCapabilities.currentExtent.width),
 			Height: uint32(cCapabilities.currentExtent.height),
 		},
-		MinImageExtent: VKng.Extent2D{
+		MinImageExtent: core.Extent2D{
 			Width: uint32(cCapabilities.minImageExtent.width),
 			Height: uint32(cCapabilities.minImageExtent.height),
 		},
-		MaxImageExtent: VKng.Extent2D{
+		MaxImageExtent: core.Extent2D{
 			Width: uint32(cCapabilities.maxImageExtent.width),
 			Height: uint32(cCapabilities.maxImageExtent.height),
 		},
@@ -71,11 +71,11 @@ func (s *Surface) Capabilities(allocator cgoalloc.Allocator, device *objects.Phy
 		CurrentTransform: SurfaceTransforms(cCapabilities.currentTransform),
 
 		SupportedCompositeAlpha: CompositeAlphaModes(cCapabilities.supportedCompositeAlpha),
-		SupportedImageUsage:     VKng.ImageUsage(cCapabilities.supportedUsageFlags),
+		SupportedImageUsage:     core.ImageUsage(cCapabilities.supportedUsageFlags),
 	}, nil
 }
 
-func (s *Surface) Formats(allocator cgoalloc.Allocator, device *objects.PhysicalDevice) ([]*SurfaceFormat, error) {
+func (s *Surface) Formats(allocator cgoalloc.Allocator, device *VKng.PhysicalDevice) ([]*SurfaceFormat, error) {
 	formatCountPtr := allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0))))
 	defer allocator.Free(formatCountPtr)
 
@@ -83,7 +83,7 @@ func (s *Surface) Formats(allocator cgoalloc.Allocator, device *objects.Physical
 	deviceHandle := (C.VkPhysicalDevice)(unsafe.Pointer(device.Handle()))
 
 	res := C.vkGetPhysicalDeviceSurfaceFormatsKHR(deviceHandle, s.handle, formatCount, nil)
-	err := VKng.Result(res).ToError()
+	err := core.Result(res).ToError()
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +98,7 @@ func (s *Surface) Formats(allocator cgoalloc.Allocator, device *objects.Physical
 	defer allocator.Free(formatsPtr)
 
 	res = C.vkGetPhysicalDeviceSurfaceFormatsKHR(deviceHandle, s.handle, formatCount, (*C.VkSurfaceFormatKHR)(formatsPtr))
-	err = VKng.Result(res).ToError()
+	err = core.Result(res).ToError()
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +107,7 @@ func (s *Surface) Formats(allocator cgoalloc.Allocator, device *objects.Physical
 	var result []*SurfaceFormat
 	for i := 0; i < count; i++ {
 		result = append(result, &SurfaceFormat{
-			Format: VKng.ColorFormat(formatSlice[i].format),
+			Format:     core.ColorFormat(formatSlice[i].format),
 			ColorSpace: ColorSpace(formatSlice[i].colorSpace),
 		})
 	}
@@ -115,7 +115,7 @@ func (s *Surface) Formats(allocator cgoalloc.Allocator, device *objects.Physical
 	return result, nil
 }
 
-func (s *Surface) PresentModes(allocator cgoalloc.Allocator, device *objects.PhysicalDevice) ([]PresentMode, error) {
+func (s *Surface) PresentModes(allocator cgoalloc.Allocator, device *VKng.PhysicalDevice) ([]PresentMode, error) {
 	modeCountPtr := allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0))))
 	defer allocator.Free(modeCountPtr)
 
@@ -123,7 +123,7 @@ func (s *Surface) PresentModes(allocator cgoalloc.Allocator, device *objects.Phy
 	deviceHandle := (C.VkPhysicalDevice)(unsafe.Pointer(device.Handle()))
 
 	res := C.vkGetPhysicalDeviceSurfacePresentModesKHR(deviceHandle, s.handle, modeCount, nil)
-	err := VKng.Result(res).ToError()
+	err := core.Result(res).ToError()
 	if err != nil {
 		return nil, err
 	}
@@ -139,7 +139,7 @@ func (s *Surface) PresentModes(allocator cgoalloc.Allocator, device *objects.Phy
 	presentModes := (*C.VkPresentModeKHR)(modesPtr)
 
 	res = C.vkGetPhysicalDeviceSurfacePresentModesKHR(deviceHandle, s.handle, modeCount, presentModes)
-	err = VKng.Result(res).ToError()
+	err = core.Result(res).ToError()
 	if err != nil {
 		return nil, err
 	}

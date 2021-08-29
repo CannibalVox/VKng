@@ -24,7 +24,7 @@ import "C"
 
 import (
 	"github.com/CannibalVox/VKng"
-	"github.com/CannibalVox/VKng/objects"
+	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/cgoalloc"
 	"unsafe"
 )
@@ -32,10 +32,10 @@ import (
 type MessengerHandle C.VkDebugUtilsMessengerEXT
 type Messenger struct {
 	instance C.VkInstance
-	handle C.VkDebugUtilsMessengerEXT
+	handle   C.VkDebugUtilsMessengerEXT
 }
 
-func CreateMessenger(allocator cgoalloc.Allocator, instance *objects.Instance, options *Options) (*Messenger, error) {
+func CreateMessenger(allocator cgoalloc.Allocator, instance *VKng.Instance, options *Options) (*Messenger, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
@@ -47,7 +47,7 @@ func CreateMessenger(allocator cgoalloc.Allocator, instance *objects.Instance, o
 
 	var messenger C.VkDebugUtilsMessengerEXT
 	res := C.vkCreateDebugUtilsMessengerEXT(instanceHandle, (*C.VkDebugUtilsMessengerCreateInfoEXT)(createInfo), nil, &messenger)
-	err = VKng.Result(res).ToError()
+	err = core.Result(res).ToError()
 	if err != nil {
 		return nil, err
 	}

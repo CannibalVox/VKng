@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/CannibalVox/VKng"
+	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/ext_surface"
 	"github.com/CannibalVox/VKng/ext_swapchain"
 )
@@ -12,7 +12,7 @@ func (app *HelloTriangleApplication) createSwapchain(caps *PhysicalDeviceCaps) e
 
 	// Find best surface format
 	for _, format := range caps.SurfaceFormats {
-		if bestFormatValue < 2 && format.ColorSpace == ext_surface.SRGBNonlinear && format.Format == VKng.B8G8R8A8SRGB {
+		if bestFormatValue < 2 && format.ColorSpace == ext_surface.SRGBNonlinear && format.Format == core.B8G8R8A8SRGB {
 			bestFormatValue = 2
 			bestFormat = format
 		} else if bestFormatValue < 1 && format.ColorSpace == ext_surface.SRGBNonlinear {
@@ -32,7 +32,7 @@ func (app *HelloTriangleApplication) createSwapchain(caps *PhysicalDeviceCaps) e
 		}
 	}
 
-	var swapExtent VKng.Extent2D
+	var swapExtent core.Extent2D
 
 	if caps.SurfaceCaps.CurrentExtent.Width != (^uint32(0)) {
 		swapExtent.Width = caps.SurfaceCaps.CurrentExtent.Width
@@ -64,23 +64,23 @@ func (app *HelloTriangleApplication) createSwapchain(caps *PhysicalDeviceCaps) e
 		swapDepth = caps.SurfaceCaps.MaxImageCount
 	}
 
-	sharingMode := VKng.Exclusive
+	sharingMode := core.Exclusive
 	var queueFamilyIndices []int
 
 	if *caps.GraphicsQueueFamily != *caps.PresentQueueFamily {
-		sharingMode = VKng.Concurrent
+		sharingMode = core.Concurrent
 		queueFamilyIndices = append(queueFamilyIndices, *caps.GraphicsQueueFamily, *caps.PresentQueueFamily)
 	}
 
 	swapchain, err := ext_swapchain.CreateSwapchain(app.allocator, app.logicalDevice, &ext_swapchain.CreationOptions{
 		Surface: app.surface,
 
-		MinImageCount: swapDepth,
-		ImageFormat: bestFormat.Format,
-		ImageColorSpace: bestFormat.ColorSpace,
-		ImageExtent: swapExtent,
+		MinImageCount:    swapDepth,
+		ImageFormat:      bestFormat.Format,
+		ImageColorSpace:  bestFormat.ColorSpace,
+		ImageExtent:      swapExtent,
 		ImageArrayLayers: 1,
-		ImageUsage: VKng.ColorAttachment,
+		ImageUsage:       core.ColorAttachment,
 
 		SharingMode: sharingMode,
 		QueueFamilyIndices: queueFamilyIndices,
@@ -94,6 +94,12 @@ func (app *HelloTriangleApplication) createSwapchain(caps *PhysicalDeviceCaps) e
 		return err
 	}
 
+	images, err := swapchain.Images(app.allocator)
+	if err != nil {
+		return err
+	}
+
 	app.swapchain = swapchain
+	app.swapchainImages = images
 	return nil
 }

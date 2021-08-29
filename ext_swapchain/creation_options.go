@@ -2,8 +2,7 @@ package ext_swapchain
 
 import "C"
 import (
-	"github.com/CannibalVox/VKng"
-	"github.com/CannibalVox/VKng/creation"
+	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/ext_surface"
 	"github.com/CannibalVox/cgoalloc"
 	"unsafe"
@@ -20,23 +19,23 @@ type CreationOptions struct {
 
 	MinImageCount uint32
 
-	ImageFormat VKng.ColorFormat
-	ImageColorSpace ext_surface.ColorSpace
-	ImageExtent VKng.Extent2D
+	ImageFormat      core.ColorFormat
+	ImageColorSpace  ext_surface.ColorSpace
+	ImageExtent      core.Extent2D
 	ImageArrayLayers uint32
-	ImageUsage VKng.ImageUsage
+	ImageUsage       core.ImageUsage
 
-	SharingMode VKng.SharingMode
+	SharingMode        core.SharingMode
 	QueueFamilyIndices []int
 
-	PreTransform ext_surface.SurfaceTransforms
+	PreTransform   ext_surface.SurfaceTransforms
 	CompositeAlpha ext_surface.CompositeAlphaModes
-	PresentMode ext_surface.PresentMode
+	PresentMode    ext_surface.PresentMode
 
-	Clipped bool
+	Clipped   bool
 	Swapchain *Swapchain
 
-	Next creation.Options
+	Next core.Options
 }
 
 func (o *CreationOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {
@@ -60,7 +59,7 @@ func (o *CreationOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.
 	if len(o.QueueFamilyIndices) == 0 {
 		createInfo.pQueueFamilyIndices = nil
 	} else {
-		familyIndexPtr := (*C.uint32_t)(allocator.Malloc(len(o.QueueFamilyIndices)*int(unsafe.Sizeof(C.uint32_t(0)))))
+		familyIndexPtr := (*C.uint32_t)(allocator.Malloc(len(o.QueueFamilyIndices) * int(unsafe.Sizeof(C.uint32_t(0)))))
 		createInfo.pQueueFamilyIndices = familyIndexPtr
 
 		familyIndexSlice := ([]C.uint32_t)(unsafe.Slice(familyIndexPtr, len(o.QueueFamilyIndices)))
@@ -74,7 +73,9 @@ func (o *CreationOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.
 	createInfo.presentMode = C.VkPresentModeKHR(o.PresentMode)
 
 	createInfo.clipped = C.VK_FALSE
-	if o.Clipped { createInfo.clipped = C.VK_TRUE }
+	if o.Clipped {
+		createInfo.clipped = C.VK_TRUE
+	}
 
 	createInfo.oldSwapchain = nil
 	if o.Swapchain != nil {

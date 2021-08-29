@@ -2,12 +2,12 @@ package ext_surface_sdl2
 
 import "C"
 import (
+	"github.com/CannibalVox/VKng"
 	"github.com/CannibalVox/VKng/ext_surface"
-	"github.com/CannibalVox/VKng/objects"
 	"github.com/CannibalVox/cgoalloc"
 )
 
-func CreateSurface(allocator cgoalloc.Allocator, instance *objects.Instance, options *CreationOptions) (*ext_surface.Surface, error) {
+func CreateSurface(allocator cgoalloc.Allocator, instance *VKng.Instance, options *CreationOptions) (*ext_surface.Surface, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 

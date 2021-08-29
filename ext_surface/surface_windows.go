@@ -16,16 +16,16 @@ VkResult vkCreateWin32SurfaceKHR(VkInstance instance, const VkWin32SurfaceCreate
 import "C"
 import (
 	"github.com/CannibalVox/VKng"
-	"github.com/CannibalVox/VKng/objects"
+	"github.com/CannibalVox/VKng/core"
 	"unsafe"
 )
 
-func CreateSurface(createInfo unsafe.Pointer, instance *objects.Instance) (*Surface, error) {
+func CreateSurface(createInfo unsafe.Pointer, instance *VKng.Instance) (*Surface, error) {
 	var surface C.VkSurfaceKHR
 	instanceHandle := (C.VkInstance)(unsafe.Pointer(instance.Handle()))
 
 	res := C.vkCreateWin32SurfaceKHR(instanceHandle, (*C.VkWin32SurfaceCreateInfoKHR)(createInfo), nil, &surface)
-	err := VKng.Result(res).ToError()
+	err := core.Result(res).ToError()
 	if err != nil {
 		return nil, err
 	}

@@ -5,7 +5,9 @@ package ext_surface
 #include "vulkan/vulkan.h"
 */
 import "C"
-import "github.com/CannibalVox/VKng"
+import (
+	"github.com/CannibalVox/VKng/core"
+)
 
 type ColorSpace int32
 
@@ -52,6 +54,6 @@ func (s ColorSpace) String() string {
 }
 
 type SurfaceFormat struct {
-	Format VKng.ColorFormat
+	Format     core.ColorFormat
 	ColorSpace ColorSpace
 }

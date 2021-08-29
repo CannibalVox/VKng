@@ -8,21 +8,17 @@ package VKng
 */
 import "C"
 import (
+	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/cgoalloc"
 	"unsafe"
 )
 
-type ExtensionProperties struct {
-	ExtensionName string
-	SpecVersion   Version
-}
-
-func AvailableExtensions(alloc cgoalloc.Allocator) (map[string]*ExtensionProperties, error) {
+func AvailableExtensions(alloc cgoalloc.Allocator) (map[string]*core.ExtensionProperties, error) {
 	extensionCount := (*C.uint32_t)(alloc.Malloc(int(unsafe.Sizeof(C.uint32_t(0)))))
 	defer alloc.Free(unsafe.Pointer(extensionCount))
 
 	res := C.vkEnumerateInstanceExtensionProperties(nil, extensionCount, nil)
-	err := Result(res).ToError()
+	err := core.Result(res).ToError()
 	if err != nil {
 		return nil, err
 	}
@@ -35,20 +31,20 @@ func AvailableExtensions(alloc cgoalloc.Allocator) (map[string]*ExtensionPropert
 	defer alloc.Free(unsafe.Pointer(extensions))
 
 	res = C.vkEnumerateInstanceExtensionProperties(nil, extensionCount, extensions)
-	err = Result(res).ToError()
+	err = core.Result(res).ToError()
 	if err != nil {
 		return nil, err
 	}
 
 	intExtensionCount := int(*extensionCount)
 	extensionArray := ([]C.VkExtensionProperties)(unsafe.Slice(extensions, intExtensionCount))
-	outExtensions := make(map[string]*ExtensionProperties)
+	outExtensions := make(map[string]*core.ExtensionProperties)
 	for i := 0; i < intExtensionCount; i++ {
 		extension := extensionArray[i]
 
-		outExtension := &ExtensionProperties{
+		outExtension := &core.ExtensionProperties{
 			ExtensionName: C.GoString((*C.char)(&extension.extensionName[0])),
-			SpecVersion:   Version(extension.specVersion),
+			SpecVersion:   core.Version(extension.specVersion),
 		}
 
 		existingExtension, ok := outExtensions[outExtension.ExtensionName]
@@ -61,19 +57,12 @@ func AvailableExtensions(alloc cgoalloc.Allocator) (map[string]*ExtensionPropert
 	return outExtensions, nil
 }
 
-type VKLayerProperties struct {
-	LayerName             string
-	SpecVersion           Version
-	ImplementationVersion Version
-	Description           string
-}
-
-func AvailableLayers(alloc cgoalloc.Allocator) (map[string]*VKLayerProperties, error) {
+func AvailableLayers(alloc cgoalloc.Allocator) (map[string]*core.LayerProperties, error) {
 	layerCount := (*C.uint32_t)(alloc.Malloc(int(unsafe.Sizeof(C.uint32_t(0)))))
 	defer alloc.Free(unsafe.Pointer(layerCount))
 
 	res := C.vkEnumerateInstanceLayerProperties(layerCount, nil)
-	err := Result(res).ToError()
+	err := core.Result(res).ToError()
 	if err != nil {
 		return nil, err
 	}
@@ -86,21 +75,21 @@ func AvailableLayers(alloc cgoalloc.Allocator) (map[string]*VKLayerProperties, e
 	defer alloc.Free(unsafe.Pointer(layers))
 
 	res = C.vkEnumerateInstanceLayerProperties(layerCount, layers)
-	err = Result(res).ToError()
+	err = core.Result(res).ToError()
 	if err != nil {
 		return nil, err
 	}
 
 	intLayerCount := int(*layerCount)
 	layerArray := ([]C.VkLayerProperties)(unsafe.Slice(layers, intLayerCount))
-	outLayers := make(map[string]*VKLayerProperties)
+	outLayers := make(map[string]*core.LayerProperties)
 	for i := 0; i < intLayerCount; i++ {
 		layer := layerArray[i]
 
-		outLayer := &VKLayerProperties{
+		outLayer := &core.LayerProperties{
 			LayerName:             C.GoString((*C.char)(&layer.layerName[0])),
-			SpecVersion:           Version(layer.specVersion),
-			ImplementationVersion: Version(layer.implementationVersion),
+			SpecVersion:           core.Version(layer.specVersion),
+			ImplementationVersion: core.Version(layer.implementationVersion),
 			Description:           C.GoString((*C.char)(&layer.description[0])),
 		}
 
