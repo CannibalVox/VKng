@@ -19,7 +19,7 @@ type PipelineLayoutOptions struct {
 }
 
 func (o *PipelineLayoutOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {
-	createInfo := (*C.VkPipelineLayoutCreateInfo)(allocator.Malloc(int(unsafe.Sizeof([1]C.VkPipelineLayoutCreateInfo{}))))
+	createInfo := (*C.VkPipelineLayoutCreateInfo)(allocator.Malloc(C.sizeof_struct_VkPipelineLayoutCreateInfo))
 
 	setLayoutCount := len(o.SetLayouts)
 	constantRangesCount := len(o.PushConstantRanges)
@@ -42,7 +42,7 @@ func (o *PipelineLayoutOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (u
 
 	createInfo.pPushConstantRanges = nil
 	if constantRangesCount > 0 {
-		constantRangesPtr := (*C.VkPushConstantRange)(allocator.Malloc(constantRangesCount * int(unsafe.Sizeof(C.VkPushConstantRange{}))))
+		constantRangesPtr := (*C.VkPushConstantRange)(allocator.Malloc(constantRangesCount * C.sizeof_struct_VkPushConstantRange))
 		constantRangesSlice := ([]C.VkPushConstantRange)(unsafe.Slice(constantRangesPtr, constantRangesCount))
 
 		for i := 0; i < constantRangesCount; i++ {

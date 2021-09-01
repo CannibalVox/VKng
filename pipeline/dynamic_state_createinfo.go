@@ -5,7 +5,11 @@ package pipeline
 #include "vulkan/vulkan.h"
 */
 import "C"
-import "github.com/CannibalVox/VKng/core"
+import (
+	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/cgoalloc"
+	"unsafe"
+)
 
 type DynamicState int32
 
@@ -97,4 +101,37 @@ type DynamicStateOptions struct {
 	DynamicStates []DynamicState
 
 	Next core.Options
+}
+
+func (o *DynamicStateOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {
+	createInfo := (*C.VkPipelineDynamicStateCreateInfo)(allocator.Malloc(C.sizeof_struct_VkPipelineDynamicStateCreateInfo))
+	createInfo.sType = C.VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO
+	createInfo.flags = 0
+
+	stateCount := len(o.DynamicStates)
+	createInfo.dynamicStateCount = C.uint32_t(stateCount)
+
+	if stateCount > 0 {
+		statesPtr := (*C.VkDynamicState)(allocator.Malloc(stateCount * int(unsafe.Sizeof(C.VkDynamicState(0)))))
+		stateSlice := ([]C.VkDynamicState)(unsafe.Slice(statesPtr, stateCount))
+
+		for i := 0; i < stateCount; i++ {
+			stateSlice[i] = C.VkDynamicState(o.DynamicStates[i])
+		}
+
+		createInfo.pDynamicStates = statesPtr
+	}
+
+	var err error
+	var next unsafe.Pointer
+	if o.Next != nil {
+		next, err = o.Next.AllocForC(allocator)
+	}
+
+	if err != nil {
+		return nil, err
+	}
+	createInfo.pNext = next
+
+	return unsafe.Pointer(createInfo), nil
 }
