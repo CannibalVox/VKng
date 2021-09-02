@@ -1,4 +1,4 @@
-package VKng
+package commands
 
 /*
 #include <stdlib.h>
@@ -13,9 +13,9 @@ import (
 )
 
 type CommandBufferOptions struct {
-	Level               core.CommandBufferLevel
-	BufferCount         int
-	CommandBufferHandle unsafe.Pointer
+	Level       core.CommandBufferLevel
+	BufferCount int
+	CommandPool *CommandPool
 
 	Next core.Options
 }
@@ -32,7 +32,7 @@ func (o *CommandBufferOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (un
 	createInfo.sType = C.VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO
 	createInfo.level = C.VkCommandBufferLevel(o.Level)
 	createInfo.commandBufferCount = C.uint32_t(o.BufferCount)
-	createInfo.commandPool = (C.VkCommandPool)(o.CommandBufferHandle)
+	createInfo.commandPool = o.CommandPool.handle
 
 	var next unsafe.Pointer
 	var err error
