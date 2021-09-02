@@ -95,3 +95,23 @@ func (d *Device) CreateShaderModule(allocator cgoalloc.Allocator, o *ShaderModul
 
 	return &ShaderModule{handle: shaderModule, device: d.handle}, nil
 }
+
+func (d *Device) CreateImageView(allocator cgoalloc.Allocator, o *ImageViewOptions) (*ImageView, error) {
+	arena := cgoalloc.CreateArenaAllocator(allocator)
+	defer arena.FreeAll()
+
+	createInfo, err := o.AllocForC(arena)
+	if err != nil {
+		return nil, err
+	}
+
+	var imageViewHandle C.VkImageView
+
+	res := C.vkCreateImageView(d.handle, (*C.VkImageViewCreateInfo)(createInfo), nil, &imageViewHandle)
+	err = core.Result(res).ToError()
+	if err != nil {
+		return nil, err
+	}
+
+	return &ImageView{handle: imageViewHandle, device: d.handle}, nil
+}

@@ -12,6 +12,8 @@ import (
 )
 
 type ImageViewOptions struct {
+	Image *Image
+
 	ViewType         core.ImageViewType
 	Format           core.ColorFormat
 	Components       core.ComponentMapping
@@ -25,7 +27,7 @@ func (o *ImageViewOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe
 
 	createInfo.sType = C.VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO
 	createInfo.flags = 0
-	createInfo.image = nil // Will need to be set by caller
+	createInfo.image = o.Image.handle
 	createInfo.viewType = C.VkImageViewType(o.ViewType)
 	createInfo.format = C.VkFormat(o.Format)
 	createInfo.components.r = C.VkComponentSwizzle(o.Components.R)
