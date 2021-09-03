@@ -1,5 +1,9 @@
 package ext_swapchain
 
+/*
+#include <stdlib.h>
+#include "vulkan/vulkan.h"
+*/
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core"
@@ -7,12 +11,6 @@ import (
 	"github.com/CannibalVox/cgoalloc"
 	"unsafe"
 )
-
-/*
-#include <stdlib.h>
-#include "vulkan/vulkan.h"
-*/
-import "C"
 
 type CreationOptions struct {
 	Surface *ext_surface.Surface

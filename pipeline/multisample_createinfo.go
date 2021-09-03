@@ -47,6 +47,7 @@ func (o *MultisampleOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsa
 	}
 
 	createInfo.minSampleShading = C.float(o.MinSampleShading)
+	createInfo.pSampleMask = nil
 
 	if len(o.SampleMask) > 0 {
 		sampleCount := o.RasterizationSamples.Count()
