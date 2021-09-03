@@ -89,8 +89,6 @@ func (s *Swapchain) Images(allocator cgoalloc.Allocator) ([]*VKng.Image, error) 
 	return result, nil
 }
 
-const NoTimeout = time.Duration(^int64(0))
-
 func (s *Swapchain) AcquireNextImage(timeout time.Duration, semaphore *VKng.Semaphore, fence *VKng.Fence) (int, error) {
 	var imageIndex C.uint32_t
 
@@ -105,14 +103,7 @@ func (s *Swapchain) AcquireNextImage(timeout time.Duration, semaphore *VKng.Sema
 		fenceHandle = (C.VkFence)(unsafe.Pointer(fence.Handle()))
 	}
 
-	var cTimeout C.uint64_t
-	if timeout == NoTimeout {
-		cTimeout = C.uint64_t(timeout)
-	} else {
-		cTimeout = C.uint64_t(timeout.Nanoseconds())
-	}
-
-	res := C.vkAcquireNextImageKHR(s.device, s.handle, cTimeout, semaphoreHandle, fenceHandle, &imageIndex)
+	res := C.vkAcquireNextImageKHR(s.device, s.handle, C.uint64_t(core.TimeoutNanoseconds(timeout)), semaphoreHandle, fenceHandle, &imageIndex)
 	err := core.Result(res).ToError()
 	return int(imageIndex), err
 }

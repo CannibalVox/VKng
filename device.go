@@ -8,6 +8,8 @@ import "C"
 import (
 	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/cgoalloc"
+	"time"
+	"unsafe"
 )
 
 type DeviceHandle C.VkDevice
@@ -112,5 +114,41 @@ func (d *Device) CreateFence(allocator cgoalloc.Allocator, o *FenceOptions) (*Fe
 
 func (d *Device) WaitForIdle() error {
 	res := C.vkDeviceWaitIdle(d.handle)
+	return core.Result(res).ToError()
+}
+
+func (d *Device) WaitForFences(allocator cgoalloc.Allocator, waitForAll bool, timeout time.Duration, fences []*Fence) error {
+	fenceCount := len(fences)
+	fenceUnsafePtr := allocator.Malloc(fenceCount * int(unsafe.Sizeof([1]C.VkFence{})))
+	defer allocator.Free(fenceUnsafePtr)
+
+	fencePtr := (*C.VkFence)(fenceUnsafePtr)
+
+	fenceSlice := ([]C.VkFence)(unsafe.Slice(fencePtr, fenceCount))
+	for i := 0; i < fenceCount; i++ {
+		fenceSlice[i] = fences[i].handle
+	}
+
+	waitAllConst := C.VK_FALSE
+	if waitForAll {
+		waitAllConst = C.VK_TRUE
+	}
+
+	res := C.vkWaitForFences(d.handle, C.uint32_t(fenceCount), fencePtr, C.uint(waitAllConst), C.uint64_t(core.TimeoutNanoseconds(timeout)))
+	return core.Result(res).ToError()
+}
+
+func (d *Device) ResetFences(allocator cgoalloc.Allocator, fences []*Fence) error {
+	fenceCount := len(fences)
+	fenceUnsafePtr := allocator.Malloc(fenceCount * int(unsafe.Sizeof([1]C.VkFence{})))
+	defer allocator.Free(fenceUnsafePtr)
+
+	fencePtr := (*C.VkFence)(fenceUnsafePtr)
+	fenceSlice := ([]C.VkFence)(unsafe.Slice(fencePtr, fenceCount))
+	for i := 0; i < fenceCount; i++ {
+		fenceSlice[i] = fences[i].handle
+	}
+
+	res := C.vkResetFences(d.handle, C.uint32_t(fenceCount), fencePtr)
 	return core.Result(res).ToError()
 }
