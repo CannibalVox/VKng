@@ -75,7 +75,7 @@ func (s *Surface) Capabilities(allocator cgoalloc.Allocator, device *VKng.Physic
 	}, nil
 }
 
-func (s *Surface) Formats(allocator cgoalloc.Allocator, device *VKng.PhysicalDevice) ([]*SurfaceFormat, error) {
+func (s *Surface) Formats(allocator cgoalloc.Allocator, device *VKng.PhysicalDevice) ([]Format, error) {
 	formatCountPtr := allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0))))
 	defer allocator.Free(formatCountPtr)
 
@@ -104,9 +104,9 @@ func (s *Surface) Formats(allocator cgoalloc.Allocator, device *VKng.PhysicalDev
 	}
 
 	formatSlice := ([]C.VkSurfaceFormatKHR)(unsafe.Slice((*C.VkSurfaceFormatKHR)(formatsPtr), count))
-	var result []*SurfaceFormat
+	var result []Format
 	for i := 0; i < count; i++ {
-		result = append(result, &SurfaceFormat{
+		result = append(result, Format{
 			Format:     core.ColorFormat(formatSlice[i].format),
 			ColorSpace: ColorSpace(formatSlice[i].colorSpace),
 		})
