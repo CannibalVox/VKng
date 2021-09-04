@@ -30,8 +30,8 @@ type CreationOptions struct {
 	CompositeAlpha ext_surface.CompositeAlphaModes
 	PresentMode    ext_surface.PresentMode
 
-	Clipped   bool
-	Swapchain *Swapchain
+	Clipped      bool
+	OldSwapchain *Swapchain
 
 	Next core.Options
 }
@@ -76,8 +76,8 @@ func (o *CreationOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.
 	}
 
 	createInfo.oldSwapchain = nil
-	if o.Swapchain != nil {
-		createInfo.oldSwapchain = o.Swapchain.handle
+	if o.OldSwapchain != nil {
+		createInfo.oldSwapchain = o.OldSwapchain.handle
 	}
 
 	var err error

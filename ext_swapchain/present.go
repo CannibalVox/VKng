@@ -82,7 +82,7 @@ func (o *PresentOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.P
 	return unsafe.Pointer(createInfo), nil
 }
 
-func PresentToQueue(allocator cgoalloc.Allocator, queue *VKng.Queue, o *PresentOptions) (errorBySwapchain []error, anyError error) {
+func PresentToQueue(allocator cgoalloc.Allocator, queue *VKng.Queue, o *PresentOptions) (resultBySwapchain []core.Result, anyError error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
@@ -100,8 +100,8 @@ func PresentToQueue(allocator cgoalloc.Allocator, queue *VKng.Queue, o *PresentO
 	resSlice := unsafe.Slice(createInfoPtr.pResults, len(o.Swapchains))
 	for i := 0; i < len(o.Swapchains); i++ {
 		res = resSlice[i]
-		errorBySwapchain = append(errorBySwapchain, core.Result(res).ToError())
+		resultBySwapchain = append(resultBySwapchain, core.Result(res))
 	}
 
-	return errorBySwapchain, anyError
+	return resultBySwapchain, anyError
 }

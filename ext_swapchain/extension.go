@@ -89,7 +89,7 @@ func (s *Swapchain) Images(allocator cgoalloc.Allocator) ([]*VKng.Image, error) 
 	return result, nil
 }
 
-func (s *Swapchain) AcquireNextImage(timeout time.Duration, semaphore *VKng.Semaphore, fence *VKng.Fence) (int, error) {
+func (s *Swapchain) AcquireNextImage(timeout time.Duration, semaphore *VKng.Semaphore, fence *VKng.Fence) (int, core.Result, error) {
 	var imageIndex C.uint32_t
 
 	var semaphoreHandle C.VkSemaphore
@@ -104,6 +104,7 @@ func (s *Swapchain) AcquireNextImage(timeout time.Duration, semaphore *VKng.Sema
 	}
 
 	res := C.vkAcquireNextImageKHR(s.device, s.handle, C.uint64_t(core.TimeoutNanoseconds(timeout)), semaphoreHandle, fenceHandle, &imageIndex)
-	err := core.Result(res).ToError()
-	return int(imageIndex), err
+	result := core.Result(res)
+	err := result.ToError()
+	return int(imageIndex), result, err
 }
