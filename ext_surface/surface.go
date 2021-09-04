@@ -107,7 +107,7 @@ func (s *Surface) Formats(allocator cgoalloc.Allocator, device *VKng.PhysicalDev
 	var result []Format
 	for i := 0; i < count; i++ {
 		result = append(result, Format{
-			Format:     core.ColorFormat(formatSlice[i].format),
+			Format:     core.DataFormat(formatSlice[i].format),
 			ColorSpace: ColorSpace(formatSlice[i].colorSpace),
 		})
 	}

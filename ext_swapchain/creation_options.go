@@ -17,7 +17,7 @@ type CreationOptions struct {
 
 	MinImageCount uint32
 
-	ImageFormat      core.ColorFormat
+	ImageFormat      core.DataFormat
 	ImageColorSpace  ext_surface.ColorSpace
 	ImageExtent      core.Extent2D
 	ImageArrayLayers uint32

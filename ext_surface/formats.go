@@ -54,6 +54,6 @@ func (s ColorSpace) String() string {
 }
 
 type Format struct {
-	Format     core.ColorFormat
+	Format     core.DataFormat
 	ColorSpace ColorSpace
 }

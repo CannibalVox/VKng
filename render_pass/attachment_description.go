@@ -4,7 +4,7 @@ import "github.com/CannibalVox/VKng/core"
 
 type AttachmentDescription struct {
 	Flags   core.AttachmentDescriptionFlags
-	Format  core.ColorFormat
+	Format  core.DataFormat
 	Samples core.SampleCounts
 
 	LoadOp         core.AttachmentLoadOp

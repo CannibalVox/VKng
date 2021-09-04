@@ -15,7 +15,7 @@ type ImageViewOptions struct {
 	Image *Image
 
 	ViewType         core.ImageViewType
-	Format           core.ColorFormat
+	Format           core.DataFormat
 	Components       core.ComponentMapping
 	SubresourceRange core.ImageSubresourceRange
 

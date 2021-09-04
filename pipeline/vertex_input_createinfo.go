@@ -14,13 +14,13 @@ import (
 type InputRate int32
 
 const (
-	Vertex   InputRate = C.VK_VERTEX_INPUT_RATE_VERTEX
-	Instance InputRate = C.VK_VERTEX_INPUT_RATE_INSTANCE
+	RateVertex   InputRate = C.VK_VERTEX_INPUT_RATE_VERTEX
+	RateInstance InputRate = C.VK_VERTEX_INPUT_RATE_INSTANCE
 )
 
 var inputRateToString = map[InputRate]string{
-	Vertex:   "Vertex",
-	Instance: "Instance",
+	RateVertex:   "Vertex",
+	RateInstance: "Instance",
 }
 
 func (r InputRate) String() string {
@@ -29,15 +29,15 @@ func (r InputRate) String() string {
 
 type VertexBindingDescription struct {
 	InputRate InputRate
-	Binding   uint32
-	Stride    uint32
+	Binding   int
+	Stride    uintptr
 }
 
 type VertexAttributeDescription struct {
 	Location uint32
-	Binding  uint32
-	Format   core.ColorFormat
-	Offset   uint32
+	Binding  int
+	Format   core.DataFormat
+	Offset   uintptr
 }
 
 type VertexInputOptions struct {
