@@ -6,13 +6,15 @@ package VKng
 */
 import "C"
 import (
+	"bytes"
+	"encoding/binary"
 	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/cgoalloc"
 	"unsafe"
 )
 
 type DeviceMemoryOptions struct {
-	AllocationSize  uint64
+	AllocationSize  int
 	MemoryTypeIndex int
 
 	Next core.Options
@@ -53,7 +55,7 @@ func (m *DeviceMemory) Free() {
 	C.vkFreeMemory(m.device, m.handle, nil)
 }
 
-func (m *DeviceMemory) MapMemory(offset uint64, size uint64) (unsafe.Pointer, core.Result, error) {
+func (m *DeviceMemory) MapMemory(offset int, size int) (unsafe.Pointer, core.Result, error) {
 	var data unsafe.Pointer
 	res := core.Result(C.vkMapMemory(m.device, m.handle, C.VkDeviceSize(offset), C.VkDeviceSize(size), 0, &data))
 	err := res.ToError()
@@ -66,4 +68,25 @@ func (m *DeviceMemory) MapMemory(offset uint64, size uint64) (unsafe.Pointer, co
 
 func (m *DeviceMemory) UnmapMemory() {
 	C.vkUnmapMemory(m.device, m.handle)
+}
+
+func (m *DeviceMemory) WriteData(offset int, data interface{}) (core.Result, error) {
+	bufferSize := binary.Size(data)
+
+	memoryPtr, res, err := m.MapMemory(offset, bufferSize)
+	if err != nil {
+		return res, err
+	}
+	defer m.UnmapMemory()
+
+	dataBuffer := unsafe.Slice((*byte)(memoryPtr), bufferSize)
+
+	buf := &bytes.Buffer{}
+	err = binary.Write(buf, core.ByteOrder, data)
+	if err != nil {
+		return core.VKErrorUnknown, err
+	}
+
+	copy(dataBuffer, buf.Bytes())
+	return res, nil
 }

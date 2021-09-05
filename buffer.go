@@ -12,7 +12,7 @@ import (
 )
 
 type BufferOptions struct {
-	BufferSize         uint64
+	BufferSize         int
 	Usages             core.BufferUsages
 	SharingMode        core.SharingMode
 	QueueFamilyIndices []int
@@ -80,13 +80,13 @@ func (b *Buffer) MemoryRequirements(allocator cgoalloc.Allocator) *core.MemoryRe
 	C.vkGetBufferMemoryRequirements(b.device, b.handle, requirements)
 
 	return &core.MemoryRequirements{
-		Size:       uint64(requirements.size),
-		Alignment:  uint64(requirements.alignment),
+		Size:       int(requirements.size),
+		Alignment:  int(requirements.alignment),
 		MemoryType: uint32(requirements.memoryTypeBits),
 	}
 }
 
-func (b *Buffer) BindBufferMemory(memory *DeviceMemory, offset uint64) (core.Result, error) {
+func (b *Buffer) BindBufferMemory(memory *DeviceMemory, offset int) (core.Result, error) {
 	res := core.Result(C.vkBindBufferMemory(b.device, b.handle, memory.handle, C.VkDeviceSize(offset)))
 	return res, res.ToError()
 }
