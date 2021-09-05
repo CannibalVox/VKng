@@ -114,6 +114,29 @@ func (c *CommandBuffer) CmdBindPipeline(bindPoint core.PipelineBindPoint, pipeli
 	C.vkCmdBindPipeline(c.handle, C.VkPipelineBindPoint(bindPoint), pipelineHandle)
 }
 
-func (c *CommandBuffer) CmdDraw(vertexCount, instanceCount, firstVertex, firstInstance uint32) {
+func (c *CommandBuffer) CmdDraw(vertexCount, instanceCount int, firstVertex, firstInstance uint32) {
 	C.vkCmdDraw(c.handle, C.uint32_t(vertexCount), C.uint32_t(instanceCount), C.uint32_t(firstVertex), C.uint32_t(firstInstance))
+}
+
+func (c *CommandBuffer) CmdBindVertexBuffers(allocator cgoalloc.Allocator, firstBinding uint32, buffers []*VKng.Buffer, bufferOffsets []uint64) {
+	bufferCount := len(buffers)
+
+	bufferArrayUnsafe := allocator.Malloc(bufferCount * int(unsafe.Sizeof([1]C.VkBuffer{})))
+	defer allocator.Free(bufferArrayUnsafe)
+
+	offsetArrayUnsafe := allocator.Malloc(bufferCount * int(unsafe.Sizeof(C.VkDeviceSize(0))))
+	defer allocator.Free(offsetArrayUnsafe)
+
+	bufferArrayPtr := (*C.VkBuffer)(bufferArrayUnsafe)
+	offsetArrayPtr := (*C.VkDeviceSize)(offsetArrayUnsafe)
+
+	bufferArraySlice := ([]C.VkBuffer)(unsafe.Slice(bufferArrayPtr, bufferCount))
+	offsetArraySlice := ([]C.VkDeviceSize)(unsafe.Slice(offsetArrayPtr, bufferCount))
+
+	for i := 0; i < bufferCount; i++ {
+		bufferArraySlice[i] = (C.VkBuffer)(unsafe.Pointer(buffers[i].Handle()))
+		offsetArraySlice[i] = C.VkDeviceSize(bufferOffsets[i])
+	}
+
+	C.vkCmdBindVertexBuffers(c.handle, C.uint32_t(firstBinding), C.uint32_t(bufferCount), bufferArrayPtr, offsetArrayPtr)
 }

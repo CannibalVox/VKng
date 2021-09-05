@@ -152,3 +152,46 @@ func (d *Device) ResetFences(allocator cgoalloc.Allocator, fences []*Fence) (cor
 	res := core.Result(C.vkResetFences(d.handle, C.uint32_t(fenceCount), fencePtr))
 	return res, res.ToError()
 }
+
+func (d *Device) CreateBuffer(allocator cgoalloc.Allocator, o *BufferOptions) (*Buffer, core.Result, error) {
+	arena := cgoalloc.CreateArenaAllocator(allocator)
+	defer arena.FreeAll()
+
+	createInfo, err := o.AllocForC(arena)
+	if err != nil {
+		return nil, core.VKErrorUnknown, err
+	}
+
+	var buffer C.VkBuffer
+
+	res := core.Result(C.vkCreateBuffer(d.handle, (*C.VkBufferCreateInfo)(createInfo), nil, &buffer))
+	err = res.ToError()
+	if err != nil {
+		return nil, res, err
+	}
+
+	return &Buffer{handle: buffer, device: d.handle}, res, nil
+}
+
+func (d *Device) AllocateMemory(allocator cgoalloc.Allocator, o *DeviceMemoryOptions) (*DeviceMemory, core.Result, error) {
+	arena := cgoalloc.CreateArenaAllocator(allocator)
+	defer arena.FreeAll()
+
+	createInfo, err := o.AllocForC(arena)
+	if err != nil {
+		return nil, core.VKErrorUnknown, err
+	}
+
+	var deviceMemory C.VkDeviceMemory
+
+	res := core.Result(C.vkAllocateMemory(d.handle, (*C.VkMemoryAllocateInfo)(createInfo), nil, &deviceMemory))
+	err = res.ToError()
+	if err != nil {
+		return nil, res, err
+	}
+
+	return &DeviceMemory{
+		device: d.handle,
+		handle: deviceMemory,
+	}, res, nil
+}
