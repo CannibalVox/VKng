@@ -30,24 +30,24 @@ func (s *Surface) Destroy() {
 	C.vkDestroySurfaceKHR(s.instance, s.handle, nil)
 }
 
-func (s *Surface) SupportsDevice(physicalDevice *VKng.PhysicalDevice, queueFamilyIndex int) bool {
+func (s *Surface) SupportsDevice(physicalDevice *VKng.PhysicalDevice, queueFamilyIndex int) (bool, core.Result, error) {
 	deviceHandle := (C.VkPhysicalDevice)(unsafe.Pointer(physicalDevice.Handle()))
 	var canPresent C.VkBool32
-	C.vkGetPhysicalDeviceSurfaceSupportKHR(deviceHandle, C.uint(queueFamilyIndex), s.handle, &canPresent)
+	res := core.Result(C.vkGetPhysicalDeviceSurfaceSupportKHR(deviceHandle, C.uint(queueFamilyIndex), s.handle, &canPresent))
 
-	return canPresent != C.VK_FALSE
+	return canPresent != C.VK_FALSE, res, res.ToError()
 }
 
-func (s *Surface) Capabilities(allocator cgoalloc.Allocator, device *VKng.PhysicalDevice) (*Capabilities, error) {
+func (s *Surface) Capabilities(allocator cgoalloc.Allocator, device *VKng.PhysicalDevice) (*Capabilities, core.Result, error) {
 	capabilitiesPtr := allocator.Malloc(int(unsafe.Sizeof([1]C.VkSurfaceCapabilitiesKHR{})))
 	defer allocator.Free(capabilitiesPtr)
 
 	cCapabilities := (*C.VkSurfaceCapabilitiesKHR)(capabilitiesPtr)
 
-	res := C.vkGetPhysicalDeviceSurfaceCapabilitiesKHR((C.VkPhysicalDevice)(unsafe.Pointer(device.Handle())), s.handle, cCapabilities)
-	err := core.Result(res).ToError()
+	res := core.Result(C.vkGetPhysicalDeviceSurfaceCapabilitiesKHR((C.VkPhysicalDevice)(unsafe.Pointer(device.Handle())), s.handle, cCapabilities))
+	err := res.ToError()
 	if err != nil {
-		return nil, err
+		return nil, res, err
 	}
 
 	return &Capabilities{
@@ -72,35 +72,35 @@ func (s *Surface) Capabilities(allocator cgoalloc.Allocator, device *VKng.Physic
 
 		SupportedCompositeAlpha: CompositeAlphaModes(cCapabilities.supportedCompositeAlpha),
 		SupportedImageUsage:     core.ImageUsages(cCapabilities.supportedUsageFlags),
-	}, nil
+	}, res, nil
 }
 
-func (s *Surface) Formats(allocator cgoalloc.Allocator, device *VKng.PhysicalDevice) ([]Format, error) {
+func (s *Surface) Formats(allocator cgoalloc.Allocator, device *VKng.PhysicalDevice) ([]Format, core.Result, error) {
 	formatCountPtr := allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0))))
 	defer allocator.Free(formatCountPtr)
 
 	formatCount := (*C.uint32_t)(formatCountPtr)
 	deviceHandle := (C.VkPhysicalDevice)(unsafe.Pointer(device.Handle()))
 
-	res := C.vkGetPhysicalDeviceSurfaceFormatsKHR(deviceHandle, s.handle, formatCount, nil)
-	err := core.Result(res).ToError()
+	res := core.Result(C.vkGetPhysicalDeviceSurfaceFormatsKHR(deviceHandle, s.handle, formatCount, nil))
+	err := res.ToError()
 	if err != nil {
-		return nil, err
+		return nil, res, err
 	}
 
 	count := int(*formatCount)
 
 	if count == 0 {
-		return nil, nil
+		return nil, res, nil
 	}
 
 	formatsPtr := allocator.Malloc(count * int(unsafe.Sizeof([1]C.VkSurfaceFormatKHR{})))
 	defer allocator.Free(formatsPtr)
 
-	res = C.vkGetPhysicalDeviceSurfaceFormatsKHR(deviceHandle, s.handle, formatCount, (*C.VkSurfaceFormatKHR)(formatsPtr))
-	err = core.Result(res).ToError()
+	res = core.Result(C.vkGetPhysicalDeviceSurfaceFormatsKHR(deviceHandle, s.handle, formatCount, (*C.VkSurfaceFormatKHR)(formatsPtr)))
+	err = res.ToError()
 	if err != nil {
-		return nil, err
+		return nil, res, err
 	}
 
 	formatSlice := ([]C.VkSurfaceFormatKHR)(unsafe.Slice((*C.VkSurfaceFormatKHR)(formatsPtr), count))
@@ -112,25 +112,25 @@ func (s *Surface) Formats(allocator cgoalloc.Allocator, device *VKng.PhysicalDev
 		})
 	}
 
-	return result, nil
+	return result, res, nil
 }
 
-func (s *Surface) PresentModes(allocator cgoalloc.Allocator, device *VKng.PhysicalDevice) ([]PresentMode, error) {
+func (s *Surface) PresentModes(allocator cgoalloc.Allocator, device *VKng.PhysicalDevice) ([]PresentMode, core.Result, error) {
 	modeCountPtr := allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0))))
 	defer allocator.Free(modeCountPtr)
 
 	modeCount := (*C.uint32_t)(modeCountPtr)
 	deviceHandle := (C.VkPhysicalDevice)(unsafe.Pointer(device.Handle()))
 
-	res := C.vkGetPhysicalDeviceSurfacePresentModesKHR(deviceHandle, s.handle, modeCount, nil)
-	err := core.Result(res).ToError()
+	res := core.Result(C.vkGetPhysicalDeviceSurfacePresentModesKHR(deviceHandle, s.handle, modeCount, nil))
+	err := res.ToError()
 	if err != nil {
-		return nil, err
+		return nil, res, err
 	}
 
 	count := int(*modeCount)
 	if count == 0 {
-		return nil, nil
+		return nil, res, nil
 	}
 
 	modesPtr := allocator.Malloc(count * int(unsafe.Sizeof(C.VkPresentModeKHR(0))))
@@ -138,10 +138,10 @@ func (s *Surface) PresentModes(allocator cgoalloc.Allocator, device *VKng.Physic
 
 	presentModes := (*C.VkPresentModeKHR)(modesPtr)
 
-	res = C.vkGetPhysicalDeviceSurfacePresentModesKHR(deviceHandle, s.handle, modeCount, presentModes)
-	err = core.Result(res).ToError()
+	res = core.Result(C.vkGetPhysicalDeviceSurfacePresentModesKHR(deviceHandle, s.handle, modeCount, presentModes))
+	err = res.ToError()
 	if err != nil {
-		return nil, err
+		return nil, res, err
 	}
 
 	presentModeSlice := ([]C.VkPresentModeKHR)(unsafe.Slice(presentModes, count))
@@ -150,5 +150,5 @@ func (s *Surface) PresentModes(allocator cgoalloc.Allocator, device *VKng.Physic
 		result = append(result, PresentMode(presentModeSlice[i]))
 	}
 
-	return result, nil
+	return result, res, nil
 }

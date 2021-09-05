@@ -82,26 +82,25 @@ func (o *PresentOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.P
 	return unsafe.Pointer(createInfo), nil
 }
 
-func PresentToQueue(allocator cgoalloc.Allocator, queue *VKng.Queue, o *PresentOptions) (resultBySwapchain []core.Result, anyError error) {
+func PresentToQueue(allocator cgoalloc.Allocator, queue *VKng.Queue, o *PresentOptions) (resultBySwapchain []core.Result, res core.Result, anyError error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
 	createInfo, err := o.AllocForC(arena)
 	if err != nil {
-		return nil, err
+		return nil, core.VKErrorUnknown, err
 	}
 
 	createInfoPtr := (*C.VkPresentInfoKHR)(createInfo)
 	queueHandle := (C.VkQueue)(unsafe.Pointer(queue.Handle()))
 
-	res := C.vkQueuePresentKHR(queueHandle, createInfoPtr)
-	anyError = core.Result(res).ToError()
+	res = core.Result(C.vkQueuePresentKHR(queueHandle, createInfoPtr))
 
 	resSlice := unsafe.Slice(createInfoPtr.pResults, len(o.Swapchains))
 	for i := 0; i < len(o.Swapchains); i++ {
-		res = resSlice[i]
-		resultBySwapchain = append(resultBySwapchain, core.Result(res))
+		singleRes := core.Result(resSlice[i])
+		resultBySwapchain = append(resultBySwapchain, singleRes)
 	}
 
-	return resultBySwapchain, anyError
+	return resultBySwapchain, res, res.ToError()
 }

@@ -1,3 +1,4 @@
+//go:build darwin
 // +build darwin
 
 package ext_surface
@@ -14,15 +15,15 @@ VkResult vkCreateMacOSSurfaceMVK(VkInstance instance, const VkMacOSSurfaceCreate
 */
 import "C"
 
-func CreateSurface(createInfo unsafe.Pointer, instance *objects.Instance) (*Surface, error) {
+func CreateSurface(createInfo unsafe.Pointer, instance *objects.Instance) (*Surface, core.Result, error) {
 	var surface C.VkSurfaceKHR
 	instanceHandle := (C.VkInstance)(instance.Handle())
 
-	res := C.vkCreateMacOSSurfaceMVK(instance, createInfo, nil, &surface);
-	err := VKng.Result(res).ToError()
+	res := core.Result(C.vkCreateMacOSSurfaceMVK(instance, createInfo, nil, &surface))
+	err := res.ToError()
 	if err != nil {
-		return nil, err
+		return nil, res, err
 	}
 
-	return &Surface{handle:surface, instance:instanceHandle}, nil
+	return &Surface{handle: surface, instance: instanceHandle}, res, nil
 }

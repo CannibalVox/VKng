@@ -56,23 +56,23 @@ func (d *PhysicalDevice) QueueFamilyProperties(allocator cgoalloc.Allocator) ([]
 	return queueFamilies, nil
 }
 
-func (d *PhysicalDevice) CreateDevice(allocator cgoalloc.Allocator, options *DeviceOptions) (*Device, error) {
+func (d *PhysicalDevice) CreateDevice(allocator cgoalloc.Allocator, options *DeviceOptions) (*Device, core.Result, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
 	createInfo, err := options.AllocForC(arena)
 	if err != nil {
-		return nil, err
+		return nil, core.VKErrorUnknown, err
 	}
 
 	var deviceHandle C.VkDevice
-	res := C.vkCreateDevice(d.handle, (*C.VkDeviceCreateInfo)(createInfo), nil, &deviceHandle)
-	err = core.Result(res).ToError()
+	res := core.Result(C.vkCreateDevice(d.handle, (*C.VkDeviceCreateInfo)(createInfo), nil, &deviceHandle))
+	err = res.ToError()
 	if err != nil {
-		return nil, err
+		return nil, res, err
 	}
 
-	return &Device{handle: deviceHandle}, nil
+	return &Device{handle: deviceHandle}, res, nil
 }
 
 func (d *PhysicalDevice) Properties(allocator cgoalloc.Allocator) (*core.PhysicalDeviceProperties, error) {
@@ -93,16 +93,17 @@ func (d *PhysicalDevice) Features(allocator cgoalloc.Allocator) (*core.PhysicalD
 	return createPhysicalDeviceFeatures(features), nil
 }
 
-func (d *PhysicalDevice) AvailableExtensions(allocator cgoalloc.Allocator) (map[string]*core.ExtensionProperties, error) {
+func (d *PhysicalDevice) AvailableExtensions(allocator cgoalloc.Allocator) (map[string]*core.ExtensionProperties, core.Result, error) {
 	extensionCountPtr := allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0))))
 	defer allocator.Free(extensionCountPtr)
 
 	extensionCount := (*C.uint32_t)(extensionCountPtr)
 
-	C.vkEnumerateDeviceExtensionProperties(d.handle, nil, extensionCount, nil)
+	res := core.Result(C.vkEnumerateDeviceExtensionProperties(d.handle, nil, extensionCount, nil))
+	err := res.ToError()
 
-	if *extensionCount == 0 {
-		return nil, nil
+	if err != nil || *extensionCount == 0 {
+		return nil, res, err
 	}
 
 	extensionTotal := int(*extensionCount)
@@ -110,7 +111,11 @@ func (d *PhysicalDevice) AvailableExtensions(allocator cgoalloc.Allocator) (map[
 	defer allocator.Free(extensionsPtr)
 
 	typedExtensionsPtr := (*C.VkExtensionProperties)(extensionsPtr)
-	C.vkEnumerateDeviceExtensionProperties(d.handle, nil, extensionCount, typedExtensionsPtr)
+	res = core.Result(C.vkEnumerateDeviceExtensionProperties(d.handle, nil, extensionCount, typedExtensionsPtr))
+	err = res.ToError()
+	if err != nil {
+		return nil, res, err
+	}
 
 	retVal := make(map[string]*core.ExtensionProperties)
 	extensionSlice := ([]C.VkExtensionProperties)(unsafe.Slice(typedExtensionsPtr, extensionTotal))
@@ -130,7 +135,7 @@ func (d *PhysicalDevice) AvailableExtensions(allocator cgoalloc.Allocator) (map[
 		retVal[outExtension.ExtensionName] = outExtension
 	}
 
-	return retVal, nil
+	return retVal, res, nil
 }
 
 func createPhysicalDeviceFeatures(f *C.VkPhysicalDeviceFeatures) *core.PhysicalDeviceFeatures {

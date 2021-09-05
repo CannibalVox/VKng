@@ -101,7 +101,7 @@ func (o *SubmitOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Po
 	return unsafe.Pointer(createInfo), nil
 }
 
-func SubmitToQueue(allocator cgoalloc.Allocator, queue *VKng.Queue, fence *VKng.Fence, o []*SubmitOptions) error {
+func SubmitToQueue(allocator cgoalloc.Allocator, queue *VKng.Queue, fence *VKng.Fence, o []*SubmitOptions) (core.Result, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
@@ -112,7 +112,7 @@ func SubmitToQueue(allocator cgoalloc.Allocator, queue *VKng.Queue, fence *VKng.
 	for i := 0; i < submitCount; i++ {
 		err := o[i].populate(arena, &(createInfoSlice[i]))
 		if err != nil {
-			return err
+			return core.VKErrorUnknown, err
 		}
 	}
 
@@ -123,6 +123,6 @@ func SubmitToQueue(allocator cgoalloc.Allocator, queue *VKng.Queue, fence *VKng.
 		fenceHandle = C.VkFence(unsafe.Pointer(fence.Handle()))
 	}
 
-	res := C.vkQueueSubmit(queueHandle, C.uint32_t(submitCount), createInfoPtr, fenceHandle)
-	return core.Result(res).ToError()
+	res := core.Result(C.vkQueueSubmit(queueHandle, C.uint32_t(submitCount), createInfoPtr, fenceHandle))
+	return res, res.ToError()
 }

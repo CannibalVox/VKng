@@ -23,25 +23,25 @@ type Swapchain struct {
 	device C.VkDevice
 }
 
-func CreateSwapchain(allocator cgoalloc.Allocator, device *VKng.Device, options *CreationOptions) (*Swapchain, error) {
+func CreateSwapchain(allocator cgoalloc.Allocator, device *VKng.Device, options *CreationOptions) (*Swapchain, core.Result, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
 	createInfo, err := options.AllocForC(arena)
 	if err != nil {
-		return nil, err
+		return nil, core.VKErrorUnknown, err
 	}
 
 	var swapchain C.VkSwapchainKHR
 	deviceHandle := (C.VkDevice)(unsafe.Pointer(device.Handle()))
 
-	res := C.vkCreateSwapchainKHR(deviceHandle, (*C.VkSwapchainCreateInfoKHR)(createInfo), nil, &swapchain)
-	err = core.Result(res).ToError()
+	res := core.Result(C.vkCreateSwapchainKHR(deviceHandle, (*C.VkSwapchainCreateInfoKHR)(createInfo), nil, &swapchain))
+	err = res.ToError()
 	if err != nil {
-		return nil, err
+		return nil, res, err
 	}
 
-	return &Swapchain{handle: swapchain, device: deviceHandle}, nil
+	return &Swapchain{handle: swapchain, device: deviceHandle}, res, nil
 }
 
 func (s *Swapchain) Handle() SwapchainHandle {
@@ -52,21 +52,21 @@ func (s *Swapchain) Destroy() {
 	C.vkDestroySwapchainKHR(s.device, s.handle, nil)
 }
 
-func (s *Swapchain) Images(allocator cgoalloc.Allocator) ([]*VKng.Image, error) {
+func (s *Swapchain) Images(allocator cgoalloc.Allocator) ([]*VKng.Image, core.Result, error) {
 	imageCountPtr := allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0))))
 	defer allocator.Free(imageCountPtr)
 
 	imageCountRef := (*C.uint32_t)(imageCountPtr)
 
-	res := C.vkGetSwapchainImagesKHR(s.device, s.handle, imageCountRef, nil)
-	err := core.Result(res).ToError()
+	res := core.Result(C.vkGetSwapchainImagesKHR(s.device, s.handle, imageCountRef, nil))
+	err := res.ToError()
 	if err != nil {
-		return nil, err
+		return nil, res, err
 	}
 
 	imageCount := int(*imageCountRef)
 	if imageCount == 0 {
-		return nil, nil
+		return nil, res, nil
 	}
 
 	imagesPtr := allocator.Malloc(imageCount * int(unsafe.Sizeof([1]C.VkImage{})))
@@ -74,10 +74,10 @@ func (s *Swapchain) Images(allocator cgoalloc.Allocator) ([]*VKng.Image, error) 
 
 	imagesRef := (*C.VkImage)(imagesPtr)
 
-	res = C.vkGetSwapchainImagesKHR(s.device, s.handle, imageCountRef, imagesRef)
-	err = core.Result(res).ToError()
+	res = core.Result(C.vkGetSwapchainImagesKHR(s.device, s.handle, imageCountRef, imagesRef))
+	err = res.ToError()
 	if err != nil {
-		return nil, err
+		return nil, res, err
 	}
 
 	imagesSlice := ([]C.VkImage)(unsafe.Slice(imagesRef, imageCount))
@@ -86,7 +86,7 @@ func (s *Swapchain) Images(allocator cgoalloc.Allocator) ([]*VKng.Image, error) 
 		result = append(result, VKng.CreateFromHandles(VKng.ImageHandle(unsafe.Pointer(imagesSlice[i])), VKng.DeviceHandle(unsafe.Pointer(s.device))))
 	}
 
-	return result, nil
+	return result, res, nil
 }
 
 func (s *Swapchain) AcquireNextImage(timeout time.Duration, semaphore *VKng.Semaphore, fence *VKng.Fence) (int, core.Result, error) {

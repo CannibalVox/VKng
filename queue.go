@@ -16,7 +16,7 @@ func (q *Queue) Handle() QueueHandle {
 	return q.handle
 }
 
-func (q *Queue) WaitForIdle() error {
-	res := C.vkQueueWaitIdle(q.handle)
-	return core.Result(res).ToError()
+func (q *Queue) WaitForIdle() (core.Result, error) {
+	res := core.Result(C.vkQueueWaitIdle(q.handle))
+	return res, res.ToError()
 }

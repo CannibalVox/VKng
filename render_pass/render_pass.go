@@ -20,25 +20,25 @@ type RenderPass struct {
 	handle C.VkRenderPass
 }
 
-func CreateRenderPass(allocator cgoalloc.Allocator, device *VKng.Device, o *RenderPassOptions) (*RenderPass, error) {
+func CreateRenderPass(allocator cgoalloc.Allocator, device *VKng.Device, o *RenderPassOptions) (*RenderPass, core.Result, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
 	createInfo, err := o.AllocForC(arena)
 	if err != nil {
-		return nil, err
+		return nil, core.VKErrorUnknown, err
 	}
 
 	var renderPass C.VkRenderPass
 	deviceHandle := (C.VkDevice)(unsafe.Pointer(device.Handle()))
 
-	res := C.vkCreateRenderPass(deviceHandle, (*C.VkRenderPassCreateInfo)(createInfo), nil, &renderPass)
-	err = core.Result(res).ToError()
+	res := core.Result(C.vkCreateRenderPass(deviceHandle, (*C.VkRenderPassCreateInfo)(createInfo), nil, &renderPass))
+	err = res.ToError()
 	if err != nil {
-		return nil, err
+		return nil, res, err
 	}
 
-	return &RenderPass{device: deviceHandle, handle: renderPass}, nil
+	return &RenderPass{device: deviceHandle, handle: renderPass}, res, nil
 }
 
 func (p *RenderPass) Handle() RenderPassHandle {

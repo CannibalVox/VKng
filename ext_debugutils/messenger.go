@@ -35,24 +35,24 @@ type Messenger struct {
 	handle   C.VkDebugUtilsMessengerEXT
 }
 
-func CreateMessenger(allocator cgoalloc.Allocator, instance *VKng.Instance, options *Options) (*Messenger, error) {
+func CreateMessenger(allocator cgoalloc.Allocator, instance *VKng.Instance, options *Options) (*Messenger, core.Result, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
 	instanceHandle := C.VkInstance(unsafe.Pointer(instance.Handle()))
 	createInfo, err := options.AllocForC(arena)
 	if err != nil {
-		return nil, err
+		return nil, core.VKErrorUnknown, err
 	}
 
 	var messenger C.VkDebugUtilsMessengerEXT
-	res := C.vkCreateDebugUtilsMessengerEXT(instanceHandle, (*C.VkDebugUtilsMessengerCreateInfoEXT)(createInfo), nil, &messenger)
-	err = core.Result(res).ToError()
+	res := core.Result(C.vkCreateDebugUtilsMessengerEXT(instanceHandle, (*C.VkDebugUtilsMessengerCreateInfoEXT)(createInfo), nil, &messenger))
+	err = res.ToError()
 	if err != nil {
-		return nil, err
+		return nil, res, err
 	}
 
-	return &Messenger{handle: messenger, instance: instanceHandle}, nil
+	return &Messenger{handle: messenger, instance: instanceHandle}, res, nil
 }
 
 func (m *Messenger) Destroy() {

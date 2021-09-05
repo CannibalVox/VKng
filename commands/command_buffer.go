@@ -20,23 +20,23 @@ type CommandBuffer struct {
 	handle C.VkCommandBuffer
 }
 
-func CreateCommandBuffers(allocator cgoalloc.Allocator, device *VKng.Device, o *CommandBufferOptions) ([]*CommandBuffer, error) {
+func CreateCommandBuffers(allocator cgoalloc.Allocator, device *VKng.Device, o *CommandBufferOptions) ([]*CommandBuffer, core.Result, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
 	createInfo, err := o.AllocForC(arena)
 	if err != nil {
-		return nil, err
+		return nil, core.VKErrorUnknown, err
 	}
 
 	deviceHandle := (C.VkDevice)(unsafe.Pointer(device.Handle()))
 
 	commandBufferPtr := (*C.VkCommandBuffer)(arena.Malloc(o.BufferCount * int(unsafe.Sizeof([1]C.VkCommandBuffer{}))))
 
-	res := C.vkAllocateCommandBuffers(deviceHandle, (*C.VkCommandBufferAllocateInfo)(createInfo), commandBufferPtr)
-	err = core.Result(res).ToError()
+	res := core.Result(C.vkAllocateCommandBuffers(deviceHandle, (*C.VkCommandBufferAllocateInfo)(createInfo), commandBufferPtr))
+	err = res.ToError()
 	if err != nil {
-		return nil, err
+		return nil, res, err
 	}
 
 	commandBufferArray := ([]C.VkCommandBuffer)(unsafe.Slice(commandBufferPtr, o.BufferCount))
@@ -45,7 +45,7 @@ func CreateCommandBuffers(allocator cgoalloc.Allocator, device *VKng.Device, o *
 		result = append(result, &CommandBuffer{pool: o.CommandPool.handle, device: deviceHandle, handle: commandBufferArray[i]})
 	}
 
-	return result, nil
+	return result, res, nil
 }
 
 func (c *CommandBuffer) Handle() CommandBufferHandle {
@@ -73,22 +73,22 @@ func DestroyBuffers(allocator cgoalloc.Allocator, pool *CommandPool, buffers []*
 	C.vkFreeCommandBuffers(pool.device, pool.handle, C.uint32_t(bufferCount), (*C.VkCommandBuffer)(destroyPtr))
 }
 
-func (c *CommandBuffer) Begin(allocator cgoalloc.Allocator, o *BeginOptions) error {
+func (c *CommandBuffer) Begin(allocator cgoalloc.Allocator, o *BeginOptions) (core.Result, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
 	createInfo, err := o.AllocForC(arena)
 	if err != nil {
-		return err
+		return core.VKErrorUnknown, err
 	}
 
-	res := C.vkBeginCommandBuffer(c.handle, (*C.VkCommandBufferBeginInfo)(createInfo))
-	return core.Result(res).ToError()
+	res := core.Result(C.vkBeginCommandBuffer(c.handle, (*C.VkCommandBufferBeginInfo)(createInfo)))
+	return res, res.ToError()
 }
 
-func (c *CommandBuffer) End() error {
-	res := C.vkEndCommandBuffer(c.handle)
-	return core.Result(res).ToError()
+func (c *CommandBuffer) End() (core.Result, error) {
+	res := core.Result(C.vkEndCommandBuffer(c.handle))
+	return res, res.ToError()
 }
 
 func (c *CommandBuffer) CmdBeginRenderPass(allocator cgoalloc.Allocator, contents SubpassContents, o *RenderPassBeginOptions) error {

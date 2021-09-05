@@ -13,26 +13,26 @@ import (
 	"unsafe"
 )
 
-func CreateInstance(allocator cgoalloc.Allocator, options *InstanceOptions) (*Instance, error) {
+func CreateInstance(allocator cgoalloc.Allocator, options *InstanceOptions) (*Instance, core.Result, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
 	createInfo, err := options.AllocForC(arena)
 	if err != nil {
-		return nil, err
+		return nil, core.VKErrorUnknown, err
 	}
 
 	var instanceHandle C.VkInstance
 
-	res := C.vkCreateInstance((*C.VkInstanceCreateInfo)(createInfo), nil, &instanceHandle)
-	err = core.Result(res).ToError()
+	res := core.Result(C.vkCreateInstance((*C.VkInstanceCreateInfo)(createInfo), nil, &instanceHandle))
+	err = res.ToError()
 	if err != nil {
-		return nil, err
+		return nil, res, err
 	}
 
 	return &Instance{
 		handle: instanceHandle,
-	}, nil
+	}, res, nil
 }
 
 type InstanceHandle C.VkInstance
@@ -48,28 +48,28 @@ func (i *Instance) Destroy() {
 	C.vkDestroyInstance(i.handle, nil)
 }
 
-func (i *Instance) PhysicalDevices(allocator cgoalloc.Allocator) ([]*PhysicalDevice, error) {
+func (i *Instance) PhysicalDevices(allocator cgoalloc.Allocator) ([]*PhysicalDevice, core.Result, error) {
 	count := (*C.uint32_t)(allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0)))))
 	defer allocator.Free(unsafe.Pointer(count))
 
-	res := C.vkEnumeratePhysicalDevices(i.handle, count, nil)
-	err := core.Result(res).ToError()
+	res := core.Result(C.vkEnumeratePhysicalDevices(i.handle, count, nil))
+	err := res.ToError()
 	if err != nil {
-		return nil, err
+		return nil, res, err
 	}
 
 	if *count == 0 {
-		return nil, nil
+		return nil, res, nil
 	}
 
 	allocatedHandles := allocator.Malloc(int(uintptr(*count) * unsafe.Sizeof([1]C.VkPhysicalDevice{})))
 	defer allocator.Free(allocatedHandles)
 
 	deviceHandles := ([]C.VkPhysicalDevice)(unsafe.Slice((*C.VkPhysicalDevice)(allocatedHandles), int(*count)))
-	res = C.vkEnumeratePhysicalDevices(i.handle, count, (*C.VkPhysicalDevice)(allocatedHandles))
-	err = core.Result(res).ToError()
+	res = core.Result(C.vkEnumeratePhysicalDevices(i.handle, count, (*C.VkPhysicalDevice)(allocatedHandles)))
+	err = res.ToError()
 	if err != nil {
-		return nil, err
+		return nil, res, err
 	}
 
 	goCount := uint32(*count)
@@ -78,5 +78,5 @@ func (i *Instance) PhysicalDevices(allocator cgoalloc.Allocator) ([]*PhysicalDev
 		devices = append(devices, &PhysicalDevice{handle: deviceHandles[i]})
 	}
 
-	return devices, nil
+	return devices, res, nil
 }
