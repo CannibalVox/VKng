@@ -118,7 +118,11 @@ func (c *CommandBuffer) CmdDraw(vertexCount, instanceCount int, firstVertex, fir
 	C.vkCmdDraw(c.handle, C.uint32_t(vertexCount), C.uint32_t(instanceCount), C.uint32_t(firstVertex), C.uint32_t(firstInstance))
 }
 
-func (c *CommandBuffer) CmdBindVertexBuffers(allocator cgoalloc.Allocator, firstBinding uint32, buffers []*VKng.Buffer, bufferOffsets []uint64) {
+func (c *CommandBuffer) CmdDrawIndexed(indexCount, instanceCount int, firstIndex uint32, vertexOffset int, firstInstance uint32) {
+	C.vkCmdDrawIndexed(c.handle, C.uint32_t(indexCount), C.uint32_t(instanceCount), C.uint32_t(firstIndex), C.int(vertexOffset), C.uint32_t(firstInstance))
+}
+
+func (c *CommandBuffer) CmdBindVertexBuffers(allocator cgoalloc.Allocator, firstBinding uint32, buffers []*VKng.Buffer, bufferOffsets []int) {
 	bufferCount := len(buffers)
 
 	bufferArrayUnsafe := allocator.Malloc(bufferCount * int(unsafe.Sizeof([1]C.VkBuffer{})))
@@ -139,4 +143,10 @@ func (c *CommandBuffer) CmdBindVertexBuffers(allocator cgoalloc.Allocator, first
 	}
 
 	C.vkCmdBindVertexBuffers(c.handle, C.uint32_t(firstBinding), C.uint32_t(bufferCount), bufferArrayPtr, offsetArrayPtr)
+}
+
+func (c *CommandBuffer) CmdBindIndexBuffer(buffer *VKng.Buffer, offset int, indexType core.IndexType) {
+	bufferHandle := C.VkBuffer(unsafe.Pointer(buffer.Handle()))
+
+	C.vkCmdBindIndexBuffer(c.handle, bufferHandle, C.VkDeviceSize(offset), C.VkIndexType(indexType))
 }
