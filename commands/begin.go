@@ -6,7 +6,7 @@ package commands
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng"
 	"github.com/CannibalVox/VKng/render_pass"
 	"github.com/CannibalVox/cgoalloc"
 	"strings"
@@ -57,10 +57,10 @@ type CommandBufferInheritanceOptions struct {
 	SubPass     int
 
 	OcclusionQueryEnable bool
-	QueryFlags           core.QueryControlFlags
-	PipelineStatistics   core.QueryPipelineStatisticFlags
+	QueryFlags           VKng.QueryControlFlags
+	PipelineStatistics   VKng.QueryPipelineStatisticFlags
 
-	Next core.Options
+	Next VKng.Options
 }
 
 func (o *CommandBufferInheritanceOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {
@@ -106,7 +106,7 @@ type BeginOptions struct {
 	Flags           BeginInfoFlags
 	InheritanceInfo *CommandBufferInheritanceOptions
 
-	Next core.Options
+	Next VKng.Options
 }
 
 func (o *BeginOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {

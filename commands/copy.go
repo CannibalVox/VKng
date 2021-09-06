@@ -6,7 +6,7 @@ package commands
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng"
+	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/cgoalloc"
 	"unsafe"
 )
@@ -17,7 +17,7 @@ type BufferCopy struct {
 	Size      int
 }
 
-func (c *CommandBuffer) CmdCopyBuffer(allocator cgoalloc.Allocator, srcBuffer *VKng.Buffer, dstBuffer *VKng.Buffer, copyRegions []BufferCopy) {
+func (c *CommandBuffer) CmdCopyBuffer(allocator cgoalloc.Allocator, srcBuffer *core.Buffer, dstBuffer *core.Buffer, copyRegions []BufferCopy) {
 	copyRegionCount := len(copyRegions)
 	copyRegionUnsafe := allocator.Malloc(copyRegionCount * C.sizeof_struct_VkBufferCopy)
 	defer allocator.Free(copyRegionUnsafe)

@@ -6,14 +6,14 @@ package pipeline
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng"
 	"github.com/CannibalVox/cgoalloc"
 	"github.com/palantir/stacktrace"
 	"unsafe"
 )
 
 type MultisampleOptions struct {
-	RasterizationSamples core.SampleCounts
+	RasterizationSamples VKng.SampleCounts
 
 	SampleShading    bool
 	MinSampleShading float32
@@ -22,7 +22,7 @@ type MultisampleOptions struct {
 	AlphaToCoverage bool
 	AlphaToOne      bool
 
-	Next core.Options
+	Next VKng.Options
 }
 
 func (o *MultisampleOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {

@@ -7,7 +7,7 @@ package pipeline
 import "C"
 
 import (
-	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng"
 	"github.com/CannibalVox/cgoalloc"
 	"unsafe"
 )
@@ -15,7 +15,7 @@ import (
 type DepthStencilOptions struct {
 	DepthTestEnable  bool
 	DepthWriteEnable bool
-	DepthCompareOp   core.CompareOp
+	DepthCompareOp   VKng.CompareOp
 
 	DepthBoundsTestEnable bool
 	StencilTestEnable     bool
@@ -26,7 +26,7 @@ type DepthStencilOptions struct {
 	MinDepthBounds float32
 	MaxDepthBounds float32
 
-	Next core.Options
+	Next VKng.Options
 }
 
 func (o *DepthStencilOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {

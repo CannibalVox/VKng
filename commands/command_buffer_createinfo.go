@@ -6,22 +6,22 @@ package commands
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng"
 	"github.com/CannibalVox/cgoalloc"
 	"github.com/palantir/stacktrace"
 	"unsafe"
 )
 
 type CommandBufferOptions struct {
-	Level       core.CommandBufferLevel
+	Level       VKng.CommandBufferLevel
 	BufferCount int
 	CommandPool *CommandPool
 
-	Next core.Options
+	Next VKng.Options
 }
 
 func (o *CommandBufferOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {
-	if o.Level == core.LevelUnset {
+	if o.Level == VKng.LevelUnset {
 		return nil, stacktrace.NewError("attempted to create command buffers without setting Level")
 	}
 	if o.BufferCount == 0 {

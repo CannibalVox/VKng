@@ -35,18 +35,18 @@ type Messenger struct {
 	handle   C.VkDebugUtilsMessengerEXT
 }
 
-func CreateMessenger(allocator cgoalloc.Allocator, instance *VKng.Instance, options *Options) (*Messenger, core.Result, error) {
+func CreateMessenger(allocator cgoalloc.Allocator, instance *core.Instance, options *Options) (*Messenger, VKng.Result, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
 	instanceHandle := C.VkInstance(unsafe.Pointer(instance.Handle()))
 	createInfo, err := options.AllocForC(arena)
 	if err != nil {
-		return nil, core.VKErrorUnknown, err
+		return nil, VKng.VKErrorUnknown, err
 	}
 
 	var messenger C.VkDebugUtilsMessengerEXT
-	res := core.Result(C.vkCreateDebugUtilsMessengerEXT(instanceHandle, (*C.VkDebugUtilsMessengerCreateInfoEXT)(createInfo), nil, &messenger))
+	res := VKng.Result(C.vkCreateDebugUtilsMessengerEXT(instanceHandle, (*C.VkDebugUtilsMessengerCreateInfoEXT)(createInfo), nil, &messenger))
 	err = res.ToError()
 	if err != nil {
 		return nil, res, err

@@ -6,7 +6,7 @@ package commands
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng"
 	"github.com/CannibalVox/VKng/render_pass"
 	"github.com/CannibalVox/cgoalloc"
 	"unsafe"
@@ -58,10 +58,10 @@ type RenderPassBeginOptions struct {
 	RenderPass  *render_pass.RenderPass
 	Framebuffer *render_pass.Framebuffer
 
-	RenderArea  core.Rect2D
+	RenderArea  VKng.Rect2D
 	ClearValues []ClearValue
 
-	Next core.Options
+	Next VKng.Options
 }
 
 func (o *RenderPassBeginOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {

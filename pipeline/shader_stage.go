@@ -17,11 +17,11 @@ import (
 
 type ShaderStage struct {
 	Name               string
-	Stage              core.ShaderStages
-	Shader             *VKng.ShaderModule
+	Stage              VKng.ShaderStages
+	Shader             *core.ShaderModule
 	SpecializationInfo map[uint32]interface{}
 
-	Next core.Options
+	Next VKng.Options
 }
 
 func (s *ShaderStage) populate(allocator *cgoalloc.ArenaAllocator, createInfo *C.VkPipelineShaderStageCreateInfo) error {
@@ -54,7 +54,7 @@ func (s *ShaderStage) populate(allocator *cgoalloc.ArenaAllocator, createInfo *C
 				}
 			}
 
-			err := binary.Write(dataBytes, core.ByteOrder, val)
+			err := binary.Write(dataBytes, VKng.ByteOrder, val)
 			if err != nil {
 				return stacktrace.Propagate(err, "failed to populate shader stage with specialization values: %d -> %v", constantID, val)
 			}

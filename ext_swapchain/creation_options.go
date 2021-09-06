@@ -6,7 +6,7 @@ package ext_swapchain
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng"
 	"github.com/CannibalVox/VKng/ext_surface"
 	"github.com/CannibalVox/cgoalloc"
 	"unsafe"
@@ -17,13 +17,13 @@ type CreationOptions struct {
 
 	MinImageCount uint32
 
-	ImageFormat      core.DataFormat
+	ImageFormat      VKng.DataFormat
 	ImageColorSpace  ext_surface.ColorSpace
-	ImageExtent      core.Extent2D
+	ImageExtent      VKng.Extent2D
 	ImageArrayLayers uint32
-	ImageUsage       core.ImageUsages
+	ImageUsage       VKng.ImageUsages
 
-	SharingMode        core.SharingMode
+	SharingMode        VKng.SharingMode
 	QueueFamilyIndices []int
 
 	PreTransform   ext_surface.SurfaceTransforms
@@ -33,7 +33,7 @@ type CreationOptions struct {
 	Clipped      bool
 	OldSwapchain *Swapchain
 
-	Next core.Options
+	Next VKng.Options
 }
 
 func (o *CreationOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {

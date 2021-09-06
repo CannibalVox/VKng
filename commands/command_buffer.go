@@ -20,20 +20,20 @@ type CommandBuffer struct {
 	handle C.VkCommandBuffer
 }
 
-func CreateCommandBuffers(allocator cgoalloc.Allocator, device *VKng.Device, o *CommandBufferOptions) ([]*CommandBuffer, core.Result, error) {
+func CreateCommandBuffers(allocator cgoalloc.Allocator, device *core.Device, o *CommandBufferOptions) ([]*CommandBuffer, VKng.Result, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
 	createInfo, err := o.AllocForC(arena)
 	if err != nil {
-		return nil, core.VKErrorUnknown, err
+		return nil, VKng.VKErrorUnknown, err
 	}
 
 	deviceHandle := (C.VkDevice)(unsafe.Pointer(device.Handle()))
 
 	commandBufferPtr := (*C.VkCommandBuffer)(arena.Malloc(o.BufferCount * int(unsafe.Sizeof([1]C.VkCommandBuffer{}))))
 
-	res := core.Result(C.vkAllocateCommandBuffers(deviceHandle, (*C.VkCommandBufferAllocateInfo)(createInfo), commandBufferPtr))
+	res := VKng.Result(C.vkAllocateCommandBuffers(deviceHandle, (*C.VkCommandBufferAllocateInfo)(createInfo), commandBufferPtr))
 	err = res.ToError()
 	if err != nil {
 		return nil, res, err
@@ -73,21 +73,21 @@ func DestroyBuffers(allocator cgoalloc.Allocator, pool *CommandPool, buffers []*
 	C.vkFreeCommandBuffers(pool.device, pool.handle, C.uint32_t(bufferCount), (*C.VkCommandBuffer)(destroyPtr))
 }
 
-func (c *CommandBuffer) Begin(allocator cgoalloc.Allocator, o *BeginOptions) (core.Result, error) {
+func (c *CommandBuffer) Begin(allocator cgoalloc.Allocator, o *BeginOptions) (VKng.Result, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
 	createInfo, err := o.AllocForC(arena)
 	if err != nil {
-		return core.VKErrorUnknown, err
+		return VKng.VKErrorUnknown, err
 	}
 
-	res := core.Result(C.vkBeginCommandBuffer(c.handle, (*C.VkCommandBufferBeginInfo)(createInfo)))
+	res := VKng.Result(C.vkBeginCommandBuffer(c.handle, (*C.VkCommandBufferBeginInfo)(createInfo)))
 	return res, res.ToError()
 }
 
-func (c *CommandBuffer) End() (core.Result, error) {
-	res := core.Result(C.vkEndCommandBuffer(c.handle))
+func (c *CommandBuffer) End() (VKng.Result, error) {
+	res := VKng.Result(C.vkEndCommandBuffer(c.handle))
 	return res, res.ToError()
 }
 
@@ -109,7 +109,7 @@ func (c *CommandBuffer) CmdEndRenderPass() {
 	C.vkCmdEndRenderPass(c.handle)
 }
 
-func (c *CommandBuffer) CmdBindPipeline(bindPoint core.PipelineBindPoint, pipeline *pipeline.Pipeline) {
+func (c *CommandBuffer) CmdBindPipeline(bindPoint VKng.PipelineBindPoint, pipeline *pipeline.Pipeline) {
 	pipelineHandle := (C.VkPipeline)(unsafe.Pointer(pipeline.Handle()))
 	C.vkCmdBindPipeline(c.handle, C.VkPipelineBindPoint(bindPoint), pipelineHandle)
 }
@@ -122,7 +122,7 @@ func (c *CommandBuffer) CmdDrawIndexed(indexCount, instanceCount int, firstIndex
 	C.vkCmdDrawIndexed(c.handle, C.uint32_t(indexCount), C.uint32_t(instanceCount), C.uint32_t(firstIndex), C.int(vertexOffset), C.uint32_t(firstInstance))
 }
 
-func (c *CommandBuffer) CmdBindVertexBuffers(allocator cgoalloc.Allocator, firstBinding uint32, buffers []*VKng.Buffer, bufferOffsets []int) {
+func (c *CommandBuffer) CmdBindVertexBuffers(allocator cgoalloc.Allocator, firstBinding uint32, buffers []*core.Buffer, bufferOffsets []int) {
 	bufferCount := len(buffers)
 
 	bufferArrayUnsafe := allocator.Malloc(bufferCount * int(unsafe.Sizeof([1]C.VkBuffer{})))
@@ -145,7 +145,7 @@ func (c *CommandBuffer) CmdBindVertexBuffers(allocator cgoalloc.Allocator, first
 	C.vkCmdBindVertexBuffers(c.handle, C.uint32_t(firstBinding), C.uint32_t(bufferCount), bufferArrayPtr, offsetArrayPtr)
 }
 
-func (c *CommandBuffer) CmdBindIndexBuffer(buffer *VKng.Buffer, offset int, indexType core.IndexType) {
+func (c *CommandBuffer) CmdBindIndexBuffer(buffer *core.Buffer, offset int, indexType VKng.IndexType) {
 	bufferHandle := C.VkBuffer(unsafe.Pointer(buffer.Handle()))
 
 	C.vkCmdBindIndexBuffer(c.handle, bufferHandle, C.VkDeviceSize(offset), C.VkIndexType(indexType))

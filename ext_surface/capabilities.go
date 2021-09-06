@@ -6,7 +6,7 @@ package ext_surface
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng"
 	"strings"
 )
 
@@ -126,14 +126,14 @@ type Capabilities struct {
 	MinImageCount uint32
 	MaxImageCount uint32
 
-	CurrentExtent  core.Extent2D
-	MinImageExtent core.Extent2D
-	MaxImageExtent core.Extent2D
+	CurrentExtent  VKng.Extent2D
+	MinImageExtent VKng.Extent2D
+	MaxImageExtent VKng.Extent2D
 
 	MaxImageArrayLayers uint32
 	SupportedTransforms SurfaceTransforms
 	CurrentTransform    SurfaceTransforms
 
 	SupportedCompositeAlpha CompositeAlphaModes
-	SupportedImageUsage     core.ImageUsages
+	SupportedImageUsage     VKng.ImageUsages
 }

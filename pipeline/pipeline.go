@@ -20,7 +20,7 @@ type Pipeline struct {
 	handle C.VkPipeline
 }
 
-func CreateGraphicsPipelines(allocator cgoalloc.Allocator, device *VKng.Device, o []*Options) ([]*Pipeline, core.Result, error) {
+func CreateGraphicsPipelines(allocator cgoalloc.Allocator, device *core.Device, o []*Options) ([]*Pipeline, VKng.Result, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
@@ -32,13 +32,13 @@ func CreateGraphicsPipelines(allocator cgoalloc.Allocator, device *VKng.Device, 
 	for i := 0; i < pipelineCount; i++ {
 		err := o[i].populate(arena, &pipelineCreateInfosSlice[i])
 		if err != nil {
-			return nil, core.VKErrorUnknown, err
+			return nil, VKng.VKErrorUnknown, err
 		}
 	}
 
 	pipelinePtr := (*C.VkPipeline)(arena.Malloc(pipelineCount * int(unsafe.Sizeof([1]C.VkPipeline{}))))
 
-	res := core.Result(C.vkCreateGraphicsPipelines(deviceHandle, (C.VkPipelineCache)(C.VK_NULL_HANDLE), C.uint32_t(pipelineCount), pipelineCreateInfosPtr, nil, pipelinePtr))
+	res := VKng.Result(C.vkCreateGraphicsPipelines(deviceHandle, (C.VkPipelineCache)(C.VK_NULL_HANDLE), C.uint32_t(pipelineCount), pipelineCreateInfosPtr, nil, pipelinePtr))
 	err := res.ToError()
 	if err != nil {
 		return nil, res, err

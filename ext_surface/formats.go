@@ -6,7 +6,7 @@ package ext_surface
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng"
 )
 
 type ColorSpace int32
@@ -54,6 +54,6 @@ func (s ColorSpace) String() string {
 }
 
 type Format struct {
-	Format     core.DataFormat
+	Format     VKng.DataFormat
 	ColorSpace ColorSpace
 }

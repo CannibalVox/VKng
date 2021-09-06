@@ -6,30 +6,30 @@ package ext_debugutils
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng"
 	"image/color"
 	"unsafe"
 )
 
 type Label struct {
-	Name string
+	Name  string
 	Color color.Color
 }
 
 type ObjectNameInfo struct {
-	Name string
+	Name   string
 	Handle uintptr
-	Type   core.ObjectType
+	Type   VKng.ObjectType
 }
 
 type CallbackData struct {
-	MessageIDName string
+	MessageIDName   string
 	MessageIDNumber int
-	Message string
+	Message         string
 
-	QueueLabels []*Label
+	QueueLabels         []*Label
 	CommandBufferLabels []*Label
-	Objects []*ObjectNameInfo
+	Objects             []*ObjectNameInfo
 }
 
 func CreateLabel(l C.VkDebugUtilsLabelEXT) *Label {
@@ -44,16 +44,16 @@ func CreateLabel(l C.VkDebugUtilsLabelEXT) *Label {
 	b := uint8(float32(l.color[2])*255.0 + 0.001)
 	a := uint8(float32(l.color[3])*255.0 + 0.001)
 
-	color := color.RGBA{R:r, G:g, B:b, A:a}
+	color := color.RGBA{R: r, G: g, B: b, A: a}
 
-	return &Label {
-		Name: name,
+	return &Label{
+		Name:  name,
 		Color: color,
 	}
 }
 
 func CreateObjectNameInfo(o C.VkDebugUtilsObjectNameInfoEXT) *ObjectNameInfo {
-	objType := core.ObjectType(o.objectType)
+	objType := VKng.ObjectType(o.objectType)
 	handle := uintptr(o.objectHandle)
 	var objName string
 
@@ -62,14 +62,14 @@ func CreateObjectNameInfo(o C.VkDebugUtilsObjectNameInfoEXT) *ObjectNameInfo {
 	}
 
 	return &ObjectNameInfo{
-		Name: objName,
-		Type: objType,
+		Name:   objName,
+		Type:   objType,
 		Handle: handle,
 	}
 }
 
 func CreateCallbackData(d *C.VkDebugUtilsMessengerCallbackDataEXT) *CallbackData {
-	var messageIDName,message string
+	var messageIDName, message string
 
 	if d.pMessageIdName != nil {
 		messageIDName = C.GoString(d.pMessageIdName)
@@ -78,7 +78,7 @@ func CreateCallbackData(d *C.VkDebugUtilsMessengerCallbackDataEXT) *CallbackData
 		message = C.GoString(d.pMessage)
 	}
 
-	var queueLabels,commandBufferLabels []*Label
+	var queueLabels, commandBufferLabels []*Label
 	var objects []*ObjectNameInfo
 
 	queueLabelCount := int(d.queueLabelCount)
@@ -100,11 +100,11 @@ func CreateCallbackData(d *C.VkDebugUtilsMessengerCallbackDataEXT) *CallbackData
 	}
 
 	return &CallbackData{
-		MessageIDName:  messageIDName,
-		MessageIDNumber: int(d.messageIdNumber),
-		Message: message,
-		QueueLabels: queueLabels,
+		MessageIDName:       messageIDName,
+		MessageIDNumber:     int(d.messageIdNumber),
+		Message:             message,
+		QueueLabels:         queueLabels,
 		CommandBufferLabels: commandBufferLabels,
-		Objects: objects,
+		Objects:             objects,
 	}
 }

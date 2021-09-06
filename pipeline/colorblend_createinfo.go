@@ -6,7 +6,7 @@ package pipeline
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng"
 	"github.com/CannibalVox/cgoalloc"
 	"unsafe"
 )
@@ -14,25 +14,25 @@ import (
 type ColorBlendAttachment struct {
 	BlendEnabled bool
 
-	SrcColor     core.BlendFactor
-	DstColor     core.BlendFactor
-	ColorBlendOp core.BlendOp
+	SrcColor     VKng.BlendFactor
+	DstColor     VKng.BlendFactor
+	ColorBlendOp VKng.BlendOp
 
-	SrcAlpha     core.BlendFactor
-	DstAlpha     core.BlendFactor
-	AlphaBlendOp core.BlendOp
+	SrcAlpha     VKng.BlendFactor
+	DstAlpha     VKng.BlendFactor
+	AlphaBlendOp VKng.BlendOp
 
-	WriteMask core.ColorComponents
+	WriteMask VKng.ColorComponents
 }
 
 type ColorBlendOptions struct {
 	LogicOpEnabled bool
-	LogicOp        core.LogicOp
+	LogicOp        VKng.LogicOp
 
 	BlendConstants [4]float32
 	Attachments    []ColorBlendAttachment
 
-	Next core.Options
+	Next VKng.Options
 }
 
 func (o *ColorBlendOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {

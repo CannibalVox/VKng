@@ -6,7 +6,7 @@ package commands
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng"
 	"github.com/CannibalVox/cgoalloc"
 	"github.com/palantir/stacktrace"
 	"strings"
@@ -53,7 +53,7 @@ type CommandPoolOptions struct {
 	GraphicsQueueFamily *int
 	Flags               CommandPoolFlags
 
-	Next core.Options
+	Next VKng.Options
 }
 
 func (o *CommandPoolOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {

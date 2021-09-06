@@ -5,19 +5,21 @@ package render_pass
 #include "../vulkan/vulkan.h"
 */
 import "C"
-import "github.com/CannibalVox/VKng/core"
+import (
+	"github.com/CannibalVox/VKng"
+)
 
 const SubpassExternal = int(C.VK_SUBPASS_EXTERNAL)
 
 type SubPassDependency struct {
-	Flags core.DependencyFlags
+	Flags VKng.DependencyFlags
 
 	SrcSubPassIndex int
 	DstSubPassIndex int
 
-	SrcStageMask core.PipelineStages
-	DstStageMask core.PipelineStages
+	SrcStageMask VKng.PipelineStages
+	DstStageMask VKng.PipelineStages
 
-	SrcAccess core.AccessFlags
-	DstAccess core.AccessFlags
+	SrcAccess VKng.AccessFlags
+	DstAccess VKng.AccessFlags
 }

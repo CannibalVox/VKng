@@ -16,7 +16,7 @@ VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng"
 	"github.com/CannibalVox/cgoalloc"
 	"runtime/cgo"
 	"unsafe"
@@ -27,7 +27,7 @@ type Options struct {
 	CaptureTypes      MessageType
 	Callback          CallbackFunction
 
-	Next core.Options
+	Next VKng.Options
 }
 
 func (o *Options) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {

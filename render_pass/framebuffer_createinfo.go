@@ -13,14 +13,14 @@ import (
 )
 
 type FramebufferOptions struct {
-	Attachments []*VKng.ImageView
+	Attachments []*core.ImageView
 	RenderPass  *RenderPass
 
 	Width  uint32
 	Height uint32
 	Layers uint32
 
-	Next core.Options
+	Next VKng.Options
 }
 
 func (o *FramebufferOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {

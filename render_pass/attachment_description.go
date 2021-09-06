@@ -1,17 +1,19 @@
 package render_pass
 
-import "github.com/CannibalVox/VKng/core"
+import (
+	"github.com/CannibalVox/VKng"
+)
 
 type AttachmentDescription struct {
-	Flags   core.AttachmentDescriptionFlags
-	Format  core.DataFormat
-	Samples core.SampleCounts
+	Flags   VKng.AttachmentDescriptionFlags
+	Format  VKng.DataFormat
+	Samples VKng.SampleCounts
 
-	LoadOp         core.AttachmentLoadOp
-	StoreOp        core.AttachmentStoreOp
-	StencilLoadOp  core.AttachmentLoadOp
-	StencilStoreOp core.AttachmentStoreOp
+	LoadOp         VKng.AttachmentLoadOp
+	StoreOp        VKng.AttachmentStoreOp
+	StencilLoadOp  VKng.AttachmentLoadOp
+	StencilStoreOp VKng.AttachmentStoreOp
 
-	InitialLayout core.ImageLayout
-	FinalLayout   core.ImageLayout
+	InitialLayout VKng.ImageLayout
+	FinalLayout   VKng.ImageLayout
 }

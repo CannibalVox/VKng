@@ -26,19 +26,19 @@ func (l *PipelineLayout) Destroy() {
 	C.vkDestroyPipelineLayout(l.device, l.handle, nil)
 }
 
-func CreatePipelineLayout(allocator cgoalloc.Allocator, device *VKng.Device, o *PipelineLayoutOptions) (*PipelineLayout, core.Result, error) {
+func CreatePipelineLayout(allocator cgoalloc.Allocator, device *core.Device, o *PipelineLayoutOptions) (*PipelineLayout, VKng.Result, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
 	createInfo, err := o.AllocForC(arena)
 	if err != nil {
-		return nil, core.VKErrorUnknown, err
+		return nil, VKng.VKErrorUnknown, err
 	}
 
 	deviceHandle := C.VkDevice(unsafe.Pointer(device.Handle()))
 
 	var pipelineLayout C.VkPipelineLayout
-	res := core.Result(C.vkCreatePipelineLayout(deviceHandle, (*C.VkPipelineLayoutCreateInfo)(createInfo), nil, &pipelineLayout))
+	res := VKng.Result(C.vkCreatePipelineLayout(deviceHandle, (*C.VkPipelineLayoutCreateInfo)(createInfo), nil, &pipelineLayout))
 	err = res.ToError()
 	if err != nil {
 		return nil, res, err

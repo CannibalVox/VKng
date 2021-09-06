@@ -20,19 +20,19 @@ type CommandPool struct {
 	device C.VkDevice
 }
 
-func CreateCommandPool(allocator cgoalloc.Allocator, device *VKng.Device, o *CommandPoolOptions) (*CommandPool, core.Result, error) {
+func CreateCommandPool(allocator cgoalloc.Allocator, device *core.Device, o *CommandPoolOptions) (*CommandPool, VKng.Result, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
 	createInfo, err := o.AllocForC(arena)
 	if err != nil {
-		return nil, core.VKErrorUnknown, err
+		return nil, VKng.VKErrorUnknown, err
 	}
 
 	deviceHandle := (C.VkDevice)(unsafe.Pointer(device.Handle()))
 
 	var cmdPoolHandle C.VkCommandPool
-	res := core.Result(C.vkCreateCommandPool(deviceHandle, (*C.VkCommandPoolCreateInfo)(createInfo), nil, &cmdPoolHandle))
+	res := VKng.Result(C.vkCreateCommandPool(deviceHandle, (*C.VkCommandPoolCreateInfo)(createInfo), nil, &cmdPoolHandle))
 	err = res.ToError()
 	if err != nil {
 		return nil, res, err

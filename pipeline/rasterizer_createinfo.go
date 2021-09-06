@@ -6,7 +6,7 @@ package pipeline
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng"
 	"github.com/CannibalVox/cgoalloc"
 	"unsafe"
 )
@@ -36,8 +36,8 @@ type RasterizationOptions struct {
 	RasterizerDiscard bool
 
 	PolygonMode PolygonMode
-	CullMode    core.CullModes
-	FrontFace   core.FrontFace
+	CullMode    VKng.CullModes
+	FrontFace   VKng.FrontFace
 
 	DepthBias               bool
 	DepthBiasClamp          float32
@@ -46,7 +46,7 @@ type RasterizationOptions struct {
 
 	LineWidth float32
 
-	Next core.Options
+	Next VKng.Options
 }
 
 func (o *RasterizationOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {

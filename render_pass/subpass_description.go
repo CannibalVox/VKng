@@ -1,13 +1,15 @@
 package render_pass
 
-import "github.com/CannibalVox/VKng/core"
+import (
+	"github.com/CannibalVox/VKng"
+)
 
 type SubPass struct {
-	BindPoint core.PipelineBindPoint
+	BindPoint VKng.PipelineBindPoint
 
-	InputAttachments           []core.AttachmentReference
-	ColorAttachments           []core.AttachmentReference
-	ResolveAttachments         []core.AttachmentReference
-	DepthStencilAttachments    []core.AttachmentReference
+	InputAttachments           []VKng.AttachmentReference
+	ColorAttachments           []VKng.AttachmentReference
+	ResolveAttachments         []VKng.AttachmentReference
+	DepthStencilAttachments    []VKng.AttachmentReference
 	PreservedAttachmentIndices []int
 }

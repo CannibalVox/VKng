@@ -6,16 +6,16 @@ package pipeline
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng"
 	"github.com/CannibalVox/cgoalloc"
 	"unsafe"
 )
 
 type ViewportOptions struct {
-	Viewports []core.Viewport
-	Scissors  []core.Rect2D
+	Viewports []VKng.Viewport
+	Scissors  []VKng.Rect2D
 
-	Next core.Options
+	Next VKng.Options
 }
 
 func (o *ViewportOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {

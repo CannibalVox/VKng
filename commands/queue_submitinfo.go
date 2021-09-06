@@ -15,11 +15,11 @@ import (
 
 type SubmitOptions struct {
 	CommandBuffers   []*CommandBuffer
-	WaitSemaphores   []*VKng.Semaphore
-	WaitDstStages    []core.PipelineStages
-	SignalSemaphores []*VKng.Semaphore
+	WaitSemaphores   []*core.Semaphore
+	WaitDstStages    []VKng.PipelineStages
+	SignalSemaphores []*core.Semaphore
 
-	Next core.Options
+	Next VKng.Options
 }
 
 func (o *SubmitOptions) populate(allocator *cgoalloc.ArenaAllocator, createInfo *C.VkSubmitInfo) error {
@@ -101,7 +101,7 @@ func (o *SubmitOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Po
 	return unsafe.Pointer(createInfo), nil
 }
 
-func SubmitToQueue(allocator cgoalloc.Allocator, queue *VKng.Queue, fence *VKng.Fence, o []*SubmitOptions) (core.Result, error) {
+func SubmitToQueue(allocator cgoalloc.Allocator, queue *core.Queue, fence *core.Fence, o []*SubmitOptions) (VKng.Result, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
@@ -112,7 +112,7 @@ func SubmitToQueue(allocator cgoalloc.Allocator, queue *VKng.Queue, fence *VKng.
 	for i := 0; i < submitCount; i++ {
 		err := o[i].populate(arena, &(createInfoSlice[i]))
 		if err != nil {
-			return core.VKErrorUnknown, err
+			return VKng.VKErrorUnknown, err
 		}
 	}
 
@@ -123,6 +123,6 @@ func SubmitToQueue(allocator cgoalloc.Allocator, queue *VKng.Queue, fence *VKng.
 		fenceHandle = C.VkFence(unsafe.Pointer(fence.Handle()))
 	}
 
-	res := core.Result(C.vkQueueSubmit(queueHandle, C.uint32_t(submitCount), createInfoPtr, fenceHandle))
+	res := VKng.Result(C.vkQueueSubmit(queueHandle, C.uint32_t(submitCount), createInfoPtr, fenceHandle))
 	return res, res.ToError()
 }

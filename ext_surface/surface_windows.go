@@ -1,3 +1,4 @@
+//go:build windows
 // +build windows
 
 package ext_surface
@@ -20,11 +21,11 @@ import (
 	"unsafe"
 )
 
-func CreateSurface(createInfo unsafe.Pointer, instance *VKng.Instance) (*Surface, core.Result, error) {
+func CreateSurface(createInfo unsafe.Pointer, instance *core.Instance) (*Surface, VKng.Result, error) {
 	var surface C.VkSurfaceKHR
 	instanceHandle := (C.VkInstance)(unsafe.Pointer(instance.Handle()))
 
-	res := core.Result(C.vkCreateWin32SurfaceKHR(instanceHandle, (*C.VkWin32SurfaceCreateInfoKHR)(createInfo), nil, &surface))
+	res := VKng.Result(C.vkCreateWin32SurfaceKHR(instanceHandle, (*C.VkWin32SurfaceCreateInfoKHR)(createInfo), nil, &surface))
 	err := res.ToError()
 	if err != nil {
 		return nil, res, err

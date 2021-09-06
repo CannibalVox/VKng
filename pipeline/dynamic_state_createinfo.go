@@ -6,7 +6,7 @@ package pipeline
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng"
 	"github.com/CannibalVox/cgoalloc"
 	"unsafe"
 )
@@ -100,7 +100,7 @@ func (s DynamicState) String() string {
 type DynamicStateOptions struct {
 	DynamicStates []DynamicState
 
-	Next core.Options
+	Next VKng.Options
 }
 
 func (o *DynamicStateOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {

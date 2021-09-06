@@ -6,7 +6,7 @@ package pipeline
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng"
 	"github.com/CannibalVox/VKng/render_pass"
 	"github.com/CannibalVox/cgoalloc"
 	"unsafe"
@@ -31,7 +31,7 @@ type Options struct {
 	BasePipeline      *Pipeline
 	BasePipelineIndex int
 
-	Next core.Options
+	Next VKng.Options
 }
 
 func (o *Options) populate(allocator *cgoalloc.ArenaAllocator, createInfo *C.VkGraphicsPipelineCreateInfo) error {

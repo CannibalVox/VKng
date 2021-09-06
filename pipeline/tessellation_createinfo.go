@@ -6,7 +6,7 @@ package pipeline
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng"
 	"github.com/CannibalVox/cgoalloc"
 	"unsafe"
 )
@@ -14,7 +14,7 @@ import (
 type TessellationOptions struct {
 	PatchControlPoints uint32
 
-	Next core.Options
+	Next VKng.Options
 }
 
 func (o *TessellationOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {

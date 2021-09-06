@@ -8,13 +8,13 @@ import (
 	"github.com/CannibalVox/cgoalloc"
 )
 
-func CreateSurface(allocator cgoalloc.Allocator, instance *VKng.Instance, options *CreationOptions) (*ext_surface.Surface, core.Result, error) {
+func CreateSurface(allocator cgoalloc.Allocator, instance *core.Instance, options *CreationOptions) (*ext_surface.Surface, VKng.Result, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
 	createInfo, err := options.AllocForC(arena)
 	if err != nil {
-		return nil, core.VKErrorUnknown, err
+		return nil, VKng.VKErrorUnknown, err
 	}
 
 	return ext_surface.CreateSurface(createInfo, instance)

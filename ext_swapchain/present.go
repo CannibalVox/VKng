@@ -14,11 +14,11 @@ import (
 )
 
 type PresentOptions struct {
-	WaitSemaphores []*VKng.Semaphore
+	WaitSemaphores []*core.Semaphore
 	Swapchains     []*Swapchain
 	ImageIndices   []int
 
-	Next core.Options
+	Next VKng.Options
 }
 
 func (o *PresentOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {
@@ -82,23 +82,23 @@ func (o *PresentOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.P
 	return unsafe.Pointer(createInfo), nil
 }
 
-func PresentToQueue(allocator cgoalloc.Allocator, queue *VKng.Queue, o *PresentOptions) (resultBySwapchain []core.Result, res core.Result, anyError error) {
+func PresentToQueue(allocator cgoalloc.Allocator, queue *core.Queue, o *PresentOptions) (resultBySwapchain []VKng.Result, res VKng.Result, anyError error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
 	createInfo, err := o.AllocForC(arena)
 	if err != nil {
-		return nil, core.VKErrorUnknown, err
+		return nil, VKng.VKErrorUnknown, err
 	}
 
 	createInfoPtr := (*C.VkPresentInfoKHR)(createInfo)
 	queueHandle := (C.VkQueue)(unsafe.Pointer(queue.Handle()))
 
-	res = core.Result(C.vkQueuePresentKHR(queueHandle, createInfoPtr))
+	res = VKng.Result(C.vkQueuePresentKHR(queueHandle, createInfoPtr))
 
 	resSlice := unsafe.Slice(createInfoPtr.pResults, len(o.Swapchains))
 	for i := 0; i < len(o.Swapchains); i++ {
-		singleRes := core.Result(resSlice[i])
+		singleRes := VKng.Result(resSlice[i])
 		resultBySwapchain = append(resultBySwapchain, singleRes)
 	}
 

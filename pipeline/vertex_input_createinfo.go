@@ -6,7 +6,7 @@ package pipeline
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng"
 	"github.com/CannibalVox/cgoalloc"
 	"unsafe"
 )
@@ -36,7 +36,7 @@ type VertexBindingDescription struct {
 type VertexAttributeDescription struct {
 	Location uint32
 	Binding  int
-	Format   core.DataFormat
+	Format   VKng.DataFormat
 	Offset   uintptr
 }
 
@@ -44,7 +44,7 @@ type VertexInputOptions struct {
 	VertexBindingDescriptions   []VertexBindingDescription
 	VertexAttributeDescriptions []VertexAttributeDescription
 
-	Next core.Options
+	Next VKng.Options
 }
 
 func (o *VertexInputOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {

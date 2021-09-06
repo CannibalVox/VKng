@@ -6,7 +6,7 @@ package render_pass
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng"
 	"github.com/CannibalVox/cgoalloc"
 	"github.com/palantir/stacktrace"
 	"unsafe"
@@ -17,7 +17,7 @@ type RenderPassOptions struct {
 	SubPasses           []SubPass
 	SubPassDependencies []SubPassDependency
 
-	Next core.Options
+	Next VKng.Options
 }
 
 func (o *RenderPassOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {
@@ -130,7 +130,7 @@ func (o *RenderPassOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsaf
 	return unsafe.Pointer(createInfo), nil
 }
 
-func createAttachmentReferences(allocator *cgoalloc.ArenaAllocator, references []core.AttachmentReference) *C.VkAttachmentReference {
+func createAttachmentReferences(allocator *cgoalloc.ArenaAllocator, references []VKng.AttachmentReference) *C.VkAttachmentReference {
 	count := len(references)
 	if count == 0 {
 		return nil
