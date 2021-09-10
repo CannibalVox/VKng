@@ -21,20 +21,9 @@ import (
 	"unsafe"
 )
 
-func CreateSurface(allocator cgoalloc.Allocator, createInfo unsafe.Pointer, instance *resource.Instance) (*Surface, loader.VkResult, error) {
+func CreateSurface(allocator cgoalloc.Allocator, surfacePtr unsafe.Pointer, instance *resource.Instance) (*Surface, loader.VkResult, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
-	var surface C.VkSurfaceKHR
-	instanceHandle := (C.VkInstance)(unsafe.Pointer(instance.Handle()))
-
-	createSurfaceFunc := (C.PFN_vkCreateWin32SurfaceKHR)(instance.Loader().LoadProcAddr((*loader.Char)(cgoalloc.CString(arena, "vkCreateWin32SurfaceKHR"))))
-
-	res := loader.VkResult(C.cgoCreateWin32SurfaceKHR(createSurfaceFunc, instanceHandle, (*C.VkWin32SurfaceCreateInfoKHR)(createInfo), nil, &surface))
-	err := res.ToError()
-	if err != nil {
-		return nil, res, err
-	}
-
-	return buildSurface(arena, instance, surface), res, nil
+	return buildSurface(arena, instance, (C.VkSurfaceKHR)(surfacePtr)), loader.VKSuccess, nil
 }

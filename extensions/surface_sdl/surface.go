@@ -1,21 +1,26 @@
 package ext_surface_sdl2
 
+/*
+#include <stdlib.h>
+#include "vulkan/vulkan.h"
+*/
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core/loader"
 	"github.com/CannibalVox/VKng/core/resource"
-	ext_surface2 "github.com/CannibalVox/VKng/extensions/surface"
+	ext_surface "github.com/CannibalVox/VKng/extensions/surface"
 	"github.com/CannibalVox/cgoalloc"
+	"github.com/veandco/go-sdl2/sdl"
+	"unsafe"
 )
 
-func CreateSurface(allocator cgoalloc.Allocator, instance *resource.Instance, options *CreationOptions) (*ext_surface2.Surface, loader.VkResult, error) {
-	arena := cgoalloc.CreateArenaAllocator(allocator)
-	defer arena.FreeAll()
-
-	createInfo, err := options.AllocForC(arena)
+func CreateSurface(allocator cgoalloc.Allocator, instance *resource.Instance, window *sdl.Window) (*ext_surface.Surface, loader.VkResult, error) {
+	surfacePtrUnsafe, err := window.VulkanCreateSurface(instance.Handle())
 	if err != nil {
 		return nil, loader.VKErrorUnknown, err
 	}
 
-	return ext_surface2.CreateSurface(allocator, createInfo, instance)
+	surfacePtr := (*C.VkSurfaceKHR)(surfacePtrUnsafe)
+
+	return ext_surface.CreateSurface(allocator, unsafe.Pointer(*surfacePtr), instance)
 }
