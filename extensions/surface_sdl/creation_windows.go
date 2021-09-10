@@ -12,7 +12,7 @@ package ext_surface_sdl2
 import "C"
 import (
 	"github.com/CannibalVox/cgoalloc"
-	"github.com/palantir/stacktrace"
+	"github.com/cockroachdb/errors"
 	"github.com/veandco/go-sdl2/sdl"
 	"unsafe"
 )
@@ -28,7 +28,7 @@ func (o *CreationOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.
 	}
 
 	if sysInfo.Subsystem != sdl.SYSWM_WINDOWS {
-		return nil, stacktrace.NewError("Unexpected window subsystems in windows OS: %v", sysInfo.Subsystem)
+		return nil, errors.Newf("Unexpected window subsystems in windows OS: %v", sysInfo.Subsystem)
 	}
 
 	winInfo := sysInfo.GetWindowsInfo()

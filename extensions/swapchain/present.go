@@ -3,13 +3,17 @@ package ext_swapchain
 /*
 #include <stdlib.h>
 #include "vulkan/vulkan.h"
+VkResult cgoQueuePresentKHR(PFN_vkQueuePresentKHR fn, VkQueue queue, VkPresentInfoKHR* pPresentInfo) {
+	return fn(queue, pPresentInfo);
+}
 */
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng/core/loader"
 	"github.com/CannibalVox/VKng/core/resource"
 	"github.com/CannibalVox/cgoalloc"
-	"github.com/palantir/stacktrace"
+	"github.com/cockroachdb/errors"
 	"unsafe"
 )
 
@@ -23,7 +27,7 @@ type PresentOptions struct {
 
 func (o *PresentOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {
 	if len(o.Swapchains) != len(o.ImageIndices) {
-		return nil, stacktrace.NewError("present: specified %d swapchains and %d image indices, but they should match")
+		return nil, errors.Newf("present: specified %d swapchains and %d image indices, but they should match")
 	}
 
 	createInfo := (*C.VkPresentInfoKHR)(allocator.Malloc(C.sizeof_struct_VkPresentInfoKHR))
@@ -82,23 +86,23 @@ func (o *PresentOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.P
 	return unsafe.Pointer(createInfo), nil
 }
 
-func PresentToQueue(allocator cgoalloc.Allocator, queue *resource.Queue, o *PresentOptions) (resultBySwapchain []core.Result, res core.Result, anyError error) {
+func (s *Swapchain) PresentToQueue(allocator cgoalloc.Allocator, queue *resource.Queue, o *PresentOptions) (resultBySwapchain []loader.VkResult, res loader.VkResult, anyError error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
 	createInfo, err := o.AllocForC(arena)
 	if err != nil {
-		return nil, core.VKErrorUnknown, err
+		return nil, loader.VKErrorUnknown, err
 	}
 
 	createInfoPtr := (*C.VkPresentInfoKHR)(createInfo)
 	queueHandle := (C.VkQueue)(unsafe.Pointer(queue.Handle()))
 
-	res = core.Result(C.vkQueuePresentKHR(queueHandle, createInfoPtr))
+	res = loader.VkResult(C.cgoQueuePresentKHR(s.queuePresentFunc, queueHandle, createInfoPtr))
 
 	resSlice := unsafe.Slice(createInfoPtr.pResults, len(o.Swapchains))
 	for i := 0; i < len(o.Swapchains); i++ {
-		singleRes := core.Result(resSlice[i])
+		singleRes := loader.VkResult(resSlice[i])
 		resultBySwapchain = append(resultBySwapchain, singleRes)
 	}
 

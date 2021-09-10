@@ -8,22 +8,27 @@ package ext_surface
 #include "../vulkan/vulkan.h"
 #include "../vulkan/vulkan_macos.h"
 
-VkResult vkCreateMacOSSurfaceMVK(VkInstance instance, const VkMacOSSurfaceCreateInfoMVK* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface) {
-	PFN_vkCreateMacOSSurfaceMVK f = (PFN_vkCreateMacOSSurfaceMVK)(vkGetInstanceProcAddr((VkInstance)instance, "vkCreateMacOSSurfaceMVK");
-	return f(instance, pCreateInfo, pAllocator, pSurface);
+VkResult cgoCreateMacOSSurfaceMVK(PFN_vkCreateMacOSSurfaceMVK fn, VkInstance instance, VkMacOSSurfaceCreateInfoMVK* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface) {
+	return fn(instance, pCreateInfo, pAllocator, pSurface);
 }
 */
 import "C"
+import "github.com/CannibalVox/cgoalloc"
 
-func CreateSurface(createInfo unsafe.Pointer, instance *objects.Instance) (*Surface, core.Result, error) {
+func CreateSurface(allocator cgoalloc.Allocator, createInfo unsafe.Pointer, instance *objects.Instance) (*Surface, core.Result, error) {
+	arena := cgoalloc.CreateArenaAllocator(allocator)
+	defer arena.FreeAll()
+
 	var surface C.VkSurfaceKHR
 	instanceHandle := (C.VkInstance)(instance.Handle())
 
-	res := core.Result(C.vkCreateMacOSSurfaceMVK(instance, createInfo, nil, &surface))
+	createSurfaceFunc := (C.PFN_vkCreateMacOSSurfaceMVK)(instance.Loader().LoadProcAddr((*loader.Char)(cgoalloc.CString(arena, "vkCreateMacOSSurfaceMVK"))))
+
+	res := core.Result(C.cgoCreateMacOSSurfaceMVK(createSurfaceFunc, instance, createInfo, nil, &surface))
 	err := res.ToError()
 	if err != nil {
 		return nil, res, err
 	}
 
-	return &Surface{handle: surface, instance: instanceHandle}, res, nil
+	return buildSurface(arena, instance, surface), res, nil
 }
