@@ -178,7 +178,10 @@ func (s *Surface) PresentModes(allocator cgoalloc.Allocator, device *resource.Ph
 	return result, res, nil
 }
 
-func buildSurface(allocator *cgoalloc.ArenaAllocator, instance *resource.Instance, surfaceHandle C.VkSurfaceKHR) *Surface {
+func CreateSurface(allocator cgoalloc.Allocator, surfacePtr unsafe.Pointer, instance *resource.Instance) (*Surface, loader.VkResult, error) {
+	arena := cgoalloc.CreateArenaAllocator(allocator)
+	defer arena.FreeAll()
+
 	instanceHandle := (C.VkInstance)(unsafe.Pointer(instance.Handle()))
 	physicalSurfaceCapabilitiesFunc := (C.PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR)(instance.Loader().LoadProcAddr((*loader.Char)(cgoalloc.CString(allocator, "vkGetPhysicalDeviceSurfaceCapabilitiesKHR"))))
 	physicalSurfaceSupportFunc := (C.PFN_vkGetPhysicalDeviceSurfaceSupportKHR)(instance.Loader().LoadProcAddr((*loader.Char)(cgoalloc.CString(allocator, "vkGetPhysicalDeviceSurfaceSupportKHR"))))
@@ -187,7 +190,7 @@ func buildSurface(allocator *cgoalloc.ArenaAllocator, instance *resource.Instanc
 	destroyFunc := (C.PFN_vkDestroySurfaceKHR)(instance.Loader().LoadProcAddr((*loader.Char)(cgoalloc.CString(allocator, "vkDestroySurfaceKHR"))))
 
 	return &Surface{
-		handle:   surfaceHandle,
+		handle:   (C.VkSurfaceKHR)(surfacePtr),
 		instance: instanceHandle,
 
 		physicalSurfaceSupportFunc:      physicalSurfaceSupportFunc,
@@ -195,5 +198,5 @@ func buildSurface(allocator *cgoalloc.ArenaAllocator, instance *resource.Instanc
 		surfaceFormatsFunc:              surfaceFormatsFunc,
 		presentModesFunc:                presentModesFunc,
 		destroyFunc:                     destroyFunc,
-	}
+	}, loader.VKSuccess, nil
 }
