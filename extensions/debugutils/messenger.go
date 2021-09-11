@@ -22,14 +22,19 @@ import (
 )
 
 type MessengerHandle C.VkDebugUtilsMessengerEXT
-type Messenger struct {
+type vulkanMessenger struct {
 	instance C.VkInstance
 	handle   C.VkDebugUtilsMessengerEXT
 
 	destroyFunc C.PFN_vkDestroyDebugUtilsMessengerEXT
 }
 
-func CreateMessenger(allocator cgoalloc.Allocator, instance resource.Instance, options *Options) (*Messenger, loader.VkResult, error) {
+type Messenger interface {
+	Handle() MessengerHandle
+	Destroy()
+}
+
+func CreateMessenger(allocator cgoalloc.Allocator, instance resource.Instance, options *Options) (Messenger, loader.VkResult, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
@@ -50,7 +55,7 @@ func CreateMessenger(allocator cgoalloc.Allocator, instance resource.Instance, o
 
 	destroyFunc := (C.PFN_vkDestroyDebugUtilsMessengerEXT)(instance.Loader().LoadProcAddr((*loader.Char)(cgoalloc.CString(arena, "vkDestroyDebugUtilsMessengerEXT"))))
 
-	return &Messenger{
+	return &vulkanMessenger{
 		handle:   messenger,
 		instance: instanceHandle,
 
@@ -58,10 +63,10 @@ func CreateMessenger(allocator cgoalloc.Allocator, instance resource.Instance, o
 	}, res, nil
 }
 
-func (m *Messenger) Destroy() {
+func (m *vulkanMessenger) Destroy() {
 	C.cgoDestroyDebugUtilsMessengerEXT(m.destroyFunc, m.instance, m.handle, nil)
 }
 
-func (m *Messenger) Handle() MessengerHandle {
+func (m *vulkanMessenger) Handle() MessengerHandle {
 	return MessengerHandle(m.handle)
 }

@@ -13,7 +13,7 @@ import (
 )
 
 type CreationOptions struct {
-	Surface *ext_surface2.Surface
+	Surface ext_surface2.Surface
 
 	MinImageCount uint32
 
@@ -31,7 +31,7 @@ type CreationOptions struct {
 	PresentMode    ext_surface2.PresentMode
 
 	Clipped      bool
-	OldSwapchain *Swapchain
+	OldSwapchain Swapchain
 
 	Next core.Options
 }
@@ -77,7 +77,7 @@ func (o *CreationOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.
 
 	createInfo.oldSwapchain = nil
 	if o.OldSwapchain != nil {
-		createInfo.oldSwapchain = o.OldSwapchain.handle
+		createInfo.oldSwapchain = (C.VkSwapchainKHR)(o.OldSwapchain.Handle())
 	}
 
 	var err error

@@ -36,7 +36,7 @@ import (
 const ExtensionName = C.VK_KHR_SURFACE_EXTENSION_NAME
 
 type Handle C.VkSurfaceKHR
-type Surface struct {
+type vulkanSurface struct {
 	instance C.VkInstance
 	handle   C.VkSurfaceKHR
 
@@ -47,15 +47,24 @@ type Surface struct {
 	destroyFunc                     C.PFN_vkDestroySurfaceKHR
 }
 
-func (s *Surface) Handle() Handle {
+type Surface interface {
+	Handle() Handle
+	Destroy()
+	SupportsDevice(physicalDevice resource.PhysicalDevice, queueFamilyIndex int) (bool, loader.VkResult, error)
+	Capabilities(allocator cgoalloc.Allocator, device resource.PhysicalDevice) (*Capabilities, loader.VkResult, error)
+	Formats(allocator cgoalloc.Allocator, device resource.PhysicalDevice) ([]Format, loader.VkResult, error)
+	PresentModes(allocator cgoalloc.Allocator, device resource.PhysicalDevice) ([]PresentMode, loader.VkResult, error)
+}
+
+func (s *vulkanSurface) Handle() Handle {
 	return Handle(s.handle)
 }
 
-func (s *Surface) Destroy() {
+func (s *vulkanSurface) Destroy() {
 	C.cgoDestroySurfaceKHR(s.destroyFunc, s.instance, s.handle, nil)
 }
 
-func (s *Surface) SupportsDevice(physicalDevice resource.PhysicalDevice, queueFamilyIndex int) (bool, loader.VkResult, error) {
+func (s *vulkanSurface) SupportsDevice(physicalDevice resource.PhysicalDevice, queueFamilyIndex int) (bool, loader.VkResult, error) {
 	deviceHandle := (C.VkPhysicalDevice)(unsafe.Pointer(physicalDevice.Handle()))
 	var canPresent C.VkBool32
 	res := loader.VkResult(C.cgoGetPhysicalDeviceSurfaceSupportKHR(s.physicalSurfaceSupportFunc, deviceHandle, C.uint(queueFamilyIndex), s.handle, &canPresent))
@@ -63,7 +72,7 @@ func (s *Surface) SupportsDevice(physicalDevice resource.PhysicalDevice, queueFa
 	return canPresent != C.VK_FALSE, res, res.ToError()
 }
 
-func (s *Surface) Capabilities(allocator cgoalloc.Allocator, device resource.PhysicalDevice) (*Capabilities, loader.VkResult, error) {
+func (s *vulkanSurface) Capabilities(allocator cgoalloc.Allocator, device resource.PhysicalDevice) (*Capabilities, loader.VkResult, error) {
 	capabilitiesPtr := allocator.Malloc(int(unsafe.Sizeof([1]C.VkSurfaceCapabilitiesKHR{})))
 	defer allocator.Free(capabilitiesPtr)
 
@@ -100,7 +109,7 @@ func (s *Surface) Capabilities(allocator cgoalloc.Allocator, device resource.Phy
 	}, res, nil
 }
 
-func (s *Surface) Formats(allocator cgoalloc.Allocator, device resource.PhysicalDevice) ([]Format, loader.VkResult, error) {
+func (s *vulkanSurface) Formats(allocator cgoalloc.Allocator, device resource.PhysicalDevice) ([]Format, loader.VkResult, error) {
 	formatCountPtr := allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0))))
 	defer allocator.Free(formatCountPtr)
 
@@ -140,7 +149,7 @@ func (s *Surface) Formats(allocator cgoalloc.Allocator, device resource.Physical
 	return result, res, nil
 }
 
-func (s *Surface) PresentModes(allocator cgoalloc.Allocator, device resource.PhysicalDevice) ([]PresentMode, loader.VkResult, error) {
+func (s *vulkanSurface) PresentModes(allocator cgoalloc.Allocator, device resource.PhysicalDevice) ([]PresentMode, loader.VkResult, error) {
 	modeCountPtr := allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0))))
 	defer allocator.Free(modeCountPtr)
 
@@ -178,7 +187,7 @@ func (s *Surface) PresentModes(allocator cgoalloc.Allocator, device resource.Phy
 	return result, res, nil
 }
 
-func CreateSurface(allocator cgoalloc.Allocator, surfacePtr unsafe.Pointer, instance resource.Instance) (*Surface, loader.VkResult, error) {
+func CreateSurface(allocator cgoalloc.Allocator, surfacePtr unsafe.Pointer, instance resource.Instance) (Surface, loader.VkResult, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
@@ -189,7 +198,7 @@ func CreateSurface(allocator cgoalloc.Allocator, surfacePtr unsafe.Pointer, inst
 	presentModesFunc := (C.PFN_vkGetPhysicalDeviceSurfacePresentModesKHR)(instance.Loader().LoadProcAddr((*loader.Char)(cgoalloc.CString(allocator, "vkGetPhysicalDeviceSurfacePresentModesKHR"))))
 	destroyFunc := (C.PFN_vkDestroySurfaceKHR)(instance.Loader().LoadProcAddr((*loader.Char)(cgoalloc.CString(allocator, "vkDestroySurfaceKHR"))))
 
-	return &Surface{
+	return &vulkanSurface{
 		handle:   (C.VkSurfaceKHR)(surfacePtr),
 		instance: instanceHandle,
 

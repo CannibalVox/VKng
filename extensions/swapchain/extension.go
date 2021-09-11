@@ -33,7 +33,7 @@ import (
 const ExtensionName = C.VK_KHR_SWAPCHAIN_EXTENSION_NAME
 
 type SwapchainHandle C.VkSwapchainKHR
-type Swapchain struct {
+type vulkanSwapchain struct {
 	handle C.VkSwapchainKHR
 	device C.VkDevice
 
@@ -43,7 +43,15 @@ type Swapchain struct {
 	queuePresentFunc C.PFN_vkQueuePresentKHR
 }
 
-func CreateSwapchain(allocator cgoalloc.Allocator, device resource.Device, options *CreationOptions) (*Swapchain, loader.VkResult, error) {
+type Swapchain interface {
+	Handle() SwapchainHandle
+	Destroy()
+	Images(allocator cgoalloc.Allocator) ([]resource.Image, loader.VkResult, error)
+	AcquireNextImage(timeout time.Duration, semaphore resource.Semaphore, fence resource.Fence) (int, loader.VkResult, error)
+	PresentToQueue(allocator cgoalloc.Allocator, queue resource.Queue, o *PresentOptions) (resultBySwapchain []loader.VkResult, res loader.VkResult, anyError error)
+}
+
+func CreateSwapchain(allocator cgoalloc.Allocator, device resource.Device, options *CreationOptions) (Swapchain, loader.VkResult, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
@@ -67,7 +75,7 @@ func CreateSwapchain(allocator cgoalloc.Allocator, device resource.Device, optio
 	acquireNextFunc := (C.PFN_vkAcquireNextImageKHR)(device.Loader().LoadProcAddr((*loader.Char)(cgoalloc.CString(arena, "vkAcquireNextImageKHR"))))
 	queuePresentFunc := (C.PFN_vkQueuePresentKHR)(device.Loader().LoadProcAddr((*loader.Char)(cgoalloc.CString(arena, "vkQueuePresentKHR"))))
 
-	return &Swapchain{
+	return &vulkanSwapchain{
 		handle: swapchain,
 		device: deviceHandle,
 
@@ -78,15 +86,15 @@ func CreateSwapchain(allocator cgoalloc.Allocator, device resource.Device, optio
 	}, res, nil
 }
 
-func (s *Swapchain) Handle() SwapchainHandle {
+func (s *vulkanSwapchain) Handle() SwapchainHandle {
 	return SwapchainHandle(s.handle)
 }
 
-func (s *Swapchain) Destroy() {
+func (s *vulkanSwapchain) Destroy() {
 	C.cgoDestroySwapchainKHR(s.destroyFunc, s.device, s.handle, nil)
 }
 
-func (s *Swapchain) Images(allocator cgoalloc.Allocator) ([]resource.Image, loader.VkResult, error) {
+func (s *vulkanSwapchain) Images(allocator cgoalloc.Allocator) ([]resource.Image, loader.VkResult, error) {
 	imageCountPtr := allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0))))
 	defer allocator.Free(imageCountPtr)
 
@@ -122,7 +130,7 @@ func (s *Swapchain) Images(allocator cgoalloc.Allocator) ([]resource.Image, load
 	return result, res, nil
 }
 
-func (s *Swapchain) AcquireNextImage(timeout time.Duration, semaphore resource.Semaphore, fence resource.Fence) (int, loader.VkResult, error) {
+func (s *vulkanSwapchain) AcquireNextImage(timeout time.Duration, semaphore resource.Semaphore, fence resource.Fence) (int, loader.VkResult, error) {
 	var imageIndex C.uint32_t
 
 	var semaphoreHandle C.VkSemaphore
