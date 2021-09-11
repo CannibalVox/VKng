@@ -11,14 +11,14 @@ import "C"
 import (
 	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/loader"
-	"github.com/CannibalVox/VKng/core/resource"
+	"github.com/CannibalVox/VKng/core/resources"
 	"github.com/CannibalVox/cgoalloc"
 	"github.com/cockroachdb/errors"
 	"unsafe"
 )
 
 type PresentOptions struct {
-	WaitSemaphores []resource.Semaphore
+	WaitSemaphores []resources.Semaphore
 	Swapchains     []Swapchain
 	ImageIndices   []int
 
@@ -86,7 +86,7 @@ func (o *PresentOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.P
 	return unsafe.Pointer(createInfo), nil
 }
 
-func (s *vulkanSwapchain) PresentToQueue(allocator cgoalloc.Allocator, queue resource.Queue, o *PresentOptions) (resultBySwapchain []loader.VkResult, res loader.VkResult, anyError error) {
+func (s *vulkanSwapchain) PresentToQueue(allocator cgoalloc.Allocator, queue resources.Queue, o *PresentOptions) (resultBySwapchain []loader.VkResult, res loader.VkResult, anyError error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 

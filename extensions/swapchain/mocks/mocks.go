@@ -9,7 +9,7 @@ import (
 	time "time"
 
 	loader "github.com/CannibalVox/VKng/core/loader"
-	resource "github.com/CannibalVox/VKng/core/resource"
+	resource "github.com/CannibalVox/VKng/core/resources"
 	ext_swapchain "github.com/CannibalVox/VKng/extensions/swapchain"
 	cgoalloc "github.com/CannibalVox/cgoalloc"
 	gomock "github.com/golang/mock/gomock"

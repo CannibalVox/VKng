@@ -30,7 +30,7 @@ import "C"
 import (
 	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/loader"
-	"github.com/CannibalVox/VKng/core/resource"
+	"github.com/CannibalVox/VKng/core/resources"
 	"github.com/CannibalVox/cgoalloc"
 	"unsafe"
 )
@@ -52,10 +52,10 @@ type vulkanSurface struct {
 type Surface interface {
 	Handle() Handle
 	Destroy()
-	SupportsDevice(physicalDevice resource.PhysicalDevice, queueFamilyIndex int) (bool, loader.VkResult, error)
-	Capabilities(allocator cgoalloc.Allocator, device resource.PhysicalDevice) (*Capabilities, loader.VkResult, error)
-	Formats(allocator cgoalloc.Allocator, device resource.PhysicalDevice) ([]Format, loader.VkResult, error)
-	PresentModes(allocator cgoalloc.Allocator, device resource.PhysicalDevice) ([]PresentMode, loader.VkResult, error)
+	SupportsDevice(physicalDevice resources.PhysicalDevice, queueFamilyIndex int) (bool, loader.VkResult, error)
+	Capabilities(allocator cgoalloc.Allocator, device resources.PhysicalDevice) (*Capabilities, loader.VkResult, error)
+	Formats(allocator cgoalloc.Allocator, device resources.PhysicalDevice) ([]Format, loader.VkResult, error)
+	PresentModes(allocator cgoalloc.Allocator, device resources.PhysicalDevice) ([]PresentMode, loader.VkResult, error)
 }
 
 func (s *vulkanSurface) Handle() Handle {
@@ -66,7 +66,7 @@ func (s *vulkanSurface) Destroy() {
 	C.cgoDestroySurfaceKHR(s.destroyFunc, s.instance, s.handle, nil)
 }
 
-func (s *vulkanSurface) SupportsDevice(physicalDevice resource.PhysicalDevice, queueFamilyIndex int) (bool, loader.VkResult, error) {
+func (s *vulkanSurface) SupportsDevice(physicalDevice resources.PhysicalDevice, queueFamilyIndex int) (bool, loader.VkResult, error) {
 	deviceHandle := (C.VkPhysicalDevice)(unsafe.Pointer(physicalDevice.Handle()))
 	var canPresent C.VkBool32
 	res := loader.VkResult(C.cgoGetPhysicalDeviceSurfaceSupportKHR(s.physicalSurfaceSupportFunc, deviceHandle, C.uint(queueFamilyIndex), s.handle, &canPresent))
@@ -74,7 +74,7 @@ func (s *vulkanSurface) SupportsDevice(physicalDevice resource.PhysicalDevice, q
 	return canPresent != C.VK_FALSE, res, res.ToError()
 }
 
-func (s *vulkanSurface) Capabilities(allocator cgoalloc.Allocator, device resource.PhysicalDevice) (*Capabilities, loader.VkResult, error) {
+func (s *vulkanSurface) Capabilities(allocator cgoalloc.Allocator, device resources.PhysicalDevice) (*Capabilities, loader.VkResult, error) {
 	capabilitiesPtr := allocator.Malloc(int(unsafe.Sizeof([1]C.VkSurfaceCapabilitiesKHR{})))
 	defer allocator.Free(capabilitiesPtr)
 
@@ -111,7 +111,7 @@ func (s *vulkanSurface) Capabilities(allocator cgoalloc.Allocator, device resour
 	}, res, nil
 }
 
-func (s *vulkanSurface) Formats(allocator cgoalloc.Allocator, device resource.PhysicalDevice) ([]Format, loader.VkResult, error) {
+func (s *vulkanSurface) Formats(allocator cgoalloc.Allocator, device resources.PhysicalDevice) ([]Format, loader.VkResult, error) {
 	formatCountPtr := allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0))))
 	defer allocator.Free(formatCountPtr)
 
@@ -151,7 +151,7 @@ func (s *vulkanSurface) Formats(allocator cgoalloc.Allocator, device resource.Ph
 	return result, res, nil
 }
 
-func (s *vulkanSurface) PresentModes(allocator cgoalloc.Allocator, device resource.PhysicalDevice) ([]PresentMode, loader.VkResult, error) {
+func (s *vulkanSurface) PresentModes(allocator cgoalloc.Allocator, device resources.PhysicalDevice) ([]PresentMode, loader.VkResult, error) {
 	modeCountPtr := allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0))))
 	defer allocator.Free(modeCountPtr)
 
@@ -189,7 +189,7 @@ func (s *vulkanSurface) PresentModes(allocator cgoalloc.Allocator, device resour
 	return result, res, nil
 }
 
-func CreateSurface(allocator cgoalloc.Allocator, surfacePtr unsafe.Pointer, instance resource.Instance) (Surface, loader.VkResult, error) {
+func CreateSurface(allocator cgoalloc.Allocator, surfacePtr unsafe.Pointer, instance resources.Instance) (Surface, loader.VkResult, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 

@@ -26,7 +26,7 @@ import "C"
 import (
 	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/loader"
-	"github.com/CannibalVox/VKng/core/resource"
+	"github.com/CannibalVox/VKng/core/resources"
 	"github.com/CannibalVox/cgoalloc"
 	"time"
 	"unsafe"
@@ -48,12 +48,12 @@ type vulkanSwapchain struct {
 type Swapchain interface {
 	Handle() SwapchainHandle
 	Destroy()
-	Images(allocator cgoalloc.Allocator) ([]resource.Image, loader.VkResult, error)
-	AcquireNextImage(timeout time.Duration, semaphore resource.Semaphore, fence resource.Fence) (int, loader.VkResult, error)
-	PresentToQueue(allocator cgoalloc.Allocator, queue resource.Queue, o *PresentOptions) (resultBySwapchain []loader.VkResult, res loader.VkResult, anyError error)
+	Images(allocator cgoalloc.Allocator) ([]resources.Image, loader.VkResult, error)
+	AcquireNextImage(timeout time.Duration, semaphore resources.Semaphore, fence resources.Fence) (int, loader.VkResult, error)
+	PresentToQueue(allocator cgoalloc.Allocator, queue resources.Queue, o *PresentOptions) (resultBySwapchain []loader.VkResult, res loader.VkResult, anyError error)
 }
 
-func CreateSwapchain(allocator cgoalloc.Allocator, device resource.Device, options *CreationOptions) (Swapchain, loader.VkResult, error) {
+func CreateSwapchain(allocator cgoalloc.Allocator, device resources.Device, options *CreationOptions) (Swapchain, loader.VkResult, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
@@ -96,7 +96,7 @@ func (s *vulkanSwapchain) Destroy() {
 	C.cgoDestroySwapchainKHR(s.destroyFunc, s.device, s.handle, nil)
 }
 
-func (s *vulkanSwapchain) Images(allocator cgoalloc.Allocator) ([]resource.Image, loader.VkResult, error) {
+func (s *vulkanSwapchain) Images(allocator cgoalloc.Allocator) ([]resources.Image, loader.VkResult, error) {
 	imageCountPtr := allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0))))
 	defer allocator.Free(imageCountPtr)
 
@@ -123,16 +123,16 @@ func (s *vulkanSwapchain) Images(allocator cgoalloc.Allocator) ([]resource.Image
 	}
 
 	imagesSlice := ([]loader.VkImage)(unsafe.Slice((*loader.VkImage)(imagesPtr), imageCount))
-	var result []resource.Image
+	var result []resources.Image
 	deviceHandle := (loader.VkDevice)(unsafe.Pointer(s.device))
 	for i := 0; i < imageCount; i++ {
-		result = append(result, resource.CreateFromHandles(imagesSlice[i], deviceHandle))
+		result = append(result, resources.CreateFromHandles(imagesSlice[i], deviceHandle))
 	}
 
 	return result, res, nil
 }
 
-func (s *vulkanSwapchain) AcquireNextImage(timeout time.Duration, semaphore resource.Semaphore, fence resource.Fence) (int, loader.VkResult, error) {
+func (s *vulkanSwapchain) AcquireNextImage(timeout time.Duration, semaphore resources.Semaphore, fence resources.Fence) (int, loader.VkResult, error) {
 	var imageIndex C.uint32_t
 
 	var semaphoreHandle C.VkSemaphore

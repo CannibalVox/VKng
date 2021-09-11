@@ -8,7 +8,7 @@ import (
 	reflect "reflect"
 
 	loader "github.com/CannibalVox/VKng/core/loader"
-	resource "github.com/CannibalVox/VKng/core/resource"
+	resource "github.com/CannibalVox/VKng/core/resources"
 	ext_surface "github.com/CannibalVox/VKng/extensions/surface"
 	cgoalloc "github.com/CannibalVox/cgoalloc"
 	gomock "github.com/golang/mock/gomock"

@@ -18,7 +18,7 @@ import "C"
 
 import (
 	"github.com/CannibalVox/VKng/core/loader"
-	"github.com/CannibalVox/VKng/core/resource"
+	"github.com/CannibalVox/VKng/core/resources"
 	"github.com/CannibalVox/cgoalloc"
 	"unsafe"
 )
@@ -36,7 +36,7 @@ type Messenger interface {
 	Destroy()
 }
 
-func CreateMessenger(allocator cgoalloc.Allocator, instance resource.Instance, options *Options) (Messenger, loader.VkResult, error) {
+func CreateMessenger(allocator cgoalloc.Allocator, instance resources.Instance, options *Options) (Messenger, loader.VkResult, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
