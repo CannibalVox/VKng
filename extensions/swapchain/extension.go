@@ -1,5 +1,7 @@
 package ext_swapchain
 
+//go:generate mockgen -source extension.go -destination ./mocks/mocks.go -package mock_swapchain
+
 /*
 #include <stdlib.h>
 #include "vulkan/vulkan.h"

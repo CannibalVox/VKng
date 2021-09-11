@@ -1,5 +1,7 @@
 package ext_surface
 
+//go:generate mockgen -source surface.go -destination ./mocks/mocks.go -package mock_surface
+
 /*
 #include <stdlib.h>
 #include "../vulkan/vulkan.h"

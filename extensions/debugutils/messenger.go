@@ -1,5 +1,7 @@
 package ext_debugutils
 
+//go:generate mockgen -source messenger.go -destination ./mocks/mocks.go -package mock_debugutils
+
 /*
 #include <stdlib.h>
 #include "../vulkan/vulkan.h"
