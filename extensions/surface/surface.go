@@ -55,7 +55,7 @@ func (s *Surface) Destroy() {
 	C.cgoDestroySurfaceKHR(s.destroyFunc, s.instance, s.handle, nil)
 }
 
-func (s *Surface) SupportsDevice(physicalDevice *resource.PhysicalDevice, queueFamilyIndex int) (bool, loader.VkResult, error) {
+func (s *Surface) SupportsDevice(physicalDevice resource.PhysicalDevice, queueFamilyIndex int) (bool, loader.VkResult, error) {
 	deviceHandle := (C.VkPhysicalDevice)(unsafe.Pointer(physicalDevice.Handle()))
 	var canPresent C.VkBool32
 	res := loader.VkResult(C.cgoGetPhysicalDeviceSurfaceSupportKHR(s.physicalSurfaceSupportFunc, deviceHandle, C.uint(queueFamilyIndex), s.handle, &canPresent))
@@ -63,7 +63,7 @@ func (s *Surface) SupportsDevice(physicalDevice *resource.PhysicalDevice, queueF
 	return canPresent != C.VK_FALSE, res, res.ToError()
 }
 
-func (s *Surface) Capabilities(allocator cgoalloc.Allocator, device *resource.PhysicalDevice) (*Capabilities, loader.VkResult, error) {
+func (s *Surface) Capabilities(allocator cgoalloc.Allocator, device resource.PhysicalDevice) (*Capabilities, loader.VkResult, error) {
 	capabilitiesPtr := allocator.Malloc(int(unsafe.Sizeof([1]C.VkSurfaceCapabilitiesKHR{})))
 	defer allocator.Free(capabilitiesPtr)
 
@@ -100,7 +100,7 @@ func (s *Surface) Capabilities(allocator cgoalloc.Allocator, device *resource.Ph
 	}, res, nil
 }
 
-func (s *Surface) Formats(allocator cgoalloc.Allocator, device *resource.PhysicalDevice) ([]Format, loader.VkResult, error) {
+func (s *Surface) Formats(allocator cgoalloc.Allocator, device resource.PhysicalDevice) ([]Format, loader.VkResult, error) {
 	formatCountPtr := allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0))))
 	defer allocator.Free(formatCountPtr)
 
@@ -140,7 +140,7 @@ func (s *Surface) Formats(allocator cgoalloc.Allocator, device *resource.Physica
 	return result, res, nil
 }
 
-func (s *Surface) PresentModes(allocator cgoalloc.Allocator, device *resource.PhysicalDevice) ([]PresentMode, loader.VkResult, error) {
+func (s *Surface) PresentModes(allocator cgoalloc.Allocator, device resource.PhysicalDevice) ([]PresentMode, loader.VkResult, error) {
 	modeCountPtr := allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0))))
 	defer allocator.Free(modeCountPtr)
 
@@ -178,7 +178,7 @@ func (s *Surface) PresentModes(allocator cgoalloc.Allocator, device *resource.Ph
 	return result, res, nil
 }
 
-func CreateSurface(allocator cgoalloc.Allocator, surfacePtr unsafe.Pointer, instance *resource.Instance) (*Surface, loader.VkResult, error) {
+func CreateSurface(allocator cgoalloc.Allocator, surfacePtr unsafe.Pointer, instance resource.Instance) (*Surface, loader.VkResult, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 

@@ -18,7 +18,7 @@ import (
 )
 
 type PresentOptions struct {
-	WaitSemaphores []*resource.Semaphore
+	WaitSemaphores []resource.Semaphore
 	Swapchains     []*Swapchain
 	ImageIndices   []int
 
@@ -86,7 +86,7 @@ func (o *PresentOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.P
 	return unsafe.Pointer(createInfo), nil
 }
 
-func (s *Swapchain) PresentToQueue(allocator cgoalloc.Allocator, queue *resource.Queue, o *PresentOptions) (resultBySwapchain []loader.VkResult, res loader.VkResult, anyError error) {
+func (s *Swapchain) PresentToQueue(allocator cgoalloc.Allocator, queue resource.Queue, o *PresentOptions) (resultBySwapchain []loader.VkResult, res loader.VkResult, anyError error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 

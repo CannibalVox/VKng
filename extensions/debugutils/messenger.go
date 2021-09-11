@@ -29,7 +29,7 @@ type Messenger struct {
 	destroyFunc C.PFN_vkDestroyDebugUtilsMessengerEXT
 }
 
-func CreateMessenger(allocator cgoalloc.Allocator, instance *resource.Instance, options *Options) (*Messenger, loader.VkResult, error) {
+func CreateMessenger(allocator cgoalloc.Allocator, instance resource.Instance, options *Options) (*Messenger, loader.VkResult, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 

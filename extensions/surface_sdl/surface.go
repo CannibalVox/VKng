@@ -14,7 +14,7 @@ import (
 	"unsafe"
 )
 
-func CreateSurface(allocator cgoalloc.Allocator, instance *resource.Instance, window *sdl.Window) (*ext_surface.Surface, loader.VkResult, error) {
+func CreateSurface(allocator cgoalloc.Allocator, instance resource.Instance, window *sdl.Window) (*ext_surface.Surface, loader.VkResult, error) {
 	surfacePtrUnsafe, err := window.VulkanCreateSurface(instance.Handle())
 	if err != nil {
 		return nil, loader.VKErrorUnknown, err

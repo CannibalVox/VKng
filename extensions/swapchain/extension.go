@@ -43,7 +43,7 @@ type Swapchain struct {
 	queuePresentFunc C.PFN_vkQueuePresentKHR
 }
 
-func CreateSwapchain(allocator cgoalloc.Allocator, device *resource.Device, options *CreationOptions) (*Swapchain, loader.VkResult, error) {
+func CreateSwapchain(allocator cgoalloc.Allocator, device resource.Device, options *CreationOptions) (*Swapchain, loader.VkResult, error) {
 	arena := cgoalloc.CreateArenaAllocator(allocator)
 	defer arena.FreeAll()
 
@@ -86,7 +86,7 @@ func (s *Swapchain) Destroy() {
 	C.cgoDestroySwapchainKHR(s.destroyFunc, s.device, s.handle, nil)
 }
 
-func (s *Swapchain) Images(allocator cgoalloc.Allocator) ([]*resource.Image, loader.VkResult, error) {
+func (s *Swapchain) Images(allocator cgoalloc.Allocator) ([]resource.Image, loader.VkResult, error) {
 	imageCountPtr := allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0))))
 	defer allocator.Free(imageCountPtr)
 
@@ -113,7 +113,7 @@ func (s *Swapchain) Images(allocator cgoalloc.Allocator) ([]*resource.Image, loa
 	}
 
 	imagesSlice := ([]loader.VkImage)(unsafe.Slice((*loader.VkImage)(imagesPtr), imageCount))
-	var result []*resource.Image
+	var result []resource.Image
 	deviceHandle := (loader.VkDevice)(unsafe.Pointer(s.device))
 	for i := 0; i < imageCount; i++ {
 		result = append(result, resource.CreateFromHandles(imagesSlice[i], deviceHandle))
@@ -122,7 +122,7 @@ func (s *Swapchain) Images(allocator cgoalloc.Allocator) ([]*resource.Image, loa
 	return result, res, nil
 }
 
-func (s *Swapchain) AcquireNextImage(timeout time.Duration, semaphore *resource.Semaphore, fence *resource.Fence) (int, loader.VkResult, error) {
+func (s *Swapchain) AcquireNextImage(timeout time.Duration, semaphore resource.Semaphore, fence resource.Fence) (int, loader.VkResult, error) {
 	var imageIndex C.uint32_t
 
 	var semaphoreHandle C.VkSemaphore
