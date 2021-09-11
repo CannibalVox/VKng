@@ -9,9 +9,8 @@ import (
 	time "time"
 
 	loader "github.com/CannibalVox/VKng/core/loader"
-	resource "github.com/CannibalVox/VKng/core/resources"
+	resources "github.com/CannibalVox/VKng/core/resources"
 	ext_swapchain "github.com/CannibalVox/VKng/extensions/swapchain"
-	cgoalloc "github.com/CannibalVox/cgoalloc"
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -39,7 +38,7 @@ func (m *MockSwapchain) EXPECT() *MockSwapchainMockRecorder {
 }
 
 // AcquireNextImage mocks base method.
-func (m *MockSwapchain) AcquireNextImage(timeout time.Duration, semaphore resource.Semaphore, fence resource.Fence) (int, loader.VkResult, error) {
+func (m *MockSwapchain) AcquireNextImage(timeout time.Duration, semaphore resources.Semaphore, fence resources.Fence) (int, loader.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AcquireNextImage", timeout, semaphore, fence)
 	ret0, _ := ret[0].(int)
@@ -81,25 +80,25 @@ func (mr *MockSwapchainMockRecorder) Handle() *gomock.Call {
 }
 
 // Images mocks base method.
-func (m *MockSwapchain) Images(allocator cgoalloc.Allocator) ([]resource.Image, loader.VkResult, error) {
+func (m *MockSwapchain) Images() ([]resources.Image, loader.VkResult, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Images", allocator)
-	ret0, _ := ret[0].([]resource.Image)
+	ret := m.ctrl.Call(m, "Images")
+	ret0, _ := ret[0].([]resources.Image)
 	ret1, _ := ret[1].(loader.VkResult)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
 }
 
 // Images indicates an expected call of Images.
-func (mr *MockSwapchainMockRecorder) Images(allocator interface{}) *gomock.Call {
+func (mr *MockSwapchainMockRecorder) Images() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Images", reflect.TypeOf((*MockSwapchain)(nil).Images), allocator)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Images", reflect.TypeOf((*MockSwapchain)(nil).Images))
 }
 
 // PresentToQueue mocks base method.
-func (m *MockSwapchain) PresentToQueue(allocator cgoalloc.Allocator, queue resource.Queue, o *ext_swapchain.PresentOptions) ([]loader.VkResult, loader.VkResult, error) {
+func (m *MockSwapchain) PresentToQueue(queue resources.Queue, o *ext_swapchain.PresentOptions) ([]loader.VkResult, loader.VkResult, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PresentToQueue", allocator, queue, o)
+	ret := m.ctrl.Call(m, "PresentToQueue", queue, o)
 	ret0, _ := ret[0].([]loader.VkResult)
 	ret1, _ := ret[1].(loader.VkResult)
 	ret2, _ := ret[2].(error)
@@ -107,7 +106,7 @@ func (m *MockSwapchain) PresentToQueue(allocator cgoalloc.Allocator, queue resou
 }
 
 // PresentToQueue indicates an expected call of PresentToQueue.
-func (mr *MockSwapchainMockRecorder) PresentToQueue(allocator, queue, o interface{}) *gomock.Call {
+func (mr *MockSwapchainMockRecorder) PresentToQueue(queue, o interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PresentToQueue", reflect.TypeOf((*MockSwapchain)(nil).PresentToQueue), allocator, queue, o)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PresentToQueue", reflect.TypeOf((*MockSwapchain)(nil).PresentToQueue), queue, o)
 }

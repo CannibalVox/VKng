@@ -27,7 +27,7 @@ import (
 	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/loader"
 	"github.com/CannibalVox/VKng/core/resources"
-	"github.com/CannibalVox/cgoalloc"
+	"github.com/CannibalVox/cgoparam"
 	"time"
 	"unsafe"
 )
@@ -48,14 +48,14 @@ type vulkanSwapchain struct {
 type Swapchain interface {
 	Handle() SwapchainHandle
 	Destroy()
-	Images(allocator cgoalloc.Allocator) ([]resources.Image, loader.VkResult, error)
+	Images() ([]resources.Image, loader.VkResult, error)
 	AcquireNextImage(timeout time.Duration, semaphore resources.Semaphore, fence resources.Fence) (int, loader.VkResult, error)
-	PresentToQueue(allocator cgoalloc.Allocator, queue resources.Queue, o *PresentOptions) (resultBySwapchain []loader.VkResult, res loader.VkResult, anyError error)
+	PresentToQueue(queue resources.Queue, o *PresentOptions) (resultBySwapchain []loader.VkResult, res loader.VkResult, anyError error)
 }
 
-func CreateSwapchain(allocator cgoalloc.Allocator, device resources.Device, options *CreationOptions) (Swapchain, loader.VkResult, error) {
-	arena := cgoalloc.CreateArenaAllocator(allocator)
-	defer arena.FreeAll()
+func CreateSwapchain(device resources.Device, options *CreationOptions) (Swapchain, loader.VkResult, error) {
+	arena := cgoparam.GetAlloc()
+	defer cgoparam.ReturnAlloc(arena)
 
 	createInfo, err := options.AllocForC(arena)
 	if err != nil {
@@ -64,7 +64,7 @@ func CreateSwapchain(allocator cgoalloc.Allocator, device resources.Device, opti
 
 	var swapchain C.VkSwapchainKHR
 	deviceHandle := (C.VkDevice)(unsafe.Pointer(device.Handle()))
-	createFuncPtr := device.Loader().LoadProcAddr((*loader.Char)(cgoalloc.CString(arena, "vkCreateSwapchainKHR")))
+	createFuncPtr := device.Loader().LoadProcAddr((*loader.Char)(arena.CString("vkCreateSwapchainKHR")))
 
 	res := loader.VkResult(C.cgoCreateSwapchainKHR((C.PFN_vkCreateSwapchainKHR)(createFuncPtr), deviceHandle, (*C.VkSwapchainCreateInfoKHR)(createInfo), nil, &swapchain))
 	err = res.ToError()
@@ -72,10 +72,10 @@ func CreateSwapchain(allocator cgoalloc.Allocator, device resources.Device, opti
 		return nil, res, err
 	}
 
-	destroyFunc := (C.PFN_vkDestroySwapchainKHR)(device.Loader().LoadProcAddr((*loader.Char)(cgoalloc.CString(arena, "vkDestroySwapchainKHR"))))
-	getImagesFunc := (C.PFN_vkGetSwapchainImagesKHR)(device.Loader().LoadProcAddr((*loader.Char)(cgoalloc.CString(arena, "vkGetSwapchainImagesKHR"))))
-	acquireNextFunc := (C.PFN_vkAcquireNextImageKHR)(device.Loader().LoadProcAddr((*loader.Char)(cgoalloc.CString(arena, "vkAcquireNextImageKHR"))))
-	queuePresentFunc := (C.PFN_vkQueuePresentKHR)(device.Loader().LoadProcAddr((*loader.Char)(cgoalloc.CString(arena, "vkQueuePresentKHR"))))
+	destroyFunc := (C.PFN_vkDestroySwapchainKHR)(device.Loader().LoadProcAddr((*loader.Char)(arena.CString("vkDestroySwapchainKHR"))))
+	getImagesFunc := (C.PFN_vkGetSwapchainImagesKHR)(device.Loader().LoadProcAddr((*loader.Char)(arena.CString("vkGetSwapchainImagesKHR"))))
+	acquireNextFunc := (C.PFN_vkAcquireNextImageKHR)(device.Loader().LoadProcAddr((*loader.Char)(arena.CString("vkAcquireNextImageKHR"))))
+	queuePresentFunc := (C.PFN_vkQueuePresentKHR)(device.Loader().LoadProcAddr((*loader.Char)(arena.CString("vkQueuePresentKHR"))))
 
 	return &vulkanSwapchain{
 		handle: swapchain,
@@ -96,10 +96,11 @@ func (s *vulkanSwapchain) Destroy() {
 	C.cgoDestroySwapchainKHR(s.destroyFunc, s.device, s.handle, nil)
 }
 
-func (s *vulkanSwapchain) Images(allocator cgoalloc.Allocator) ([]resources.Image, loader.VkResult, error) {
-	imageCountPtr := allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0))))
-	defer allocator.Free(imageCountPtr)
+func (s *vulkanSwapchain) Images() ([]resources.Image, loader.VkResult, error) {
+	allocator := cgoparam.GetAlloc()
+	defer cgoparam.ReturnAlloc(allocator)
 
+	imageCountPtr := allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0))))
 	imageCountRef := (*C.uint32_t)(imageCountPtr)
 
 	res := loader.VkResult(C.cgoGetSwapchainImagesKHR(s.getImagesFunc, s.device, s.handle, imageCountRef, nil))
@@ -114,7 +115,6 @@ func (s *vulkanSwapchain) Images(allocator cgoalloc.Allocator) ([]resources.Imag
 	}
 
 	imagesPtr := allocator.Malloc(imageCount * int(unsafe.Sizeof([1]C.VkImage{})))
-	defer allocator.Free(imagesPtr)
 
 	res = loader.VkResult(C.cgoGetSwapchainImagesKHR(s.getImagesFunc, s.device, s.handle, imageCountRef, (*C.VkImage)(imagesPtr)))
 	err = res.ToError()

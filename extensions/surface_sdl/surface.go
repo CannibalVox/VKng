@@ -9,12 +9,11 @@ import (
 	"github.com/CannibalVox/VKng/core/loader"
 	"github.com/CannibalVox/VKng/core/resources"
 	ext_surface "github.com/CannibalVox/VKng/extensions/surface"
-	"github.com/CannibalVox/cgoalloc"
 	"github.com/veandco/go-sdl2/sdl"
 	"unsafe"
 )
 
-func CreateSurface(allocator cgoalloc.Allocator, instance resources.Instance, window *sdl.Window) (ext_surface.Surface, loader.VkResult, error) {
+func CreateSurface(instance resources.Instance, window *sdl.Window) (ext_surface.Surface, loader.VkResult, error) {
 	surfacePtrUnsafe, err := window.VulkanCreateSurface(instance.Handle())
 	if err != nil {
 		return nil, loader.VKErrorUnknown, err
@@ -22,5 +21,5 @@ func CreateSurface(allocator cgoalloc.Allocator, instance resources.Instance, wi
 
 	surfacePtr := (*C.VkSurfaceKHR)(surfacePtrUnsafe)
 
-	return ext_surface.CreateSurface(allocator, unsafe.Pointer(*surfacePtr), instance)
+	return ext_surface.CreateSurface(unsafe.Pointer(*surfacePtr), instance)
 }

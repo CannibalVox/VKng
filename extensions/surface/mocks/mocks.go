@@ -8,9 +8,8 @@ import (
 	reflect "reflect"
 
 	loader "github.com/CannibalVox/VKng/core/loader"
-	resource "github.com/CannibalVox/VKng/core/resources"
+	resources "github.com/CannibalVox/VKng/core/resources"
 	ext_surface "github.com/CannibalVox/VKng/extensions/surface"
-	cgoalloc "github.com/CannibalVox/cgoalloc"
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -38,9 +37,9 @@ func (m *MockSurface) EXPECT() *MockSurfaceMockRecorder {
 }
 
 // Capabilities mocks base method.
-func (m *MockSurface) Capabilities(allocator cgoalloc.Allocator, device resource.PhysicalDevice) (*ext_surface.Capabilities, loader.VkResult, error) {
+func (m *MockSurface) Capabilities(device resources.PhysicalDevice) (*ext_surface.Capabilities, loader.VkResult, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Capabilities", allocator, device)
+	ret := m.ctrl.Call(m, "Capabilities", device)
 	ret0, _ := ret[0].(*ext_surface.Capabilities)
 	ret1, _ := ret[1].(loader.VkResult)
 	ret2, _ := ret[2].(error)
@@ -48,9 +47,9 @@ func (m *MockSurface) Capabilities(allocator cgoalloc.Allocator, device resource
 }
 
 // Capabilities indicates an expected call of Capabilities.
-func (mr *MockSurfaceMockRecorder) Capabilities(allocator, device interface{}) *gomock.Call {
+func (mr *MockSurfaceMockRecorder) Capabilities(device interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Capabilities", reflect.TypeOf((*MockSurface)(nil).Capabilities), allocator, device)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Capabilities", reflect.TypeOf((*MockSurface)(nil).Capabilities), device)
 }
 
 // Destroy mocks base method.
@@ -66,9 +65,9 @@ func (mr *MockSurfaceMockRecorder) Destroy() *gomock.Call {
 }
 
 // Formats mocks base method.
-func (m *MockSurface) Formats(allocator cgoalloc.Allocator, device resource.PhysicalDevice) ([]ext_surface.Format, loader.VkResult, error) {
+func (m *MockSurface) Formats(device resources.PhysicalDevice) ([]ext_surface.Format, loader.VkResult, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Formats", allocator, device)
+	ret := m.ctrl.Call(m, "Formats", device)
 	ret0, _ := ret[0].([]ext_surface.Format)
 	ret1, _ := ret[1].(loader.VkResult)
 	ret2, _ := ret[2].(error)
@@ -76,9 +75,9 @@ func (m *MockSurface) Formats(allocator cgoalloc.Allocator, device resource.Phys
 }
 
 // Formats indicates an expected call of Formats.
-func (mr *MockSurfaceMockRecorder) Formats(allocator, device interface{}) *gomock.Call {
+func (mr *MockSurfaceMockRecorder) Formats(device interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Formats", reflect.TypeOf((*MockSurface)(nil).Formats), allocator, device)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Formats", reflect.TypeOf((*MockSurface)(nil).Formats), device)
 }
 
 // Handle mocks base method.
@@ -96,9 +95,9 @@ func (mr *MockSurfaceMockRecorder) Handle() *gomock.Call {
 }
 
 // PresentModes mocks base method.
-func (m *MockSurface) PresentModes(allocator cgoalloc.Allocator, device resource.PhysicalDevice) ([]ext_surface.PresentMode, loader.VkResult, error) {
+func (m *MockSurface) PresentModes(device resources.PhysicalDevice) ([]ext_surface.PresentMode, loader.VkResult, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PresentModes", allocator, device)
+	ret := m.ctrl.Call(m, "PresentModes", device)
 	ret0, _ := ret[0].([]ext_surface.PresentMode)
 	ret1, _ := ret[1].(loader.VkResult)
 	ret2, _ := ret[2].(error)
@@ -106,13 +105,13 @@ func (m *MockSurface) PresentModes(allocator cgoalloc.Allocator, device resource
 }
 
 // PresentModes indicates an expected call of PresentModes.
-func (mr *MockSurfaceMockRecorder) PresentModes(allocator, device interface{}) *gomock.Call {
+func (mr *MockSurfaceMockRecorder) PresentModes(device interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PresentModes", reflect.TypeOf((*MockSurface)(nil).PresentModes), allocator, device)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PresentModes", reflect.TypeOf((*MockSurface)(nil).PresentModes), device)
 }
 
 // SupportsDevice mocks base method.
-func (m *MockSurface) SupportsDevice(physicalDevice resource.PhysicalDevice, queueFamilyIndex int) (bool, loader.VkResult, error) {
+func (m *MockSurface) SupportsDevice(physicalDevice resources.PhysicalDevice, queueFamilyIndex int) (bool, loader.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SupportsDevice", physicalDevice, queueFamilyIndex)
 	ret0, _ := ret[0].(bool)

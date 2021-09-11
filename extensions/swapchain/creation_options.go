@@ -7,18 +7,18 @@ package ext_swapchain
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core"
-	ext_surface2 "github.com/CannibalVox/VKng/extensions/surface"
-	"github.com/CannibalVox/cgoalloc"
+	ext_surface "github.com/CannibalVox/VKng/extensions/surface"
+	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
 
 type CreationOptions struct {
-	Surface ext_surface2.Surface
+	Surface ext_surface.Surface
 
 	MinImageCount uint32
 
 	ImageFormat      core.DataFormat
-	ImageColorSpace  ext_surface2.ColorSpace
+	ImageColorSpace  ext_surface.ColorSpace
 	ImageExtent      core.Extent2D
 	ImageArrayLayers uint32
 	ImageUsage       core.ImageUsages
@@ -26,9 +26,9 @@ type CreationOptions struct {
 	SharingMode        core.SharingMode
 	QueueFamilyIndices []int
 
-	PreTransform   ext_surface2.SurfaceTransforms
-	CompositeAlpha ext_surface2.CompositeAlphaModes
-	PresentMode    ext_surface2.PresentMode
+	PreTransform   ext_surface.SurfaceTransforms
+	CompositeAlpha ext_surface.CompositeAlphaModes
+	PresentMode    ext_surface.PresentMode
 
 	Clipped      bool
 	OldSwapchain Swapchain
@@ -36,7 +36,7 @@ type CreationOptions struct {
 	Next core.Options
 }
 
-func (o *CreationOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {
+func (o *CreationOptions) AllocForC(allocator *cgoparam.Allocator) (unsafe.Pointer, error) {
 	createInfo := (*C.VkSwapchainCreateInfoKHR)(allocator.Malloc(int(unsafe.Sizeof([1]C.VkSwapchainCreateInfoKHR{}))))
 	createInfo.sType = C.VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR
 	createInfo.flags = 0

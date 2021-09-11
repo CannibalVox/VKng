@@ -19,7 +19,7 @@ import "C"
 import (
 	"github.com/CannibalVox/VKng/core/loader"
 	"github.com/CannibalVox/VKng/core/resources"
-	"github.com/CannibalVox/cgoalloc"
+	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
 
@@ -36,9 +36,9 @@ type Messenger interface {
 	Destroy()
 }
 
-func CreateMessenger(allocator cgoalloc.Allocator, instance resources.Instance, options *Options) (Messenger, loader.VkResult, error) {
-	arena := cgoalloc.CreateArenaAllocator(allocator)
-	defer arena.FreeAll()
+func CreateMessenger(instance resources.Instance, options *Options) (Messenger, loader.VkResult, error) {
+	arena := cgoparam.GetAlloc()
+	defer cgoparam.ReturnAlloc(arena)
 
 	instanceHandle := C.VkInstance(unsafe.Pointer(instance.Handle()))
 	createInfo, err := options.AllocForC(arena)
@@ -46,7 +46,7 @@ func CreateMessenger(allocator cgoalloc.Allocator, instance resources.Instance, 
 		return nil, loader.VKErrorUnknown, err
 	}
 
-	createFunc := (C.PFN_vkCreateDebugUtilsMessengerEXT)(instance.Loader().LoadProcAddr((*loader.Char)(cgoalloc.CString(arena, "vkCreateDebugUtilsMessengerEXT"))))
+	createFunc := (C.PFN_vkCreateDebugUtilsMessengerEXT)(instance.Loader().LoadProcAddr((*loader.Char)(arena.CString("vkCreateDebugUtilsMessengerEXT"))))
 
 	var messenger C.VkDebugUtilsMessengerEXT
 	res := loader.VkResult(C.cgoCreateDebugUtilsMessengerEXT(createFunc, instanceHandle, (*C.VkDebugUtilsMessengerCreateInfoEXT)(createInfo), nil, &messenger))
@@ -55,7 +55,7 @@ func CreateMessenger(allocator cgoalloc.Allocator, instance resources.Instance, 
 		return nil, res, err
 	}
 
-	destroyFunc := (C.PFN_vkDestroyDebugUtilsMessengerEXT)(instance.Loader().LoadProcAddr((*loader.Char)(cgoalloc.CString(arena, "vkDestroyDebugUtilsMessengerEXT"))))
+	destroyFunc := (C.PFN_vkDestroyDebugUtilsMessengerEXT)(instance.Loader().LoadProcAddr((*loader.Char)(arena.CString("vkDestroyDebugUtilsMessengerEXT"))))
 
 	return &vulkanMessenger{
 		handle:   messenger,

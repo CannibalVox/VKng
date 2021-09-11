@@ -12,7 +12,7 @@ import (
 	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/loader"
 	"github.com/CannibalVox/VKng/core/resources"
-	"github.com/CannibalVox/cgoalloc"
+	"github.com/CannibalVox/cgoparam"
 	"github.com/cockroachdb/errors"
 	"unsafe"
 )
@@ -25,7 +25,7 @@ type PresentOptions struct {
 	Next core.Options
 }
 
-func (o *PresentOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.Pointer, error) {
+func (o *PresentOptions) AllocForC(allocator *cgoparam.Allocator) (unsafe.Pointer, error) {
 	if len(o.Swapchains) != len(o.ImageIndices) {
 		return nil, errors.Newf("present: specified %d swapchains and %d image indices, but they should match")
 	}
@@ -86,9 +86,9 @@ func (o *PresentOptions) AllocForC(allocator *cgoalloc.ArenaAllocator) (unsafe.P
 	return unsafe.Pointer(createInfo), nil
 }
 
-func (s *vulkanSwapchain) PresentToQueue(allocator cgoalloc.Allocator, queue resources.Queue, o *PresentOptions) (resultBySwapchain []loader.VkResult, res loader.VkResult, anyError error) {
-	arena := cgoalloc.CreateArenaAllocator(allocator)
-	defer arena.FreeAll()
+func (s *vulkanSwapchain) PresentToQueue(queue resources.Queue, o *PresentOptions) (resultBySwapchain []loader.VkResult, res loader.VkResult, anyError error) {
+	arena := cgoparam.GetAlloc()
+	defer cgoparam.ReturnAlloc(arena)
 
 	createInfo, err := o.AllocForC(arena)
 	if err != nil {
