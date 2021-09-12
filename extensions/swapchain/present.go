@@ -22,16 +22,17 @@ type PresentOptions struct {
 	Swapchains     []Swapchain
 	ImageIndices   []int
 
-	Next core.Options
+	core.HaveNext
 }
 
-func (o *PresentOptions) AllocForC(allocator *cgoparam.Allocator) (unsafe.Pointer, error) {
+func (o *PresentOptions) AllocForC(allocator *cgoparam.Allocator, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if len(o.Swapchains) != len(o.ImageIndices) {
 		return nil, errors.Newf("present: specified %d swapchains and %d image indices, but they should match")
 	}
 
 	createInfo := (*C.VkPresentInfoKHR)(allocator.Malloc(C.sizeof_struct_VkPresentInfoKHR))
 	createInfo.sType = C.VK_STRUCTURE_TYPE_PRESENT_INFO_KHR
+	createInfo.pNext = next
 
 	waitSemaphoreCount := len(o.WaitSemaphores)
 	createInfo.waitSemaphoreCount = C.uint32_t(waitSemaphoreCount)
@@ -72,17 +73,6 @@ func (o *PresentOptions) AllocForC(allocator *cgoparam.Allocator) (unsafe.Pointe
 		createInfo.pResults = resultPtr
 	}
 
-	var err error
-	var next unsafe.Pointer
-	if o.Next != nil {
-		next, err = o.Next.AllocForC(allocator)
-	}
-
-	if err != nil {
-		return nil, err
-	}
-	createInfo.pNext = next
-
 	return unsafe.Pointer(createInfo), nil
 }
 
@@ -90,7 +80,7 @@ func (s *vulkanSwapchain) PresentToQueue(queue resources.Queue, o *PresentOption
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
-	createInfo, err := o.AllocForC(arena)
+	createInfo, err := core.AllocOptions(arena, o)
 	if err != nil {
 		return nil, loader.VKErrorUnknown, err
 	}

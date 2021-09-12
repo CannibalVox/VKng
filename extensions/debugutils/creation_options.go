@@ -27,29 +27,19 @@ type Options struct {
 	CaptureTypes      MessageType
 	Callback          CallbackFunction
 
-	Next core.Options
+	core.HaveNext
 }
 
-func (o *Options) AllocForC(allocator *cgoparam.Allocator) (unsafe.Pointer, error) {
+func (o *Options) AllocForC(allocator *cgoparam.Allocator, next unsafe.Pointer) (unsafe.Pointer, error) {
 	createInfo := (*C.VkDebugUtilsMessengerCreateInfoEXT)(allocator.Malloc(int(unsafe.Sizeof([1]C.VkDebugUtilsMessengerCreateInfoEXT{}))))
 	createInfo.sType = C.VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT
 	createInfo.flags = 0
+	createInfo.pNext = next
+
 	createInfo.messageSeverity = C.VkDebugUtilsMessageSeverityFlagsEXT(o.CaptureSeverities)
 	createInfo.messageType = C.VkDebugUtilsMessageTypeFlagsEXT(o.CaptureTypes)
 	createInfo.pfnUserCallback = (C.PFN_vkDebugUtilsMessengerCallbackEXT)(C.debugCallback)
 	createInfo.pUserData = unsafe.Pointer(cgo.NewHandle(o.Callback))
-
-	var next unsafe.Pointer
-	var err error
-
-	if o.Next != nil {
-		next, err = o.Next.AllocForC(allocator)
-	}
-	if err != nil {
-		return nil, err
-	}
-
-	createInfo.pNext = next
 
 	return unsafe.Pointer(createInfo), nil
 }

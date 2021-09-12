@@ -33,13 +33,14 @@ type CreationOptions struct {
 	Clipped      bool
 	OldSwapchain Swapchain
 
-	Next core.Options
+	core.HaveNext
 }
 
-func (o *CreationOptions) AllocForC(allocator *cgoparam.Allocator) (unsafe.Pointer, error) {
+func (o *CreationOptions) AllocForC(allocator *cgoparam.Allocator, next unsafe.Pointer) (unsafe.Pointer, error) {
 	createInfo := (*C.VkSwapchainCreateInfoKHR)(allocator.Malloc(int(unsafe.Sizeof([1]C.VkSwapchainCreateInfoKHR{}))))
 	createInfo.sType = C.VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR
 	createInfo.flags = 0
+	createInfo.pNext = next
 
 	createInfo.surface = C.VkSurfaceKHR(unsafe.Pointer(o.Surface.Handle()))
 	createInfo.minImageCount = C.uint32_t(o.MinImageCount)
@@ -79,17 +80,6 @@ func (o *CreationOptions) AllocForC(allocator *cgoparam.Allocator) (unsafe.Point
 	if o.OldSwapchain != nil {
 		createInfo.oldSwapchain = (C.VkSwapchainKHR)(o.OldSwapchain.Handle())
 	}
-
-	var err error
-	var next unsafe.Pointer
-	if o.Next != nil {
-		next, err = o.Next.AllocForC(allocator)
-	}
-
-	if err != nil {
-		return nil, err
-	}
-	createInfo.pNext = next
 
 	return unsafe.Pointer(createInfo), nil
 }

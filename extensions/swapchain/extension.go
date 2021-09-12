@@ -57,7 +57,7 @@ func CreateSwapchain(device resources.Device, options *CreationOptions) (Swapcha
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
-	createInfo, err := options.AllocForC(arena)
+	createInfo, err := core.AllocOptions(arena, options)
 	if err != nil {
 		return nil, loader.VKErrorUnknown, err
 	}

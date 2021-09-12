@@ -17,6 +17,7 @@ void cgoDestroyDebugUtilsMessengerEXT(PFN_vkDestroyDebugUtilsMessengerEXT fn, Vk
 import "C"
 
 import (
+	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/loader"
 	"github.com/CannibalVox/VKng/core/resources"
 	"github.com/CannibalVox/cgoparam"
@@ -41,7 +42,7 @@ func CreateMessenger(instance resources.Instance, options *Options) (Messenger, 
 	defer cgoparam.ReturnAlloc(arena)
 
 	instanceHandle := C.VkInstance(unsafe.Pointer(instance.Handle()))
-	createInfo, err := options.AllocForC(arena)
+	createInfo, err := core.AllocOptions(arena, options)
 	if err != nil {
 		return nil, loader.VKErrorUnknown, err
 	}
