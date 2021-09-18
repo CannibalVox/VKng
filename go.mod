@@ -5,6 +5,7 @@ go 1.17
 require (
 	github.com/CannibalVox/cgoparam v0.0.0-20210911212540-41cbfa86f15d
 	github.com/cockroachdb/errors v1.8.6
+	github.com/go-gl/mathgl v1.0.0
 	github.com/golang/mock v1.6.0
 	github.com/google/uuid v1.3.0
 	github.com/palantir/stacktrace v0.0.0-20161112013806-78658fd2d177
@@ -18,5 +19,7 @@ require (
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/kr/pretty v0.2.1 // indirect
 	github.com/kr/text v0.2.0 // indirect
+	github.com/loov/hrtime v1.0.3 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	golang.org/x/image v0.0.0-20190321063152-3fc05d484e9f // indirect
 )
