@@ -10,19 +10,18 @@ VkResult cgoQueuePresentKHR(PFN_vkQueuePresentKHR fn, VkQueue queue, VkPresentIn
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core"
-	"github.com/CannibalVox/VKng/core/loader"
-	"github.com/CannibalVox/VKng/core/resources"
+	"github.com/CannibalVox/VKng/core/common"
 	"github.com/CannibalVox/cgoparam"
 	"github.com/cockroachdb/errors"
 	"unsafe"
 )
 
 type PresentOptions struct {
-	WaitSemaphores []resources.Semaphore
+	WaitSemaphores []core.Semaphore
 	Swapchains     []Swapchain
 	ImageIndices   []int
 
-	core.HaveNext
+	common.HaveNext
 }
 
 func (o *PresentOptions) AllocForC(allocator *cgoparam.Allocator, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -76,23 +75,23 @@ func (o *PresentOptions) AllocForC(allocator *cgoparam.Allocator, next unsafe.Po
 	return unsafe.Pointer(createInfo), nil
 }
 
-func (s *vulkanSwapchain) PresentToQueue(queue resources.Queue, o *PresentOptions) (resultBySwapchain []loader.VkResult, res loader.VkResult, anyError error) {
+func (s *vulkanSwapchain) PresentToQueue(queue core.Queue, o *PresentOptions) (resultBySwapchain []core.VkResult, res core.VkResult, anyError error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
-	createInfo, err := core.AllocOptions(arena, o)
+	createInfo, err := common.AllocOptions(arena, o)
 	if err != nil {
-		return nil, loader.VKErrorUnknown, err
+		return nil, core.VKErrorUnknown, err
 	}
 
 	createInfoPtr := (*C.VkPresentInfoKHR)(createInfo)
 	queueHandle := (C.VkQueue)(unsafe.Pointer(queue.Handle()))
 
-	res = loader.VkResult(C.cgoQueuePresentKHR(s.queuePresentFunc, queueHandle, createInfoPtr))
+	res = core.VkResult(C.cgoQueuePresentKHR(s.queuePresentFunc, queueHandle, createInfoPtr))
 
 	resSlice := unsafe.Slice(createInfoPtr.pResults, len(o.Swapchains))
 	for i := 0; i < len(o.Swapchains); i++ {
-		singleRes := loader.VkResult(resSlice[i])
+		singleRes := core.VkResult(resSlice[i])
 		resultBySwapchain = append(resultBySwapchain, singleRes)
 	}
 

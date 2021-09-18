@@ -6,7 +6,7 @@ package ext_swapchain
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng/core/common"
 	ext_surface "github.com/CannibalVox/VKng/extensions/surface"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
@@ -17,13 +17,13 @@ type CreationOptions struct {
 
 	MinImageCount uint32
 
-	ImageFormat      core.DataFormat
+	ImageFormat      common.DataFormat
 	ImageColorSpace  ext_surface.ColorSpace
-	ImageExtent      core.Extent2D
+	ImageExtent      common.Extent2D
 	ImageArrayLayers uint32
-	ImageUsage       core.ImageUsages
+	ImageUsage       common.ImageUsages
 
-	SharingMode        core.SharingMode
+	SharingMode        common.SharingMode
 	QueueFamilyIndices []int
 
 	PreTransform   ext_surface.SurfaceTransforms
@@ -33,7 +33,7 @@ type CreationOptions struct {
 	Clipped      bool
 	OldSwapchain Swapchain
 
-	core.HaveNext
+	common.HaveNext
 }
 
 func (o *CreationOptions) AllocForC(allocator *cgoparam.Allocator, next unsafe.Pointer) (unsafe.Pointer, error) {

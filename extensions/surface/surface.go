@@ -29,8 +29,7 @@ VkResult cgoGetPhysicalDeviceSurfacePresentModesKHR(PFN_vkGetPhysicalDeviceSurfa
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core"
-	"github.com/CannibalVox/VKng/core/loader"
-	"github.com/CannibalVox/VKng/core/resources"
+	"github.com/CannibalVox/VKng/core/common"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
@@ -52,10 +51,10 @@ type vulkanSurface struct {
 type Surface interface {
 	Handle() Handle
 	Destroy()
-	SupportsDevice(physicalDevice resources.PhysicalDevice, queueFamilyIndex int) (bool, loader.VkResult, error)
-	Capabilities(device resources.PhysicalDevice) (*Capabilities, loader.VkResult, error)
-	Formats(device resources.PhysicalDevice) ([]Format, loader.VkResult, error)
-	PresentModes(device resources.PhysicalDevice) ([]PresentMode, loader.VkResult, error)
+	SupportsDevice(physicalDevice core.PhysicalDevice, queueFamilyIndex int) (bool, core.VkResult, error)
+	Capabilities(device core.PhysicalDevice) (*Capabilities, core.VkResult, error)
+	Formats(device core.PhysicalDevice) ([]Format, core.VkResult, error)
+	PresentModes(device core.PhysicalDevice) ([]PresentMode, core.VkResult, error)
 }
 
 func (s *vulkanSurface) Handle() Handle {
@@ -66,22 +65,22 @@ func (s *vulkanSurface) Destroy() {
 	C.cgoDestroySurfaceKHR(s.destroyFunc, s.instance, s.handle, nil)
 }
 
-func (s *vulkanSurface) SupportsDevice(physicalDevice resources.PhysicalDevice, queueFamilyIndex int) (bool, loader.VkResult, error) {
+func (s *vulkanSurface) SupportsDevice(physicalDevice core.PhysicalDevice, queueFamilyIndex int) (bool, core.VkResult, error) {
 	deviceHandle := (C.VkPhysicalDevice)(unsafe.Pointer(physicalDevice.Handle()))
 	var canPresent C.VkBool32
-	res := loader.VkResult(C.cgoGetPhysicalDeviceSurfaceSupportKHR(s.physicalSurfaceSupportFunc, deviceHandle, C.uint(queueFamilyIndex), s.handle, &canPresent))
+	res := core.VkResult(C.cgoGetPhysicalDeviceSurfaceSupportKHR(s.physicalSurfaceSupportFunc, deviceHandle, C.uint(queueFamilyIndex), s.handle, &canPresent))
 
 	return canPresent != C.VK_FALSE, res, res.ToError()
 }
 
-func (s *vulkanSurface) Capabilities(device resources.PhysicalDevice) (*Capabilities, loader.VkResult, error) {
+func (s *vulkanSurface) Capabilities(device core.PhysicalDevice) (*Capabilities, core.VkResult, error) {
 	allocator := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(allocator)
 
 	capabilitiesPtr := allocator.Malloc(int(unsafe.Sizeof([1]C.VkSurfaceCapabilitiesKHR{})))
 	cCapabilities := (*C.VkSurfaceCapabilitiesKHR)(capabilitiesPtr)
 
-	res := loader.VkResult(C.cgoGetPhysicalDeviceSurfaceCapabilitiesKHR(s.physicalSurfaceCapabilitiesFunc, (C.VkPhysicalDevice)(unsafe.Pointer(device.Handle())), s.handle, cCapabilities))
+	res := core.VkResult(C.cgoGetPhysicalDeviceSurfaceCapabilitiesKHR(s.physicalSurfaceCapabilitiesFunc, (C.VkPhysicalDevice)(unsafe.Pointer(device.Handle())), s.handle, cCapabilities))
 	err := res.ToError()
 	if err != nil {
 		return nil, res, err
@@ -90,15 +89,15 @@ func (s *vulkanSurface) Capabilities(device resources.PhysicalDevice) (*Capabili
 	return &Capabilities{
 		MinImageCount: uint32(cCapabilities.minImageCount),
 		MaxImageCount: uint32(cCapabilities.maxImageCount),
-		CurrentExtent: core.Extent2D{
+		CurrentExtent: common.Extent2D{
 			Width:  uint32(cCapabilities.currentExtent.width),
 			Height: uint32(cCapabilities.currentExtent.height),
 		},
-		MinImageExtent: core.Extent2D{
+		MinImageExtent: common.Extent2D{
 			Width:  uint32(cCapabilities.minImageExtent.width),
 			Height: uint32(cCapabilities.minImageExtent.height),
 		},
-		MaxImageExtent: core.Extent2D{
+		MaxImageExtent: common.Extent2D{
 			Width:  uint32(cCapabilities.maxImageExtent.width),
 			Height: uint32(cCapabilities.maxImageExtent.height),
 		},
@@ -108,11 +107,11 @@ func (s *vulkanSurface) Capabilities(device resources.PhysicalDevice) (*Capabili
 		CurrentTransform:    SurfaceTransforms(cCapabilities.currentTransform),
 
 		SupportedCompositeAlpha: CompositeAlphaModes(cCapabilities.supportedCompositeAlpha),
-		SupportedImageUsage:     core.ImageUsages(cCapabilities.supportedUsageFlags),
+		SupportedImageUsage:     common.ImageUsages(cCapabilities.supportedUsageFlags),
 	}, res, nil
 }
 
-func (s *vulkanSurface) Formats(device resources.PhysicalDevice) ([]Format, loader.VkResult, error) {
+func (s *vulkanSurface) Formats(device core.PhysicalDevice) ([]Format, core.VkResult, error) {
 	allocator := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(allocator)
 
@@ -120,7 +119,7 @@ func (s *vulkanSurface) Formats(device resources.PhysicalDevice) ([]Format, load
 	formatCount := (*C.uint32_t)(formatCountPtr)
 	deviceHandle := (C.VkPhysicalDevice)(unsafe.Pointer(device.Handle()))
 
-	res := loader.VkResult(C.cgoGetPhysicalDeviceSurfaceFormatsKHR(s.surfaceFormatsFunc, deviceHandle, s.handle, formatCount, nil))
+	res := core.VkResult(C.cgoGetPhysicalDeviceSurfaceFormatsKHR(s.surfaceFormatsFunc, deviceHandle, s.handle, formatCount, nil))
 	err := res.ToError()
 	if err != nil {
 		return nil, res, err
@@ -134,7 +133,7 @@ func (s *vulkanSurface) Formats(device resources.PhysicalDevice) ([]Format, load
 
 	formatsPtr := allocator.Malloc(count * int(unsafe.Sizeof([1]C.VkSurfaceFormatKHR{})))
 
-	res = loader.VkResult(C.cgoGetPhysicalDeviceSurfaceFormatsKHR(s.surfaceFormatsFunc, deviceHandle, s.handle, formatCount, (*C.VkSurfaceFormatKHR)(formatsPtr)))
+	res = core.VkResult(C.cgoGetPhysicalDeviceSurfaceFormatsKHR(s.surfaceFormatsFunc, deviceHandle, s.handle, formatCount, (*C.VkSurfaceFormatKHR)(formatsPtr)))
 	err = res.ToError()
 	if err != nil {
 		return nil, res, err
@@ -144,7 +143,7 @@ func (s *vulkanSurface) Formats(device resources.PhysicalDevice) ([]Format, load
 	var result []Format
 	for i := 0; i < count; i++ {
 		result = append(result, Format{
-			Format:     core.DataFormat(formatSlice[i].format),
+			Format:     common.DataFormat(formatSlice[i].format),
 			ColorSpace: ColorSpace(formatSlice[i].colorSpace),
 		})
 	}
@@ -152,7 +151,7 @@ func (s *vulkanSurface) Formats(device resources.PhysicalDevice) ([]Format, load
 	return result, res, nil
 }
 
-func (s *vulkanSurface) PresentModes(device resources.PhysicalDevice) ([]PresentMode, loader.VkResult, error) {
+func (s *vulkanSurface) PresentModes(device core.PhysicalDevice) ([]PresentMode, core.VkResult, error) {
 	allocator := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(allocator)
 
@@ -160,7 +159,7 @@ func (s *vulkanSurface) PresentModes(device resources.PhysicalDevice) ([]Present
 	modeCount := (*C.uint32_t)(modeCountPtr)
 	deviceHandle := (C.VkPhysicalDevice)(unsafe.Pointer(device.Handle()))
 
-	res := loader.VkResult(C.cgoGetPhysicalDeviceSurfacePresentModesKHR(s.presentModesFunc, deviceHandle, s.handle, modeCount, nil))
+	res := core.VkResult(C.cgoGetPhysicalDeviceSurfacePresentModesKHR(s.presentModesFunc, deviceHandle, s.handle, modeCount, nil))
 	err := res.ToError()
 	if err != nil {
 		return nil, res, err
@@ -174,7 +173,7 @@ func (s *vulkanSurface) PresentModes(device resources.PhysicalDevice) ([]Present
 	modesPtr := allocator.Malloc(count * int(unsafe.Sizeof(C.VkPresentModeKHR(0))))
 	presentModes := (*C.VkPresentModeKHR)(modesPtr)
 
-	res = loader.VkResult(C.cgoGetPhysicalDeviceSurfacePresentModesKHR(s.presentModesFunc, deviceHandle, s.handle, modeCount, presentModes))
+	res = core.VkResult(C.cgoGetPhysicalDeviceSurfacePresentModesKHR(s.presentModesFunc, deviceHandle, s.handle, modeCount, presentModes))
 	err = res.ToError()
 	if err != nil {
 		return nil, res, err
@@ -189,16 +188,16 @@ func (s *vulkanSurface) PresentModes(device resources.PhysicalDevice) ([]Present
 	return result, res, nil
 }
 
-func CreateSurface(surfacePtr unsafe.Pointer, instance resources.Instance) (Surface, loader.VkResult, error) {
+func CreateSurface(surfacePtr unsafe.Pointer, instance core.Instance) (Surface, core.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
 	instanceHandle := (C.VkInstance)(unsafe.Pointer(instance.Handle()))
-	physicalSurfaceCapabilitiesFunc := (C.PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR)(instance.Loader().LoadProcAddr((*loader.Char)(arena.CString("vkGetPhysicalDeviceSurfaceCapabilitiesKHR"))))
-	physicalSurfaceSupportFunc := (C.PFN_vkGetPhysicalDeviceSurfaceSupportKHR)(instance.Loader().LoadProcAddr((*loader.Char)(arena.CString("vkGetPhysicalDeviceSurfaceSupportKHR"))))
-	surfaceFormatsFunc := (C.PFN_vkGetPhysicalDeviceSurfaceFormatsKHR)(instance.Loader().LoadProcAddr((*loader.Char)(arena.CString("vkGetPhysicalDeviceSurfaceFormatsKHR"))))
-	presentModesFunc := (C.PFN_vkGetPhysicalDeviceSurfacePresentModesKHR)(instance.Loader().LoadProcAddr((*loader.Char)(arena.CString("vkGetPhysicalDeviceSurfacePresentModesKHR"))))
-	destroyFunc := (C.PFN_vkDestroySurfaceKHR)(instance.Loader().LoadProcAddr((*loader.Char)(arena.CString("vkDestroySurfaceKHR"))))
+	physicalSurfaceCapabilitiesFunc := (C.PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR)(instance.Driver().LoadProcAddr((*core.Char)(arena.CString("vkGetPhysicalDeviceSurfaceCapabilitiesKHR"))))
+	physicalSurfaceSupportFunc := (C.PFN_vkGetPhysicalDeviceSurfaceSupportKHR)(instance.Driver().LoadProcAddr((*core.Char)(arena.CString("vkGetPhysicalDeviceSurfaceSupportKHR"))))
+	surfaceFormatsFunc := (C.PFN_vkGetPhysicalDeviceSurfaceFormatsKHR)(instance.Driver().LoadProcAddr((*core.Char)(arena.CString("vkGetPhysicalDeviceSurfaceFormatsKHR"))))
+	presentModesFunc := (C.PFN_vkGetPhysicalDeviceSurfacePresentModesKHR)(instance.Driver().LoadProcAddr((*core.Char)(arena.CString("vkGetPhysicalDeviceSurfacePresentModesKHR"))))
+	destroyFunc := (C.PFN_vkDestroySurfaceKHR)(instance.Driver().LoadProcAddr((*core.Char)(arena.CString("vkDestroySurfaceKHR"))))
 
 	return &vulkanSurface{
 		handle:   (C.VkSurfaceKHR)(surfacePtr),
@@ -209,5 +208,5 @@ func CreateSurface(surfacePtr unsafe.Pointer, instance resources.Instance) (Surf
 		surfaceFormatsFunc:              surfaceFormatsFunc,
 		presentModesFunc:                presentModesFunc,
 		destroyFunc:                     destroyFunc,
-	}, loader.VKSuccess, nil
+	}, core.VKSuccess, nil
 }

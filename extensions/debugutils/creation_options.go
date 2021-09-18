@@ -16,7 +16,7 @@ VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng/core/common"
 	"github.com/CannibalVox/cgoparam"
 	"runtime/cgo"
 	"unsafe"
@@ -27,7 +27,7 @@ type Options struct {
 	CaptureTypes      MessageType
 	Callback          CallbackFunction
 
-	core.HaveNext
+	common.HaveNext
 }
 
 func (o *Options) AllocForC(allocator *cgoparam.Allocator, next unsafe.Pointer) (unsafe.Pointer, error) {

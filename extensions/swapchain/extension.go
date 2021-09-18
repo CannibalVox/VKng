@@ -25,8 +25,7 @@ VkResult cgoGetSwapchainImagesKHR(PFN_vkGetSwapchainImagesKHR fn, VkDevice devic
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core"
-	"github.com/CannibalVox/VKng/core/loader"
-	"github.com/CannibalVox/VKng/core/resources"
+	"github.com/CannibalVox/VKng/core/common"
 	"github.com/CannibalVox/cgoparam"
 	"time"
 	"unsafe"
@@ -48,34 +47,34 @@ type vulkanSwapchain struct {
 type Swapchain interface {
 	Handle() SwapchainHandle
 	Destroy()
-	Images() ([]resources.Image, loader.VkResult, error)
-	AcquireNextImage(timeout time.Duration, semaphore resources.Semaphore, fence resources.Fence) (int, loader.VkResult, error)
-	PresentToQueue(queue resources.Queue, o *PresentOptions) (resultBySwapchain []loader.VkResult, res loader.VkResult, anyError error)
+	Images() ([]core.Image, core.VkResult, error)
+	AcquireNextImage(timeout time.Duration, semaphore core.Semaphore, fence core.Fence) (int, core.VkResult, error)
+	PresentToQueue(queue core.Queue, o *PresentOptions) (resultBySwapchain []core.VkResult, res core.VkResult, anyError error)
 }
 
-func CreateSwapchain(device resources.Device, options *CreationOptions) (Swapchain, loader.VkResult, error) {
+func CreateSwapchain(device core.Device, options *CreationOptions) (Swapchain, core.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
-	createInfo, err := core.AllocOptions(arena, options)
+	createInfo, err := common.AllocOptions(arena, options)
 	if err != nil {
-		return nil, loader.VKErrorUnknown, err
+		return nil, core.VKErrorUnknown, err
 	}
 
 	var swapchain C.VkSwapchainKHR
 	deviceHandle := (C.VkDevice)(unsafe.Pointer(device.Handle()))
-	createFuncPtr := device.Loader().LoadProcAddr((*loader.Char)(arena.CString("vkCreateSwapchainKHR")))
+	createFuncPtr := device.Driver().LoadProcAddr((*core.Char)(arena.CString("vkCreateSwapchainKHR")))
 
-	res := loader.VkResult(C.cgoCreateSwapchainKHR((C.PFN_vkCreateSwapchainKHR)(createFuncPtr), deviceHandle, (*C.VkSwapchainCreateInfoKHR)(createInfo), nil, &swapchain))
+	res := core.VkResult(C.cgoCreateSwapchainKHR((C.PFN_vkCreateSwapchainKHR)(createFuncPtr), deviceHandle, (*C.VkSwapchainCreateInfoKHR)(createInfo), nil, &swapchain))
 	err = res.ToError()
 	if err != nil {
 		return nil, res, err
 	}
 
-	destroyFunc := (C.PFN_vkDestroySwapchainKHR)(device.Loader().LoadProcAddr((*loader.Char)(arena.CString("vkDestroySwapchainKHR"))))
-	getImagesFunc := (C.PFN_vkGetSwapchainImagesKHR)(device.Loader().LoadProcAddr((*loader.Char)(arena.CString("vkGetSwapchainImagesKHR"))))
-	acquireNextFunc := (C.PFN_vkAcquireNextImageKHR)(device.Loader().LoadProcAddr((*loader.Char)(arena.CString("vkAcquireNextImageKHR"))))
-	queuePresentFunc := (C.PFN_vkQueuePresentKHR)(device.Loader().LoadProcAddr((*loader.Char)(arena.CString("vkQueuePresentKHR"))))
+	destroyFunc := (C.PFN_vkDestroySwapchainKHR)(device.Driver().LoadProcAddr((*core.Char)(arena.CString("vkDestroySwapchainKHR"))))
+	getImagesFunc := (C.PFN_vkGetSwapchainImagesKHR)(device.Driver().LoadProcAddr((*core.Char)(arena.CString("vkGetSwapchainImagesKHR"))))
+	acquireNextFunc := (C.PFN_vkAcquireNextImageKHR)(device.Driver().LoadProcAddr((*core.Char)(arena.CString("vkAcquireNextImageKHR"))))
+	queuePresentFunc := (C.PFN_vkQueuePresentKHR)(device.Driver().LoadProcAddr((*core.Char)(arena.CString("vkQueuePresentKHR"))))
 
 	return &vulkanSwapchain{
 		handle: swapchain,
@@ -96,14 +95,14 @@ func (s *vulkanSwapchain) Destroy() {
 	C.cgoDestroySwapchainKHR(s.destroyFunc, s.device, s.handle, nil)
 }
 
-func (s *vulkanSwapchain) Images() ([]resources.Image, loader.VkResult, error) {
+func (s *vulkanSwapchain) Images() ([]core.Image, core.VkResult, error) {
 	allocator := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(allocator)
 
 	imageCountPtr := allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0))))
 	imageCountRef := (*C.uint32_t)(imageCountPtr)
 
-	res := loader.VkResult(C.cgoGetSwapchainImagesKHR(s.getImagesFunc, s.device, s.handle, imageCountRef, nil))
+	res := core.VkResult(C.cgoGetSwapchainImagesKHR(s.getImagesFunc, s.device, s.handle, imageCountRef, nil))
 	err := res.ToError()
 	if err != nil {
 		return nil, res, err
@@ -116,23 +115,23 @@ func (s *vulkanSwapchain) Images() ([]resources.Image, loader.VkResult, error) {
 
 	imagesPtr := allocator.Malloc(imageCount * int(unsafe.Sizeof([1]C.VkImage{})))
 
-	res = loader.VkResult(C.cgoGetSwapchainImagesKHR(s.getImagesFunc, s.device, s.handle, imageCountRef, (*C.VkImage)(imagesPtr)))
+	res = core.VkResult(C.cgoGetSwapchainImagesKHR(s.getImagesFunc, s.device, s.handle, imageCountRef, (*C.VkImage)(imagesPtr)))
 	err = res.ToError()
 	if err != nil {
 		return nil, res, err
 	}
 
-	imagesSlice := ([]loader.VkImage)(unsafe.Slice((*loader.VkImage)(imagesPtr), imageCount))
-	var result []resources.Image
-	deviceHandle := (loader.VkDevice)(unsafe.Pointer(s.device))
+	imagesSlice := ([]core.VkImage)(unsafe.Slice((*core.VkImage)(imagesPtr), imageCount))
+	var result []core.Image
+	deviceHandle := (core.VkDevice)(unsafe.Pointer(s.device))
 	for i := 0; i < imageCount; i++ {
-		result = append(result, resources.CreateFromHandles(imagesSlice[i], deviceHandle))
+		result = append(result, core.CreateFromHandles(imagesSlice[i], deviceHandle))
 	}
 
 	return result, res, nil
 }
 
-func (s *vulkanSwapchain) AcquireNextImage(timeout time.Duration, semaphore resources.Semaphore, fence resources.Fence) (int, loader.VkResult, error) {
+func (s *vulkanSwapchain) AcquireNextImage(timeout time.Duration, semaphore core.Semaphore, fence core.Fence) (int, core.VkResult, error) {
 	var imageIndex C.uint32_t
 
 	var semaphoreHandle C.VkSemaphore
@@ -146,8 +145,8 @@ func (s *vulkanSwapchain) AcquireNextImage(timeout time.Duration, semaphore reso
 		fenceHandle = (C.VkFence)(unsafe.Pointer(fence.Handle()))
 	}
 
-	res := C.cgoAcquireNextImageKHR(s.acquireNextFunc, s.device, s.handle, C.uint64_t(core.TimeoutNanoseconds(timeout)), semaphoreHandle, fenceHandle, &imageIndex)
-	result := loader.VkResult(res)
+	res := C.cgoAcquireNextImageKHR(s.acquireNextFunc, s.device, s.handle, C.uint64_t(common.TimeoutNanoseconds(timeout)), semaphoreHandle, fenceHandle, &imageIndex)
+	result := core.VkResult(res)
 	err := result.ToError()
 	return int(imageIndex), result, err
 }

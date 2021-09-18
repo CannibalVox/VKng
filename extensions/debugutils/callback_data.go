@@ -6,7 +6,7 @@ package ext_debugutils
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng/core/common"
 	"image/color"
 	"unsafe"
 )
@@ -19,7 +19,7 @@ type Label struct {
 type ObjectNameInfo struct {
 	Name   string
 	Handle uintptr
-	Type   core.ObjectType
+	Type   common.ObjectType
 }
 
 type CallbackData struct {
@@ -53,7 +53,7 @@ func CreateLabel(l C.VkDebugUtilsLabelEXT) *Label {
 }
 
 func CreateObjectNameInfo(o C.VkDebugUtilsObjectNameInfoEXT) *ObjectNameInfo {
-	objType := core.ObjectType(o.objectType)
+	objType := common.ObjectType(o.objectType)
 	handle := uintptr(o.objectHandle)
 	var objName string
 
