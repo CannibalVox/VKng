@@ -5,10 +5,10 @@
 package mock_swapchain
 
 import (
-	"github.com/CannibalVox/VKng/core"
 	reflect "reflect"
 	time "time"
 
+	core "github.com/CannibalVox/VKng/core"
 	ext_swapchain "github.com/CannibalVox/VKng/extensions/swapchain"
 	gomock "github.com/golang/mock/gomock"
 )

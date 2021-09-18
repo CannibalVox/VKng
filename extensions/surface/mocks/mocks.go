@@ -5,9 +5,9 @@
 package mock_surface
 
 import (
-	"github.com/CannibalVox/VKng/core"
 	reflect "reflect"
 
+	core "github.com/CannibalVox/VKng/core"
 	ext_surface "github.com/CannibalVox/VKng/extensions/surface"
 	gomock "github.com/golang/mock/gomock"
 )
