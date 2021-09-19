@@ -1,4 +1,4 @@
-package ext_debugutils
+package ext_debug_utils
 
 //go:generate mockgen -source messenger.go -destination ./mocks/mocks.go -package mock_debugutils
 

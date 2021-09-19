@@ -1,4 +1,4 @@
-package ext_surface
+package khr_surface
 
 /*
 #include <stdlib.h>

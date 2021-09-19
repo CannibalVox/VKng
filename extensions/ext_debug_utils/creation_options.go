@@ -1,4 +1,4 @@
-package ext_debugutils
+package ext_debug_utils
 
 /*
 #include <stdlib.h>

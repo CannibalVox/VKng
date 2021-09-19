@@ -1,11 +1,9 @@
-package ext_swapchain
+package khr_swapchain
 
 /*
 #include <stdlib.h>
 #include "vulkan/vulkan.h"
-VkResult cgoQueuePresentKHR(PFN_vkQueuePresentKHR fn, VkQueue queue, VkPresentInfoKHR* pPresentInfo) {
-	return fn(queue, pPresentInfo);
-}
+
 */
 import "C"
 import (
@@ -73,27 +71,4 @@ func (o *PresentOptions) AllocForC(allocator *cgoparam.Allocator, next unsafe.Po
 	}
 
 	return unsafe.Pointer(createInfo), nil
-}
-
-func (s *vulkanSwapchain) PresentToQueue(queue core.Queue, o *PresentOptions) (resultBySwapchain []core.VkResult, res core.VkResult, anyError error) {
-	arena := cgoparam.GetAlloc()
-	defer cgoparam.ReturnAlloc(arena)
-
-	createInfo, err := common.AllocOptions(arena, o)
-	if err != nil {
-		return nil, core.VKErrorUnknown, err
-	}
-
-	createInfoPtr := (*C.VkPresentInfoKHR)(createInfo)
-	queueHandle := (C.VkQueue)(unsafe.Pointer(queue.Handle()))
-
-	res = core.VkResult(C.cgoQueuePresentKHR(s.queuePresentFunc, queueHandle, createInfoPtr))
-
-	resSlice := unsafe.Slice(createInfoPtr.pResults, len(o.Swapchains))
-	for i := 0; i < len(o.Swapchains); i++ {
-		singleRes := core.VkResult(resSlice[i])
-		resultBySwapchain = append(resultBySwapchain, singleRes)
-	}
-
-	return resultBySwapchain, res, res.ToError()
 }

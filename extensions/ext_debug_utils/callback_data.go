@@ -1,4 +1,4 @@
-package ext_debugutils
+package ext_debug_utils
 
 /*
 #include <stdlib.h>
@@ -32,7 +32,7 @@ type CallbackData struct {
 	Objects             []*ObjectNameInfo
 }
 
-func CreateLabel(l C.VkDebugUtilsLabelEXT) *Label {
+func createLabel(l C.VkDebugUtilsLabelEXT) *Label {
 	var name string
 
 	if l.pLabelName != nil {
@@ -52,7 +52,7 @@ func CreateLabel(l C.VkDebugUtilsLabelEXT) *Label {
 	}
 }
 
-func CreateObjectNameInfo(o C.VkDebugUtilsObjectNameInfoEXT) *ObjectNameInfo {
+func createObjectNameInfo(o C.VkDebugUtilsObjectNameInfoEXT) *ObjectNameInfo {
 	objType := common.ObjectType(o.objectType)
 	handle := uintptr(o.objectHandle)
 	var objName string
@@ -68,7 +68,7 @@ func CreateObjectNameInfo(o C.VkDebugUtilsObjectNameInfoEXT) *ObjectNameInfo {
 	}
 }
 
-func CreateCallbackData(d *C.VkDebugUtilsMessengerCallbackDataEXT) *CallbackData {
+func createCallbackData(d *C.VkDebugUtilsMessengerCallbackDataEXT) *CallbackData {
 	var messageIDName, message string
 
 	if d.pMessageIdName != nil {
@@ -84,19 +84,19 @@ func CreateCallbackData(d *C.VkDebugUtilsMessengerCallbackDataEXT) *CallbackData
 	queueLabelCount := int(d.queueLabelCount)
 	cQueueLabels := ([]C.VkDebugUtilsLabelEXT)(unsafe.Slice(d.pQueueLabels, queueLabelCount))
 	for i := 0; i < queueLabelCount; i++ {
-		queueLabels = append(queueLabels, CreateLabel(cQueueLabels[i]))
+		queueLabels = append(queueLabels, createLabel(cQueueLabels[i]))
 	}
 
 	commandBufferLabelCount := int(d.cmdBufLabelCount)
 	cCommandBufferLabels := ([]C.VkDebugUtilsLabelEXT)(unsafe.Slice(d.pCmdBufLabels, commandBufferLabelCount))
 	for i := 0; i < commandBufferLabelCount; i++ {
-		commandBufferLabels = append(commandBufferLabels, CreateLabel(cCommandBufferLabels[i]))
+		commandBufferLabels = append(commandBufferLabels, createLabel(cCommandBufferLabels[i]))
 	}
 
 	objectCount := int(d.objectCount)
 	cObjects := ([]C.VkDebugUtilsObjectNameInfoEXT)(unsafe.Slice(d.pObjects, objectCount))
 	for i := 0; i < objectCount; i++ {
-		objects = append(objects, CreateObjectNameInfo(cObjects[i]))
+		objects = append(objects, createObjectNameInfo(cObjects[i]))
 	}
 
 	return &CallbackData{

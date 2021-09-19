@@ -1,4 +1,4 @@
-package ext_debugutils
+package ext_debug_utils
 
 /*
 #include <stdlib.h>
@@ -18,7 +18,7 @@ type CallbackFunction func(msgType MessageType, severity MessageSeverity, data *
 func goDebugCallback(messageSeverity C.VkDebugUtilsMessageSeverityFlagBitsEXT, messageType C.VkDebugUtilsMessageTypeFlagsEXT, data *C.VkDebugUtilsMessengerCallbackDataEXT, userData unsafe.Pointer) C.VkBool32 {
 	severity := MessageSeverity(messageSeverity)
 	msgType := MessageType(messageType)
-	callbackData := CreateCallbackData(data)
+	callbackData := createCallbackData(data)
 
 	f := cgo.Handle(userData).Value().(CallbackFunction)
 	if f(msgType, severity, callbackData) {

@@ -1,4 +1,4 @@
-package ext_swapchain
+package khr_swapchain
 
 /*
 #include <stdlib.h>
@@ -7,7 +7,7 @@ package ext_swapchain
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core/common"
-	ext_surface "github.com/CannibalVox/VKng/extensions/surface"
+	ext_surface "github.com/CannibalVox/VKng/extensions/khr_surface"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )

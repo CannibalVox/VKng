@@ -7,7 +7,7 @@ package mock_debugutils
 import (
 	reflect "reflect"
 
-	ext_debugutils "github.com/CannibalVox/VKng/extensions/debugutils"
+	ext_debug_utils "github.com/CannibalVox/VKng/extensions/ext_debug_utils"
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -47,10 +47,10 @@ func (mr *MockMessengerMockRecorder) Destroy() *gomock.Call {
 }
 
 // Handle mocks base method.
-func (m *MockMessenger) Handle() ext_debugutils.MessengerHandle {
+func (m *MockMessenger) Handle() ext_debug_utils.MessengerHandle {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Handle")
-	ret0, _ := ret[0].(ext_debugutils.MessengerHandle)
+	ret0, _ := ret[0].(ext_debug_utils.MessengerHandle)
 	return ret0
 }
 
