@@ -56,7 +56,7 @@ type Driver interface {
 	VkQueuePresentKHR(queue core.VkQueue, pPresentInfo *VkPresentInfoKHR) (core.VkResult, error)
 }
 
-func createDriverFromCore(driver core.Driver) *khrSwapchainDriver {
+func CreateDriverFromCore(driver core.Driver) *khrSwapchainDriver {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -149,7 +149,7 @@ type Loader interface {
 
 func CreateLoaderFromDevice(device core.Device) Loader {
 	return &khrSwapchainLoader{
-		driver: createDriverFromCore(device.Driver()),
+		driver: CreateDriverFromCore(device.Driver()),
 	}
 }
 

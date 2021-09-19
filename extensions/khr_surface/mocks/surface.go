@@ -52,9 +52,11 @@ func (mr *MockSurfaceMockRecorder) Capabilities(device interface{}) *gomock.Call
 }
 
 // Destroy mocks base method.
-func (m *MockSurface) Destroy() {
+func (m *MockSurface) Destroy() error {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "Destroy")
+	ret := m.ctrl.Call(m, "Destroy")
+	ret0, _ := ret[0].(error)
+	return ret0
 }
 
 // Destroy indicates an expected call of Destroy.

@@ -35,9 +35,11 @@ func (m *MockMessenger) EXPECT() *MockMessengerMockRecorder {
 }
 
 // Destroy mocks base method.
-func (m *MockMessenger) Destroy() {
+func (m *MockMessenger) Destroy() error {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "Destroy")
+	ret := m.ctrl.Call(m, "Destroy")
+	ret0, _ := ret[0].(error)
+	return ret0
 }
 
 // Destroy indicates an expected call of Destroy.
@@ -47,10 +49,10 @@ func (mr *MockMessengerMockRecorder) Destroy() *gomock.Call {
 }
 
 // Handle mocks base method.
-func (m *MockMessenger) Handle() ext_debug_utils.MessengerHandle {
+func (m *MockMessenger) Handle() ext_debug_utils.VkDebugUtilsMessengerEXT {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Handle")
-	ret0, _ := ret[0].(ext_debug_utils.MessengerHandle)
+	ret0, _ := ret[0].(ext_debug_utils.VkDebugUtilsMessengerEXT)
 	return ret0
 }
 

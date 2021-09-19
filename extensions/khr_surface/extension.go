@@ -56,15 +56,15 @@ type Driver interface {
 	VkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice core.VkPhysicalDevice, surface VkSurfaceKHR, pPresentModeCount *core.Uint32, pPresentModes *VkPresentModeKHR) (core.VkResult, error)
 }
 
-func CreateDriverFromInstance(instance core.Instance) Driver {
+func CreateDriverFromCore(driver core.Driver) Driver {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
-	physicalSurfaceCapabilitiesFunc := (C.PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR)(instance.Driver().LoadProcAddr((*core.Char)(arena.CString("vkGetPhysicalDeviceSurfaceCapabilitiesKHR"))))
-	physicalSurfaceSupportFunc := (C.PFN_vkGetPhysicalDeviceSurfaceSupportKHR)(instance.Driver().LoadProcAddr((*core.Char)(arena.CString("vkGetPhysicalDeviceSurfaceSupportKHR"))))
-	surfaceFormatsFunc := (C.PFN_vkGetPhysicalDeviceSurfaceFormatsKHR)(instance.Driver().LoadProcAddr((*core.Char)(arena.CString("vkGetPhysicalDeviceSurfaceFormatsKHR"))))
-	presentModesFunc := (C.PFN_vkGetPhysicalDeviceSurfacePresentModesKHR)(instance.Driver().LoadProcAddr((*core.Char)(arena.CString("vkGetPhysicalDeviceSurfacePresentModesKHR"))))
-	destroyFunc := (C.PFN_vkDestroySurfaceKHR)(instance.Driver().LoadProcAddr((*core.Char)(arena.CString("vkDestroySurfaceKHR"))))
+	physicalSurfaceCapabilitiesFunc := (C.PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR)(driver.LoadProcAddr((*core.Char)(arena.CString("vkGetPhysicalDeviceSurfaceCapabilitiesKHR"))))
+	physicalSurfaceSupportFunc := (C.PFN_vkGetPhysicalDeviceSurfaceSupportKHR)(driver.LoadProcAddr((*core.Char)(arena.CString("vkGetPhysicalDeviceSurfaceSupportKHR"))))
+	surfaceFormatsFunc := (C.PFN_vkGetPhysicalDeviceSurfaceFormatsKHR)(driver.LoadProcAddr((*core.Char)(arena.CString("vkGetPhysicalDeviceSurfaceFormatsKHR"))))
+	presentModesFunc := (C.PFN_vkGetPhysicalDeviceSurfacePresentModesKHR)(driver.LoadProcAddr((*core.Char)(arena.CString("vkGetPhysicalDeviceSurfacePresentModesKHR"))))
+	destroyFunc := (C.PFN_vkDestroySurfaceKHR)(driver.LoadProcAddr((*core.Char)(arena.CString("vkDestroySurfaceKHR"))))
 
 	return &khrSurfaceDriver{
 		physicalSurfaceSupportFunc:      physicalSurfaceSupportFunc,
@@ -125,7 +125,6 @@ func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice c
 		C.VkSurfaceKHR(surface),
 		(*C.uint32_t)(unsafe.Pointer(pSurfaceFormatCount)),
 		(*C.VkSurfaceFormatKHR)(pSurfaceFormats)))
-
 	return res, res.ToError()
 }
 

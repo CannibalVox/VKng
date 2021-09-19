@@ -15,36 +15,33 @@ import (
 )
 
 type khrSurfaceSDl2Loader struct {
-	instance core.Instance
-	driver   khr_surface.Driver
+	driver khr_surface.Driver
 }
 
 type Loader interface {
-	CreateSurface(window *sdl.Window) (khr_surface.Surface, core.VkResult, error)
+	CreateSurface(instance core.Instance, window *sdl.Window) (khr_surface.Surface, core.VkResult, error)
 }
 
 func CreateLoaderFromInstance(instance core.Instance) Loader {
-	driver := khr_surface.CreateDriverFromInstance(instance)
+	driver := khr_surface.CreateDriverFromCore(instance.Driver())
 	return &khrSurfaceSDl2Loader{
-		instance: instance,
-		driver:   driver,
+		driver: driver,
 	}
 }
 
-func CreateLoaderFromDriver(instance core.Instance, driver khr_surface.Driver) Loader {
+func CreateLoaderFromDriver(driver khr_surface.Driver) Loader {
 	return &khrSurfaceSDl2Loader{
-		instance: instance,
-		driver:   driver,
+		driver: driver,
 	}
 }
 
-func (l *khrSurfaceSDl2Loader) CreateSurface(window *sdl.Window) (khr_surface.Surface, core.VkResult, error) {
-	surfacePtrUnsafe, err := window.VulkanCreateSurface(l.instance.Handle())
+func (l *khrSurfaceSDl2Loader) CreateSurface(instance core.Instance, window *sdl.Window) (khr_surface.Surface, core.VkResult, error) {
+	surfacePtrUnsafe, err := window.VulkanCreateSurface(instance.Handle())
 	if err != nil {
 		return nil, core.VKErrorUnknown, err
 	}
 
 	surfacePtr := (*C.VkSurfaceKHR)(surfacePtrUnsafe)
 
-	return khr_surface.CreateSurface(unsafe.Pointer(*surfacePtr), l.instance, l.driver)
+	return khr_surface.CreateSurface(unsafe.Pointer(*surfacePtr), instance, l.driver)
 }

@@ -37,9 +37,9 @@ func (m *MockLoader) EXPECT() *MockLoaderMockRecorder {
 }
 
 // CreateSurface mocks base method.
-func (m *MockLoader) CreateSurface(window *sdl.Window) (khr_surface.Surface, core.VkResult, error) {
+func (m *MockLoader) CreateSurface(instance core.Instance, window *sdl.Window) (khr_surface.Surface, core.VkResult, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateSurface", window)
+	ret := m.ctrl.Call(m, "CreateSurface", instance, window)
 	ret0, _ := ret[0].(khr_surface.Surface)
 	ret1, _ := ret[1].(core.VkResult)
 	ret2, _ := ret[2].(error)
@@ -47,7 +47,7 @@ func (m *MockLoader) CreateSurface(window *sdl.Window) (khr_surface.Surface, cor
 }
 
 // CreateSurface indicates an expected call of CreateSurface.
-func (mr *MockLoaderMockRecorder) CreateSurface(window interface{}) *gomock.Call {
+func (mr *MockLoaderMockRecorder) CreateSurface(instance, window interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSurface", reflect.TypeOf((*MockLoader)(nil).CreateSurface), window)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSurface", reflect.TypeOf((*MockLoader)(nil).CreateSurface), instance, window)
 }

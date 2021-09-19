@@ -6,69 +6,45 @@ package ext_debug_utils
 #include <stdlib.h>
 #include "../vulkan/vulkan.h"
 
-VkResult cgoCreateDebugUtilsMessengerEXT(PFN_vkCreateDebugUtilsMessengerEXT fn, VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo,const VkAllocationCallbacks *pAllocator, VkDebugUtilsMessengerEXT* pDebugMessenger) {
-	return fn(instance, pCreateInfo, pAllocator, pDebugMessenger);
-}
-
-void cgoDestroyDebugUtilsMessengerEXT(PFN_vkDestroyDebugUtilsMessengerEXT fn, VkInstance instance, VkDebugUtilsMessengerEXT debugMessenger, const VkAllocationCallbacks* pAllocator) {
-	fn(instance, debugMessenger, pAllocator);
-}
 */
 import "C"
-
 import (
 	"github.com/CannibalVox/VKng/core"
-	"github.com/CannibalVox/VKng/core/common"
-	"github.com/CannibalVox/cgoparam"
+	"runtime/cgo"
 	"unsafe"
 )
 
-type MessengerHandle C.VkDebugUtilsMessengerEXT
 type vulkanMessenger struct {
-	instance C.VkInstance
-	handle   C.VkDebugUtilsMessengerEXT
-
-	destroyFunc C.PFN_vkDestroyDebugUtilsMessengerEXT
+	instance core.VkInstance
+	handle   VkDebugUtilsMessengerEXT
+	driver   Driver
 }
 
 type Messenger interface {
-	Handle() MessengerHandle
-	Destroy()
+	Handle() VkDebugUtilsMessengerEXT
+	Destroy() error
 }
 
-func CreateMessenger(instance core.Instance, options *Options) (Messenger, core.VkResult, error) {
-	arena := cgoparam.GetAlloc()
-	defer cgoparam.ReturnAlloc(arena)
+func (m *vulkanMessenger) Destroy() error {
+	return m.driver.VkDestroyDebugUtilsMessengerEXT(m.instance, m.handle, nil)
+}
 
-	instanceHandle := C.VkInstance(unsafe.Pointer(instance.Handle()))
-	createInfo, err := common.AllocOptions(arena, options)
-	if err != nil {
-		return nil, core.VKErrorUnknown, err
+func (m *vulkanMessenger) Handle() VkDebugUtilsMessengerEXT {
+	return m.handle
+}
+
+type CallbackFunction func(msgType MessageType, severity MessageSeverity, data *CallbackData) bool
+
+//export goDebugCallback
+func goDebugCallback(messageSeverity C.VkDebugUtilsMessageSeverityFlagBitsEXT, messageType C.VkDebugUtilsMessageTypeFlagsEXT, data *C.VkDebugUtilsMessengerCallbackDataEXT, userData unsafe.Pointer) C.VkBool32 {
+	severity := MessageSeverity(messageSeverity)
+	msgType := MessageType(messageType)
+	callbackData := createCallbackData(data)
+
+	f := cgo.Handle(userData).Value().(CallbackFunction)
+	if f(msgType, severity, callbackData) {
+		return C.VK_TRUE
 	}
 
-	createFunc := (C.PFN_vkCreateDebugUtilsMessengerEXT)(instance.Driver().LoadProcAddr((*core.Char)(arena.CString("vkCreateDebugUtilsMessengerEXT"))))
-
-	var messenger C.VkDebugUtilsMessengerEXT
-	res := core.VkResult(C.cgoCreateDebugUtilsMessengerEXT(createFunc, instanceHandle, (*C.VkDebugUtilsMessengerCreateInfoEXT)(createInfo), nil, &messenger))
-	err = res.ToError()
-	if err != nil {
-		return nil, res, err
-	}
-
-	destroyFunc := (C.PFN_vkDestroyDebugUtilsMessengerEXT)(instance.Driver().LoadProcAddr((*core.Char)(arena.CString("vkDestroyDebugUtilsMessengerEXT"))))
-
-	return &vulkanMessenger{
-		handle:   messenger,
-		instance: instanceHandle,
-
-		destroyFunc: destroyFunc,
-	}, res, nil
-}
-
-func (m *vulkanMessenger) Destroy() {
-	C.cgoDestroyDebugUtilsMessengerEXT(m.destroyFunc, m.instance, m.handle, nil)
-}
-
-func (m *vulkanMessenger) Handle() MessengerHandle {
-	return MessengerHandle(m.handle)
+	return C.VK_FALSE
 }
