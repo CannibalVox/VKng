@@ -12,41 +12,41 @@ import (
 type ColorSpace int32
 
 const (
-	SRGBNonlinear         ColorSpace = C.VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
-	DisplayP3Nonlinear    ColorSpace = C.VK_COLOR_SPACE_DISPLAY_P3_NONLINEAR_EXT
-	ExtendedSRGBLinear    ColorSpace = C.VK_COLOR_SPACE_EXTENDED_SRGB_LINEAR_EXT
-	DisplayP3Linear       ColorSpace = C.VK_COLOR_SPACE_DISPLAY_P3_LINEAR_EXT
-	DCIP3Nonlinear        ColorSpace = C.VK_COLOR_SPACE_DCI_P3_NONLINEAR_EXT
-	BT709Linear           ColorSpace = C.VK_COLOR_SPACE_BT709_LINEAR_EXT
-	BT709Nonlinear        ColorSpace = C.VK_COLOR_SPACE_BT709_NONLINEAR_EXT
-	BT2020Linear          ColorSpace = C.VK_COLOR_SPACE_BT2020_LINEAR_EXT
-	HDR10ST2084           ColorSpace = C.VK_COLOR_SPACE_HDR10_ST2084_EXT
-	DolbyVision           ColorSpace = C.VK_COLOR_SPACE_DOLBYVISION_EXT
-	HDR10HLG              ColorSpace = C.VK_COLOR_SPACE_HDR10_HLG_EXT
-	AdobeRGBLinear        ColorSpace = C.VK_COLOR_SPACE_ADOBERGB_LINEAR_EXT
-	AdobeRGBNonlinear     ColorSpace = C.VK_COLOR_SPACE_ADOBERGB_NONLINEAR_EXT
-	PassThrough           ColorSpace = C.VK_COLOR_SPACE_PASS_THROUGH_EXT
-	ExtendedSRGBNonlinear ColorSpace = C.VK_COLOR_SPACE_EXTENDED_SRGB_NONLINEAR_EXT
-	DisplayNativeAMD      ColorSpace = C.VK_COLOR_SPACE_DISPLAY_NATIVE_AMD
+	SRGBNonlinear            ColorSpace = C.VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
+	DisplayP3NonlinearEXT    ColorSpace = C.VK_COLOR_SPACE_DISPLAY_P3_NONLINEAR_EXT
+	ExtendedSRGBLinearEXT    ColorSpace = C.VK_COLOR_SPACE_EXTENDED_SRGB_LINEAR_EXT
+	DisplayP3LinearEXT       ColorSpace = C.VK_COLOR_SPACE_DISPLAY_P3_LINEAR_EXT
+	DCIP3NonlinearEXT        ColorSpace = C.VK_COLOR_SPACE_DCI_P3_NONLINEAR_EXT
+	BT709LinearEXT           ColorSpace = C.VK_COLOR_SPACE_BT709_LINEAR_EXT
+	BT709NonlinearEXT        ColorSpace = C.VK_COLOR_SPACE_BT709_NONLINEAR_EXT
+	BT2020LinearEXT          ColorSpace = C.VK_COLOR_SPACE_BT2020_LINEAR_EXT
+	HDR10ST2084EXT           ColorSpace = C.VK_COLOR_SPACE_HDR10_ST2084_EXT
+	DolbyVisionEXT           ColorSpace = C.VK_COLOR_SPACE_DOLBYVISION_EXT
+	HDR10HLGEXT              ColorSpace = C.VK_COLOR_SPACE_HDR10_HLG_EXT
+	AdobeRGBLinearEXT        ColorSpace = C.VK_COLOR_SPACE_ADOBERGB_LINEAR_EXT
+	AdobeRGBNonlinearEXT     ColorSpace = C.VK_COLOR_SPACE_ADOBERGB_NONLINEAR_EXT
+	PassThroughEXT           ColorSpace = C.VK_COLOR_SPACE_PASS_THROUGH_EXT
+	ExtendedSRGBNonlinearEXT ColorSpace = C.VK_COLOR_SPACE_EXTENDED_SRGB_NONLINEAR_EXT
+	DisplayNativeAMD         ColorSpace = C.VK_COLOR_SPACE_DISPLAY_NATIVE_AMD
 )
 
 var colorSpaceToString = map[ColorSpace]string{
-	SRGBNonlinear:         "sRGB Non-Linear",
-	DisplayP3Nonlinear:    "Display-P3 Non-Linear",
-	ExtendedSRGBNonlinear: "Extended sRGB Non-Linear",
-	ExtendedSRGBLinear:    "Extended sRGB Linear",
-	DisplayP3Linear:       "Display-P3 Linear",
-	DCIP3Nonlinear:        "DCI-P3 Non-Linear",
-	BT709Linear:           "BT709 Linear",
-	BT709Nonlinear:        "BT709 non-Linear",
-	BT2020Linear:          "BT2020 Linear",
-	HDR10ST2084:           "HDR10 (BT2020 Color) - SMPTE ST2084",
-	DolbyVision:           "Dolby Vision (BT2020 Color) - SMPTE ST2084",
-	HDR10HLG:              "HDR10 (BT2020 Color) - Hybrid Log Gamma",
-	AdobeRGBNonlinear:     "AdobeRGB Non-Linear",
-	AdobeRGBLinear:        "AdobeRGB Linear",
-	PassThrough:           "Pass-Through",
-	DisplayNativeAMD:      "Display's Native Color Space (AMD)",
+	SRGBNonlinear:            "sRGB Non-Linear",
+	DisplayP3NonlinearEXT:    "Display-P3 Non-Linear (Extension)",
+	ExtendedSRGBNonlinearEXT: "Extended sRGB Non-Linear (Extension)",
+	ExtendedSRGBLinearEXT:    "Extended sRGB Linear (Extension)",
+	DisplayP3LinearEXT:       "Display-P3 Linear (Extension)",
+	DCIP3NonlinearEXT:        "DCI-P3 Non-Linear (Extension)",
+	BT709LinearEXT:           "BT709 Linear (Extension)",
+	BT709NonlinearEXT:        "BT709 non-Linear (Extension)",
+	BT2020LinearEXT:          "BT2020 Linear (Extension)",
+	HDR10ST2084EXT:           "HDR10 (BT2020 Color) - SMPTE ST2084 (Extension)",
+	DolbyVisionEXT:           "Dolby Vision (BT2020 Color) - SMPTE ST2084 (Extension)",
+	HDR10HLGEXT:              "HDR10 (BT2020 Color) - Hybrid Log Gamma (Extension)",
+	AdobeRGBNonlinearEXT:     "AdobeRGB Non-Linear (Extension)",
+	AdobeRGBLinearEXT:        "AdobeRGB Linear (Extension)",
+	PassThroughEXT:           "Pass-Through (Extension)",
+	DisplayNativeAMD:         "Display's Native Color Space (AMD Extension)",
 }
 
 func (s ColorSpace) String() string {
