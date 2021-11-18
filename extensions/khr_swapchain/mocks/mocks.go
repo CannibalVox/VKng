@@ -109,6 +109,20 @@ func (mr *MockDriverMockRecorder) VkQueuePresentKHR(queue, pPresentInfo interfac
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkQueuePresentKHR", reflect.TypeOf((*MockDriver)(nil).VkQueuePresentKHR), queue, pPresentInfo)
 }
 
+// coreDriver mocks base method.
+func (m *MockDriver) coreDriver() core.Driver {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "coreDriver")
+	ret0, _ := ret[0].(core.Driver)
+	return ret0
+}
+
+// coreDriver indicates an expected call of coreDriver.
+func (mr *MockDriverMockRecorder) coreDriver() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "coreDriver", reflect.TypeOf((*MockDriver)(nil).coreDriver))
+}
+
 // MockLoader is a mock of Loader interface.
 type MockLoader struct {
 	ctrl     *gomock.Controller

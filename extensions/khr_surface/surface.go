@@ -69,16 +69,16 @@ func (s *vulkanSurface) Capabilities(device core.PhysicalDevice) (*Capabilities,
 		MinImageCount: uint32(cCapabilities.minImageCount),
 		MaxImageCount: uint32(cCapabilities.maxImageCount),
 		CurrentExtent: common.Extent2D{
-			Width:  uint32(cCapabilities.currentExtent.width),
-			Height: uint32(cCapabilities.currentExtent.height),
+			Width:  int(cCapabilities.currentExtent.width),
+			Height: int(cCapabilities.currentExtent.height),
 		},
 		MinImageExtent: common.Extent2D{
-			Width:  uint32(cCapabilities.minImageExtent.width),
-			Height: uint32(cCapabilities.minImageExtent.height),
+			Width:  int(cCapabilities.minImageExtent.width),
+			Height: int(cCapabilities.minImageExtent.height),
 		},
 		MaxImageExtent: common.Extent2D{
-			Width:  uint32(cCapabilities.maxImageExtent.width),
-			Height: uint32(cCapabilities.maxImageExtent.height),
+			Width:  int(cCapabilities.maxImageExtent.width),
+			Height: int(cCapabilities.maxImageExtent.height),
 		},
 		MaxImageArrayLayers: uint32(cCapabilities.maxImageArrayLayers),
 

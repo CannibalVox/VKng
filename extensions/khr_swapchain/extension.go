@@ -38,6 +38,7 @@ import (
 const ExtensionName = C.VK_KHR_SWAPCHAIN_EXTENSION_NAME
 
 type khrSwapchainDriver struct {
+	driver           core.Driver
 	createFunc       C.PFN_vkCreateSwapchainKHR
 	destroyFunc      C.PFN_vkDestroySwapchainKHR
 	getImagesFunc    C.PFN_vkGetSwapchainImagesKHR
@@ -49,6 +50,7 @@ type VkSwapchainKHR C.VkSwapchainKHR
 type VkSwapchainCreateInfoKHR C.VkSwapchainCreateInfoKHR
 type VkPresentInfoKHR C.VkPresentInfoKHR
 type Driver interface {
+	coreDriver() core.Driver
 	VkCreateSwapchainKHR(device core.VkDevice, pCreateInfo *VkSwapchainCreateInfoKHR, pAllocator *core.VkAllocationCallbacks, pSwapchain *VkSwapchainKHR) (core.VkResult, error)
 	VkDestroySwapchainKHR(device core.VkDevice, swapchain VkSwapchainKHR, pAllocator *core.VkAllocationCallbacks) error
 	VkGetSwapchainImagesKHR(device core.VkDevice, swapchain VkSwapchainKHR, pSwapchainImageCount *core.Uint32, pSwapchainImages *core.VkImage) (core.VkResult, error)
@@ -61,12 +63,17 @@ func CreateDriverFromCore(driver core.Driver) *khrSwapchainDriver {
 	defer cgoparam.ReturnAlloc(arena)
 
 	return &khrSwapchainDriver{
+		driver:           driver,
 		createFunc:       (C.PFN_vkCreateSwapchainKHR)(driver.LoadProcAddr((*core.Char)(arena.CString("vkCreateSwapchainKHR")))),
 		destroyFunc:      (C.PFN_vkDestroySwapchainKHR)(driver.LoadProcAddr((*core.Char)(arena.CString("vkDestroySwapchainKHR")))),
 		getImagesFunc:    (C.PFN_vkGetSwapchainImagesKHR)(driver.LoadProcAddr((*core.Char)(arena.CString("vkGetSwapchainImagesKHR")))),
 		acquireNextFunc:  (C.PFN_vkAcquireNextImageKHR)(driver.LoadProcAddr((*core.Char)(arena.CString("vkAcquireNextImageKHR")))),
 		queuePresentFunc: (C.PFN_vkQueuePresentKHR)(driver.LoadProcAddr((*core.Char)(arena.CString("vkQueuePresentKHR")))),
 	}
+}
+
+func (d *khrSwapchainDriver) coreDriver() core.Driver {
+	return d.driver
 }
 
 func (d *khrSwapchainDriver) VkCreateSwapchainKHR(device core.VkDevice, pCreateInfo *VkSwapchainCreateInfoKHR, pAllocator *core.VkAllocationCallbacks, pSwapchain *VkSwapchainKHR) (core.VkResult, error) {

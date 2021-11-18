@@ -63,7 +63,7 @@ func (s *vulkanSwapchain) Images() ([]core.Image, core.VkResult, error) {
 	var result []core.Image
 	deviceHandle := (core.VkDevice)(unsafe.Pointer(s.device))
 	for i := 0; i < imageCount; i++ {
-		result = append(result, core.CreateFromHandles(imagesSlice[i], deviceHandle))
+		result = append(result, core.CreateImageFromHandles(imagesSlice[i], deviceHandle, s.driver.coreDriver()))
 	}
 
 	return result, res, nil
