@@ -5,6 +5,7 @@ go 1.17
 require (
 	github.com/CannibalVox/cgoparam v0.0.0-20210911212540-41cbfa86f15d
 	github.com/cockroachdb/errors v1.8.6
+	github.com/g3n/engine v0.2.0
 	github.com/go-gl/mathgl v1.0.0
 	github.com/golang/mock v1.6.0
 	github.com/google/uuid v1.3.0
@@ -24,6 +25,6 @@ require (
 	github.com/kr/text v0.2.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	golang.org/x/image v0.0.0-20190321063152-3fc05d484e9f // indirect
+	golang.org/x/image v0.0.0-20210607152325-775e3b0c77b9 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )
