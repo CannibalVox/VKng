@@ -22,7 +22,7 @@ import (
 	"unsafe"
 )
 
-type Options struct {
+type CreationOptions struct {
 	CaptureSeverities MessageSeverity
 	CaptureTypes      MessageType
 	Callback          CallbackFunction
@@ -30,7 +30,7 @@ type Options struct {
 	common.HaveNext
 }
 
-func (o *Options) AllocForC(allocator *cgoparam.Allocator, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *CreationOptions) AllocForC(allocator *cgoparam.Allocator, next unsafe.Pointer) (unsafe.Pointer, error) {
 	createInfo := (*C.VkDebugUtilsMessengerCreateInfoEXT)(allocator.Malloc(int(unsafe.Sizeof([1]C.VkDebugUtilsMessengerCreateInfoEXT{}))))
 	createInfo.sType = C.VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT
 	createInfo.flags = 0

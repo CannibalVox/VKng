@@ -35,11 +35,9 @@ func (m *MockMessenger) EXPECT() *MockMessengerMockRecorder {
 }
 
 // Destroy mocks base method.
-func (m *MockMessenger) Destroy() error {
+func (m *MockMessenger) Destroy() {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Destroy")
-	ret0, _ := ret[0].(error)
-	return ret0
+	m.ctrl.Call(m, "Destroy")
 }
 
 // Destroy indicates an expected call of Destroy.

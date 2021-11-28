@@ -31,7 +31,6 @@ import (
 	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/common"
 	"github.com/CannibalVox/cgoparam"
-	"github.com/cockroachdb/errors"
 	"unsafe"
 )
 
@@ -52,7 +51,7 @@ type VkPresentInfoKHR C.VkPresentInfoKHR
 type Driver interface {
 	coreDriver() core.Driver
 	VkCreateSwapchainKHR(device core.VkDevice, pCreateInfo *VkSwapchainCreateInfoKHR, pAllocator *core.VkAllocationCallbacks, pSwapchain *VkSwapchainKHR) (core.VkResult, error)
-	VkDestroySwapchainKHR(device core.VkDevice, swapchain VkSwapchainKHR, pAllocator *core.VkAllocationCallbacks) error
+	VkDestroySwapchainKHR(device core.VkDevice, swapchain VkSwapchainKHR, pAllocator *core.VkAllocationCallbacks)
 	VkGetSwapchainImagesKHR(device core.VkDevice, swapchain VkSwapchainKHR, pSwapchainImageCount *core.Uint32, pSwapchainImages *core.VkImage) (core.VkResult, error)
 	VkAcquireNextImageKHR(device core.VkDevice, swapchain VkSwapchainKHR, timeout core.Uint64, semaphore core.VkSemaphore, fence core.VkFence, pImageIndex *core.Uint32) (core.VkResult, error)
 	VkQueuePresentKHR(queue core.VkQueue, pPresentInfo *VkPresentInfoKHR) (core.VkResult, error)
@@ -78,7 +77,7 @@ func (d *khrSwapchainDriver) coreDriver() core.Driver {
 
 func (d *khrSwapchainDriver) VkCreateSwapchainKHR(device core.VkDevice, pCreateInfo *VkSwapchainCreateInfoKHR, pAllocator *core.VkAllocationCallbacks, pSwapchain *VkSwapchainKHR) (core.VkResult, error) {
 	if d.createFunc == nil {
-		return core.VKErrorUnknown, errors.New("attempt to call extension method vkCreateSwapchainKHR when extension not present")
+		panic("attempt to call extension method vkCreateSwapchainKHR when extension not present")
 	}
 
 	res := core.VkResult(C.cgoCreateSwapchainKHR(d.createFunc,
@@ -90,22 +89,20 @@ func (d *khrSwapchainDriver) VkCreateSwapchainKHR(device core.VkDevice, pCreateI
 	return res, res.ToError()
 }
 
-func (d *khrSwapchainDriver) VkDestroySwapchainKHR(device core.VkDevice, swapchain VkSwapchainKHR, pAllocator *core.VkAllocationCallbacks) error {
+func (d *khrSwapchainDriver) VkDestroySwapchainKHR(device core.VkDevice, swapchain VkSwapchainKHR, pAllocator *core.VkAllocationCallbacks) {
 	if d.destroyFunc == nil {
-		return errors.New("attempt to call extension method vkDestroySwapchainKHR when extension not present")
+		panic("attempt to call extension method vkDestroySwapchainKHR when extension not present")
 	}
 
 	C.cgoDestroySwapchainKHR(d.destroyFunc,
 		C.VkDevice(unsafe.Pointer(device)),
 		C.VkSwapchainKHR(swapchain),
 		(*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)))
-
-	return nil
 }
 
 func (d *khrSwapchainDriver) VkGetSwapchainImagesKHR(device core.VkDevice, swapchain VkSwapchainKHR, pSwapchainImageCount *core.Uint32, pSwapchainImages *core.VkImage) (core.VkResult, error) {
 	if d.getImagesFunc == nil {
-		return core.VKErrorUnknown, errors.New("attempt to call extension method vkGetSwapchainImagesKHR when extension not present")
+		panic("attempt to call extension method vkGetSwapchainImagesKHR when extension not present")
 	}
 
 	res := core.VkResult(C.cgoGetSwapchainImagesKHR(d.getImagesFunc,
@@ -119,7 +116,7 @@ func (d *khrSwapchainDriver) VkGetSwapchainImagesKHR(device core.VkDevice, swapc
 
 func (d *khrSwapchainDriver) VkAcquireNextImageKHR(device core.VkDevice, swapchain VkSwapchainKHR, timeout core.Uint64, semaphore core.VkSemaphore, fence core.VkFence, pImageIndex *core.Uint32) (core.VkResult, error) {
 	if d.acquireNextFunc == nil {
-		return core.VKErrorUnknown, errors.New("attempt to call extension method vkAcquireNextImageKHR when extension not present")
+		panic("attempt to call extension method vkAcquireNextImageKHR when extension not present")
 	}
 
 	res := core.VkResult(C.cgoAcquireNextImageKHR(d.acquireNextFunc,
@@ -136,7 +133,7 @@ func (d *khrSwapchainDriver) VkAcquireNextImageKHR(device core.VkDevice, swapcha
 
 func (d *khrSwapchainDriver) VkQueuePresentKHR(queue core.VkQueue, pPresentInfo *VkPresentInfoKHR) (core.VkResult, error) {
 	if d.queuePresentFunc == nil {
-		return core.VKErrorUnknown, errors.New("attempt to call extension method vkQueuePresentKHR when extension not present")
+		panic("attempt to call extension method vkQueuePresentKHR when extension not present")
 	}
 
 	res := core.VkResult(C.cgoQueuePresentKHR(d.queuePresentFunc,

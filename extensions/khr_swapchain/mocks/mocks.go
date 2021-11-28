@@ -66,11 +66,9 @@ func (mr *MockDriverMockRecorder) VkCreateSwapchainKHR(device, pCreateInfo, pAll
 }
 
 // VkDestroySwapchainKHR mocks base method.
-func (m *MockDriver) VkDestroySwapchainKHR(device core.VkDevice, swapchain khr_swapchain.VkSwapchainKHR, pAllocator *core.VkAllocationCallbacks) error {
+func (m *MockDriver) VkDestroySwapchainKHR(device core.VkDevice, swapchain khr_swapchain.VkSwapchainKHR, pAllocator *core.VkAllocationCallbacks) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "VkDestroySwapchainKHR", device, swapchain, pAllocator)
-	ret0, _ := ret[0].(error)
-	return ret0
+	m.ctrl.Call(m, "VkDestroySwapchainKHR", device, swapchain, pAllocator)
 }
 
 // VkDestroySwapchainKHR indicates an expected call of VkDestroySwapchainKHR.

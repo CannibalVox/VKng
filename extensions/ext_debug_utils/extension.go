@@ -17,7 +17,6 @@ import (
 	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/common"
 	"github.com/CannibalVox/cgoparam"
-	"github.com/cockroachdb/errors"
 	"unsafe"
 )
 
@@ -32,7 +31,7 @@ type VkDebugUtilsMessengerCreateInfoEXT C.VkDebugUtilsMessengerCreateInfoEXT
 type VkDebugUtilsMessengerEXT C.VkDebugUtilsMessengerEXT
 type Driver interface {
 	VkCreateDebugUtilsMessengerEXT(instance core.VkInstance, pCreateInfo *VkDebugUtilsMessengerCreateInfoEXT, pAllocator *core.VkAllocationCallbacks, pDebugMessenger *VkDebugUtilsMessengerEXT) (core.VkResult, error)
-	VkDestroyDebugUtilsMessengerEXT(instance core.VkInstance, debugMessenger VkDebugUtilsMessengerEXT, pAllocator *core.VkAllocationCallbacks) error
+	VkDestroyDebugUtilsMessengerEXT(instance core.VkInstance, debugMessenger VkDebugUtilsMessengerEXT, pAllocator *core.VkAllocationCallbacks)
 }
 
 func CreateDriverFromCore(driver core.Driver) Driver {
@@ -47,7 +46,7 @@ func CreateDriverFromCore(driver core.Driver) Driver {
 
 func (d *extDebugUtilsDriver) VkCreateDebugUtilsMessengerEXT(instance core.VkInstance, pCreateInfo *VkDebugUtilsMessengerCreateInfoEXT, pAllocator *core.VkAllocationCallbacks, pDebugMessenger *VkDebugUtilsMessengerEXT) (core.VkResult, error) {
 	if d.createDebugUtils == nil {
-		return core.VKErrorUnknown, errors.New("attempt to call extension method vkCreateDebugUtilsMessengerEXT when extension not present")
+		panic("attempt to call extension method vkCreateDebugUtilsMessengerEXT when extension not present")
 	}
 
 	res := core.VkResult(C.cgoCreateDebugUtilsMessengerEXT(d.createDebugUtils,
@@ -59,17 +58,15 @@ func (d *extDebugUtilsDriver) VkCreateDebugUtilsMessengerEXT(instance core.VkIns
 	return res, res.ToError()
 }
 
-func (d *extDebugUtilsDriver) VkDestroyDebugUtilsMessengerEXT(instance core.VkInstance, debugMessenger VkDebugUtilsMessengerEXT, pAllocator *core.VkAllocationCallbacks) error {
+func (d *extDebugUtilsDriver) VkDestroyDebugUtilsMessengerEXT(instance core.VkInstance, debugMessenger VkDebugUtilsMessengerEXT, pAllocator *core.VkAllocationCallbacks) {
 	if d.destroyDebugUtils == nil {
-		return errors.New("attempt to call extension method vkDestroyDebugUtilsMessengerEXT when extension not present")
+		panic("attempt to call extension method vkDestroyDebugUtilsMessengerEXT when extension not present")
 	}
 
 	C.cgoDestroyDebugUtilsMessengerEXT(d.destroyDebugUtils,
 		C.VkInstance(unsafe.Pointer(instance)),
 		C.VkDebugUtilsMessengerEXT(debugMessenger),
 		(*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)))
-
-	return nil
 }
 
 type extDebugUtilsLoader struct {
@@ -77,7 +74,7 @@ type extDebugUtilsLoader struct {
 }
 
 type Loader interface {
-	CreateMessenger(instance core.Instance, o *Options) (Messenger, core.VkResult, error)
+	CreateMessenger(instance core.Instance, o *CreationOptions) (Messenger, core.VkResult, error)
 }
 
 func CreateLoaderFromInstance(instance core.Instance) Loader {
@@ -94,7 +91,7 @@ func CreateLoaderFromDriver(driver Driver) Loader {
 	}
 }
 
-func (l *extDebugUtilsLoader) CreateMessenger(instance core.Instance, o *Options) (Messenger, core.VkResult, error) {
+func (l *extDebugUtilsLoader) CreateMessenger(instance core.Instance, o *CreationOptions) (Messenger, core.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 

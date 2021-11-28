@@ -30,7 +30,6 @@ import "C"
 import (
 	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/cgoparam"
-	"github.com/cockroachdb/errors"
 	"unsafe"
 )
 
@@ -49,7 +48,7 @@ type VkSurfaceCapabilitiesKHR C.VkSurfaceCapabilitiesKHR
 type VkSurfaceFormatKHR C.VkSurfaceFormatKHR
 type VkPresentModeKHR C.VkPresentModeKHR
 type Driver interface {
-	VkDestroySurfaceKHR(instance core.VkInstance, surface VkSurfaceKHR, pAllocator *core.VkAllocationCallbacks) error
+	VkDestroySurfaceKHR(instance core.VkInstance, surface VkSurfaceKHR, pAllocator *core.VkAllocationCallbacks)
 	VkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice core.VkPhysicalDevice, surface VkSurfaceKHR, pSurfaceCapabilities *VkSurfaceCapabilitiesKHR) (core.VkResult, error)
 	VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice core.VkPhysicalDevice, queueFamilyIndex core.Uint32, surface VkSurfaceKHR, pSupported *core.VkBool32) (core.VkResult, error)
 	VkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice core.VkPhysicalDevice, surface VkSurfaceKHR, pSurfaceFormatCount *core.Uint32, pSurfaceFormats *VkSurfaceFormatKHR) (core.VkResult, error)
@@ -75,22 +74,20 @@ func CreateDriverFromCore(driver core.Driver) Driver {
 	}
 }
 
-func (d *khrSurfaceDriver) VkDestroySurfaceKHR(instance core.VkInstance, surface VkSurfaceKHR, pAllocator *core.VkAllocationCallbacks) error {
+func (d *khrSurfaceDriver) VkDestroySurfaceKHR(instance core.VkInstance, surface VkSurfaceKHR, pAllocator *core.VkAllocationCallbacks) {
 	if d.destroyFunc == nil {
-		return errors.New("attempt to call extension method vkDestroySurfaceKHR when extension not present")
+		panic("attempt to call extension method vkDestroySurfaceKHR when extension not present")
 	}
 
 	C.cgoDestroySurfaceKHR(d.destroyFunc,
 		C.VkInstance(unsafe.Pointer(instance)),
 		C.VkSurfaceKHR(surface),
 		(*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)))
-
-	return nil
 }
 
 func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice core.VkPhysicalDevice, surface VkSurfaceKHR, pSurfaceCapabilities *VkSurfaceCapabilitiesKHR) (core.VkResult, error) {
 	if d.physicalSurfaceCapabilitiesFunc == nil {
-		return core.VKErrorUnknown, errors.New("attempt to call extension method vkGetPhysicalDeviceSurfaceCapabilitiesKHR")
+		panic("attempt to call extension method vkGetPhysicalDeviceSurfaceCapabilitiesKHR")
 	}
 
 	res := core.VkResult(C.cgoGetPhysicalDeviceSurfaceCapabilitiesKHR(d.physicalSurfaceCapabilitiesFunc,
@@ -103,7 +100,7 @@ func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDev
 
 func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice core.VkPhysicalDevice, queueFamilyIndex core.Uint32, surface VkSurfaceKHR, pSupported *core.VkBool32) (core.VkResult, error) {
 	if d.physicalSurfaceSupportFunc == nil {
-		return core.VKErrorUnknown, errors.New("attempt to call extension method vkGetPhysicalDeviceSurfaceSupportKHR")
+		panic("attempt to call extension method vkGetPhysicalDeviceSurfaceSupportKHR")
 	}
 
 	res := core.VkResult(C.cgoGetPhysicalDeviceSurfaceSupportKHR(d.physicalSurfaceSupportFunc,
@@ -117,7 +114,7 @@ func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice c
 
 func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice core.VkPhysicalDevice, surface VkSurfaceKHR, pSurfaceFormatCount *core.Uint32, pSurfaceFormats *VkSurfaceFormatKHR) (core.VkResult, error) {
 	if d.surfaceFormatsFunc == nil {
-		return core.VKErrorUnknown, errors.New("attempt to call extension method vkGetPhysicalDeviceSurfaceFormatsKHR")
+		panic("attempt to call extension method vkGetPhysicalDeviceSurfaceFormatsKHR")
 	}
 
 	res := core.VkResult(C.cgoGetPhysicalDeviceSurfaceFormatsKHR(d.surfaceFormatsFunc,
@@ -130,7 +127,7 @@ func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice c
 
 func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice core.VkPhysicalDevice, surface VkSurfaceKHR, pPresentModeCount *core.Uint32, pPresentModes *VkPresentModeKHR) (core.VkResult, error) {
 	if d.presentModesFunc == nil {
-		return core.VKErrorUnknown, errors.New("attempt to call extension method vkGetPhysicalDeviceSurfacePresentModesKHR")
+		panic("attempt to call extension method vkGetPhysicalDeviceSurfacePresentModesKHR")
 	}
 
 	res := core.VkResult(C.cgoGetPhysicalDeviceSurfacePresentModesKHR(d.presentModesFunc,

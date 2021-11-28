@@ -36,11 +36,9 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 }
 
 // VkDestroySurfaceKHR mocks base method.
-func (m *MockDriver) VkDestroySurfaceKHR(instance core.VkInstance, surface khr_surface.VkSurfaceKHR, pAllocator *core.VkAllocationCallbacks) error {
+func (m *MockDriver) VkDestroySurfaceKHR(instance core.VkInstance, surface khr_surface.VkSurfaceKHR, pAllocator *core.VkAllocationCallbacks) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "VkDestroySurfaceKHR", instance, surface, pAllocator)
-	ret0, _ := ret[0].(error)
-	return ret0
+	m.ctrl.Call(m, "VkDestroySurfaceKHR", instance, surface, pAllocator)
 }
 
 // VkDestroySurfaceKHR indicates an expected call of VkDestroySurfaceKHR.

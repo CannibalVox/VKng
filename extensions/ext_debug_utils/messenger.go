@@ -22,11 +22,11 @@ type vulkanMessenger struct {
 
 type Messenger interface {
 	Handle() VkDebugUtilsMessengerEXT
-	Destroy() error
+	Destroy()
 }
 
-func (m *vulkanMessenger) Destroy() error {
-	return m.driver.VkDestroyDebugUtilsMessengerEXT(m.instance, m.handle, nil)
+func (m *vulkanMessenger) Destroy() {
+	m.driver.VkDestroyDebugUtilsMessengerEXT(m.instance, m.handle, nil)
 }
 
 func (m *vulkanMessenger) Handle() VkDebugUtilsMessengerEXT {
