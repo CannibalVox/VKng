@@ -148,7 +148,7 @@ type khrSwapchainLoader struct {
 }
 
 type Loader interface {
-	CreateSwapchain(device core.Device, options *CreationOptions) (Swapchain, core.VkResult, error)
+	CreateSwapchain(device core.Device, allocation *core.AllocationCallbacks, options *CreationOptions) (Swapchain, core.VkResult, error)
 }
 
 func CreateLoaderFromDevice(device core.Device) Loader {
@@ -163,7 +163,7 @@ func CreateLoaderFromDriver(driver Driver) Loader {
 	}
 }
 
-func (l *khrSwapchainLoader) CreateSwapchain(device core.Device, options *CreationOptions) (Swapchain, core.VkResult, error) {
+func (l *khrSwapchainLoader) CreateSwapchain(device core.Device, allocation *core.AllocationCallbacks, options *CreationOptions) (Swapchain, core.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 

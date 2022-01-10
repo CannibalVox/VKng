@@ -74,7 +74,7 @@ type extDebugUtilsLoader struct {
 }
 
 type Loader interface {
-	CreateMessenger(instance core.Instance, o *CreationOptions) (Messenger, core.VkResult, error)
+	CreateMessenger(instance core.Instance, allocation *core.AllocationCallbacks, o *CreationOptions) (Messenger, core.VkResult, error)
 }
 
 func CreateLoaderFromInstance(instance core.Instance) Loader {
@@ -91,7 +91,7 @@ func CreateLoaderFromDriver(driver Driver) Loader {
 	}
 }
 
-func (l *extDebugUtilsLoader) CreateMessenger(instance core.Instance, o *CreationOptions) (Messenger, core.VkResult, error) {
+func (l *extDebugUtilsLoader) CreateMessenger(instance core.Instance, allocation *core.AllocationCallbacks, o *CreationOptions) (Messenger, core.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
