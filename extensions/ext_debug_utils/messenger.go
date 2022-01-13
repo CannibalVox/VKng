@@ -33,12 +33,12 @@ func (m *vulkanMessenger) Handle() VkDebugUtilsMessengerEXT {
 	return m.handle
 }
 
-type CallbackFunction func(msgType MessageType, severity MessageSeverity, data *CallbackData) bool
+type CallbackFunction func(msgType MessageTypes, severity MessageSeverities, data *CallbackData) bool
 
 //export goDebugCallback
 func goDebugCallback(messageSeverity C.VkDebugUtilsMessageSeverityFlagBitsEXT, messageType C.VkDebugUtilsMessageTypeFlagsEXT, data *C.VkDebugUtilsMessengerCallbackDataEXT, userData unsafe.Pointer) C.VkBool32 {
-	severity := MessageSeverity(messageSeverity)
-	msgType := MessageType(messageType)
+	severity := MessageSeverities(messageSeverity)
+	msgType := MessageTypes(messageType)
 	callbackData := createCallbackData(data)
 
 	f := cgo.Handle(userData).Value().(CallbackFunction)

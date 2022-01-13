@@ -7,7 +7,6 @@ package khr_surface
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core/common"
-	"strings"
 )
 
 type SurfaceTransforms int32
@@ -37,24 +36,7 @@ var surfaceTransformsToString = map[SurfaceTransforms]string{
 }
 
 func (t SurfaceTransforms) String() string {
-	hasOne := false
-	var sb strings.Builder
-
-	for i := 0; i < 32; i++ {
-		shiftedBit := SurfaceTransforms(1 << i)
-		if t&shiftedBit != 0 {
-			strVal, exists := surfaceTransformsToString[shiftedBit]
-			if exists {
-				if hasOne {
-					sb.WriteString("|")
-				}
-				sb.WriteString(strVal)
-				hasOne = true
-			}
-		}
-	}
-
-	return sb.String()
+	return common.FlagsToString(t, surfaceTransformsToString)
 }
 
 type CompositeAlphaModes int32
@@ -74,24 +56,7 @@ var compositeAlphaModesToString = map[CompositeAlphaModes]string{
 }
 
 func (m CompositeAlphaModes) String() string {
-	hasOne := false
-	var sb strings.Builder
-
-	for i := 0; i < 32; i++ {
-		shiftedBit := CompositeAlphaModes(1 << i)
-		if m&shiftedBit != 0 {
-			strVal, exists := compositeAlphaModesToString[shiftedBit]
-			if exists {
-				if hasOne {
-					sb.WriteString("|")
-				}
-				sb.WriteString(strVal)
-				hasOne = true
-			}
-		}
-	}
-
-	return sb.String()
+	return common.FlagsToString(m, compositeAlphaModesToString)
 }
 
 type PresentMode int32

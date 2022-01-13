@@ -7,16 +7,16 @@ package ext_debug_utils
 import "C"
 import "strings"
 
-type MessageType uint32
+type MessageTypes uint32
 
 const (
-	TypeGeneral     MessageType = C.VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT
-	TypeValidation  MessageType = C.VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT
-	TypePerformance MessageType = C.VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT
-	TypeAll         MessageType = TypeGeneral | TypeValidation | TypePerformance
+	TypeGeneral     MessageTypes = C.VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT
+	TypeValidation  MessageTypes = C.VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT
+	TypePerformance MessageTypes = C.VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT
+	TypeAll         MessageTypes = TypeGeneral | TypeValidation | TypePerformance
 )
 
-func (f MessageType) String() string {
+func (f MessageTypes) String() string {
 	hasOne := false
 	sb := strings.Builder{}
 
@@ -45,17 +45,17 @@ func (f MessageType) String() string {
 	return sb.String()
 }
 
-type MessageSeverity uint32
+type MessageSeverities uint32
 
 const (
-	SeverityVerbose MessageSeverity = C.VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT
-	SeverityInfo    MessageSeverity = C.VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT
-	SeverityWarning MessageSeverity = C.VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT
-	SeverityError   MessageSeverity = C.VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT
-	SeverityAll     MessageSeverity = SeverityVerbose | SeverityInfo | SeverityWarning | SeverityError
+	SeverityVerbose MessageSeverities = C.VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT
+	SeverityInfo    MessageSeverities = C.VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT
+	SeverityWarning MessageSeverities = C.VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT
+	SeverityError   MessageSeverities = C.VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT
+	SeverityAll     MessageSeverities = SeverityVerbose | SeverityInfo | SeverityWarning | SeverityError
 )
 
-func (s MessageSeverity) String() string {
+func (s MessageSeverities) String() string {
 	hasOne := false
 	sb := strings.Builder{}
 

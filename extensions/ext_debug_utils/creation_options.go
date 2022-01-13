@@ -23,8 +23,8 @@ import (
 )
 
 type CreationOptions struct {
-	CaptureSeverities MessageSeverity
-	CaptureTypes      MessageType
+	CaptureSeverities MessageSeverities
+	CaptureTypes      MessageTypes
 	Callback          CallbackFunction
 
 	common.HaveNext

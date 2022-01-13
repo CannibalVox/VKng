@@ -1,6 +1,6 @@
 module github.com/CannibalVox/VKng
 
-go 1.17
+go 1.18
 
 require (
 	github.com/CannibalVox/cgoparam v0.0.0-20210911212540-41cbfa86f15d
