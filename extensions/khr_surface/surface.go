@@ -22,7 +22,7 @@ type vulkanSurface struct {
 
 type Surface interface {
 	Handle() VkSurfaceKHR
-	Destroy()
+	Destroy(callbacks *core.AllocationCallbacks)
 	SupportsDevice(physicalDevice core.PhysicalDevice, queueFamilyIndex int) (bool, core.VkResult, error)
 	Capabilities(device core.PhysicalDevice) (*Capabilities, core.VkResult, error)
 	Formats(device core.PhysicalDevice) ([]Format, core.VkResult, error)
@@ -41,7 +41,7 @@ func (s *vulkanSurface) Handle() VkSurfaceKHR {
 	return s.handle
 }
 
-func (s *vulkanSurface) Destroy() {
+func (s *vulkanSurface) Destroy(callbacks *core.AllocationCallbacks) {
 	s.driver.VkDestroySurfaceKHR(s.instance, s.handle, nil)
 }
 

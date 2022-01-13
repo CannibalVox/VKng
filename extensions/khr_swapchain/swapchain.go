@@ -21,7 +21,7 @@ type vulkanSwapchain struct {
 
 type Swapchain interface {
 	Handle() VkSwapchainKHR
-	Destroy()
+	Destroy(callbacks *core.AllocationCallbacks)
 	Images() ([]core.Image, core.VkResult, error)
 	AcquireNextImage(timeout time.Duration, semaphore core.Semaphore, fence core.Fence) (int, core.VkResult, error)
 	PresentToQueue(queue core.Queue, o *PresentOptions) (resultBySwapchain []core.VkResult, res core.VkResult, anyError error)
@@ -31,7 +31,7 @@ func (s *vulkanSwapchain) Handle() VkSwapchainKHR {
 	return s.handle
 }
 
-func (s *vulkanSwapchain) Destroy() {
+func (s *vulkanSwapchain) Destroy(callbacks *core.AllocationCallbacks) {
 	s.driver.VkDestroySwapchainKHR(s.device, s.handle, nil)
 }
 

@@ -7,6 +7,7 @@ package mock_debugutils
 import (
 	reflect "reflect"
 
+	core "github.com/CannibalVox/VKng/core"
 	ext_debug_utils "github.com/CannibalVox/VKng/extensions/ext_debug_utils"
 	gomock "github.com/golang/mock/gomock"
 )
@@ -35,15 +36,15 @@ func (m *MockMessenger) EXPECT() *MockMessengerMockRecorder {
 }
 
 // Destroy mocks base method.
-func (m *MockMessenger) Destroy() {
+func (m *MockMessenger) Destroy(callbacks *core.AllocationCallbacks) {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "Destroy")
+	m.ctrl.Call(m, "Destroy", callbacks)
 }
 
 // Destroy indicates an expected call of Destroy.
-func (mr *MockMessengerMockRecorder) Destroy() *gomock.Call {
+func (mr *MockMessengerMockRecorder) Destroy(callbacks interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Destroy", reflect.TypeOf((*MockMessenger)(nil).Destroy))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Destroy", reflect.TypeOf((*MockMessenger)(nil).Destroy), callbacks)
 }
 
 // Handle mocks base method.

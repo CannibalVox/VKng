@@ -145,9 +145,9 @@ func (m *MockLoader) EXPECT() *MockLoaderMockRecorder {
 }
 
 // CreateSwapchain mocks base method.
-func (m *MockLoader) CreateSwapchain(device core.Device, options *khr_swapchain.CreationOptions) (khr_swapchain.Swapchain, core.VkResult, error) {
+func (m *MockLoader) CreateSwapchain(device core.Device, allocation *core.AllocationCallbacks, options *khr_swapchain.CreationOptions) (khr_swapchain.Swapchain, core.VkResult, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateSwapchain", device, options)
+	ret := m.ctrl.Call(m, "CreateSwapchain", device, allocation, options)
 	ret0, _ := ret[0].(khr_swapchain.Swapchain)
 	ret1, _ := ret[1].(core.VkResult)
 	ret2, _ := ret[2].(error)
@@ -155,7 +155,7 @@ func (m *MockLoader) CreateSwapchain(device core.Device, options *khr_swapchain.
 }
 
 // CreateSwapchain indicates an expected call of CreateSwapchain.
-func (mr *MockLoaderMockRecorder) CreateSwapchain(device, options interface{}) *gomock.Call {
+func (mr *MockLoaderMockRecorder) CreateSwapchain(device, allocation, options interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSwapchain", reflect.TypeOf((*MockLoader)(nil).CreateSwapchain), device, options)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSwapchain", reflect.TypeOf((*MockLoader)(nil).CreateSwapchain), device, allocation, options)
 }

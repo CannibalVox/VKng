@@ -52,15 +52,15 @@ func (mr *MockSurfaceMockRecorder) Capabilities(device interface{}) *gomock.Call
 }
 
 // Destroy mocks base method.
-func (m *MockSurface) Destroy() {
+func (m *MockSurface) Destroy(callbacks *core.AllocationCallbacks) {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "Destroy")
+	m.ctrl.Call(m, "Destroy", callbacks)
 }
 
 // Destroy indicates an expected call of Destroy.
-func (mr *MockSurfaceMockRecorder) Destroy() *gomock.Call {
+func (mr *MockSurfaceMockRecorder) Destroy(callbacks interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Destroy", reflect.TypeOf((*MockSurface)(nil).Destroy))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Destroy", reflect.TypeOf((*MockSurface)(nil).Destroy), callbacks)
 }
 
 // Formats mocks base method.
