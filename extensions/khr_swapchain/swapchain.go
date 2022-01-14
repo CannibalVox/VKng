@@ -32,7 +32,7 @@ func (s *vulkanSwapchain) Handle() VkSwapchainKHR {
 }
 
 func (s *vulkanSwapchain) Destroy(callbacks *core.AllocationCallbacks) {
-	s.driver.VkDestroySwapchainKHR(s.device, s.handle, nil)
+	s.driver.VkDestroySwapchainKHR(s.device, s.handle, callbacks.Handle())
 }
 
 func (s *vulkanSwapchain) Images() ([]core.Image, core.VkResult, error) {

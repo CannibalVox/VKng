@@ -42,7 +42,7 @@ func (s *vulkanSurface) Handle() VkSurfaceKHR {
 }
 
 func (s *vulkanSurface) Destroy(callbacks *core.AllocationCallbacks) {
-	s.driver.VkDestroySurfaceKHR(s.instance, s.handle, nil)
+	s.driver.VkDestroySurfaceKHR(s.instance, s.handle, callbacks.Handle())
 }
 
 func (s *vulkanSurface) SupportsDevice(physicalDevice core.PhysicalDevice, queueFamilyIndex int) (bool, core.VkResult, error) {

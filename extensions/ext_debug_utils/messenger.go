@@ -26,7 +26,7 @@ type Messenger interface {
 }
 
 func (m *vulkanMessenger) Destroy(callbacks *core.AllocationCallbacks) {
-	m.driver.VkDestroyDebugUtilsMessengerEXT(m.instance, m.handle, nil)
+	m.driver.VkDestroyDebugUtilsMessengerEXT(m.instance, m.handle, callbacks.Handle())
 }
 
 func (m *vulkanMessenger) Handle() VkDebugUtilsMessengerEXT {
