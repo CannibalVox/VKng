@@ -10,12 +10,13 @@ import "C"
 import (
 	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/driver"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
 
 type vulkanSurface struct {
-	instance core.VkInstance
+	instance driver.VkInstance
 	handle   VkSurfaceKHR
 	driver   Driver
 }
@@ -23,18 +24,18 @@ type vulkanSurface struct {
 type Surface interface {
 	Handle() VkSurfaceKHR
 	Destroy(callbacks *core.AllocationCallbacks)
-	SupportsDevice(physicalDevice core.PhysicalDevice, queueFamilyIndex int) (bool, core.VkResult, error)
-	Capabilities(device core.PhysicalDevice) (*Capabilities, core.VkResult, error)
-	Formats(device core.PhysicalDevice) ([]Format, core.VkResult, error)
-	PresentModes(device core.PhysicalDevice) ([]PresentMode, core.VkResult, error)
+	SupportsDevice(physicalDevice core.PhysicalDevice, queueFamilyIndex int) (bool, common.VkResult, error)
+	Capabilities(device core.PhysicalDevice) (*Capabilities, common.VkResult, error)
+	Formats(device core.PhysicalDevice) ([]Format, common.VkResult, error)
+	PresentModes(device core.PhysicalDevice) ([]PresentMode, common.VkResult, error)
 }
 
-func CreateSurface(surfacePtr unsafe.Pointer, instance core.Instance, driver Driver) (Surface, core.VkResult, error) {
+func CreateSurface(surfacePtr unsafe.Pointer, instance core.Instance, driver Driver) (Surface, common.VkResult, error) {
 	return &vulkanSurface{
 		handle:   (VkSurfaceKHR)(surfacePtr),
 		instance: instance.Handle(),
 		driver:   driver,
-	}, core.VKSuccess, nil
+	}, common.VKSuccess, nil
 }
 
 func (s *vulkanSurface) Handle() VkSurfaceKHR {
@@ -45,15 +46,15 @@ func (s *vulkanSurface) Destroy(callbacks *core.AllocationCallbacks) {
 	s.driver.VkDestroySurfaceKHR(s.instance, s.handle, callbacks.Handle())
 }
 
-func (s *vulkanSurface) SupportsDevice(physicalDevice core.PhysicalDevice, queueFamilyIndex int) (bool, core.VkResult, error) {
-	var canPresent core.VkBool32
+func (s *vulkanSurface) SupportsDevice(physicalDevice core.PhysicalDevice, queueFamilyIndex int) (bool, common.VkResult, error) {
+	var canPresent driver.VkBool32
 
-	res, err := s.driver.VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice.Handle(), core.Uint32(queueFamilyIndex), s.handle, &canPresent)
+	res, err := s.driver.VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice.Handle(), driver.Uint32(queueFamilyIndex), s.handle, &canPresent)
 
 	return canPresent != C.VK_FALSE, res, err
 }
 
-func (s *vulkanSurface) Capabilities(device core.PhysicalDevice) (*Capabilities, core.VkResult, error) {
+func (s *vulkanSurface) Capabilities(device core.PhysicalDevice) (*Capabilities, common.VkResult, error) {
 	allocator := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(allocator)
 
@@ -90,12 +91,12 @@ func (s *vulkanSurface) Capabilities(device core.PhysicalDevice) (*Capabilities,
 	}, res, nil
 }
 
-func (s *vulkanSurface) Formats(device core.PhysicalDevice) ([]Format, core.VkResult, error) {
+func (s *vulkanSurface) Formats(device core.PhysicalDevice) ([]Format, common.VkResult, error) {
 	allocator := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(allocator)
 
 	formatCountPtr := allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0))))
-	formatCount := (*core.Uint32)(formatCountPtr)
+	formatCount := (*driver.Uint32)(formatCountPtr)
 
 	res, err := s.driver.VkGetPhysicalDeviceSurfaceFormatsKHR(device.Handle(), s.handle, formatCount, nil)
 	if err != nil {
@@ -127,12 +128,12 @@ func (s *vulkanSurface) Formats(device core.PhysicalDevice) ([]Format, core.VkRe
 	return result, res, nil
 }
 
-func (s *vulkanSurface) PresentModes(device core.PhysicalDevice) ([]PresentMode, core.VkResult, error) {
+func (s *vulkanSurface) PresentModes(device core.PhysicalDevice) ([]PresentMode, common.VkResult, error) {
 	allocator := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(allocator)
 
 	modeCountPtr := allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0))))
-	modeCount := (*core.Uint32)(modeCountPtr)
+	modeCount := (*driver.Uint32)(modeCountPtr)
 
 	res, err := s.driver.VkGetPhysicalDeviceSurfacePresentModesKHR(device.Handle(), s.handle, modeCount, nil)
 	if err != nil {

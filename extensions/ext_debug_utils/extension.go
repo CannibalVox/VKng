@@ -16,6 +16,7 @@ import "C"
 import (
 	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/driver"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
@@ -30,26 +31,26 @@ type extDebugUtilsDriver struct {
 type VkDebugUtilsMessengerCreateInfoEXT C.VkDebugUtilsMessengerCreateInfoEXT
 type VkDebugUtilsMessengerEXT C.VkDebugUtilsMessengerEXT
 type Driver interface {
-	VkCreateDebugUtilsMessengerEXT(instance core.VkInstance, pCreateInfo *VkDebugUtilsMessengerCreateInfoEXT, pAllocator *core.VkAllocationCallbacks, pDebugMessenger *VkDebugUtilsMessengerEXT) (core.VkResult, error)
-	VkDestroyDebugUtilsMessengerEXT(instance core.VkInstance, debugMessenger VkDebugUtilsMessengerEXT, pAllocator *core.VkAllocationCallbacks)
+	VkCreateDebugUtilsMessengerEXT(instance driver.VkInstance, pCreateInfo *VkDebugUtilsMessengerCreateInfoEXT, pAllocator *driver.VkAllocationCallbacks, pDebugMessenger *VkDebugUtilsMessengerEXT) (common.VkResult, error)
+	VkDestroyDebugUtilsMessengerEXT(instance driver.VkInstance, debugMessenger VkDebugUtilsMessengerEXT, pAllocator *driver.VkAllocationCallbacks)
 }
 
-func CreateDriverFromCore(driver core.Driver) Driver {
+func CreateDriverFromCore(coreDriver driver.Driver) Driver {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
 	return &extDebugUtilsDriver{
-		createDebugUtils:  (C.PFN_vkCreateDebugUtilsMessengerEXT)(driver.LoadProcAddr((*core.Char)(arena.CString("vkCreateDebugUtilsMessengerEXT")))),
-		destroyDebugUtils: (C.PFN_vkDestroyDebugUtilsMessengerEXT)(driver.LoadProcAddr((*core.Char)(arena.CString("vkDestroyDebugUtilsMessengerEXT")))),
+		createDebugUtils:  (C.PFN_vkCreateDebugUtilsMessengerEXT)(coreDriver.LoadProcAddr((*driver.Char)(arena.CString("vkCreateDebugUtilsMessengerEXT")))),
+		destroyDebugUtils: (C.PFN_vkDestroyDebugUtilsMessengerEXT)(coreDriver.LoadProcAddr((*driver.Char)(arena.CString("vkDestroyDebugUtilsMessengerEXT")))),
 	}
 }
 
-func (d *extDebugUtilsDriver) VkCreateDebugUtilsMessengerEXT(instance core.VkInstance, pCreateInfo *VkDebugUtilsMessengerCreateInfoEXT, pAllocator *core.VkAllocationCallbacks, pDebugMessenger *VkDebugUtilsMessengerEXT) (core.VkResult, error) {
+func (d *extDebugUtilsDriver) VkCreateDebugUtilsMessengerEXT(instance driver.VkInstance, pCreateInfo *VkDebugUtilsMessengerCreateInfoEXT, pAllocator *driver.VkAllocationCallbacks, pDebugMessenger *VkDebugUtilsMessengerEXT) (common.VkResult, error) {
 	if d.createDebugUtils == nil {
 		panic("attempt to call extension method vkCreateDebugUtilsMessengerEXT when extension not present")
 	}
 
-	res := core.VkResult(C.cgoCreateDebugUtilsMessengerEXT(d.createDebugUtils,
+	res := common.VkResult(C.cgoCreateDebugUtilsMessengerEXT(d.createDebugUtils,
 		C.VkInstance(unsafe.Pointer(instance)),
 		(*C.VkDebugUtilsMessengerCreateInfoEXT)(pCreateInfo),
 		(*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)),
@@ -58,7 +59,7 @@ func (d *extDebugUtilsDriver) VkCreateDebugUtilsMessengerEXT(instance core.VkIns
 	return res, res.ToError()
 }
 
-func (d *extDebugUtilsDriver) VkDestroyDebugUtilsMessengerEXT(instance core.VkInstance, debugMessenger VkDebugUtilsMessengerEXT, pAllocator *core.VkAllocationCallbacks) {
+func (d *extDebugUtilsDriver) VkDestroyDebugUtilsMessengerEXT(instance driver.VkInstance, debugMessenger VkDebugUtilsMessengerEXT, pAllocator *driver.VkAllocationCallbacks) {
 	if d.destroyDebugUtils == nil {
 		panic("attempt to call extension method vkDestroyDebugUtilsMessengerEXT when extension not present")
 	}
@@ -74,7 +75,7 @@ type extDebugUtilsLoader struct {
 }
 
 type Loader interface {
-	CreateMessenger(instance core.Instance, allocation *core.AllocationCallbacks, o *CreationOptions) (Messenger, core.VkResult, error)
+	CreateMessenger(instance core.Instance, allocation *core.AllocationCallbacks, o *CreationOptions) (Messenger, common.VkResult, error)
 }
 
 func CreateLoaderFromInstance(instance core.Instance) Loader {
@@ -91,13 +92,13 @@ func CreateLoaderFromDriver(driver Driver) Loader {
 	}
 }
 
-func (l *extDebugUtilsLoader) CreateMessenger(instance core.Instance, allocation *core.AllocationCallbacks, o *CreationOptions) (Messenger, core.VkResult, error) {
+func (l *extDebugUtilsLoader) CreateMessenger(instance core.Instance, allocation *core.AllocationCallbacks, o *CreationOptions) (Messenger, common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
 	createInfo, err := common.AllocOptions(arena, o)
 	if err != nil {
-		return nil, core.VKErrorUnknown, err
+		return nil, common.VKErrorUnknown, err
 	}
 
 	var messenger VkDebugUtilsMessengerEXT

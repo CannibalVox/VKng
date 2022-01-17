@@ -10,12 +10,13 @@ package ext_debug_utils
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng/core/driver"
 	"runtime/cgo"
 	"unsafe"
 )
 
 type vulkanMessenger struct {
-	instance core.VkInstance
+	instance driver.VkInstance
 	handle   VkDebugUtilsMessengerEXT
 	driver   Driver
 }

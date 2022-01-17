@@ -8,6 +8,7 @@ import (
 	reflect "reflect"
 
 	core "github.com/CannibalVox/VKng/core"
+	common "github.com/CannibalVox/VKng/core/common"
 	khr_surface "github.com/CannibalVox/VKng/extensions/khr_surface"
 	gomock "github.com/golang/mock/gomock"
 )
@@ -36,11 +37,11 @@ func (m *MockSurface) EXPECT() *MockSurfaceMockRecorder {
 }
 
 // Capabilities mocks base method.
-func (m *MockSurface) Capabilities(device core.PhysicalDevice) (*khr_surface.Capabilities, core.VkResult, error) {
+func (m *MockSurface) Capabilities(device core.PhysicalDevice) (*khr_surface.Capabilities, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Capabilities", device)
 	ret0, _ := ret[0].(*khr_surface.Capabilities)
-	ret1, _ := ret[1].(core.VkResult)
+	ret1, _ := ret[1].(common.VkResult)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
 }
@@ -64,11 +65,11 @@ func (mr *MockSurfaceMockRecorder) Destroy(callbacks interface{}) *gomock.Call {
 }
 
 // Formats mocks base method.
-func (m *MockSurface) Formats(device core.PhysicalDevice) ([]khr_surface.Format, core.VkResult, error) {
+func (m *MockSurface) Formats(device core.PhysicalDevice) ([]khr_surface.Format, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Formats", device)
 	ret0, _ := ret[0].([]khr_surface.Format)
-	ret1, _ := ret[1].(core.VkResult)
+	ret1, _ := ret[1].(common.VkResult)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
 }
@@ -94,11 +95,11 @@ func (mr *MockSurfaceMockRecorder) Handle() *gomock.Call {
 }
 
 // PresentModes mocks base method.
-func (m *MockSurface) PresentModes(device core.PhysicalDevice) ([]khr_surface.PresentMode, core.VkResult, error) {
+func (m *MockSurface) PresentModes(device core.PhysicalDevice) ([]khr_surface.PresentMode, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PresentModes", device)
 	ret0, _ := ret[0].([]khr_surface.PresentMode)
-	ret1, _ := ret[1].(core.VkResult)
+	ret1, _ := ret[1].(common.VkResult)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
 }
@@ -110,11 +111,11 @@ func (mr *MockSurfaceMockRecorder) PresentModes(device interface{}) *gomock.Call
 }
 
 // SupportsDevice mocks base method.
-func (m *MockSurface) SupportsDevice(physicalDevice core.PhysicalDevice, queueFamilyIndex int) (bool, core.VkResult, error) {
+func (m *MockSurface) SupportsDevice(physicalDevice core.PhysicalDevice, queueFamilyIndex int) (bool, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SupportsDevice", physicalDevice, queueFamilyIndex)
 	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(core.VkResult)
+	ret1, _ := ret[1].(common.VkResult)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
 }

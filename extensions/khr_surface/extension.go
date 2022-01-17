@@ -28,7 +28,8 @@ VkResult cgoGetPhysicalDeviceSurfacePresentModesKHR(PFN_vkGetPhysicalDeviceSurfa
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/driver"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
@@ -48,22 +49,22 @@ type VkSurfaceCapabilitiesKHR C.VkSurfaceCapabilitiesKHR
 type VkSurfaceFormatKHR C.VkSurfaceFormatKHR
 type VkPresentModeKHR C.VkPresentModeKHR
 type Driver interface {
-	VkDestroySurfaceKHR(instance core.VkInstance, surface VkSurfaceKHR, pAllocator *core.VkAllocationCallbacks)
-	VkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice core.VkPhysicalDevice, surface VkSurfaceKHR, pSurfaceCapabilities *VkSurfaceCapabilitiesKHR) (core.VkResult, error)
-	VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice core.VkPhysicalDevice, queueFamilyIndex core.Uint32, surface VkSurfaceKHR, pSupported *core.VkBool32) (core.VkResult, error)
-	VkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice core.VkPhysicalDevice, surface VkSurfaceKHR, pSurfaceFormatCount *core.Uint32, pSurfaceFormats *VkSurfaceFormatKHR) (core.VkResult, error)
-	VkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice core.VkPhysicalDevice, surface VkSurfaceKHR, pPresentModeCount *core.Uint32, pPresentModes *VkPresentModeKHR) (core.VkResult, error)
+	VkDestroySurfaceKHR(instance driver.VkInstance, surface VkSurfaceKHR, pAllocator *driver.VkAllocationCallbacks)
+	VkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice driver.VkPhysicalDevice, surface VkSurfaceKHR, pSurfaceCapabilities *VkSurfaceCapabilitiesKHR) (common.VkResult, error)
+	VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice driver.VkPhysicalDevice, queueFamilyIndex driver.Uint32, surface VkSurfaceKHR, pSupported *driver.VkBool32) (common.VkResult, error)
+	VkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice driver.VkPhysicalDevice, surface VkSurfaceKHR, pSurfaceFormatCount *driver.Uint32, pSurfaceFormats *VkSurfaceFormatKHR) (common.VkResult, error)
+	VkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice driver.VkPhysicalDevice, surface VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *VkPresentModeKHR) (common.VkResult, error)
 }
 
-func CreateDriverFromCore(driver core.Driver) Driver {
+func CreateDriverFromCore(coreDriver driver.Driver) Driver {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
-	physicalSurfaceCapabilitiesFunc := (C.PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR)(driver.LoadProcAddr((*core.Char)(arena.CString("vkGetPhysicalDeviceSurfaceCapabilitiesKHR"))))
-	physicalSurfaceSupportFunc := (C.PFN_vkGetPhysicalDeviceSurfaceSupportKHR)(driver.LoadProcAddr((*core.Char)(arena.CString("vkGetPhysicalDeviceSurfaceSupportKHR"))))
-	surfaceFormatsFunc := (C.PFN_vkGetPhysicalDeviceSurfaceFormatsKHR)(driver.LoadProcAddr((*core.Char)(arena.CString("vkGetPhysicalDeviceSurfaceFormatsKHR"))))
-	presentModesFunc := (C.PFN_vkGetPhysicalDeviceSurfacePresentModesKHR)(driver.LoadProcAddr((*core.Char)(arena.CString("vkGetPhysicalDeviceSurfacePresentModesKHR"))))
-	destroyFunc := (C.PFN_vkDestroySurfaceKHR)(driver.LoadProcAddr((*core.Char)(arena.CString("vkDestroySurfaceKHR"))))
+	physicalSurfaceCapabilitiesFunc := (C.PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR)(coreDriver.LoadProcAddr((*driver.Char)(arena.CString("vkGetPhysicalDeviceSurfaceCapabilitiesKHR"))))
+	physicalSurfaceSupportFunc := (C.PFN_vkGetPhysicalDeviceSurfaceSupportKHR)(coreDriver.LoadProcAddr((*driver.Char)(arena.CString("vkGetPhysicalDeviceSurfaceSupportKHR"))))
+	surfaceFormatsFunc := (C.PFN_vkGetPhysicalDeviceSurfaceFormatsKHR)(coreDriver.LoadProcAddr((*driver.Char)(arena.CString("vkGetPhysicalDeviceSurfaceFormatsKHR"))))
+	presentModesFunc := (C.PFN_vkGetPhysicalDeviceSurfacePresentModesKHR)(coreDriver.LoadProcAddr((*driver.Char)(arena.CString("vkGetPhysicalDeviceSurfacePresentModesKHR"))))
+	destroyFunc := (C.PFN_vkDestroySurfaceKHR)(coreDriver.LoadProcAddr((*driver.Char)(arena.CString("vkDestroySurfaceKHR"))))
 
 	return &khrSurfaceDriver{
 		physicalSurfaceSupportFunc:      physicalSurfaceSupportFunc,
@@ -74,7 +75,7 @@ func CreateDriverFromCore(driver core.Driver) Driver {
 	}
 }
 
-func (d *khrSurfaceDriver) VkDestroySurfaceKHR(instance core.VkInstance, surface VkSurfaceKHR, pAllocator *core.VkAllocationCallbacks) {
+func (d *khrSurfaceDriver) VkDestroySurfaceKHR(instance driver.VkInstance, surface VkSurfaceKHR, pAllocator *driver.VkAllocationCallbacks) {
 	if d.destroyFunc == nil {
 		panic("attempt to call extension method vkDestroySurfaceKHR when extension not present")
 	}
@@ -85,12 +86,12 @@ func (d *khrSurfaceDriver) VkDestroySurfaceKHR(instance core.VkInstance, surface
 		(*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)))
 }
 
-func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice core.VkPhysicalDevice, surface VkSurfaceKHR, pSurfaceCapabilities *VkSurfaceCapabilitiesKHR) (core.VkResult, error) {
+func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice driver.VkPhysicalDevice, surface VkSurfaceKHR, pSurfaceCapabilities *VkSurfaceCapabilitiesKHR) (common.VkResult, error) {
 	if d.physicalSurfaceCapabilitiesFunc == nil {
 		panic("attempt to call extension method vkGetPhysicalDeviceSurfaceCapabilitiesKHR")
 	}
 
-	res := core.VkResult(C.cgoGetPhysicalDeviceSurfaceCapabilitiesKHR(d.physicalSurfaceCapabilitiesFunc,
+	res := common.VkResult(C.cgoGetPhysicalDeviceSurfaceCapabilitiesKHR(d.physicalSurfaceCapabilitiesFunc,
 		C.VkPhysicalDevice(unsafe.Pointer(physicalDevice)),
 		C.VkSurfaceKHR(surface),
 		(*C.VkSurfaceCapabilitiesKHR)(pSurfaceCapabilities)))
@@ -98,12 +99,12 @@ func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDev
 	return res, res.ToError()
 }
 
-func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice core.VkPhysicalDevice, queueFamilyIndex core.Uint32, surface VkSurfaceKHR, pSupported *core.VkBool32) (core.VkResult, error) {
+func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice driver.VkPhysicalDevice, queueFamilyIndex driver.Uint32, surface VkSurfaceKHR, pSupported *driver.VkBool32) (common.VkResult, error) {
 	if d.physicalSurfaceSupportFunc == nil {
 		panic("attempt to call extension method vkGetPhysicalDeviceSurfaceSupportKHR")
 	}
 
-	res := core.VkResult(C.cgoGetPhysicalDeviceSurfaceSupportKHR(d.physicalSurfaceSupportFunc,
+	res := common.VkResult(C.cgoGetPhysicalDeviceSurfaceSupportKHR(d.physicalSurfaceSupportFunc,
 		C.VkPhysicalDevice(unsafe.Pointer(physicalDevice)),
 		C.uint32_t(queueFamilyIndex),
 		C.VkSurfaceKHR(surface),
@@ -112,12 +113,12 @@ func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice c
 	return res, res.ToError()
 }
 
-func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice core.VkPhysicalDevice, surface VkSurfaceKHR, pSurfaceFormatCount *core.Uint32, pSurfaceFormats *VkSurfaceFormatKHR) (core.VkResult, error) {
+func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice driver.VkPhysicalDevice, surface VkSurfaceKHR, pSurfaceFormatCount *driver.Uint32, pSurfaceFormats *VkSurfaceFormatKHR) (common.VkResult, error) {
 	if d.surfaceFormatsFunc == nil {
 		panic("attempt to call extension method vkGetPhysicalDeviceSurfaceFormatsKHR")
 	}
 
-	res := core.VkResult(C.cgoGetPhysicalDeviceSurfaceFormatsKHR(d.surfaceFormatsFunc,
+	res := common.VkResult(C.cgoGetPhysicalDeviceSurfaceFormatsKHR(d.surfaceFormatsFunc,
 		C.VkPhysicalDevice(unsafe.Pointer(physicalDevice)),
 		C.VkSurfaceKHR(surface),
 		(*C.uint32_t)(unsafe.Pointer(pSurfaceFormatCount)),
@@ -125,12 +126,12 @@ func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice c
 	return res, res.ToError()
 }
 
-func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice core.VkPhysicalDevice, surface VkSurfaceKHR, pPresentModeCount *core.Uint32, pPresentModes *VkPresentModeKHR) (core.VkResult, error) {
+func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice driver.VkPhysicalDevice, surface VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *VkPresentModeKHR) (common.VkResult, error) {
 	if d.presentModesFunc == nil {
 		panic("attempt to call extension method vkGetPhysicalDeviceSurfacePresentModesKHR")
 	}
 
-	res := core.VkResult(C.cgoGetPhysicalDeviceSurfacePresentModesKHR(d.presentModesFunc,
+	res := common.VkResult(C.cgoGetPhysicalDeviceSurfacePresentModesKHR(d.presentModesFunc,
 		C.VkPhysicalDevice(unsafe.Pointer(physicalDevice)),
 		C.VkSurfaceKHR(surface),
 		(*C.uint32_t)(unsafe.Pointer(pPresentModeCount)),

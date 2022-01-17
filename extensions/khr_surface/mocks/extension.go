@@ -7,7 +7,8 @@ package mock_surface
 import (
 	reflect "reflect"
 
-	core "github.com/CannibalVox/VKng/core"
+	common "github.com/CannibalVox/VKng/core/common"
+	driver "github.com/CannibalVox/VKng/core/driver"
 	khr_surface "github.com/CannibalVox/VKng/extensions/khr_surface"
 	gomock "github.com/golang/mock/gomock"
 )
@@ -36,7 +37,7 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 }
 
 // VkDestroySurfaceKHR mocks base method.
-func (m *MockDriver) VkDestroySurfaceKHR(instance core.VkInstance, surface khr_surface.VkSurfaceKHR, pAllocator *core.VkAllocationCallbacks) {
+func (m *MockDriver) VkDestroySurfaceKHR(instance driver.VkInstance, surface khr_surface.VkSurfaceKHR, pAllocator *driver.VkAllocationCallbacks) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkDestroySurfaceKHR", instance, surface, pAllocator)
 }
@@ -48,10 +49,10 @@ func (mr *MockDriverMockRecorder) VkDestroySurfaceKHR(instance, surface, pAlloca
 }
 
 // VkGetPhysicalDeviceSurfaceCapabilitiesKHR mocks base method.
-func (m *MockDriver) VkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice core.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pSurfaceCapabilities *khr_surface.VkSurfaceCapabilitiesKHR) (core.VkResult, error) {
+func (m *MockDriver) VkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pSurfaceCapabilities *khr_surface.VkSurfaceCapabilitiesKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkGetPhysicalDeviceSurfaceCapabilitiesKHR", physicalDevice, surface, pSurfaceCapabilities)
-	ret0, _ := ret[0].(core.VkResult)
+	ret0, _ := ret[0].(common.VkResult)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -63,10 +64,10 @@ func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceSurfaceCapabilitiesKHR(phys
 }
 
 // VkGetPhysicalDeviceSurfaceFormatsKHR mocks base method.
-func (m *MockDriver) VkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice core.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pSurfaceFormatCount *core.Uint32, pSurfaceFormats *khr_surface.VkSurfaceFormatKHR) (core.VkResult, error) {
+func (m *MockDriver) VkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pSurfaceFormatCount *driver.Uint32, pSurfaceFormats *khr_surface.VkSurfaceFormatKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkGetPhysicalDeviceSurfaceFormatsKHR", physicalDevice, surface, pSurfaceFormatCount, pSurfaceFormats)
-	ret0, _ := ret[0].(core.VkResult)
+	ret0, _ := ret[0].(common.VkResult)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -78,10 +79,10 @@ func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceSurfaceFormatsKHR(physicalD
 }
 
 // VkGetPhysicalDeviceSurfacePresentModesKHR mocks base method.
-func (m *MockDriver) VkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice core.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pPresentModeCount *core.Uint32, pPresentModes *khr_surface.VkPresentModeKHR) (core.VkResult, error) {
+func (m *MockDriver) VkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *khr_surface.VkPresentModeKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkGetPhysicalDeviceSurfacePresentModesKHR", physicalDevice, surface, pPresentModeCount, pPresentModes)
-	ret0, _ := ret[0].(core.VkResult)
+	ret0, _ := ret[0].(common.VkResult)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -93,10 +94,10 @@ func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceSurfacePresentModesKHR(phys
 }
 
 // VkGetPhysicalDeviceSurfaceSupportKHR mocks base method.
-func (m *MockDriver) VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice core.VkPhysicalDevice, queueFamilyIndex core.Uint32, surface khr_surface.VkSurfaceKHR, pSupported *core.VkBool32) (core.VkResult, error) {
+func (m *MockDriver) VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice driver.VkPhysicalDevice, queueFamilyIndex driver.Uint32, surface khr_surface.VkSurfaceKHR, pSupported *driver.VkBool32) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkGetPhysicalDeviceSurfaceSupportKHR", physicalDevice, queueFamilyIndex, surface, pSupported)
-	ret0, _ := ret[0].(core.VkResult)
+	ret0, _ := ret[0].(common.VkResult)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

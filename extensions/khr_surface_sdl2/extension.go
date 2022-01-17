@@ -9,6 +9,7 @@ package khr_surface_sdl2
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core"
+	"github.com/CannibalVox/VKng/core/common"
 	"github.com/CannibalVox/VKng/extensions/khr_surface"
 	"github.com/veandco/go-sdl2/sdl"
 	"unsafe"
@@ -19,7 +20,7 @@ type khrSurfaceSDl2Loader struct {
 }
 
 type Loader interface {
-	CreateSurface(instance core.Instance, window *sdl.Window) (khr_surface.Surface, core.VkResult, error)
+	CreateSurface(instance core.Instance, window *sdl.Window) (khr_surface.Surface, common.VkResult, error)
 }
 
 func CreateLoaderFromInstance(instance core.Instance) Loader {
@@ -35,10 +36,10 @@ func CreateLoaderFromDriver(driver khr_surface.Driver) Loader {
 	}
 }
 
-func (l *khrSurfaceSDl2Loader) CreateSurface(instance core.Instance, window *sdl.Window) (khr_surface.Surface, core.VkResult, error) {
+func (l *khrSurfaceSDl2Loader) CreateSurface(instance core.Instance, window *sdl.Window) (khr_surface.Surface, common.VkResult, error) {
 	surfacePtrUnsafe, err := window.VulkanCreateSurface(instance.Handle())
 	if err != nil {
-		return nil, core.VKErrorUnknown, err
+		return nil, common.VKErrorUnknown, err
 	}
 
 	surfacePtr := (*C.VkSurfaceKHR)(surfacePtrUnsafe)

@@ -8,6 +8,7 @@ import "C"
 import (
 	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/driver"
 	"github.com/CannibalVox/cgoparam"
 	"time"
 	"unsafe"
@@ -15,16 +16,16 @@ import (
 
 type vulkanSwapchain struct {
 	handle VkSwapchainKHR
-	device core.VkDevice
+	device driver.VkDevice
 	driver Driver
 }
 
 type Swapchain interface {
 	Handle() VkSwapchainKHR
 	Destroy(callbacks *core.AllocationCallbacks)
-	Images() ([]core.Image, core.VkResult, error)
-	AcquireNextImage(timeout time.Duration, semaphore core.Semaphore, fence core.Fence) (int, core.VkResult, error)
-	PresentToQueue(queue core.Queue, o *PresentOptions) (resultBySwapchain []core.VkResult, res core.VkResult, anyError error)
+	Images() ([]core.Image, common.VkResult, error)
+	AcquireNextImage(timeout time.Duration, semaphore core.Semaphore, fence core.Fence) (int, common.VkResult, error)
+	PresentToQueue(queue core.Queue, o *PresentOptions) (resultBySwapchain []common.VkResult, res common.VkResult, anyError error)
 }
 
 func (s *vulkanSwapchain) Handle() VkSwapchainKHR {
@@ -35,12 +36,12 @@ func (s *vulkanSwapchain) Destroy(callbacks *core.AllocationCallbacks) {
 	s.driver.VkDestroySwapchainKHR(s.device, s.handle, callbacks.Handle())
 }
 
-func (s *vulkanSwapchain) Images() ([]core.Image, core.VkResult, error) {
+func (s *vulkanSwapchain) Images() ([]core.Image, common.VkResult, error) {
 	allocator := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(allocator)
 
 	imageCountPtr := allocator.Malloc(int(unsafe.Sizeof(C.uint32_t(0))))
-	imageCountRef := (*core.Uint32)(imageCountPtr)
+	imageCountRef := (*driver.Uint32)(imageCountPtr)
 
 	res, err := s.driver.VkGetSwapchainImagesKHR(s.device, s.handle, imageCountRef, nil)
 	if err != nil {
@@ -52,16 +53,16 @@ func (s *vulkanSwapchain) Images() ([]core.Image, core.VkResult, error) {
 		return nil, res, nil
 	}
 
-	imagesPtr := (*core.VkImage)(allocator.Malloc(imageCount * int(unsafe.Sizeof([1]C.VkImage{}))))
+	imagesPtr := (*driver.VkImage)(allocator.Malloc(imageCount * int(unsafe.Sizeof([1]C.VkImage{}))))
 
 	res, err = s.driver.VkGetSwapchainImagesKHR(s.device, s.handle, imageCountRef, imagesPtr)
 	if err != nil {
 		return nil, res, err
 	}
 
-	imagesSlice := ([]core.VkImage)(unsafe.Slice(imagesPtr, imageCount))
+	imagesSlice := ([]driver.VkImage)(unsafe.Slice(imagesPtr, imageCount))
 	var result []core.Image
-	deviceHandle := (core.VkDevice)(unsafe.Pointer(s.device))
+	deviceHandle := (driver.VkDevice)(unsafe.Pointer(s.device))
 	for i := 0; i < imageCount; i++ {
 		result = append(result, core.CreateImageFromHandles(imagesSlice[i], deviceHandle, s.driver.coreDriver()))
 	}
@@ -69,11 +70,11 @@ func (s *vulkanSwapchain) Images() ([]core.Image, core.VkResult, error) {
 	return result, res, nil
 }
 
-func (s *vulkanSwapchain) AcquireNextImage(timeout time.Duration, semaphore core.Semaphore, fence core.Fence) (int, core.VkResult, error) {
-	var imageIndex core.Uint32
+func (s *vulkanSwapchain) AcquireNextImage(timeout time.Duration, semaphore core.Semaphore, fence core.Fence) (int, common.VkResult, error) {
+	var imageIndex driver.Uint32
 
-	var semaphoreHandle core.VkSemaphore
-	var fenceHandle core.VkFence
+	var semaphoreHandle driver.VkSemaphore
+	var fenceHandle driver.VkFence
 
 	if semaphore != nil {
 		semaphoreHandle = semaphore.Handle()
@@ -82,18 +83,18 @@ func (s *vulkanSwapchain) AcquireNextImage(timeout time.Duration, semaphore core
 		fenceHandle = fence.Handle()
 	}
 
-	res, err := s.driver.VkAcquireNextImageKHR(s.device, s.handle, core.Uint64(common.TimeoutNanoseconds(timeout)), semaphoreHandle, fenceHandle, &imageIndex)
+	res, err := s.driver.VkAcquireNextImageKHR(s.device, s.handle, driver.Uint64(common.TimeoutNanoseconds(timeout)), semaphoreHandle, fenceHandle, &imageIndex)
 
 	return int(imageIndex), res, err
 }
 
-func (s *vulkanSwapchain) PresentToQueue(queue core.Queue, o *PresentOptions) (resultBySwapchain []core.VkResult, res core.VkResult, anyError error) {
+func (s *vulkanSwapchain) PresentToQueue(queue core.Queue, o *PresentOptions) (resultBySwapchain []common.VkResult, res common.VkResult, anyError error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
 	createInfo, err := common.AllocOptions(arena, o)
 	if err != nil {
-		return nil, core.VKErrorUnknown, err
+		return nil, common.VKErrorUnknown, err
 	}
 
 	createInfoPtr := (*VkPresentInfoKHR)(createInfo)
@@ -101,7 +102,7 @@ func (s *vulkanSwapchain) PresentToQueue(queue core.Queue, o *PresentOptions) (r
 
 	resSlice := unsafe.Slice(createInfoPtr.pResults, len(o.Swapchains))
 	for i := 0; i < len(o.Swapchains); i++ {
-		singleRes := core.VkResult(resSlice[i])
+		singleRes := common.VkResult(resSlice[i])
 		resultBySwapchain = append(resultBySwapchain, singleRes)
 	}
 

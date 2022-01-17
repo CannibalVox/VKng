@@ -8,6 +8,7 @@ import (
 	reflect "reflect"
 
 	core "github.com/CannibalVox/VKng/core"
+	common "github.com/CannibalVox/VKng/core/common"
 	khr_surface "github.com/CannibalVox/VKng/extensions/khr_surface"
 	gomock "github.com/golang/mock/gomock"
 	sdl "github.com/veandco/go-sdl2/sdl"
@@ -37,11 +38,11 @@ func (m *MockLoader) EXPECT() *MockLoaderMockRecorder {
 }
 
 // CreateSurface mocks base method.
-func (m *MockLoader) CreateSurface(instance core.Instance, window *sdl.Window) (khr_surface.Surface, core.VkResult, error) {
+func (m *MockLoader) CreateSurface(instance core.Instance, window *sdl.Window) (khr_surface.Surface, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateSurface", instance, window)
 	ret0, _ := ret[0].(khr_surface.Surface)
-	ret1, _ := ret[1].(core.VkResult)
+	ret1, _ := ret[1].(common.VkResult)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
 }
