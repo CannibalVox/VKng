@@ -9,28 +9,22 @@ package ext_debug_utils
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/driver"
 	"runtime/cgo"
 	"unsafe"
 )
 
-type vulkanMessenger struct {
+type Messenger struct {
 	instance driver.VkInstance
 	handle   VkDebugUtilsMessengerEXT
 	driver   Driver
 }
 
-type Messenger interface {
-	Handle() VkDebugUtilsMessengerEXT
-	Destroy(callbacks *core.AllocationCallbacks)
-}
-
-func (m *vulkanMessenger) Destroy(callbacks *core.AllocationCallbacks) {
+func (m *Messenger) Destroy(callbacks *driver.AllocationCallbacks) {
 	m.driver.VkDestroyDebugUtilsMessengerEXT(m.instance, m.handle, callbacks.Handle())
 }
 
-func (m *vulkanMessenger) Handle() VkDebugUtilsMessengerEXT {
+func (m *Messenger) Handle() VkDebugUtilsMessengerEXT {
 	return m.handle
 }
 

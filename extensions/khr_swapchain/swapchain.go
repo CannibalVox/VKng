@@ -8,35 +8,41 @@ import "C"
 import (
 	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0/loader"
 	"github.com/CannibalVox/VKng/core/driver"
+	"github.com/CannibalVox/VKng/core/iface"
 	"github.com/CannibalVox/cgoparam"
 	"time"
 	"unsafe"
 )
 
-type vulkanSwapchain struct {
+type vulkanSwapchain[Image iface.Image] struct {
 	handle VkSwapchainKHR
 	device driver.VkDevice
 	driver Driver
 }
 
-type Swapchain interface {
+type CommonSwapchain interface {
 	Handle() VkSwapchainKHR
-	Destroy(callbacks *core.AllocationCallbacks)
-	Images() ([]core.Image, common.VkResult, error)
-	AcquireNextImage(timeout time.Duration, semaphore core.Semaphore, fence core.Fence) (int, common.VkResult, error)
-	PresentToQueue(queue core.Queue, o *PresentOptions) (resultBySwapchain []common.VkResult, res common.VkResult, anyError error)
 }
 
-func (s *vulkanSwapchain) Handle() VkSwapchainKHR {
+type Swapchain[Image iface.Image] interface {
+	CommonSwapchain
+	Destroy(callbacks *driver.AllocationCallbacks)
+	Images() ([]Image, common.VkResult, error)
+	AcquireNextImage(timeout time.Duration, semaphore iface.Semaphore, fence iface.Fence) (int, common.VkResult, error)
+	PresentToQueue(queue iface.Queue, o *PresentOptions) (resultBySwapchain []common.VkResult, res common.VkResult, anyError error)
+}
+
+func (s *vulkanSwapchain[Image]) Handle() VkSwapchainKHR {
 	return s.handle
 }
 
-func (s *vulkanSwapchain) Destroy(callbacks *core.AllocationCallbacks) {
+func (s *vulkanSwapchain[Image]) Destroy(callbacks *driver.AllocationCallbacks) {
 	s.driver.VkDestroySwapchainKHR(s.device, s.handle, callbacks.Handle())
 }
 
-func (s *vulkanSwapchain) Images() ([]core.Image, common.VkResult, error) {
+func (s *vulkanSwapchain[Image]) Images() ([]Image, common.VkResult, error) {
 	allocator := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(allocator)
 
@@ -61,16 +67,17 @@ func (s *vulkanSwapchain) Images() ([]core.Image, common.VkResult, error) {
 	}
 
 	imagesSlice := ([]driver.VkImage)(unsafe.Slice(imagesPtr, imageCount))
-	var result []core.Image
+	var result []Image
 	deviceHandle := (driver.VkDevice)(unsafe.Pointer(s.device))
 	for i := 0; i < imageCount; i++ {
-		result = append(result, core.CreateImageFromHandles(imagesSlice[i], deviceHandle, s.driver.coreDriver()))
+		image := loader.CreateImageFromHandles(imagesSlice[i], deviceHandle, s.driver.coreDriver())
+		result = append(result, image.(Image))
 	}
 
 	return result, res, nil
 }
 
-func (s *vulkanSwapchain) AcquireNextImage(timeout time.Duration, semaphore core.Semaphore, fence core.Fence) (int, common.VkResult, error) {
+func (s *vulkanSwapchain[Image]) AcquireNextImage(timeout time.Duration, semaphore iface.Semaphore, fence iface.Fence) (int, common.VkResult, error) {
 	var imageIndex driver.Uint32
 
 	var semaphoreHandle driver.VkSemaphore
@@ -88,11 +95,11 @@ func (s *vulkanSwapchain) AcquireNextImage(timeout time.Duration, semaphore core
 	return int(imageIndex), res, err
 }
 
-func (s *vulkanSwapchain) PresentToQueue(queue core.Queue, o *PresentOptions) (resultBySwapchain []common.VkResult, res common.VkResult, anyError error) {
+func (s *vulkanSwapchain[Image]) PresentToQueue(queue iface.Queue, o *PresentOptions) (resultBySwapchain []common.VkResult, res common.VkResult, anyError error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
-	createInfo, err := common.AllocOptions(arena, o)
+	createInfo, err := core.AllocOptions(arena, o)
 	if err != nil {
 		return nil, common.VKErrorUnknown, err
 	}

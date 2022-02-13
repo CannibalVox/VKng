@@ -17,13 +17,14 @@ import (
 	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/common"
 	"github.com/CannibalVox/VKng/core/driver"
+	"github.com/CannibalVox/VKng/core/iface"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
 
 const ExtensionName string = C.VK_EXT_DEBUG_UTILS_EXTENSION_NAME
 
-type extDebugUtilsDriver struct {
+type CDriver struct {
 	createDebugUtils  C.PFN_vkCreateDebugUtilsMessengerEXT
 	destroyDebugUtils C.PFN_vkDestroyDebugUtilsMessengerEXT
 }
@@ -35,17 +36,17 @@ type Driver interface {
 	VkDestroyDebugUtilsMessengerEXT(instance driver.VkInstance, debugMessenger VkDebugUtilsMessengerEXT, pAllocator *driver.VkAllocationCallbacks)
 }
 
-func CreateDriverFromCore(coreDriver driver.Driver) Driver {
+func CreateDriverFromCore(coreDriver driver.Driver) *CDriver {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
-	return &extDebugUtilsDriver{
+	return &CDriver{
 		createDebugUtils:  (C.PFN_vkCreateDebugUtilsMessengerEXT)(coreDriver.LoadProcAddr((*driver.Char)(arena.CString("vkCreateDebugUtilsMessengerEXT")))),
 		destroyDebugUtils: (C.PFN_vkDestroyDebugUtilsMessengerEXT)(coreDriver.LoadProcAddr((*driver.Char)(arena.CString("vkDestroyDebugUtilsMessengerEXT")))),
 	}
 }
 
-func (d *extDebugUtilsDriver) VkCreateDebugUtilsMessengerEXT(instance driver.VkInstance, pCreateInfo *VkDebugUtilsMessengerCreateInfoEXT, pAllocator *driver.VkAllocationCallbacks, pDebugMessenger *VkDebugUtilsMessengerEXT) (common.VkResult, error) {
+func (d *CDriver) VkCreateDebugUtilsMessengerEXT(instance driver.VkInstance, pCreateInfo *VkDebugUtilsMessengerCreateInfoEXT, pAllocator *driver.VkAllocationCallbacks, pDebugMessenger *VkDebugUtilsMessengerEXT) (common.VkResult, error) {
 	if d.createDebugUtils == nil {
 		panic("attempt to call extension method vkCreateDebugUtilsMessengerEXT when extension not present")
 	}
@@ -59,7 +60,7 @@ func (d *extDebugUtilsDriver) VkCreateDebugUtilsMessengerEXT(instance driver.VkI
 	return res, res.ToError()
 }
 
-func (d *extDebugUtilsDriver) VkDestroyDebugUtilsMessengerEXT(instance driver.VkInstance, debugMessenger VkDebugUtilsMessengerEXT, pAllocator *driver.VkAllocationCallbacks) {
+func (d *CDriver) VkDestroyDebugUtilsMessengerEXT(instance driver.VkInstance, debugMessenger VkDebugUtilsMessengerEXT, pAllocator *driver.VkAllocationCallbacks) {
 	if d.destroyDebugUtils == nil {
 		panic("attempt to call extension method vkDestroyDebugUtilsMessengerEXT when extension not present")
 	}
@@ -70,45 +71,45 @@ func (d *extDebugUtilsDriver) VkDestroyDebugUtilsMessengerEXT(instance driver.Vk
 		(*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)))
 }
 
-type extDebugUtilsLoader struct {
+type VulkanExtension struct {
 	driver Driver
 }
 
-type Loader interface {
-	CreateMessenger(instance core.Instance, allocation *core.AllocationCallbacks, o *CreationOptions) (Messenger, common.VkResult, error)
+type Extension interface {
+	CreateMessenger(instance iface.Instance, allocation *driver.AllocationCallbacks, o *CreationOptions) (*Messenger, common.VkResult, error)
 }
 
-func CreateLoaderFromInstance(instance core.Instance) Loader {
+func CreateExtensionFromInstance(instance iface.Instance) *VulkanExtension {
 	driver := CreateDriverFromCore(instance.Driver())
 
-	return &extDebugUtilsLoader{
+	return &VulkanExtension{
 		driver: driver,
 	}
 }
 
-func CreateLoaderFromDriver(driver Driver) Loader {
-	return &extDebugUtilsLoader{
+func CreateExtensionFromDriver(driver Driver) *VulkanExtension {
+	return &VulkanExtension{
 		driver: driver,
 	}
 }
 
-func (l *extDebugUtilsLoader) CreateMessenger(instance core.Instance, allocation *core.AllocationCallbacks, o *CreationOptions) (Messenger, common.VkResult, error) {
+func (l *VulkanExtension) CreateMessenger(instance iface.Instance, allocation *driver.AllocationCallbacks, o *CreationOptions) (*Messenger, common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
-	createInfo, err := common.AllocOptions(arena, o)
+	createInfo, err := core.AllocOptions(arena, o)
 	if err != nil {
 		return nil, common.VKErrorUnknown, err
 	}
 
 	var messenger VkDebugUtilsMessengerEXT
-	res, err := l.driver.VkCreateDebugUtilsMessengerEXT(instance.Handle(), (*VkDebugUtilsMessengerCreateInfoEXT)(createInfo), nil, &messenger)
+	res, err := l.driver.VkCreateDebugUtilsMessengerEXT(instance.Handle(), (*VkDebugUtilsMessengerCreateInfoEXT)(createInfo), allocation.Handle(), &messenger)
 
 	if err != nil {
 		return nil, res, err
 	}
 
-	return &vulkanMessenger{
+	return &Messenger{
 		handle:   messenger,
 		instance: instance.Handle(),
 		driver:   l.driver,

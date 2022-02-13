@@ -31,13 +31,14 @@ import (
 	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/common"
 	"github.com/CannibalVox/VKng/core/driver"
+	"github.com/CannibalVox/VKng/core/iface"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
 
 const ExtensionName = C.VK_KHR_SWAPCHAIN_EXTENSION_NAME
 
-type khrSwapchainDriver struct {
+type CDriver struct {
 	driver           driver.Driver
 	createFunc       C.PFN_vkCreateSwapchainKHR
 	destroyFunc      C.PFN_vkDestroySwapchainKHR
@@ -58,11 +59,11 @@ type Driver interface {
 	VkQueuePresentKHR(queue driver.VkQueue, pPresentInfo *VkPresentInfoKHR) (common.VkResult, error)
 }
 
-func CreateDriverFromCore(coreDriver driver.Driver) *khrSwapchainDriver {
+func CreateDriverFromCore(coreDriver driver.Driver) *CDriver {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
-	return &khrSwapchainDriver{
+	return &CDriver{
 		driver:           coreDriver,
 		createFunc:       (C.PFN_vkCreateSwapchainKHR)(coreDriver.LoadProcAddr((*driver.Char)(arena.CString("vkCreateSwapchainKHR")))),
 		destroyFunc:      (C.PFN_vkDestroySwapchainKHR)(coreDriver.LoadProcAddr((*driver.Char)(arena.CString("vkDestroySwapchainKHR")))),
@@ -72,11 +73,11 @@ func CreateDriverFromCore(coreDriver driver.Driver) *khrSwapchainDriver {
 	}
 }
 
-func (d *khrSwapchainDriver) coreDriver() driver.Driver {
+func (d *CDriver) coreDriver() driver.Driver {
 	return d.driver
 }
 
-func (d *khrSwapchainDriver) VkCreateSwapchainKHR(device driver.VkDevice, pCreateInfo *VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *VkSwapchainKHR) (common.VkResult, error) {
+func (d *CDriver) VkCreateSwapchainKHR(device driver.VkDevice, pCreateInfo *VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *VkSwapchainKHR) (common.VkResult, error) {
 	if d.createFunc == nil {
 		panic("attempt to call extension method vkCreateSwapchainKHR when extension not present")
 	}
@@ -90,7 +91,7 @@ func (d *khrSwapchainDriver) VkCreateSwapchainKHR(device driver.VkDevice, pCreat
 	return res, res.ToError()
 }
 
-func (d *khrSwapchainDriver) VkDestroySwapchainKHR(device driver.VkDevice, swapchain VkSwapchainKHR, pAllocator *driver.VkAllocationCallbacks) {
+func (d *CDriver) VkDestroySwapchainKHR(device driver.VkDevice, swapchain VkSwapchainKHR, pAllocator *driver.VkAllocationCallbacks) {
 	if d.destroyFunc == nil {
 		panic("attempt to call extension method vkDestroySwapchainKHR when extension not present")
 	}
@@ -101,7 +102,7 @@ func (d *khrSwapchainDriver) VkDestroySwapchainKHR(device driver.VkDevice, swapc
 		(*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)))
 }
 
-func (d *khrSwapchainDriver) VkGetSwapchainImagesKHR(device driver.VkDevice, swapchain VkSwapchainKHR, pSwapchainImageCount *driver.Uint32, pSwapchainImages *driver.VkImage) (common.VkResult, error) {
+func (d *CDriver) VkGetSwapchainImagesKHR(device driver.VkDevice, swapchain VkSwapchainKHR, pSwapchainImageCount *driver.Uint32, pSwapchainImages *driver.VkImage) (common.VkResult, error) {
 	if d.getImagesFunc == nil {
 		panic("attempt to call extension method vkGetSwapchainImagesKHR when extension not present")
 	}
@@ -115,7 +116,7 @@ func (d *khrSwapchainDriver) VkGetSwapchainImagesKHR(device driver.VkDevice, swa
 	return res, res.ToError()
 }
 
-func (d *khrSwapchainDriver) VkAcquireNextImageKHR(device driver.VkDevice, swapchain VkSwapchainKHR, timeout driver.Uint64, semaphore driver.VkSemaphore, fence driver.VkFence, pImageIndex *driver.Uint32) (common.VkResult, error) {
+func (d *CDriver) VkAcquireNextImageKHR(device driver.VkDevice, swapchain VkSwapchainKHR, timeout driver.Uint64, semaphore driver.VkSemaphore, fence driver.VkFence, pImageIndex *driver.Uint32) (common.VkResult, error) {
 	if d.acquireNextFunc == nil {
 		panic("attempt to call extension method vkAcquireNextImageKHR when extension not present")
 	}
@@ -132,7 +133,7 @@ func (d *khrSwapchainDriver) VkAcquireNextImageKHR(device driver.VkDevice, swapc
 	return res, res.ToError()
 }
 
-func (d *khrSwapchainDriver) VkQueuePresentKHR(queue driver.VkQueue, pPresentInfo *VkPresentInfoKHR) (common.VkResult, error) {
+func (d *CDriver) VkQueuePresentKHR(queue driver.VkQueue, pPresentInfo *VkPresentInfoKHR) (common.VkResult, error) {
 	if d.queuePresentFunc == nil {
 		panic("attempt to call extension method vkQueuePresentKHR when extension not present")
 	}
@@ -144,43 +145,43 @@ func (d *khrSwapchainDriver) VkQueuePresentKHR(queue driver.VkQueue, pPresentInf
 	return res, res.ToError()
 }
 
-type khrSwapchainLoader struct {
+type VulkanExtension[Image iface.Image] struct {
 	driver Driver
 }
 
-type Loader interface {
-	CreateSwapchain(device core.Device, allocation *core.AllocationCallbacks, options *CreationOptions) (Swapchain, common.VkResult, error)
+type Extension[Image iface.Image] interface {
+	CreateSwapchain(device iface.Device, allocation *driver.AllocationCallbacks, options *CreationOptions) (Swapchain[Image], common.VkResult, error)
 }
 
-func CreateLoaderFromDevice(device core.Device) Loader {
-	return &khrSwapchainLoader{
+func CreateExtensionFromDevice[Image iface.Image](device iface.Device) *VulkanExtension[Image] {
+	return &VulkanExtension[Image]{
 		driver: CreateDriverFromCore(device.Driver()),
 	}
 }
 
-func CreateLoaderFromDriver(driver Driver) Loader {
-	return &khrSwapchainLoader{
+func CreateExtensionFromDriver[Image iface.Image](driver Driver) *VulkanExtension[Image] {
+	return &VulkanExtension[Image]{
 		driver: driver,
 	}
 }
 
-func (l *khrSwapchainLoader) CreateSwapchain(device core.Device, allocation *core.AllocationCallbacks, options *CreationOptions) (Swapchain, common.VkResult, error) {
+func (l *VulkanExtension[Image]) CreateSwapchain(device iface.Device, allocation *driver.AllocationCallbacks, options *CreationOptions) (Swapchain[Image], common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
-	createInfo, err := common.AllocOptions(arena, options)
+	createInfo, err := core.AllocOptions(arena, options)
 	if err != nil {
 		return nil, common.VKErrorUnknown, err
 	}
 
 	var swapchain VkSwapchainKHR
 
-	res, err := l.driver.VkCreateSwapchainKHR(device.Handle(), (*VkSwapchainCreateInfoKHR)(createInfo), nil, &swapchain)
+	res, err := l.driver.VkCreateSwapchainKHR(device.Handle(), (*VkSwapchainCreateInfoKHR)(createInfo), allocation.Handle(), &swapchain)
 	if err != nil {
 		return nil, res, err
 	}
 
-	return &vulkanSwapchain{
+	return &vulkanSwapchain[Image]{
 		handle: swapchain,
 		device: device.Handle(),
 		driver: l.driver,

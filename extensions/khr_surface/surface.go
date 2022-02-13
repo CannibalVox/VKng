@@ -8,9 +8,9 @@ package khr_surface
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/common"
 	"github.com/CannibalVox/VKng/core/driver"
+	"github.com/CannibalVox/VKng/core/iface"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
@@ -23,14 +23,14 @@ type vulkanSurface struct {
 
 type Surface interface {
 	Handle() VkSurfaceKHR
-	Destroy(callbacks *core.AllocationCallbacks)
-	SupportsDevice(physicalDevice core.PhysicalDevice, queueFamilyIndex int) (bool, common.VkResult, error)
-	Capabilities(device core.PhysicalDevice) (*Capabilities, common.VkResult, error)
-	Formats(device core.PhysicalDevice) ([]Format, common.VkResult, error)
-	PresentModes(device core.PhysicalDevice) ([]PresentMode, common.VkResult, error)
+	Destroy(callbacks *driver.AllocationCallbacks)
+	SupportsDevice(physicalDevice iface.PhysicalDevice, queueFamilyIndex int) (bool, common.VkResult, error)
+	Capabilities(device iface.PhysicalDevice) (*Capabilities, common.VkResult, error)
+	Formats(device iface.PhysicalDevice) ([]Format, common.VkResult, error)
+	PresentModes(device iface.PhysicalDevice) ([]PresentMode, common.VkResult, error)
 }
 
-func CreateSurface(surfacePtr unsafe.Pointer, instance core.Instance, driver Driver) (Surface, common.VkResult, error) {
+func CreateSurface(surfacePtr unsafe.Pointer, instance iface.Instance, driver Driver) (Surface, common.VkResult, error) {
 	return &vulkanSurface{
 		handle:   (VkSurfaceKHR)(surfacePtr),
 		instance: instance.Handle(),
@@ -42,11 +42,11 @@ func (s *vulkanSurface) Handle() VkSurfaceKHR {
 	return s.handle
 }
 
-func (s *vulkanSurface) Destroy(callbacks *core.AllocationCallbacks) {
+func (s *vulkanSurface) Destroy(callbacks *driver.AllocationCallbacks) {
 	s.driver.VkDestroySurfaceKHR(s.instance, s.handle, callbacks.Handle())
 }
 
-func (s *vulkanSurface) SupportsDevice(physicalDevice core.PhysicalDevice, queueFamilyIndex int) (bool, common.VkResult, error) {
+func (s *vulkanSurface) SupportsDevice(physicalDevice iface.PhysicalDevice, queueFamilyIndex int) (bool, common.VkResult, error) {
 	var canPresent driver.VkBool32
 
 	res, err := s.driver.VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice.Handle(), driver.Uint32(queueFamilyIndex), s.handle, &canPresent)
@@ -54,7 +54,7 @@ func (s *vulkanSurface) SupportsDevice(physicalDevice core.PhysicalDevice, queue
 	return canPresent != C.VK_FALSE, res, err
 }
 
-func (s *vulkanSurface) Capabilities(device core.PhysicalDevice) (*Capabilities, common.VkResult, error) {
+func (s *vulkanSurface) Capabilities(device iface.PhysicalDevice) (*Capabilities, common.VkResult, error) {
 	allocator := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(allocator)
 
@@ -91,7 +91,7 @@ func (s *vulkanSurface) Capabilities(device core.PhysicalDevice) (*Capabilities,
 	}, res, nil
 }
 
-func (s *vulkanSurface) Formats(device core.PhysicalDevice) ([]Format, common.VkResult, error) {
+func (s *vulkanSurface) Formats(device iface.PhysicalDevice) ([]Format, common.VkResult, error) {
 	allocator := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(allocator)
 
@@ -128,7 +128,7 @@ func (s *vulkanSurface) Formats(device core.PhysicalDevice) ([]Format, common.Vk
 	return result, res, nil
 }
 
-func (s *vulkanSurface) PresentModes(device core.PhysicalDevice) ([]PresentMode, common.VkResult, error) {
+func (s *vulkanSurface) PresentModes(device iface.PhysicalDevice) ([]PresentMode, common.VkResult, error) {
 	allocator := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(allocator)
 

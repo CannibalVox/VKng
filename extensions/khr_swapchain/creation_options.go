@@ -6,6 +6,7 @@ package khr_swapchain
 */
 import "C"
 import (
+	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/common"
 	ext_surface "github.com/CannibalVox/VKng/extensions/khr_surface"
 	"github.com/CannibalVox/cgoparam"
@@ -31,13 +32,16 @@ type CreationOptions struct {
 	PresentMode    ext_surface.PresentMode
 
 	Clipped      bool
-	OldSwapchain Swapchain
+	OldSwapchain CommonSwapchain
 
-	common.HaveNext
+	core.HaveNext
 }
 
-func (o *CreationOptions) AllocForC(allocator *cgoparam.Allocator, next unsafe.Pointer) (unsafe.Pointer, error) {
-	createInfo := (*C.VkSwapchainCreateInfoKHR)(allocator.Malloc(int(unsafe.Sizeof([1]C.VkSwapchainCreateInfoKHR{}))))
+func (o *CreationOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+	if preallocatedPointer == unsafe.Pointer(nil) {
+		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof([1]C.VkSwapchainCreateInfoKHR{})))
+	}
+	createInfo := (*C.VkSwapchainCreateInfoKHR)(preallocatedPointer)
 	createInfo.sType = C.VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR
 	createInfo.flags = 0
 	createInfo.pNext = next
@@ -81,5 +85,5 @@ func (o *CreationOptions) AllocForC(allocator *cgoparam.Allocator, next unsafe.P
 		createInfo.oldSwapchain = (C.VkSwapchainKHR)(o.OldSwapchain.Handle())
 	}
 
-	return unsafe.Pointer(createInfo), nil
+	return preallocatedPointer, nil
 }

@@ -53,7 +53,7 @@ func (mr *MockSurfaceMockRecorder) Capabilities(device interface{}) *gomock.Call
 }
 
 // Destroy mocks base method.
-func (m *MockSurface) Destroy(callbacks *core.AllocationCallbacks) {
+func (m *MockSurface) Destroy(callbacks *driver.AllocationCallbacks) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "Destroy", callbacks)
 }

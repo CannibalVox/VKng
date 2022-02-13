@@ -8,26 +8,29 @@ package khr_swapchain
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core"
-	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/iface"
 	"github.com/CannibalVox/cgoparam"
 	"github.com/cockroachdb/errors"
 	"unsafe"
 )
 
 type PresentOptions struct {
-	WaitSemaphores []core.Semaphore
-	Swapchains     []Swapchain
+	WaitSemaphores []iface.Semaphore
+	Swapchains     []CommonSwapchain
 	ImageIndices   []int
 
-	common.HaveNext
+	core.HaveNext
 }
 
-func (o *PresentOptions) AllocForC(allocator *cgoparam.Allocator, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PresentOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+	if preallocatedPointer == unsafe.Pointer(nil) {
+		preallocatedPointer = allocator.Malloc(C.sizeof_struct_VkPresentInfoKHR)
+	}
 	if len(o.Swapchains) != len(o.ImageIndices) {
 		return nil, errors.Newf("present: specified %d swapchains and %d image indices, but they should match")
 	}
 
-	createInfo := (*C.VkPresentInfoKHR)(allocator.Malloc(C.sizeof_struct_VkPresentInfoKHR))
+	createInfo := (*C.VkPresentInfoKHR)(preallocatedPointer)
 	createInfo.sType = C.VK_STRUCTURE_TYPE_PRESENT_INFO_KHR
 	createInfo.pNext = next
 
@@ -70,5 +73,5 @@ func (o *PresentOptions) AllocForC(allocator *cgoparam.Allocator, next unsafe.Po
 		createInfo.pResults = resultPtr
 	}
 
-	return unsafe.Pointer(createInfo), nil
+	return preallocatedPointer, nil
 }

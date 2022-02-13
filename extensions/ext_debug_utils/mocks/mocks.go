@@ -36,7 +36,7 @@ func (m *MockMessenger) EXPECT() *MockMessengerMockRecorder {
 }
 
 // Destroy mocks base method.
-func (m *MockMessenger) Destroy(callbacks *core.AllocationCallbacks) {
+func (m *MockMessenger) Destroy(callbacks *driver.AllocationCallbacks) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "Destroy", callbacks)
 }
