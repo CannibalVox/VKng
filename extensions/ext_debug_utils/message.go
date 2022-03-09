@@ -5,90 +5,60 @@ package ext_debug_utils
 #include "../vulkan/vulkan.h"
 */
 import "C"
-import "strings"
+import (
+	"github.com/CannibalVox/VKng/core/common"
+)
 
-type MessageTypes uint32
+type MessageTypes int32
+
+var messageTypesMapping = common.NewFlagStringMapping[MessageTypes]()
+
+func (f MessageTypes) Register(str string) {
+	messageTypesMapping.Register(f, str)
+}
+func (f MessageTypes) String() string {
+	return messageTypesMapping.FlagsToString(f)
+}
+
+////
+
+type MessageSeverities int32
+
+var messageSeveritiesMapping = common.NewFlagStringMapping[MessageSeverities]()
+
+func (f MessageSeverities) Register(str string) {
+	messageSeveritiesMapping.Register(f, str)
+}
+func (f MessageSeverities) String() string {
+	return messageSeveritiesMapping.FlagsToString(f)
+}
+
+////
 
 const (
 	TypeGeneral     MessageTypes = C.VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT
 	TypeValidation  MessageTypes = C.VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT
 	TypePerformance MessageTypes = C.VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT
 	TypeAll         MessageTypes = TypeGeneral | TypeValidation | TypePerformance
-)
 
-func (f MessageTypes) String() string {
-	hasOne := false
-	sb := strings.Builder{}
-
-	if f&TypeGeneral != 0 {
-		sb.WriteString("General")
-		hasOne = true
-	}
-
-	if f&TypeValidation != 0 {
-		if hasOne {
-			sb.WriteString("|")
-		}
-
-		sb.WriteString("Validation")
-		hasOne = true
-	}
-
-	if f&TypePerformance != 0 {
-		if hasOne {
-			sb.WriteString("|")
-		}
-
-		sb.WriteString("Performance")
-	}
-
-	return sb.String()
-}
-
-type MessageSeverities uint32
-
-const (
 	SeverityVerbose MessageSeverities = C.VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT
 	SeverityInfo    MessageSeverities = C.VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT
 	SeverityWarning MessageSeverities = C.VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT
 	SeverityError   MessageSeverities = C.VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT
 	SeverityAll     MessageSeverities = SeverityVerbose | SeverityInfo | SeverityWarning | SeverityError
+
+	ObjectTypeDebugUtilsMessenger common.ObjectType = C.VK_OBJECT_TYPE_DEBUG_UTILS_MESSENGER_EXT
 )
 
-func (s MessageSeverities) String() string {
-	hasOne := false
-	sb := strings.Builder{}
+func init() {
+	TypeGeneral.Register("General")
+	TypeValidation.Register("Validation")
+	TypePerformance.Register("Performance")
 
-	if s&SeverityVerbose != 0 {
-		sb.WriteString("Verbose")
-		hasOne = true
-	}
+	SeverityVerbose.Register("Verbose")
+	SeverityInfo.Register("Info")
+	SeverityWarning.Register("Warning")
+	SeverityError.Register("Error")
 
-	if s&SeverityInfo != 0 {
-		if hasOne {
-			sb.WriteString("|")
-		}
-
-		sb.WriteString("Info")
-		hasOne = true
-	}
-
-	if s&SeverityWarning != 0 {
-		if hasOne {
-			sb.WriteString("|")
-		}
-
-		sb.WriteString("Warning")
-		hasOne = true
-	}
-
-	if s&SeverityError != 0 {
-		if hasOne {
-			sb.WriteString("|")
-		}
-
-		sb.WriteString("Error")
-	}
-
-	return sb.String()
+	ObjectTypeDebugUtilsMessenger.Register("Debug Utils Messenger")
 }

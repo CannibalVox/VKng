@@ -28,10 +28,9 @@ VkResult cgoQueuePresentKHR(PFN_vkQueuePresentKHR fn, VkQueue queue, VkPresentIn
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/VKng/core/driver"
-	"github.com/CannibalVox/VKng/core/iface"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
@@ -145,33 +144,33 @@ func (d *CDriver) VkQueuePresentKHR(queue driver.VkQueue, pPresentInfo *VkPresen
 	return res, res.ToError()
 }
 
-type VulkanExtension[Image iface.Image] struct {
+type VulkanExtension struct {
 	driver Driver
 }
 
-type Extension[Image iface.Image] interface {
-	CreateSwapchain(device iface.Device, allocation *driver.AllocationCallbacks, options *CreationOptions) (Swapchain[Image], common.VkResult, error)
+type Extension interface {
+	CreateSwapchain(device core1_0.Device, allocation *driver.AllocationCallbacks, options *CreationOptions) (Swapchain, common.VkResult, error)
 }
 
-func CreateExtensionFromDevice[Image iface.Image](device iface.Device) *VulkanExtension[Image] {
-	return &VulkanExtension[Image]{
+func CreateExtensionFromDevice(device core1_0.Device) *VulkanExtension {
+	return &VulkanExtension{
 		driver: CreateDriverFromCore(device.Driver()),
 	}
 }
 
-func CreateExtensionFromDriver[Image iface.Image](driver Driver) *VulkanExtension[Image] {
-	return &VulkanExtension[Image]{
+func CreateExtensionFromDriver(driver Driver) *VulkanExtension {
+	return &VulkanExtension{
 		driver: driver,
 	}
 }
 
-func (l *VulkanExtension[Image]) CreateSwapchain(device iface.Device, allocation *driver.AllocationCallbacks, options *CreationOptions) (Swapchain[Image], common.VkResult, error) {
+func (l *VulkanExtension) CreateSwapchain(device core1_0.Device, allocation *driver.AllocationCallbacks, options *CreationOptions) (Swapchain, common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
-	createInfo, err := core.AllocOptions(arena, options)
+	createInfo, err := common.AllocOptions(arena, options)
 	if err != nil {
-		return nil, common.VKErrorUnknown, err
+		return nil, core1_0.VKErrorUnknown, err
 	}
 
 	var swapchain VkSwapchainKHR
@@ -181,7 +180,7 @@ func (l *VulkanExtension[Image]) CreateSwapchain(device iface.Device, allocation
 		return nil, res, err
 	}
 
-	return &vulkanSwapchain[Image]{
+	return &vulkanSwapchain{
 		handle: swapchain,
 		device: device.Handle(),
 		driver: l.driver,

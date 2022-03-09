@@ -7,19 +7,19 @@ package khr_swapchain
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
-	"github.com/CannibalVox/VKng/core/iface"
+	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/cgoparam"
 	"github.com/cockroachdb/errors"
 	"unsafe"
 )
 
 type PresentOptions struct {
-	WaitSemaphores []iface.Semaphore
+	WaitSemaphores []core1_0.Semaphore
 	Swapchains     []CommonSwapchain
 	ImageIndices   []int
 
-	core.HaveNext
+	common.HaveNext
 }
 
 func (o *PresentOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {

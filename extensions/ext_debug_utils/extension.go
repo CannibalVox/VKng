@@ -14,10 +14,9 @@ void cgoDestroyDebugUtilsMessengerEXT(PFN_vkDestroyDebugUtilsMessengerEXT fn, Vk
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/VKng/core/driver"
-	"github.com/CannibalVox/VKng/core/iface"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
@@ -76,10 +75,10 @@ type VulkanExtension struct {
 }
 
 type Extension interface {
-	CreateMessenger(instance iface.Instance, allocation *driver.AllocationCallbacks, o *CreationOptions) (*Messenger, common.VkResult, error)
+	CreateMessenger(instance core1_0.Instance, allocation *driver.AllocationCallbacks, o *CreationOptions) (*Messenger, common.VkResult, error)
 }
 
-func CreateExtensionFromInstance(instance iface.Instance) *VulkanExtension {
+func CreateExtensionFromInstance(instance core1_0.Instance) *VulkanExtension {
 	driver := CreateDriverFromCore(instance.Driver())
 
 	return &VulkanExtension{
@@ -93,13 +92,13 @@ func CreateExtensionFromDriver(driver Driver) *VulkanExtension {
 	}
 }
 
-func (l *VulkanExtension) CreateMessenger(instance iface.Instance, allocation *driver.AllocationCallbacks, o *CreationOptions) (*Messenger, common.VkResult, error) {
+func (l *VulkanExtension) CreateMessenger(instance core1_0.Instance, allocation *driver.AllocationCallbacks, o *CreationOptions) (*Messenger, common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
-	createInfo, err := core.AllocOptions(arena, o)
+	createInfo, err := common.AllocOptions(arena, o)
 	if err != nil {
-		return nil, common.VKErrorUnknown, err
+		return nil, core1_0.VKErrorUnknown, err
 	}
 
 	var messenger VkDebugUtilsMessengerEXT

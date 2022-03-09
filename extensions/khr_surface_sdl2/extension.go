@@ -9,7 +9,7 @@ package khr_surface_sdl2
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core/common"
-	"github.com/CannibalVox/VKng/core/iface"
+	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/VKng/extensions/khr_surface"
 	"github.com/veandco/go-sdl2/sdl"
 	"unsafe"
@@ -20,10 +20,10 @@ type khrSurfaceSDl2Loader struct {
 }
 
 type Loader interface {
-	CreateSurface(instance iface.Instance, window *sdl.Window) (khr_surface.Surface, common.VkResult, error)
+	CreateSurface(instance core1_0.Instance, window *sdl.Window) (khr_surface.Surface, common.VkResult, error)
 }
 
-func CreateLoaderFromInstance(instance iface.Instance) Loader {
+func CreateLoaderFromInstance(instance core1_0.Instance) Loader {
 	driver := khr_surface.CreateDriverFromCore(instance.Driver())
 	return &khrSurfaceSDl2Loader{
 		driver: driver,
@@ -36,10 +36,10 @@ func CreateLoaderFromDriver(driver khr_surface.Driver) Loader {
 	}
 }
 
-func (l *khrSurfaceSDl2Loader) CreateSurface(instance iface.Instance, window *sdl.Window) (khr_surface.Surface, common.VkResult, error) {
+func (l *khrSurfaceSDl2Loader) CreateSurface(instance core1_0.Instance, window *sdl.Window) (khr_surface.Surface, common.VkResult, error) {
 	surfacePtrUnsafe, err := window.VulkanCreateSurface(instance.Handle())
 	if err != nil {
-		return nil, common.VKErrorUnknown, err
+		return nil, core1_0.VKErrorUnknown, err
 	}
 
 	surfacePtr := (*C.VkSurfaceKHR)(surfacePtrUnsafe)

@@ -6,12 +6,21 @@ package khr_swapchain
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/common"
 	ext_surface "github.com/CannibalVox/VKng/extensions/khr_surface"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
+
+const (
+	VKErrorOutOfDate common.VkResult = C.VK_ERROR_OUT_OF_DATE_KHR
+	VKSuboptimal     common.VkResult = C.VK_SUBOPTIMAL_KHR
+)
+
+func init() {
+	VKErrorOutOfDate.Register("out of date")
+	VKSuboptimal.Register("Out of Date")
+}
 
 type CreationOptions struct {
 	Surface ext_surface.Surface
@@ -34,7 +43,7 @@ type CreationOptions struct {
 	Clipped      bool
 	OldSwapchain CommonSwapchain
 
-	core.HaveNext
+	common.HaveNext
 }
 
 func (o *CreationOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
