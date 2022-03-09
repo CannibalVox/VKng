@@ -15,11 +15,6 @@ import (
 	"unsafe"
 )
 
-type Format struct {
-	Format     common.DataFormat
-	ColorSpace ColorSpace
-}
-
 type vulkanSurface struct {
 	instance driver.VkInstance
 	handle   VkSurfaceKHR

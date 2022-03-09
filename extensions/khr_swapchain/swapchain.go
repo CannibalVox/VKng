@@ -21,12 +21,8 @@ type vulkanSwapchain struct {
 	driver Driver
 }
 
-type CommonSwapchain interface {
-	Handle() VkSwapchainKHR
-}
-
 type Swapchain interface {
-	CommonSwapchain
+	Handle() VkSwapchainKHR
 	Destroy(callbacks *driver.AllocationCallbacks)
 	Images() ([]core1_0.Image, common.VkResult, error)
 	AcquireNextImage(timeout time.Duration, semaphore core1_0.Semaphore, fence core1_0.Fence) (int, common.VkResult, error)

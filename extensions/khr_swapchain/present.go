@@ -16,7 +16,7 @@ import (
 
 type PresentOptions struct {
 	WaitSemaphores []core1_0.Semaphore
-	Swapchains     []CommonSwapchain
+	Swapchains     []Swapchain
 	ImageIndices   []int
 
 	common.HaveNext

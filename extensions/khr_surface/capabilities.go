@@ -65,6 +65,8 @@ func (e ColorSpace) String() string {
 ////
 
 const (
+	ObjectTypeSurface common.ObjectType = C.VK_OBJECT_TYPE_SURFACE_KHR
+
 	TransformIdentity                  SurfaceTransforms = C.VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR
 	TransformRotate90                  SurfaceTransforms = C.VK_SURFACE_TRANSFORM_ROTATE_90_BIT_KHR
 	TransformRotate180                 SurfaceTransforms = C.VK_SURFACE_TRANSFORM_ROTATE_180_BIT_KHR
@@ -87,13 +89,13 @@ const (
 
 	ColorSpaceSRGBNonlinear ColorSpace = C.VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
 
-	ImageLayoutPresentSrc common.ImageLayout = C.VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
-
 	VKErrorSurfaceLost       common.VkResult = C.VK_ERROR_SURFACE_LOST_KHR
 	VKErrorNativeWindowInUse common.VkResult = C.VK_ERROR_NATIVE_WINDOW_IN_USE_KHR
 )
 
 func init() {
+	ObjectTypeSurface.Register("Surface")
+
 	TransformIdentity.Register("Identity")
 	TransformRotate90.Register("Rotate 90")
 	TransformRotate180.Register("Rotate 180")
@@ -116,8 +118,6 @@ func init() {
 
 	ColorSpaceSRGBNonlinear.Register("sRGB Non-Linear")
 
-	ImageLayoutPresentSrc.Register("Present Src")
-
 	VKErrorSurfaceLost.Register("surface lost")
 	VKErrorNativeWindowInUse.Register("native window in use")
 }
@@ -136,4 +136,9 @@ type Capabilities struct {
 
 	SupportedCompositeAlpha CompositeAlphaModes
 	SupportedImageUsage     common.ImageUsages
+}
+
+type Format struct {
+	Format     common.DataFormat
+	ColorSpace ColorSpace
 }

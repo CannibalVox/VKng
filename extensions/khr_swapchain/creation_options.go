@@ -13,13 +13,21 @@ import (
 )
 
 const (
+	ObjectTypeSwapchain common.ObjectType = C.VK_OBJECT_TYPE_SWAPCHAIN_KHR
+
+	ImageLayoutPresentSrc common.ImageLayout = C.VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
+
 	VKErrorOutOfDate common.VkResult = C.VK_ERROR_OUT_OF_DATE_KHR
 	VKSuboptimal     common.VkResult = C.VK_SUBOPTIMAL_KHR
 )
 
 func init() {
+	ObjectTypeSwapchain.Register("Swapchain")
+
+	ImageLayoutPresentSrc.Register("Present Src")
+
 	VKErrorOutOfDate.Register("out of date")
-	VKSuboptimal.Register("Out of Date")
+	VKSuboptimal.Register("Suboptimal")
 }
 
 type CreationOptions struct {
@@ -41,7 +49,7 @@ type CreationOptions struct {
 	PresentMode    ext_surface.PresentMode
 
 	Clipped      bool
-	OldSwapchain CommonSwapchain
+	OldSwapchain Swapchain
 
 	common.HaveNext
 }
