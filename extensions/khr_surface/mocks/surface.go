@@ -7,8 +7,9 @@ package mock_surface
 import (
 	reflect "reflect"
 
-	core "github.com/CannibalVox/VKng/core"
 	common "github.com/CannibalVox/VKng/core/common"
+	core1_0 "github.com/CannibalVox/VKng/core/core1_0"
+	driver "github.com/CannibalVox/VKng/core/driver"
 	khr_surface "github.com/CannibalVox/VKng/extensions/khr_surface"
 	gomock "github.com/golang/mock/gomock"
 )
@@ -37,7 +38,7 @@ func (m *MockSurface) EXPECT() *MockSurfaceMockRecorder {
 }
 
 // Capabilities mocks base method.
-func (m *MockSurface) Capabilities(device core.PhysicalDevice) (*khr_surface.Capabilities, common.VkResult, error) {
+func (m *MockSurface) Capabilities(device core1_0.PhysicalDevice) (*khr_surface.Capabilities, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Capabilities", device)
 	ret0, _ := ret[0].(*khr_surface.Capabilities)
@@ -65,7 +66,7 @@ func (mr *MockSurfaceMockRecorder) Destroy(callbacks interface{}) *gomock.Call {
 }
 
 // Formats mocks base method.
-func (m *MockSurface) Formats(device core.PhysicalDevice) ([]khr_surface.Format, common.VkResult, error) {
+func (m *MockSurface) Formats(device core1_0.PhysicalDevice) ([]khr_surface.Format, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Formats", device)
 	ret0, _ := ret[0].([]khr_surface.Format)
@@ -95,7 +96,7 @@ func (mr *MockSurfaceMockRecorder) Handle() *gomock.Call {
 }
 
 // PresentModes mocks base method.
-func (m *MockSurface) PresentModes(device core.PhysicalDevice) ([]khr_surface.PresentMode, common.VkResult, error) {
+func (m *MockSurface) PresentModes(device core1_0.PhysicalDevice) ([]khr_surface.PresentMode, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PresentModes", device)
 	ret0, _ := ret[0].([]khr_surface.PresentMode)
@@ -111,7 +112,7 @@ func (mr *MockSurfaceMockRecorder) PresentModes(device interface{}) *gomock.Call
 }
 
 // SupportsDevice mocks base method.
-func (m *MockSurface) SupportsDevice(physicalDevice core.PhysicalDevice, queueFamilyIndex int) (bool, common.VkResult, error) {
+func (m *MockSurface) SupportsDevice(physicalDevice core1_0.PhysicalDevice, queueFamilyIndex int) (bool, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SupportsDevice", physicalDevice, queueFamilyIndex)
 	ret0, _ := ret[0].(bool)

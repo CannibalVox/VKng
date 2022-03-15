@@ -7,8 +7,8 @@ package mock_swapchain
 import (
 	reflect "reflect"
 
-	core "github.com/CannibalVox/VKng/core"
 	common "github.com/CannibalVox/VKng/core/common"
+	core1_0 "github.com/CannibalVox/VKng/core/core1_0"
 	driver "github.com/CannibalVox/VKng/core/driver"
 	khr_swapchain "github.com/CannibalVox/VKng/extensions/khr_swapchain"
 	gomock "github.com/golang/mock/gomock"
@@ -123,31 +123,31 @@ func (mr *MockDriverMockRecorder) coreDriver() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "coreDriver", reflect.TypeOf((*MockDriver)(nil).coreDriver))
 }
 
-// MockLoader is a mock of Loader interface.
-type MockLoader struct {
+// MockExtension is a mock of Extension interface.
+type MockExtension struct {
 	ctrl     *gomock.Controller
-	recorder *MockLoaderMockRecorder
+	recorder *MockExtensionMockRecorder
 }
 
-// MockLoaderMockRecorder is the mock recorder for MockLoader.
-type MockLoaderMockRecorder struct {
-	mock *MockLoader
+// MockExtensionMockRecorder is the mock recorder for MockExtension.
+type MockExtensionMockRecorder struct {
+	mock *MockExtension
 }
 
-// NewMockLoader creates a new mock instance.
-func NewMockLoader(ctrl *gomock.Controller) *MockLoader {
-	mock := &MockLoader{ctrl: ctrl}
-	mock.recorder = &MockLoaderMockRecorder{mock}
+// NewMockExtension creates a new mock instance.
+func NewMockExtension(ctrl *gomock.Controller) *MockExtension {
+	mock := &MockExtension{ctrl: ctrl}
+	mock.recorder = &MockExtensionMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockLoader) EXPECT() *MockLoaderMockRecorder {
+func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 	return m.recorder
 }
 
 // CreateSwapchain mocks base method.
-func (m *MockLoader) CreateSwapchain(device core.Device, allocation *driver.AllocationCallbacks, options *khr_swapchain.CreationOptions) (khr_swapchain.Swapchain, common.VkResult, error) {
+func (m *MockExtension) CreateSwapchain(device core1_0.Device, allocation *driver.AllocationCallbacks, options *khr_swapchain.CreationOptions) (khr_swapchain.Swapchain, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateSwapchain", device, allocation, options)
 	ret0, _ := ret[0].(khr_swapchain.Swapchain)
@@ -157,7 +157,7 @@ func (m *MockLoader) CreateSwapchain(device core.Device, allocation *driver.Allo
 }
 
 // CreateSwapchain indicates an expected call of CreateSwapchain.
-func (mr *MockLoaderMockRecorder) CreateSwapchain(device, allocation, options interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) CreateSwapchain(device, allocation, options interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSwapchain", reflect.TypeOf((*MockLoader)(nil).CreateSwapchain), device, allocation, options)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSwapchain", reflect.TypeOf((*MockExtension)(nil).CreateSwapchain), device, allocation, options)
 }
