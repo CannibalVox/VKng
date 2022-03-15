@@ -10,7 +10,6 @@ require (
 	github.com/golang/mock v1.6.0
 	github.com/google/uuid v1.3.0
 	github.com/loov/hrtime v1.0.3
-	github.com/palantir/stacktrace v0.0.0-20161112013806-78658fd2d177
 	github.com/stretchr/testify v1.7.0
 	github.com/veandco/go-sdl2 v0.4.10
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
