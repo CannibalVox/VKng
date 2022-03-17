@@ -65,6 +65,8 @@ func (e ColorSpace) String() string {
 ////
 
 const (
+	ExtensionName string = C.VK_KHR_SURFACE_EXTENSION_NAME
+
 	ObjectTypeSurface common.ObjectType = C.VK_OBJECT_TYPE_SURFACE_KHR
 
 	TransformIdentity                  SurfaceTransforms = C.VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR
@@ -120,25 +122,4 @@ func init() {
 
 	VKErrorSurfaceLost.Register("surface lost")
 	VKErrorNativeWindowInUse.Register("native window in use")
-}
-
-type Capabilities struct {
-	MinImageCount uint32
-	MaxImageCount uint32
-
-	CurrentExtent  common.Extent2D
-	MinImageExtent common.Extent2D
-	MaxImageExtent common.Extent2D
-
-	MaxImageArrayLayers uint32
-	SupportedTransforms SurfaceTransforms
-	CurrentTransform    SurfaceTransforms
-
-	SupportedCompositeAlpha CompositeAlphaModes
-	SupportedImageUsage     common.ImageUsages
-}
-
-type Format struct {
-	Format     common.DataFormat
-	ColorSpace ColorSpace
 }

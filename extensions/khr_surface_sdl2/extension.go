@@ -19,18 +19,18 @@ type khrSurfaceSDl2Loader struct {
 	driver khr_surface.Driver
 }
 
-type Loader interface {
+type Extension interface {
 	CreateSurface(instance core1_0.Instance, window *sdl.Window) (khr_surface.Surface, common.VkResult, error)
 }
 
-func CreateLoaderFromInstance(instance core1_0.Instance) Loader {
+func CreateExtensionFromInstance(instance core1_0.Instance) Extension {
 	driver := khr_surface.CreateDriverFromCore(instance.Driver())
 	return &khrSurfaceSDl2Loader{
 		driver: driver,
 	}
 }
 
-func CreateLoaderFromDriver(driver khr_surface.Driver) Loader {
+func CreateExtensionFromDriver(driver khr_surface.Driver) Extension {
 	return &khrSurfaceSDl2Loader{
 		driver: driver,
 	}

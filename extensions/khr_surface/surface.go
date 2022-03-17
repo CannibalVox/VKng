@@ -15,6 +15,27 @@ import (
 	"unsafe"
 )
 
+type Capabilities struct {
+	MinImageCount int
+	MaxImageCount int
+
+	CurrentExtent  common.Extent2D
+	MinImageExtent common.Extent2D
+	MaxImageExtent common.Extent2D
+
+	MaxImageArrayLayers int
+	SupportedTransforms SurfaceTransforms
+	CurrentTransform    SurfaceTransforms
+
+	SupportedCompositeAlpha CompositeAlphaModes
+	SupportedImageUsage     common.ImageUsages
+}
+
+type Format struct {
+	Format     common.DataFormat
+	ColorSpace ColorSpace
+}
+
 type vulkanSurface struct {
 	instance driver.VkInstance
 	handle   VkSurfaceKHR
@@ -67,8 +88,8 @@ func (s *vulkanSurface) Capabilities(device core1_0.PhysicalDevice) (*Capabiliti
 	}
 
 	return &Capabilities{
-		MinImageCount: uint32(cCapabilities.minImageCount),
-		MaxImageCount: uint32(cCapabilities.maxImageCount),
+		MinImageCount: int(cCapabilities.minImageCount),
+		MaxImageCount: int(cCapabilities.maxImageCount),
 		CurrentExtent: common.Extent2D{
 			Width:  int(cCapabilities.currentExtent.width),
 			Height: int(cCapabilities.currentExtent.height),
@@ -81,7 +102,7 @@ func (s *vulkanSurface) Capabilities(device core1_0.PhysicalDevice) (*Capabiliti
 			Width:  int(cCapabilities.maxImageExtent.width),
 			Height: int(cCapabilities.maxImageExtent.height),
 		},
-		MaxImageArrayLayers: uint32(cCapabilities.maxImageArrayLayers),
+		MaxImageArrayLayers: int(cCapabilities.maxImageArrayLayers),
 
 		SupportedTransforms: SurfaceTransforms(cCapabilities.supportedTransforms),
 		CurrentTransform:    SurfaceTransforms(cCapabilities.currentTransform),
@@ -91,7 +112,7 @@ func (s *vulkanSurface) Capabilities(device core1_0.PhysicalDevice) (*Capabiliti
 	}, res, nil
 }
 
-func (s *vulkanSurface) Formats(device core1_0.PhysicalDevice) ([]Format, common.VkResult, error) {
+func (s *vulkanSurface) attemptFormats(device core1_0.PhysicalDevice) ([]Format, common.VkResult, error) {
 	allocator := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(allocator)
 
@@ -112,7 +133,7 @@ func (s *vulkanSurface) Formats(device core1_0.PhysicalDevice) ([]Format, common
 	formatsPtr := allocator.Malloc(count * int(unsafe.Sizeof([1]C.VkSurfaceFormatKHR{})))
 
 	res, err = s.driver.VkGetPhysicalDeviceSurfaceFormatsKHR(device.Handle(), s.handle, formatCount, (*VkSurfaceFormatKHR)(formatsPtr))
-	if err != nil {
+	if err != nil || res == core1_0.VKIncomplete {
 		return nil, res, err
 	}
 
@@ -128,7 +149,18 @@ func (s *vulkanSurface) Formats(device core1_0.PhysicalDevice) ([]Format, common
 	return result, res, nil
 }
 
-func (s *vulkanSurface) PresentModes(device core1_0.PhysicalDevice) ([]PresentMode, common.VkResult, error) {
+func (s *vulkanSurface) Formats(device core1_0.PhysicalDevice) ([]Format, common.VkResult, error) {
+	var formats []Format
+	var result common.VkResult
+	var err error
+	for doWhile := true; doWhile; doWhile = (result == core1_0.VKIncomplete) {
+		formats, result, err = s.attemptFormats(device)
+	}
+
+	return formats, result, err
+}
+
+func (s *vulkanSurface) attemptPresentModes(device core1_0.PhysicalDevice) ([]PresentMode, common.VkResult, error) {
 	allocator := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(allocator)
 
@@ -149,7 +181,7 @@ func (s *vulkanSurface) PresentModes(device core1_0.PhysicalDevice) ([]PresentMo
 	presentModes := (*VkPresentModeKHR)(modesPtr)
 
 	res, err = s.driver.VkGetPhysicalDeviceSurfacePresentModesKHR(device.Handle(), s.handle, modeCount, presentModes)
-	if err != nil {
+	if err != nil || res == core1_0.VKIncomplete {
 		return nil, res, err
 	}
 
@@ -160,4 +192,15 @@ func (s *vulkanSurface) PresentModes(device core1_0.PhysicalDevice) ([]PresentMo
 	}
 
 	return result, res, nil
+}
+
+func (s *vulkanSurface) PresentModes(device core1_0.PhysicalDevice) ([]PresentMode, common.VkResult, error) {
+	var presentModes []PresentMode
+	var result common.VkResult
+	var err error
+	for doWhile := true; doWhile; doWhile = (result == core1_0.VKIncomplete) {
+		presentModes, result, err = s.attemptPresentModes(device)
+	}
+
+	return presentModes, result, err
 }

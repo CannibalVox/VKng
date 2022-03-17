@@ -1,6 +1,6 @@
 package khr_surface
 
-//go:generate mockgen -source extension.go -destination ./mocks/extension.go -package mock_surface
+//go:generate mockgen -source driver.go -destination ./mocks/driver.go -package mock_surface
 
 /*
 #include <stdlib.h>
@@ -34,8 +34,6 @@ import (
 	"unsafe"
 )
 
-const ExtensionName = C.VK_KHR_SURFACE_EXTENSION_NAME
-
 type khrSurfaceDriver struct {
 	physicalSurfaceCapabilitiesFunc C.PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR
 	physicalSurfaceSupportFunc      C.PFN_vkGetPhysicalDeviceSurfaceSupportKHR
@@ -48,6 +46,7 @@ type VkSurfaceKHR C.VkSurfaceKHR
 type VkSurfaceCapabilitiesKHR C.VkSurfaceCapabilitiesKHR
 type VkSurfaceFormatKHR C.VkSurfaceFormatKHR
 type VkPresentModeKHR C.VkPresentModeKHR
+
 type Driver interface {
 	VkDestroySurfaceKHR(instance driver.VkInstance, surface VkSurfaceKHR, pAllocator *driver.VkAllocationCallbacks)
 	VkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice driver.VkPhysicalDevice, surface VkSurfaceKHR, pSurfaceCapabilities *VkSurfaceCapabilitiesKHR) (common.VkResult, error)

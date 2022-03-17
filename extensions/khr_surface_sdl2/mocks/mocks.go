@@ -14,31 +14,31 @@ import (
 	sdl "github.com/veandco/go-sdl2/sdl"
 )
 
-// MockLoader is a mock of Loader interface.
-type MockLoader struct {
+// MockExtension is a mock of Extension interface.
+type MockExtension struct {
 	ctrl     *gomock.Controller
-	recorder *MockLoaderMockRecorder
+	recorder *MockExtensionMockRecorder
 }
 
-// MockLoaderMockRecorder is the mock recorder for MockLoader.
-type MockLoaderMockRecorder struct {
-	mock *MockLoader
+// MockExtensionMockRecorder is the mock recorder for MockExtension.
+type MockExtensionMockRecorder struct {
+	mock *MockExtension
 }
 
-// NewMockLoader creates a new mock instance.
-func NewMockLoader(ctrl *gomock.Controller) *MockLoader {
-	mock := &MockLoader{ctrl: ctrl}
-	mock.recorder = &MockLoaderMockRecorder{mock}
+// NewMockExtension creates a new mock instance.
+func NewMockExtension(ctrl *gomock.Controller) *MockExtension {
+	mock := &MockExtension{ctrl: ctrl}
+	mock.recorder = &MockExtensionMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockLoader) EXPECT() *MockLoaderMockRecorder {
+func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 	return m.recorder
 }
 
 // CreateSurface mocks base method.
-func (m *MockLoader) CreateSurface(instance core1_0.Instance, window *sdl.Window) (khr_surface.Surface, common.VkResult, error) {
+func (m *MockExtension) CreateSurface(instance core1_0.Instance, window *sdl.Window) (khr_surface.Surface, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateSurface", instance, window)
 	ret0, _ := ret[0].(khr_surface.Surface)
@@ -48,7 +48,7 @@ func (m *MockLoader) CreateSurface(instance core1_0.Instance, window *sdl.Window
 }
 
 // CreateSurface indicates an expected call of CreateSurface.
-func (mr *MockLoaderMockRecorder) CreateSurface(instance, window interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) CreateSurface(instance, window interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSurface", reflect.TypeOf((*MockLoader)(nil).CreateSurface), instance, window)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSurface", reflect.TypeOf((*MockExtension)(nil).CreateSurface), instance, window)
 }
