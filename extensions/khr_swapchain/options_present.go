@@ -3,7 +3,6 @@ package khr_swapchain
 /*
 #include <stdlib.h>
 #include "vulkan/vulkan.h"
-
 */
 import "C"
 import (
@@ -14,15 +13,21 @@ import (
 	"unsafe"
 )
 
+type PresentOptionsOutData struct {
+	Results []common.VkResult
+}
+
 type PresentOptions struct {
 	WaitSemaphores []core1_0.Semaphore
 	Swapchains     []Swapchain
 	ImageIndices   []int
 
 	common.HaveNext
+
+	OutData *PresentOptionsOutData
 }
 
-func (o *PresentOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o PresentOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == unsafe.Pointer(nil) {
 		preallocatedPointer = allocator.Malloc(C.sizeof_struct_VkPresentInfoKHR)
 	}
@@ -74,4 +79,22 @@ func (o *PresentOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallo
 	}
 
 	return preallocatedPointer, nil
+}
+
+func (o PresentOptions) PopulateOutData(cDataPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
+	createInfo := (*C.VkPresentInfoKHR)(cDataPointer)
+
+	if o.OutData == nil {
+		return createInfo.pNext, nil
+	}
+
+	resultCount := len(o.Swapchains)
+	o.OutData.Results = make([]common.VkResult, resultCount)
+
+	resultSlice := ([]C.VkResult)(unsafe.Slice(createInfo.pResults, resultCount))
+	for i := 0; i < resultCount; i++ {
+		o.OutData.Results[i] = common.VkResult(resultSlice[i])
+	}
+
+	return createInfo.pNext, nil
 }

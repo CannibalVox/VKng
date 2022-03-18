@@ -15,7 +15,7 @@ import (
 	"unsafe"
 )
 
-type khrSurfaceSDl2Loader struct {
+type VulkanExtension struct {
 	driver khr_surface.Driver
 }
 
@@ -23,20 +23,20 @@ type Extension interface {
 	CreateSurface(instance core1_0.Instance, window *sdl.Window) (khr_surface.Surface, common.VkResult, error)
 }
 
-func CreateExtensionFromInstance(instance core1_0.Instance) Extension {
+func CreateExtensionFromInstance(instance core1_0.Instance) *VulkanExtension {
 	driver := khr_surface.CreateDriverFromCore(instance.Driver())
-	return &khrSurfaceSDl2Loader{
+	return &VulkanExtension{
 		driver: driver,
 	}
 }
 
-func CreateExtensionFromDriver(driver khr_surface.Driver) Extension {
-	return &khrSurfaceSDl2Loader{
+func CreateExtensionFromDriver(driver khr_surface.Driver) *VulkanExtension {
+	return &VulkanExtension{
 		driver: driver,
 	}
 }
 
-func (l *khrSurfaceSDl2Loader) CreateSurface(instance core1_0.Instance, window *sdl.Window) (khr_surface.Surface, common.VkResult, error) {
+func (l *VulkanExtension) CreateSurface(instance core1_0.Instance, window *sdl.Window) (khr_surface.Surface, common.VkResult, error) {
 	surfacePtrUnsafe, err := window.VulkanCreateSurface(instance.Handle())
 	if err != nil {
 		return nil, core1_0.VKErrorUnknown, err

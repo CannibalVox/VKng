@@ -1,12 +1,13 @@
 package khr_swapchain
 
+//go:generate mockgen -source swapchain.go -destination ./mocks/swapchain.go -package mock_swapchain
+
 /*
 #include <stdlib.h>
 #include "vulkan/vulkan.h"
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/common"
 	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/VKng/core/driver"
@@ -19,14 +20,16 @@ type vulkanSwapchain struct {
 	handle VkSwapchainKHR
 	device driver.VkDevice
 	driver Driver
+
+	minimumAPIVersion common.APIVersion
 }
 
 type Swapchain interface {
 	Handle() VkSwapchainKHR
+
 	Destroy(callbacks *driver.AllocationCallbacks)
 	Images() ([]core1_0.Image, common.VkResult, error)
 	AcquireNextImage(timeout time.Duration, semaphore core1_0.Semaphore, fence core1_0.Fence) (int, common.VkResult, error)
-	PresentToQueue(queue core1_0.Queue, o *PresentOptions) (resultBySwapchain []common.VkResult, res common.VkResult, anyError error)
 }
 
 func (s *vulkanSwapchain) Handle() VkSwapchainKHR {
@@ -37,7 +40,7 @@ func (s *vulkanSwapchain) Destroy(callbacks *driver.AllocationCallbacks) {
 	s.driver.VkDestroySwapchainKHR(s.device, s.handle, callbacks.Handle())
 }
 
-func (s *vulkanSwapchain) Images() ([]core1_0.Image, common.VkResult, error) {
+func (s *vulkanSwapchain) attemptImages() ([]core1_0.Image, common.VkResult, error) {
 	allocator := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(allocator)
 
@@ -65,11 +68,23 @@ func (s *vulkanSwapchain) Images() ([]core1_0.Image, common.VkResult, error) {
 	var result []core1_0.Image
 	deviceHandle := (driver.VkDevice)(unsafe.Pointer(s.device))
 	for i := 0; i < imageCount; i++ {
-		image := core.CreateImageFromHandles(imagesSlice[i], deviceHandle, s.driver.coreDriver())
+		image := s.driver.CreateImage(imagesSlice[i], deviceHandle)
 		result = append(result, image)
 	}
 
 	return result, res, nil
+}
+
+func (s *vulkanSwapchain) Images() ([]core1_0.Image, common.VkResult, error) {
+	var result []core1_0.Image
+	var res common.VkResult
+	var err error
+
+	for doWhile := true; doWhile; doWhile = (res == core1_0.VKIncomplete) {
+		result, res, err = s.attemptImages()
+	}
+
+	return result, res, err
 }
 
 func (s *vulkanSwapchain) AcquireNextImage(timeout time.Duration, semaphore core1_0.Semaphore, fence core1_0.Fence) (int, common.VkResult, error) {
@@ -88,25 +103,4 @@ func (s *vulkanSwapchain) AcquireNextImage(timeout time.Duration, semaphore core
 	res, err := s.driver.VkAcquireNextImageKHR(s.device, s.handle, driver.Uint64(common.TimeoutNanoseconds(timeout)), semaphoreHandle, fenceHandle, &imageIndex)
 
 	return int(imageIndex), res, err
-}
-
-func (s *vulkanSwapchain) PresentToQueue(queue core1_0.Queue, o *PresentOptions) (resultBySwapchain []common.VkResult, res common.VkResult, anyError error) {
-	arena := cgoparam.GetAlloc()
-	defer cgoparam.ReturnAlloc(arena)
-
-	createInfo, err := common.AllocOptions(arena, o)
-	if err != nil {
-		return nil, core1_0.VKErrorUnknown, err
-	}
-
-	createInfoPtr := (*VkPresentInfoKHR)(createInfo)
-	res, err = s.driver.VkQueuePresentKHR(queue.Handle(), createInfoPtr)
-
-	resSlice := unsafe.Slice(createInfoPtr.pResults, len(o.Swapchains))
-	for i := 0; i < len(o.Swapchains); i++ {
-		singleRes := common.VkResult(resSlice[i])
-		resultBySwapchain = append(resultBySwapchain, singleRes)
-	}
-
-	return resultBySwapchain, res, res.ToError()
 }

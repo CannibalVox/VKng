@@ -79,10 +79,10 @@ const (
 	TransformHorizontalMirrorRotate270 SurfaceTransforms = C.VK_SURFACE_TRANSFORM_HORIZONTAL_MIRROR_ROTATE_270_BIT_KHR
 	TransformInherit                   SurfaceTransforms = C.VK_SURFACE_TRANSFORM_INHERIT_BIT_KHR
 
-	AlphaModeOpaque         CompositeAlphaModes = C.VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR
-	AlphaModePreMultiplied  CompositeAlphaModes = C.VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR
-	AlphaModePostMultiplied CompositeAlphaModes = C.VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR
-	AlphaModeInherit        CompositeAlphaModes = C.VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR
+	CompositeAlphaModeOpaque         CompositeAlphaModes = C.VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR
+	CompositeAlphaModePreMultiplied  CompositeAlphaModes = C.VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR
+	CompositeAlphaModePostMultiplied CompositeAlphaModes = C.VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR
+	CompositeAlphaModeInherit        CompositeAlphaModes = C.VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR
 
 	PresentImmediate   PresentMode = C.VK_PRESENT_MODE_IMMEDIATE_KHR
 	PresentMailbox     PresentMode = C.VK_PRESENT_MODE_MAILBOX_KHR
@@ -108,10 +108,10 @@ func init() {
 	TransformHorizontalMirrorRotate270.Register("Horizontal Mirror & Rotate 270")
 	TransformInherit.Register("Inherit")
 
-	AlphaModeOpaque.Register("Opaque")
-	AlphaModePreMultiplied.Register("Pre-Multiplied")
-	AlphaModePostMultiplied.Register("Post-Multiplied")
-	AlphaModeInherit.Register("Inherited")
+	CompositeAlphaModeOpaque.Register("Opaque")
+	CompositeAlphaModePreMultiplied.Register("Pre-Multiplied")
+	CompositeAlphaModePostMultiplied.Register("Post-Multiplied")
+	CompositeAlphaModeInherit.Register("Inherited")
 
 	PresentImmediate.Register("Immediate")
 	PresentMailbox.Register("Mailbox")

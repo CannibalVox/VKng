@@ -34,7 +34,7 @@ import (
 	"unsafe"
 )
 
-type khrSurfaceDriver struct {
+type CDriver struct {
 	physicalSurfaceCapabilitiesFunc C.PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR
 	physicalSurfaceSupportFunc      C.PFN_vkGetPhysicalDeviceSurfaceSupportKHR
 	surfaceFormatsFunc              C.PFN_vkGetPhysicalDeviceSurfaceFormatsKHR
@@ -55,7 +55,7 @@ type Driver interface {
 	VkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice driver.VkPhysicalDevice, surface VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *VkPresentModeKHR) (common.VkResult, error)
 }
 
-func CreateDriverFromCore(coreDriver driver.Driver) Driver {
+func CreateDriverFromCore(coreDriver driver.Driver) *CDriver {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -65,7 +65,7 @@ func CreateDriverFromCore(coreDriver driver.Driver) Driver {
 	presentModesFunc := (C.PFN_vkGetPhysicalDeviceSurfacePresentModesKHR)(coreDriver.LoadProcAddr((*driver.Char)(arena.CString("vkGetPhysicalDeviceSurfacePresentModesKHR"))))
 	destroyFunc := (C.PFN_vkDestroySurfaceKHR)(coreDriver.LoadProcAddr((*driver.Char)(arena.CString("vkDestroySurfaceKHR"))))
 
-	return &khrSurfaceDriver{
+	return &CDriver{
 		physicalSurfaceSupportFunc:      physicalSurfaceSupportFunc,
 		physicalSurfaceCapabilitiesFunc: physicalSurfaceCapabilitiesFunc,
 		surfaceFormatsFunc:              surfaceFormatsFunc,
@@ -74,7 +74,7 @@ func CreateDriverFromCore(coreDriver driver.Driver) Driver {
 	}
 }
 
-func (d *khrSurfaceDriver) VkDestroySurfaceKHR(instance driver.VkInstance, surface VkSurfaceKHR, pAllocator *driver.VkAllocationCallbacks) {
+func (d *CDriver) VkDestroySurfaceKHR(instance driver.VkInstance, surface VkSurfaceKHR, pAllocator *driver.VkAllocationCallbacks) {
 	if d.destroyFunc == nil {
 		panic("attempt to call extension method vkDestroySurfaceKHR when extension not present")
 	}
@@ -85,7 +85,7 @@ func (d *khrSurfaceDriver) VkDestroySurfaceKHR(instance driver.VkInstance, surfa
 		(*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)))
 }
 
-func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice driver.VkPhysicalDevice, surface VkSurfaceKHR, pSurfaceCapabilities *VkSurfaceCapabilitiesKHR) (common.VkResult, error) {
+func (d *CDriver) VkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice driver.VkPhysicalDevice, surface VkSurfaceKHR, pSurfaceCapabilities *VkSurfaceCapabilitiesKHR) (common.VkResult, error) {
 	if d.physicalSurfaceCapabilitiesFunc == nil {
 		panic("attempt to call extension method vkGetPhysicalDeviceSurfaceCapabilitiesKHR")
 	}
@@ -98,7 +98,7 @@ func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDev
 	return res, res.ToError()
 }
 
-func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice driver.VkPhysicalDevice, queueFamilyIndex driver.Uint32, surface VkSurfaceKHR, pSupported *driver.VkBool32) (common.VkResult, error) {
+func (d *CDriver) VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice driver.VkPhysicalDevice, queueFamilyIndex driver.Uint32, surface VkSurfaceKHR, pSupported *driver.VkBool32) (common.VkResult, error) {
 	if d.physicalSurfaceSupportFunc == nil {
 		panic("attempt to call extension method vkGetPhysicalDeviceSurfaceSupportKHR")
 	}
@@ -112,7 +112,7 @@ func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice d
 	return res, res.ToError()
 }
 
-func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice driver.VkPhysicalDevice, surface VkSurfaceKHR, pSurfaceFormatCount *driver.Uint32, pSurfaceFormats *VkSurfaceFormatKHR) (common.VkResult, error) {
+func (d *CDriver) VkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice driver.VkPhysicalDevice, surface VkSurfaceKHR, pSurfaceFormatCount *driver.Uint32, pSurfaceFormats *VkSurfaceFormatKHR) (common.VkResult, error) {
 	if d.surfaceFormatsFunc == nil {
 		panic("attempt to call extension method vkGetPhysicalDeviceSurfaceFormatsKHR")
 	}
@@ -125,7 +125,7 @@ func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice d
 	return res, res.ToError()
 }
 
-func (d *khrSurfaceDriver) VkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice driver.VkPhysicalDevice, surface VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *VkPresentModeKHR) (common.VkResult, error) {
+func (d *CDriver) VkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice driver.VkPhysicalDevice, surface VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *VkPresentModeKHR) (common.VkResult, error) {
 	if d.presentModesFunc == nil {
 		panic("attempt to call extension method vkGetPhysicalDeviceSurfacePresentModesKHR")
 	}

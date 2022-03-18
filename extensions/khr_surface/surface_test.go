@@ -19,9 +19,9 @@ func TestVulkanSurface_PresentModes(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	instance := core_mocks.EasyMockInstance(ctrl)
-	surfaceDriver := mock_surface.NewMockDriver(ctrl)
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
+	instance := core_mocks.EasyMockInstance(ctrl, coreDriver)
+	surfaceDriver := mock_surface.NewMockDriver(ctrl)
 	device := core_mocks.EasyMockPhysicalDevice(ctrl, coreDriver)
 
 	surface, _, err := khr_surface.CreateSurface(nil, instance, surfaceDriver)
@@ -65,9 +65,9 @@ func TestVulkanSurface_PresentModes_Incomplete(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	instance := core_mocks.EasyMockInstance(ctrl)
-	surfaceDriver := mock_surface.NewMockDriver(ctrl)
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
+	instance := core_mocks.EasyMockInstance(ctrl, coreDriver)
+	surfaceDriver := mock_surface.NewMockDriver(ctrl)
 	device := core_mocks.EasyMockPhysicalDevice(ctrl, coreDriver)
 
 	surface, _, err := khr_surface.CreateSurface(nil, instance, surfaceDriver)
@@ -136,9 +136,9 @@ func TestVulkanSurface_SupportsDevice(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	instance := core_mocks.EasyMockInstance(ctrl)
-	surfaceDriver := mock_surface.NewMockDriver(ctrl)
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
+	instance := core_mocks.EasyMockInstance(ctrl, coreDriver)
+	surfaceDriver := mock_surface.NewMockDriver(ctrl)
 	device := core_mocks.EasyMockPhysicalDevice(ctrl, coreDriver)
 
 	surface, _, err := khr_surface.CreateSurface(nil, instance, surfaceDriver)
@@ -165,9 +165,9 @@ func TestVulkanSurface_Capabilities(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	instance := core_mocks.EasyMockInstance(ctrl)
-	surfaceDriver := mock_surface.NewMockDriver(ctrl)
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
+	instance := core_mocks.EasyMockInstance(ctrl, coreDriver)
+	surfaceDriver := mock_surface.NewMockDriver(ctrl)
 	device := core_mocks.EasyMockPhysicalDevice(ctrl, coreDriver)
 
 	surface, _, err := khr_surface.CreateSurface(nil, instance, surfaceDriver)
@@ -220,7 +220,7 @@ func TestVulkanSurface_Capabilities(t *testing.T) {
 	require.Equal(t, 19, capabilities.MinImageExtent.Width)
 	require.Equal(t, 23, capabilities.MinImageExtent.Height)
 	require.Equal(t, khr_surface.TransformHorizontalMirror, capabilities.SupportedTransforms)
-	require.Equal(t, khr_surface.AlphaModePreMultiplied, capabilities.SupportedCompositeAlpha)
+	require.Equal(t, khr_surface.CompositeAlphaModePreMultiplied, capabilities.SupportedCompositeAlpha)
 	require.Equal(t, core1_0.ImageUsageTransferDst, capabilities.SupportedImageUsage)
 }
 
@@ -228,9 +228,9 @@ func TestVulkanSurface_Formats(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	instance := core_mocks.EasyMockInstance(ctrl)
-	surfaceDriver := mock_surface.NewMockDriver(ctrl)
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
+	instance := core_mocks.EasyMockInstance(ctrl, coreDriver)
+	surfaceDriver := mock_surface.NewMockDriver(ctrl)
 	device := core_mocks.EasyMockPhysicalDevice(ctrl, coreDriver)
 
 	surface, _, err := khr_surface.CreateSurface(nil, instance, surfaceDriver)
@@ -286,9 +286,9 @@ func TestVulkanSurface_Formats_Incomplete(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	instance := core_mocks.EasyMockInstance(ctrl)
-	surfaceDriver := mock_surface.NewMockDriver(ctrl)
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
+	instance := core_mocks.EasyMockInstance(ctrl, coreDriver)
+	surfaceDriver := mock_surface.NewMockDriver(ctrl)
 	device := core_mocks.EasyMockPhysicalDevice(ctrl, coreDriver)
 
 	surface, _, err := khr_surface.CreateSurface(nil, instance, surfaceDriver)
