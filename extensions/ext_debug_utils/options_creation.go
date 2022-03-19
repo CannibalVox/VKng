@@ -23,6 +23,7 @@ import (
 )
 
 type CreationOptions struct {
+	Flags             CallbackDataFlags
 	CaptureSeverities MessageSeverities
 	CaptureTypes      MessageTypes
 	Callback          CallbackFunction
@@ -36,7 +37,7 @@ func (o CreationOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallo
 	}
 	createInfo := (*C.VkDebugUtilsMessengerCreateInfoEXT)(preallocatedPointer)
 	createInfo.sType = C.VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT
-	createInfo.flags = 0
+	createInfo.flags = C.VkDebugUtilsMessengerCreateFlagsEXT(o.Flags)
 	createInfo.pNext = next
 
 	createInfo.messageSeverity = C.VkDebugUtilsMessageSeverityFlagsEXT(o.CaptureSeverities)

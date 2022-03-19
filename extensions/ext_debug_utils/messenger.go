@@ -1,6 +1,6 @@
 package ext_debug_utils
 
-//go:generate mockgen -source messenger.go -destination ./mocks/mocks.go -package mock_debugutils
+//go:generate mockgen -source messenger.go -destination ./mocks/messenger.go -package mock_debugutils
 
 /*
 #include <stdlib.h>
@@ -9,32 +9,48 @@ package ext_debug_utils
 */
 import "C"
 import (
+	"fmt"
+	"github.com/CannibalVox/VKng/core/common"
 	"github.com/CannibalVox/VKng/core/driver"
 	"runtime/cgo"
 	"unsafe"
 )
 
-type Messenger struct {
+type Messenger interface {
+	Destroy(callbacks *driver.AllocationCallbacks)
+	Handle() VkDebugUtilsMessengerEXT
+}
+
+type vulkanMessenger struct {
 	instance driver.VkInstance
 	handle   VkDebugUtilsMessengerEXT
 	driver   Driver
 }
 
-func (m *Messenger) Destroy(callbacks *driver.AllocationCallbacks) {
+func (m *vulkanMessenger) Destroy(callbacks *driver.AllocationCallbacks) {
 	m.driver.VkDestroyDebugUtilsMessengerEXT(m.instance, m.handle, callbacks.Handle())
 }
 
-func (m *Messenger) Handle() VkDebugUtilsMessengerEXT {
+func (m *vulkanMessenger) Handle() VkDebugUtilsMessengerEXT {
 	return m.handle
 }
 
-type CallbackFunction func(msgType MessageTypes, severity MessageSeverities, data *CallbackData) bool
+type CallbackFunction func(msgType MessageTypes, severity MessageSeverities, data *CallbackDataOptions) bool
 
 //export goDebugCallback
 func goDebugCallback(messageSeverity C.VkDebugUtilsMessageSeverityFlagBitsEXT, messageType C.VkDebugUtilsMessageTypeFlagsEXT, data *C.VkDebugUtilsMessengerCallbackDataEXT, userData unsafe.Pointer) C.VkBool32 {
 	severity := MessageSeverities(messageSeverity)
 	msgType := MessageTypes(messageType)
-	callbackData := createCallbackData(data)
+
+	callbackData := &CallbackDataOptions{}
+	err := common.PopulateOutData(callbackData, unsafe.Pointer(data))
+
+	if err != nil {
+		callbackData = &CallbackDataOptions{
+			MessageIDName: "vkng-internal",
+			Message:       fmt.Sprintf("error loading debug callback data from C: %v+", err),
+		}
+	}
 
 	f := cgo.Handle(userData).Value().(CallbackFunction)
 	if f(msgType, severity, callbackData) {

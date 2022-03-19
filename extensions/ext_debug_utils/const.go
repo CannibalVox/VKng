@@ -35,17 +35,30 @@ func (f MessageSeverities) String() string {
 
 ////
 
+type CallbackDataFlags int32
+
+var callbackDataFlagsMapping = common.NewFlagStringMapping[CallbackDataFlags]()
+
+func (f CallbackDataFlags) Register(str string) {
+	callbackDataFlagsMapping.Register(f, str)
+}
+func (f CallbackDataFlags) String() string {
+	return callbackDataFlagsMapping.FlagsToString(f)
+}
+
+////
+
 const (
+	ExtensionName string = C.VK_EXT_DEBUG_UTILS_EXTENSION_NAME
+
 	TypeGeneral     MessageTypes = C.VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT
 	TypeValidation  MessageTypes = C.VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT
 	TypePerformance MessageTypes = C.VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT
-	TypeAll         MessageTypes = TypeGeneral | TypeValidation | TypePerformance
 
 	SeverityVerbose MessageSeverities = C.VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT
 	SeverityInfo    MessageSeverities = C.VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT
 	SeverityWarning MessageSeverities = C.VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT
 	SeverityError   MessageSeverities = C.VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT
-	SeverityAll     MessageSeverities = SeverityVerbose | SeverityInfo | SeverityWarning | SeverityError
 
 	ObjectTypeDebugUtilsMessenger common.ObjectType = C.VK_OBJECT_TYPE_DEBUG_UTILS_MESSENGER_EXT
 )

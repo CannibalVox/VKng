@@ -1,81 +1,34 @@
 package ext_debug_utils
 
-/*
-#include <stdlib.h>
-#include "../vulkan/vulkan.h"
-
-VkResult cgoCreateDebugUtilsMessengerEXT(PFN_vkCreateDebugUtilsMessengerEXT fn, VkInstance instance, VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo, VkAllocationCallbacks *pAllocator, VkDebugUtilsMessengerEXT* pDebugMessenger) {
-	return fn(instance, pCreateInfo, pAllocator, pDebugMessenger);
-}
-
-void cgoDestroyDebugUtilsMessengerEXT(PFN_vkDestroyDebugUtilsMessengerEXT fn, VkInstance instance, VkDebugUtilsMessengerEXT debugMessenger, VkAllocationCallbacks* pAllocator) {
-	fn(instance, debugMessenger, pAllocator);
-}
-*/
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core/common"
 	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/VKng/core/driver"
 	"github.com/CannibalVox/cgoparam"
-	"unsafe"
 )
 
-const ExtensionName string = C.VK_EXT_DEBUG_UTILS_EXTENSION_NAME
-
-type CDriver struct {
-	createDebugUtils  C.PFN_vkCreateDebugUtilsMessengerEXT
-	destroyDebugUtils C.PFN_vkDestroyDebugUtilsMessengerEXT
-}
-
-type VkDebugUtilsMessengerCreateInfoEXT C.VkDebugUtilsMessengerCreateInfoEXT
-type VkDebugUtilsMessengerEXT C.VkDebugUtilsMessengerEXT
-type Driver interface {
-	VkCreateDebugUtilsMessengerEXT(instance driver.VkInstance, pCreateInfo *VkDebugUtilsMessengerCreateInfoEXT, pAllocator *driver.VkAllocationCallbacks, pDebugMessenger *VkDebugUtilsMessengerEXT) (common.VkResult, error)
-	VkDestroyDebugUtilsMessengerEXT(instance driver.VkInstance, debugMessenger VkDebugUtilsMessengerEXT, pAllocator *driver.VkAllocationCallbacks)
-}
-
-func CreateDriverFromCore(coreDriver driver.Driver) *CDriver {
-	arena := cgoparam.GetAlloc()
-	defer cgoparam.ReturnAlloc(arena)
-
-	return &CDriver{
-		createDebugUtils:  (C.PFN_vkCreateDebugUtilsMessengerEXT)(coreDriver.LoadProcAddr((*driver.Char)(arena.CString("vkCreateDebugUtilsMessengerEXT")))),
-		destroyDebugUtils: (C.PFN_vkDestroyDebugUtilsMessengerEXT)(coreDriver.LoadProcAddr((*driver.Char)(arena.CString("vkDestroyDebugUtilsMessengerEXT")))),
-	}
-}
-
-func (d *CDriver) VkCreateDebugUtilsMessengerEXT(instance driver.VkInstance, pCreateInfo *VkDebugUtilsMessengerCreateInfoEXT, pAllocator *driver.VkAllocationCallbacks, pDebugMessenger *VkDebugUtilsMessengerEXT) (common.VkResult, error) {
-	if d.createDebugUtils == nil {
-		panic("attempt to call extension method vkCreateDebugUtilsMessengerEXT when extension not present")
-	}
-
-	res := common.VkResult(C.cgoCreateDebugUtilsMessengerEXT(d.createDebugUtils,
-		C.VkInstance(unsafe.Pointer(instance)),
-		(*C.VkDebugUtilsMessengerCreateInfoEXT)(pCreateInfo),
-		(*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)),
-		(*C.VkDebugUtilsMessengerEXT)(pDebugMessenger)))
-
-	return res, res.ToError()
-}
-
-func (d *CDriver) VkDestroyDebugUtilsMessengerEXT(instance driver.VkInstance, debugMessenger VkDebugUtilsMessengerEXT, pAllocator *driver.VkAllocationCallbacks) {
-	if d.destroyDebugUtils == nil {
-		panic("attempt to call extension method vkDestroyDebugUtilsMessengerEXT when extension not present")
-	}
-
-	C.cgoDestroyDebugUtilsMessengerEXT(d.destroyDebugUtils,
-		C.VkInstance(unsafe.Pointer(instance)),
-		C.VkDebugUtilsMessengerEXT(debugMessenger),
-		(*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)))
-}
+//go:generate mockgen -source extension.go -destination ./mocks/extension.go -package mock_debugutils
 
 type VulkanExtension struct {
 	driver Driver
 }
 
 type Extension interface {
-	CreateMessenger(instance core1_0.Instance, allocation *driver.AllocationCallbacks, o *CreationOptions) (*Messenger, common.VkResult, error)
+	CreateMessenger(instance core1_0.Instance, allocation *driver.AllocationCallbacks, o *CreationOptions) (Messenger, common.VkResult, error)
+
+	CmdBeginLabel(commandBuffer core1_0.CommandBuffer, label LabelOptions) error
+	CmdEndLabel(commandBuffer core1_0.CommandBuffer)
+	CmdInsertLabel(commandBuffer core1_0.CommandBuffer, label LabelOptions) error
+
+	QueueBeginLabel(queue core1_0.Queue, label LabelOptions) error
+	QueueEndLabel(queue core1_0.Queue)
+	QueueInsertLabel(queue core1_0.Queue, label LabelOptions) error
+
+	SetObjectName(instance core1_0.Device, name ObjectNameOptions) (common.VkResult, error)
+	SetObjectTag(instance core1_0.Device, tag ObjectTagOptions) (common.VkResult, error)
+
+	SubmitMessage(instance core1_0.Instance, severity MessageSeverities, types MessageTypes, data CallbackDataOptions) error
 }
 
 func CreateExtensionFromInstance(instance core1_0.Instance) *VulkanExtension {
@@ -92,7 +45,7 @@ func CreateExtensionFromDriver(driver Driver) *VulkanExtension {
 	}
 }
 
-func (l *VulkanExtension) CreateMessenger(instance core1_0.Instance, allocation *driver.AllocationCallbacks, o *CreationOptions) (*Messenger, common.VkResult, error) {
+func (l *VulkanExtension) CreateMessenger(instance core1_0.Instance, allocation *driver.AllocationCallbacks, o *CreationOptions) (Messenger, common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -108,9 +61,114 @@ func (l *VulkanExtension) CreateMessenger(instance core1_0.Instance, allocation 
 		return nil, res, err
 	}
 
-	return &Messenger{
+	return &vulkanMessenger{
 		handle:   messenger,
 		instance: instance.Handle(),
 		driver:   l.driver,
 	}, res, nil
+}
+
+func (l *VulkanExtension) CmdBeginLabel(commandBuffer core1_0.CommandBuffer, label LabelOptions) error {
+	arena := cgoparam.GetAlloc()
+	defer cgoparam.ReturnAlloc(arena)
+
+	labelPtr, err := common.AllocOptions(arena, label)
+	if err != nil {
+		return err
+	}
+
+	l.driver.VKCmdBeginDebugUtilsLabelEXT(commandBuffer.Handle(), (*VkDebugUtilsLabelEXT)(labelPtr))
+
+	return nil
+}
+
+func (l *VulkanExtension) CmdEndLabel(buffer core1_0.CommandBuffer) {
+	l.driver.VkCmdEndDebugUtilsLabelEXT(buffer.Handle())
+}
+
+func (l *VulkanExtension) CmdInsertLabel(buffer core1_0.CommandBuffer, label LabelOptions) error {
+	arena := cgoparam.GetAlloc()
+	defer cgoparam.ReturnAlloc(arena)
+
+	labelPtr, err := common.AllocOptions(arena, label)
+	if err != nil {
+		return err
+	}
+
+	l.driver.VkCmdInsertDebugUtilsLabelEXT(buffer.Handle(), (*VkDebugUtilsLabelEXT)(labelPtr))
+
+	return nil
+}
+
+func (l *VulkanExtension) QueueBeginLabel(queue core1_0.Queue, label LabelOptions) error {
+	arena := cgoparam.GetAlloc()
+	defer cgoparam.ReturnAlloc(arena)
+
+	labelPtr, err := common.AllocOptions(arena, label)
+	if err != nil {
+		return err
+	}
+
+	l.driver.VkQueueBeginDebugUtilsLabelEXT(queue.Handle(), (*VkDebugUtilsLabelEXT)(labelPtr))
+
+	return nil
+}
+
+func (l *VulkanExtension) QueueEndLabel(queue core1_0.Queue) {
+	l.driver.VkQueueEndDebugUtilsLabelEXT(queue.Handle())
+}
+
+func (l *VulkanExtension) QueueInsertLabel(queue core1_0.Queue, label LabelOptions) error {
+	arena := cgoparam.GetAlloc()
+	defer cgoparam.ReturnAlloc(arena)
+
+	labelPtr, err := common.AllocOptions(arena, label)
+	if err != nil {
+		return err
+	}
+
+	l.driver.VkQueueInsertDebugUtilsLabelEXT(queue.Handle(), (*VkDebugUtilsLabelEXT)(labelPtr))
+
+	return nil
+}
+
+func (l *VulkanExtension) SetObjectName(device core1_0.Device, name ObjectNameOptions) (common.VkResult, error) {
+	arena := cgoparam.GetAlloc()
+	defer cgoparam.ReturnAlloc(arena)
+
+	namePtr, err := common.AllocOptions(arena, name)
+	if err != nil {
+		return core1_0.VKErrorUnknown, err
+	}
+
+	return l.driver.VkSetDebugUtilsObjectNameEXT(device.Handle(), (*VkDebugUtilsObjectNameInfoEXT)(namePtr))
+}
+
+func (l *VulkanExtension) SetObjectTag(device core1_0.Device, tag ObjectTagOptions) (common.VkResult, error) {
+	arena := cgoparam.GetAlloc()
+	defer cgoparam.ReturnAlloc(arena)
+
+	tagPtr, err := common.AllocOptions(arena, tag)
+	if err != nil {
+		return core1_0.VKErrorUnknown, err
+	}
+
+	return l.driver.VkSetDebugUtilsObjectTagEXT(device.Handle(), (*VkDebugUtilsObjectTagInfoEXT)(tagPtr))
+}
+
+func (l *VulkanExtension) SubmitMessage(instance core1_0.Instance, severity MessageSeverities, types MessageTypes, data CallbackDataOptions) error {
+	arena := cgoparam.GetAlloc()
+	defer cgoparam.ReturnAlloc(arena)
+
+	callbackPtr, err := common.AllocOptions(arena, data)
+	if err != nil {
+		return err
+	}
+
+	l.driver.VkSubmitDebugUtilsMessageEXT(instance.Handle(),
+		VkDebugUtilsMessageSeverityFlagBitsEXT(severity),
+		VkDebugUtilsMessageTypeFlagsEXT(types),
+		(*VkDebugUtilsMessengerCallbackDataEXT)(callbackPtr))
+
+	return nil
 }
