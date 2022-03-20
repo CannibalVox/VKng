@@ -10,7 +10,6 @@ package ext_debug_utils
 import "C"
 import (
 	"fmt"
-	"github.com/CannibalVox/VKng/core/common"
 	"github.com/CannibalVox/VKng/core/driver"
 	"runtime/cgo"
 	"unsafe"
@@ -22,13 +21,15 @@ type Messenger interface {
 }
 
 type vulkanMessenger struct {
-	instance driver.VkInstance
-	handle   VkDebugUtilsMessengerEXT
-	driver   Driver
+	instance   driver.VkInstance
+	handle     VkDebugUtilsMessengerEXT
+	coreDriver driver.Driver
+	driver     Driver
 }
 
 func (m *vulkanMessenger) Destroy(callbacks *driver.AllocationCallbacks) {
 	m.driver.VkDestroyDebugUtilsMessengerEXT(m.instance, m.handle, callbacks.Handle())
+	m.coreDriver.ObjectStore().Delete(driver.VulkanHandle(m.handle), m)
 }
 
 func (m *vulkanMessenger) Handle() VkDebugUtilsMessengerEXT {
@@ -43,8 +44,8 @@ func goDebugCallback(messageSeverity C.VkDebugUtilsMessageSeverityFlagBitsEXT, m
 	msgType := MessageTypes(messageType)
 
 	callbackData := &CallbackDataOptions{}
-	err := common.PopulateOutData(callbackData, unsafe.Pointer(data))
 
+	err := callbackData.PopulateFromCPointer(unsafe.Pointer(data))
 	if err != nil {
 		callbackData = &CallbackDataOptions{
 			MessageIDName: "vkng-internal",

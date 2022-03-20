@@ -68,6 +68,11 @@ func (c CallbackDataOptions) PopulateCPointer(allocator *cgoparam.Allocator, pre
 
 func (c CallbackDataOptions) PopulateOutData(cPointer unsafe.Pointer) (unsafe.Pointer, error) {
 	callbackData := (*C.VkDebugUtilsMessengerCallbackDataEXT)(cPointer)
+	return callbackData.pNext, nil
+}
+
+func (c *CallbackDataOptions) PopulateFromCPointer(cPointer unsafe.Pointer) error {
+	callbackData := (*C.VkDebugUtilsMessengerCallbackDataEXT)(cPointer)
 
 	c.MessageIDName = ""
 	c.Message = ""
@@ -83,24 +88,32 @@ func (c CallbackDataOptions) PopulateOutData(cPointer unsafe.Pointer) (unsafe.Po
 
 	queueLabelCount := int(callbackData.queueLabelCount)
 	c.QueueLabels = make([]LabelOptions, queueLabelCount)
-	err := common.PopulateOutDataSlice[C.VkDebugUtilsLabelEXT, LabelOptions](c.QueueLabels, unsafe.Pointer(callbackData.pQueueLabels))
-	if err != nil {
-		return nil, err
+	queueCPointer := unsafe.Pointer(callbackData.pQueueLabels)
+	labelSize := uintptr(C.sizeof_struct_VkDebugUtilsLabelEXT)
+	for i := 0; i < queueLabelCount; i++ {
+		c.QueueLabels[i].PopulateFromCPointer(queueCPointer)
+
+		queueCPointer = unsafe.Add(queueCPointer, labelSize)
 	}
 
 	commandBufferLabelCount := int(callbackData.cmdBufLabelCount)
 	c.CommandBufferLabels = make([]LabelOptions, commandBufferLabelCount)
-	err = common.PopulateOutDataSlice[C.VkDebugUtilsLabelEXT, LabelOptions](c.CommandBufferLabels, unsafe.Pointer(callbackData.pCmdBufLabels))
-	if err != nil {
-		return nil, err
+	cmdBufCPointer := unsafe.Pointer(callbackData.pCmdBufLabels)
+	for i := 0; i < commandBufferLabelCount; i++ {
+		c.CommandBufferLabels[i].PopulateFromCPointer(cmdBufCPointer)
+
+		cmdBufCPointer = unsafe.Add(cmdBufCPointer, labelSize)
 	}
 
 	objectCount := int(callbackData.objectCount)
 	c.Objects = make([]ObjectNameOptions, objectCount)
-	err = common.PopulateOutDataSlice[C.VkDebugUtilsObjectNameInfoEXT, ObjectNameOptions](c.Objects, unsafe.Pointer(callbackData.pObjects))
-	if err != nil {
-		return nil, err
+	objectsPointer := unsafe.Pointer(callbackData.pObjects)
+	objectNameSize := uintptr(C.sizeof_struct_VkDebugUtilsObjectNameInfoEXT)
+	for i := 0; i < objectCount; i++ {
+		c.Objects[i].PopulateFromCPointer(objectsPointer)
+
+		objectsPointer = unsafe.Add(objectsPointer, objectNameSize)
 	}
 
-	return callbackData.pNext, nil
+	return nil
 }

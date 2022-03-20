@@ -30,7 +30,7 @@ func TestVulkanExtension_CreateSwapchain(t *testing.T) {
 	surface := mock_surface.EasyMockSurface(ctrl)
 	oldSwapchain := mock_swapchain.EasyMockSwapchain(ctrl)
 
-	swapchainDriver.EXPECT().VkCreateSwapchainKHR(mocks.Exactly(device.Handle()), gomock.Not(gomock.Nil()), gomock.Nil(), gomock.Not(gomock.Nil())).
+	swapchainDriver.EXPECT().VkCreateSwapchainKHR(device.Handle(), gomock.Not(gomock.Nil()), gomock.Nil(), gomock.Not(gomock.Nil())).
 		DoAndReturn(func(device driver.VkDevice, pCreateInfo *khr_swapchain.VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *khr_swapchain.VkSwapchainKHR) (common.VkResult, error) {
 			*pSwapchain = swapchainHandle
 
@@ -40,7 +40,7 @@ func TestVulkanExtension_CreateSwapchain(t *testing.T) {
 			require.Equal(t, uint64(0), val.FieldByName("flags").Uint())
 
 			surfaceHandle := (khr_surface.VkSurfaceKHR)(unsafe.Pointer(val.FieldByName("surface").Elem().UnsafeAddr()))
-			require.Same(t, surface.Handle(), surfaceHandle)
+			require.Equal(t, surface.Handle(), surfaceHandle)
 
 			require.Equal(t, uint64(1), val.FieldByName("minImageCount").Uint())
 			require.Equal(t, uint64(67), val.FieldByName("imageFormat").Uint())    // VK_FORMAT_A2B10G10R10_SSCALED_PACK32
@@ -65,7 +65,7 @@ func TestVulkanExtension_CreateSwapchain(t *testing.T) {
 			require.Equal(t, uint64(1), val.FieldByName("clipped").Uint())
 
 			oldSwapchainHandle := (khr_swapchain.VkSwapchainKHR)(unsafe.Pointer(val.FieldByName("oldSwapchain").Elem().UnsafeAddr()))
-			require.Same(t, oldSwapchain.Handle(), oldSwapchainHandle)
+			require.Equal(t, oldSwapchain.Handle(), oldSwapchainHandle)
 
 			return core1_0.VKSuccess, nil
 		})
@@ -88,7 +88,7 @@ func TestVulkanExtension_CreateSwapchain(t *testing.T) {
 	})
 
 	require.NoError(t, err)
-	require.Same(t, swapchainHandle, swapchain.Handle())
+	require.Equal(t, swapchainHandle, swapchain.Handle())
 }
 
 func TestVulkanExtension_PresentToQueue_NullOutData(t *testing.T) {
@@ -105,7 +105,7 @@ func TestVulkanExtension_PresentToQueue_NullOutData(t *testing.T) {
 	semaphore2 := mocks.EasyMockSemaphore(ctrl)
 
 	swapchainDriver.EXPECT().VkQueuePresentKHR(
-		mocks.Exactly(queue.Handle()),
+		queue.Handle(),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
 		func(queue driver.VkQueue, pPresentInfo *khr_swapchain.VkPresentInfoKHR) (common.VkResult, error) {
@@ -118,12 +118,12 @@ func TestVulkanExtension_PresentToQueue_NullOutData(t *testing.T) {
 
 			semaphorePtr := (*driver.VkSemaphore)(unsafe.Pointer(val.FieldByName("pWaitSemaphores").Elem().UnsafeAddr()))
 			semaphores := ([]driver.VkSemaphore)(unsafe.Slice(semaphorePtr, 2))
-			require.Same(t, semaphore1.Handle(), semaphores[0])
-			require.Same(t, semaphore2.Handle(), semaphores[1])
+			require.Equal(t, semaphore1.Handle(), semaphores[0])
+			require.Equal(t, semaphore2.Handle(), semaphores[1])
 
 			swapchainPtr := (*khr_swapchain.VkSwapchainKHR)(unsafe.Pointer(val.FieldByName("pSwapchains").Elem().UnsafeAddr()))
 			swapchains := ([]khr_swapchain.VkSwapchainKHR)(unsafe.Slice(swapchainPtr, 1))
-			require.Same(t, swapchain.Handle(), swapchains[0])
+			require.Equal(t, swapchain.Handle(), swapchains[0])
 
 			imageIndicesPtr := (*driver.Uint32)(unsafe.Pointer(val.FieldByName("pImageIndices").Elem().UnsafeAddr()))
 			imageIndices := ([]driver.Uint32)(unsafe.Slice(imageIndicesPtr, 1))
@@ -158,7 +158,7 @@ func TestVulkanExtension_PresentToQueue_RealOutData(t *testing.T) {
 	semaphore2 := mocks.EasyMockSemaphore(ctrl)
 
 	swapchainDriver.EXPECT().VkQueuePresentKHR(
-		mocks.Exactly(queue.Handle()),
+		queue.Handle(),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
 		func(queue driver.VkQueue, pPresentInfo *khr_swapchain.VkPresentInfoKHR) (common.VkResult, error) {
@@ -171,12 +171,12 @@ func TestVulkanExtension_PresentToQueue_RealOutData(t *testing.T) {
 
 			semaphorePtr := (*driver.VkSemaphore)(unsafe.Pointer(val.FieldByName("pWaitSemaphores").Elem().UnsafeAddr()))
 			semaphores := ([]driver.VkSemaphore)(unsafe.Slice(semaphorePtr, 2))
-			require.Same(t, semaphore1.Handle(), semaphores[0])
-			require.Same(t, semaphore2.Handle(), semaphores[1])
+			require.Equal(t, semaphore1.Handle(), semaphores[0])
+			require.Equal(t, semaphore2.Handle(), semaphores[1])
 
 			swapchainPtr := (*khr_swapchain.VkSwapchainKHR)(unsafe.Pointer(val.FieldByName("pSwapchains").Elem().UnsafeAddr()))
 			swapchains := ([]khr_swapchain.VkSwapchainKHR)(unsafe.Slice(swapchainPtr, 1))
-			require.Same(t, swapchain.Handle(), swapchains[0])
+			require.Equal(t, swapchain.Handle(), swapchains[0])
 
 			imageIndicesPtr := (*driver.Uint32)(unsafe.Pointer(val.FieldByName("pImageIndices").Elem().UnsafeAddr()))
 			imageIndices := ([]driver.Uint32)(unsafe.Slice(imageIndicesPtr, 1))

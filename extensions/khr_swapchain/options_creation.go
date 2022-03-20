@@ -88,7 +88,7 @@ func (o CreationOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallo
 
 	createInfo.oldSwapchain = nil
 	if o.OldSwapchain != nil {
-		createInfo.oldSwapchain = (C.VkSwapchainKHR)(o.OldSwapchain.Handle())
+		createInfo.oldSwapchain = (C.VkSwapchainKHR)(unsafe.Pointer(o.OldSwapchain.Handle()))
 	}
 
 	return preallocatedPointer, nil

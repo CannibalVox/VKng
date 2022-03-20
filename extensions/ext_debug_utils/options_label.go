@@ -40,6 +40,12 @@ func (l LabelOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocat
 
 func (l LabelOptions) PopulateOutData(cDataPointer unsafe.Pointer) (unsafe.Pointer, error) {
 	label := (*C.VkDebugUtilsLabelEXT)(cDataPointer)
+
+	return label.pNext, nil
+}
+
+func (l *LabelOptions) PopulateFromCPointer(cDataPointer unsafe.Pointer) {
+	label := (*C.VkDebugUtilsLabelEXT)(cDataPointer)
 	l.Name = ""
 
 	if label.pLabelName != nil {
@@ -52,6 +58,4 @@ func (l LabelOptions) PopulateOutData(cDataPointer unsafe.Pointer) (unsafe.Point
 	a := uint8(float32(label.color[3])*65535.0 + 0.001)
 
 	l.Color = color.RGBA{R: r, G: g, B: b, A: a}
-
-	return label.pNext, nil
 }

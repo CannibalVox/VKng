@@ -73,7 +73,7 @@ type CDriver struct {
 }
 
 type VkDebugUtilsMessengerCreateInfoEXT C.VkDebugUtilsMessengerCreateInfoEXT
-type VkDebugUtilsMessengerEXT C.VkDebugUtilsMessengerEXT
+type VkDebugUtilsMessengerEXT driver.VulkanHandle
 type VkDebugUtilsLabelEXT C.VkDebugUtilsLabelEXT
 type VkDebugUtilsObjectNameInfoEXT C.VkDebugUtilsObjectNameInfoEXT
 type VkDebugUtilsObjectTagInfoEXT C.VkDebugUtilsObjectTagInfoEXT
@@ -122,7 +122,7 @@ func (d *CDriver) VkCreateDebugUtilsMessengerEXT(instance driver.VkInstance, pCr
 		C.VkInstance(unsafe.Pointer(instance)),
 		(*C.VkDebugUtilsMessengerCreateInfoEXT)(pCreateInfo),
 		(*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)),
-		(*C.VkDebugUtilsMessengerEXT)(pDebugMessenger)))
+		(*C.VkDebugUtilsMessengerEXT)(unsafe.Pointer(pDebugMessenger))))
 
 	return res, res.ToError()
 }
@@ -134,7 +134,7 @@ func (d *CDriver) VkDestroyDebugUtilsMessengerEXT(instance driver.VkInstance, de
 
 	C.cgoDestroyDebugUtilsMessengerEXT(d.destroyDebugUtilsMessenger,
 		C.VkInstance(unsafe.Pointer(instance)),
-		C.VkDebugUtilsMessengerEXT(debugMessenger),
+		C.VkDebugUtilsMessengerEXT(unsafe.Pointer(debugMessenger)),
 		(*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)))
 }
 

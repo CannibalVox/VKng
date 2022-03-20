@@ -61,11 +61,17 @@ func (l *VulkanExtension) CreateMessenger(instance core1_0.Instance, allocation 
 		return nil, res, err
 	}
 
-	return &vulkanMessenger{
-		handle:   messenger,
-		instance: instance.Handle(),
-		driver:   l.driver,
-	}, res, nil
+	coreDriver := instance.Driver()
+	newMessenger := coreDriver.ObjectStore().GetOrCreate(driver.VulkanHandle(messenger), func() interface{} {
+		return &vulkanMessenger{
+			coreDriver: coreDriver,
+			handle:     messenger,
+			instance:   instance.Handle(),
+			driver:     l.driver,
+		}
+	}).(*vulkanMessenger)
+
+	return newMessenger, res, nil
 }
 
 func (l *VulkanExtension) CmdBeginLabel(commandBuffer core1_0.CommandBuffer, label LabelOptions) error {
@@ -160,7 +166,7 @@ func (l *VulkanExtension) SubmitMessage(instance core1_0.Instance, severity Mess
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
-	callbackPtr, err := common.AllocOptions(arena, data)
+	callbackPtr, err := common.AllocOptions(arena, &data)
 	if err != nil {
 		return err
 	}

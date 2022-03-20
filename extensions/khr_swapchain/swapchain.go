@@ -17,9 +17,10 @@ import (
 )
 
 type vulkanSwapchain struct {
-	handle VkSwapchainKHR
-	device driver.VkDevice
-	driver Driver
+	handle     VkSwapchainKHR
+	device     driver.VkDevice
+	driver     Driver
+	coreDriver driver.Driver
 
 	minimumAPIVersion common.APIVersion
 }
@@ -38,6 +39,7 @@ func (s *vulkanSwapchain) Handle() VkSwapchainKHR {
 
 func (s *vulkanSwapchain) Destroy(callbacks *driver.AllocationCallbacks) {
 	s.driver.VkDestroySwapchainKHR(s.device, s.handle, callbacks.Handle())
+	s.coreDriver.ObjectStore().Delete(driver.VulkanHandle(s.handle), s)
 }
 
 func (s *vulkanSwapchain) attemptImages() ([]core1_0.Image, common.VkResult, error) {

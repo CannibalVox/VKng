@@ -45,7 +45,7 @@ type CDriver struct {
 	queuePresentFunc C.PFN_vkQueuePresentKHR
 }
 
-type VkSwapchainKHR C.VkSwapchainKHR
+type VkSwapchainKHR driver.VulkanHandle
 type VkSwapchainCreateInfoKHR C.VkSwapchainCreateInfoKHR
 type VkPresentInfoKHR C.VkPresentInfoKHR
 type Driver interface {
@@ -84,7 +84,7 @@ func (d *CDriver) VkCreateSwapchainKHR(device driver.VkDevice, pCreateInfo *VkSw
 		C.VkDevice(unsafe.Pointer(device)),
 		(*C.VkSwapchainCreateInfoKHR)(pCreateInfo),
 		(*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)),
-		(*C.VkSwapchainKHR)(pSwapchain)))
+		(*C.VkSwapchainKHR)(unsafe.Pointer(pSwapchain))))
 
 	return res, res.ToError()
 }
@@ -96,7 +96,7 @@ func (d *CDriver) VkDestroySwapchainKHR(device driver.VkDevice, swapchain VkSwap
 
 	C.cgoDestroySwapchainKHR(d.destroyFunc,
 		C.VkDevice(unsafe.Pointer(device)),
-		C.VkSwapchainKHR(swapchain),
+		C.VkSwapchainKHR(unsafe.Pointer(swapchain)),
 		(*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)))
 }
 
@@ -107,7 +107,7 @@ func (d *CDriver) VkGetSwapchainImagesKHR(device driver.VkDevice, swapchain VkSw
 
 	res := common.VkResult(C.cgoGetSwapchainImagesKHR(d.getImagesFunc,
 		C.VkDevice(unsafe.Pointer(device)),
-		C.VkSwapchainKHR(swapchain),
+		C.VkSwapchainKHR(unsafe.Pointer(swapchain)),
 		(*C.uint32_t)(unsafe.Pointer(pSwapchainImageCount)),
 		(*C.VkImage)(unsafe.Pointer(pSwapchainImages))))
 
@@ -121,7 +121,7 @@ func (d *CDriver) VkAcquireNextImageKHR(device driver.VkDevice, swapchain VkSwap
 
 	res := common.VkResult(C.cgoAcquireNextImageKHR(d.acquireNextFunc,
 		C.VkDevice(unsafe.Pointer(device)),
-		C.VkSwapchainKHR(swapchain),
+		C.VkSwapchainKHR(unsafe.Pointer(swapchain)),
 		C.uint64_t(timeout),
 		C.VkSemaphore(unsafe.Pointer(semaphore)),
 		C.VkFence(unsafe.Pointer(fence)),

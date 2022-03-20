@@ -28,8 +28,8 @@ func TestVulkanSurface_PresentModes(t *testing.T) {
 	require.NoError(t, err)
 
 	surfaceDriver.EXPECT().VkGetPhysicalDeviceSurfacePresentModesKHR(
-		core_mocks.Exactly(device.Handle()),
-		core_mocks.Exactly(surface.Handle()),
+		device.Handle(),
+		surface.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Nil()).DoAndReturn(
 		func(device driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *khr_surface.VkPresentModeKHR) (common.VkResult, error) {
@@ -39,8 +39,8 @@ func TestVulkanSurface_PresentModes(t *testing.T) {
 		})
 
 	surfaceDriver.EXPECT().VkGetPhysicalDeviceSurfacePresentModesKHR(
-		core_mocks.Exactly(device.Handle()),
-		core_mocks.Exactly(surface.Handle()),
+		device.Handle(),
+		surface.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Not(gomock.Nil())).DoAndReturn(
 		func(device driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *khr_surface.VkPresentModeKHR) (common.VkResult, error) {
@@ -74,8 +74,8 @@ func TestVulkanSurface_PresentModes_Incomplete(t *testing.T) {
 	require.NoError(t, err)
 
 	surfaceDriver.EXPECT().VkGetPhysicalDeviceSurfacePresentModesKHR(
-		core_mocks.Exactly(device.Handle()),
-		core_mocks.Exactly(surface.Handle()),
+		device.Handle(),
+		surface.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Nil()).DoAndReturn(
 		func(device driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *khr_surface.VkPresentModeKHR) (common.VkResult, error) {
@@ -85,8 +85,8 @@ func TestVulkanSurface_PresentModes_Incomplete(t *testing.T) {
 		})
 
 	surfaceDriver.EXPECT().VkGetPhysicalDeviceSurfacePresentModesKHR(
-		core_mocks.Exactly(device.Handle()),
-		core_mocks.Exactly(surface.Handle()),
+		device.Handle(),
+		surface.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Not(gomock.Nil())).DoAndReturn(
 		func(device driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *khr_surface.VkPresentModeKHR) (common.VkResult, error) {
@@ -99,8 +99,8 @@ func TestVulkanSurface_PresentModes_Incomplete(t *testing.T) {
 		})
 
 	surfaceDriver.EXPECT().VkGetPhysicalDeviceSurfacePresentModesKHR(
-		core_mocks.Exactly(device.Handle()),
-		core_mocks.Exactly(surface.Handle()),
+		device.Handle(),
+		surface.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Nil()).DoAndReturn(
 		func(device driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *khr_surface.VkPresentModeKHR) (common.VkResult, error) {
@@ -110,8 +110,8 @@ func TestVulkanSurface_PresentModes_Incomplete(t *testing.T) {
 		})
 
 	surfaceDriver.EXPECT().VkGetPhysicalDeviceSurfacePresentModesKHR(
-		core_mocks.Exactly(device.Handle()),
-		core_mocks.Exactly(surface.Handle()),
+		device.Handle(),
+		surface.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Not(gomock.Nil())).DoAndReturn(
 		func(device driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *khr_surface.VkPresentModeKHR) (common.VkResult, error) {
@@ -145,9 +145,9 @@ func TestVulkanSurface_SupportsDevice(t *testing.T) {
 	require.NoError(t, err)
 
 	surfaceDriver.EXPECT().VkGetPhysicalDeviceSurfaceSupportKHR(
-		core_mocks.Exactly(device.Handle()),
+		device.Handle(),
 		driver.Uint32(3),
-		core_mocks.Exactly(surface.Handle()),
+		surface.Handle(),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
 		func(device driver.VkPhysicalDevice, queueFamilyIndex driver.Uint32, surface khr_surface.VkSurfaceKHR, pSupport *driver.VkBool32) (common.VkResult, error) {
@@ -174,8 +174,8 @@ func TestVulkanSurface_Capabilities(t *testing.T) {
 	require.NoError(t, err)
 
 	surfaceDriver.EXPECT().VkGetPhysicalDeviceSurfaceCapabilitiesKHR(
-		core_mocks.Exactly(device.Handle()),
-		core_mocks.Exactly(surface.Handle()),
+		device.Handle(),
+		surface.Handle(),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
 		func(device driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pCapabilities *khr_surface.VkSurfaceCapabilitiesKHR) (common.VkResult, error) {
@@ -237,8 +237,8 @@ func TestVulkanSurface_Formats(t *testing.T) {
 	require.NoError(t, err)
 
 	surfaceDriver.EXPECT().VkGetPhysicalDeviceSurfaceFormatsKHR(
-		core_mocks.Exactly(device.Handle()),
-		core_mocks.Exactly(surface.Handle()),
+		device.Handle(),
+		surface.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Nil(),
 	).DoAndReturn(
@@ -249,8 +249,8 @@ func TestVulkanSurface_Formats(t *testing.T) {
 		})
 
 	surfaceDriver.EXPECT().VkGetPhysicalDeviceSurfaceFormatsKHR(
-		core_mocks.Exactly(device.Handle()),
-		core_mocks.Exactly(surface.Handle()),
+		device.Handle(),
+		surface.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
@@ -295,8 +295,8 @@ func TestVulkanSurface_Formats_Incomplete(t *testing.T) {
 	require.NoError(t, err)
 
 	surfaceDriver.EXPECT().VkGetPhysicalDeviceSurfaceFormatsKHR(
-		core_mocks.Exactly(device.Handle()),
-		core_mocks.Exactly(surface.Handle()),
+		device.Handle(),
+		surface.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Nil(),
 	).DoAndReturn(
@@ -307,8 +307,8 @@ func TestVulkanSurface_Formats_Incomplete(t *testing.T) {
 		})
 
 	surfaceDriver.EXPECT().VkGetPhysicalDeviceSurfaceFormatsKHR(
-		core_mocks.Exactly(device.Handle()),
-		core_mocks.Exactly(surface.Handle()),
+		device.Handle(),
+		surface.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
@@ -326,8 +326,8 @@ func TestVulkanSurface_Formats_Incomplete(t *testing.T) {
 		})
 
 	surfaceDriver.EXPECT().VkGetPhysicalDeviceSurfaceFormatsKHR(
-		core_mocks.Exactly(device.Handle()),
-		core_mocks.Exactly(surface.Handle()),
+		device.Handle(),
+		surface.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Nil(),
 	).DoAndReturn(
@@ -338,8 +338,8 @@ func TestVulkanSurface_Formats_Incomplete(t *testing.T) {
 		})
 
 	surfaceDriver.EXPECT().VkGetPhysicalDeviceSurfaceFormatsKHR(
-		core_mocks.Exactly(device.Handle()),
-		core_mocks.Exactly(surface.Handle()),
+		device.Handle(),
+		surface.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(

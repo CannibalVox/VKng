@@ -61,7 +61,7 @@ func TestVulkanExtension_CreateMessenger(t *testing.T) {
 	expectedMessenger := mock_debugutils.EasyMockMessenger(ctrl)
 
 	debugDriver.EXPECT().VkCreateDebugUtilsMessengerEXT(
-		mocks.Exactly(instance.Handle()),
+		instance.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Nil(),
 		gomock.Not(gomock.Nil()),
@@ -92,7 +92,7 @@ func TestVulkanExtension_CreateMessenger(t *testing.T) {
 	})
 	require.NoError(t, err)
 	require.NotNil(t, messenger)
-	require.Same(t, expectedMessenger.Handle(), messenger.Handle())
+	require.Equal(t, expectedMessenger.Handle(), messenger.Handle())
 }
 
 func TestVulkanExtension_CmdBeginLabel(t *testing.T) {
@@ -109,7 +109,7 @@ func TestVulkanExtension_CmdBeginLabel(t *testing.T) {
 	}
 
 	debugDriver.EXPECT().VKCmdBeginDebugUtilsLabelEXT(
-		mocks.Exactly(commandBuffer.Handle()),
+		commandBuffer.Handle(),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
 		func(commandBuffer driver.VkCommandBuffer, pLabel *ext_debug_utils.VkDebugUtilsLabelEXT) {
@@ -139,7 +139,7 @@ func TestVulkanExtension_CmdEndLabel(t *testing.T) {
 	extension := ext_debug_utils.CreateExtensionFromDriver(debugDriver)
 	commandBuffer := mocks.EasyMockCommandBuffer(ctrl)
 
-	debugDriver.EXPECT().VkCmdEndDebugUtilsLabelEXT(mocks.Exactly(commandBuffer.Handle()))
+	debugDriver.EXPECT().VkCmdEndDebugUtilsLabelEXT(commandBuffer.Handle())
 
 	extension.CmdEndLabel(commandBuffer)
 }
@@ -158,7 +158,7 @@ func TestVulkanExtension_CmdInsertLabel(t *testing.T) {
 	}
 
 	debugDriver.EXPECT().VkCmdInsertDebugUtilsLabelEXT(
-		mocks.Exactly(commandBuffer.Handle()),
+		commandBuffer.Handle(),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
 		func(commandBuffer driver.VkCommandBuffer, pLabel *ext_debug_utils.VkDebugUtilsLabelEXT) {
@@ -194,7 +194,7 @@ func TestVulkanExtension_QueueBeginLabel(t *testing.T) {
 	}
 
 	debugDriver.EXPECT().VkQueueBeginDebugUtilsLabelEXT(
-		mocks.Exactly(queue.Handle()),
+		queue.Handle(),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
 		func(queue driver.VkQueue, pLabel *ext_debug_utils.VkDebugUtilsLabelEXT) {
@@ -224,7 +224,7 @@ func TestVulkanExtension_QueueEndLabel(t *testing.T) {
 	extension := ext_debug_utils.CreateExtensionFromDriver(debugDriver)
 	queue := mocks.EasyMockQueue(ctrl)
 
-	debugDriver.EXPECT().VkQueueEndDebugUtilsLabelEXT(mocks.Exactly(queue.Handle()))
+	debugDriver.EXPECT().VkQueueEndDebugUtilsLabelEXT(queue.Handle())
 
 	extension.QueueEndLabel(queue)
 }
@@ -243,7 +243,7 @@ func TestVulkanExtension_QueueInsertLabel(t *testing.T) {
 	}
 
 	debugDriver.EXPECT().VkQueueInsertDebugUtilsLabelEXT(
-		mocks.Exactly(queue.Handle()),
+		queue.Handle(),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
 		func(queue driver.VkQueue, pLabel *ext_debug_utils.VkDebugUtilsLabelEXT) {
@@ -282,7 +282,7 @@ func TestVulkanExtension_SetObjectName(t *testing.T) {
 	}
 
 	debugDriver.EXPECT().VkSetDebugUtilsObjectNameEXT(
-		mocks.Exactly(device.Handle()),
+		device.Handle(),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
 		func(device driver.VkDevice, pNameInfo *ext_debug_utils.VkDebugUtilsObjectNameInfoEXT) (common.VkResult, error) {
@@ -322,7 +322,7 @@ func TestVulkanExtension_SetObjectTag(t *testing.T) {
 	}
 
 	debugDriver.EXPECT().VkSetDebugUtilsObjectTagEXT(
-		mocks.Exactly(device.Handle()),
+		device.Handle(),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
 		func(device driver.VkDevice, pTagInfo *ext_debug_utils.VkDebugUtilsObjectTagInfoEXT) (common.VkResult, error) {
@@ -379,7 +379,7 @@ func TestVulkanExtension_SubmitMessage(t *testing.T) {
 	}
 
 	debugDriver.EXPECT().VkSubmitDebugUtilsMessageEXT(
-		mocks.Exactly(instance.Handle()),
+		instance.Handle(),
 		ext_debug_utils.VkDebugUtilsMessageSeverityFlagBitsEXT(0x00001000), // VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT
 		ext_debug_utils.VkDebugUtilsMessageTypeFlagsEXT(0x00000002),        // VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT
 		gomock.Not(gomock.Nil()),

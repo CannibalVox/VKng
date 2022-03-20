@@ -42,7 +42,7 @@ type CDriver struct {
 	destroyFunc                     C.PFN_vkDestroySurfaceKHR
 }
 
-type VkSurfaceKHR C.VkSurfaceKHR
+type VkSurfaceKHR driver.VulkanHandle
 type VkSurfaceCapabilitiesKHR C.VkSurfaceCapabilitiesKHR
 type VkSurfaceFormatKHR C.VkSurfaceFormatKHR
 type VkPresentModeKHR C.VkPresentModeKHR
@@ -81,7 +81,7 @@ func (d *CDriver) VkDestroySurfaceKHR(instance driver.VkInstance, surface VkSurf
 
 	C.cgoDestroySurfaceKHR(d.destroyFunc,
 		C.VkInstance(unsafe.Pointer(instance)),
-		C.VkSurfaceKHR(surface),
+		C.VkSurfaceKHR(unsafe.Pointer(surface)),
 		(*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)))
 }
 
@@ -92,7 +92,7 @@ func (d *CDriver) VkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice drive
 
 	res := common.VkResult(C.cgoGetPhysicalDeviceSurfaceCapabilitiesKHR(d.physicalSurfaceCapabilitiesFunc,
 		C.VkPhysicalDevice(unsafe.Pointer(physicalDevice)),
-		C.VkSurfaceKHR(surface),
+		C.VkSurfaceKHR(unsafe.Pointer(surface)),
 		(*C.VkSurfaceCapabilitiesKHR)(pSurfaceCapabilities)))
 
 	return res, res.ToError()
@@ -106,7 +106,7 @@ func (d *CDriver) VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice driver.VkP
 	res := common.VkResult(C.cgoGetPhysicalDeviceSurfaceSupportKHR(d.physicalSurfaceSupportFunc,
 		C.VkPhysicalDevice(unsafe.Pointer(physicalDevice)),
 		C.uint32_t(queueFamilyIndex),
-		C.VkSurfaceKHR(surface),
+		C.VkSurfaceKHR(unsafe.Pointer(surface)),
 		(*C.VkBool32)(unsafe.Pointer(pSupported))))
 
 	return res, res.ToError()
@@ -119,7 +119,7 @@ func (d *CDriver) VkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice driver.VkP
 
 	res := common.VkResult(C.cgoGetPhysicalDeviceSurfaceFormatsKHR(d.surfaceFormatsFunc,
 		C.VkPhysicalDevice(unsafe.Pointer(physicalDevice)),
-		C.VkSurfaceKHR(surface),
+		C.VkSurfaceKHR(unsafe.Pointer(surface)),
 		(*C.uint32_t)(unsafe.Pointer(pSurfaceFormatCount)),
 		(*C.VkSurfaceFormatKHR)(pSurfaceFormats)))
 	return res, res.ToError()
@@ -132,7 +132,7 @@ func (d *CDriver) VkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice drive
 
 	res := common.VkResult(C.cgoGetPhysicalDeviceSurfacePresentModesKHR(d.presentModesFunc,
 		C.VkPhysicalDevice(unsafe.Pointer(physicalDevice)),
-		C.VkSurfaceKHR(surface),
+		C.VkSurfaceKHR(unsafe.Pointer(surface)),
 		(*C.uint32_t)(unsafe.Pointer(pPresentModeCount)),
 		(*C.VkPresentModeKHR)(pPresentModes)))
 

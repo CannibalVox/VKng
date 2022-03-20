@@ -37,9 +37,10 @@ type Format struct {
 }
 
 type vulkanSurface struct {
-	instance driver.VkInstance
-	handle   VkSurfaceKHR
-	driver   Driver
+	instance   driver.VkInstance
+	handle     VkSurfaceKHR
+	driver     Driver
+	coreDriver driver.Driver
 
 	minimumAPIVersion common.APIVersion
 }
@@ -54,13 +55,20 @@ type Surface interface {
 	PresentModes(device core1_0.PhysicalDevice) ([]PresentMode, common.VkResult, error)
 }
 
-func CreateSurface(surfacePtr unsafe.Pointer, instance core1_0.Instance, driver Driver) (Surface, common.VkResult, error) {
-	return &vulkanSurface{
-		handle:            (VkSurfaceKHR)(surfacePtr),
-		instance:          instance.Handle(),
-		driver:            driver,
-		minimumAPIVersion: instance.APIVersion(),
-	}, core1_0.VKSuccess, nil
+func CreateSurface(surfacePtr unsafe.Pointer, instance core1_0.Instance, surfaceDriver Driver) (Surface, common.VkResult, error) {
+	surfaceHandle := (VkSurfaceKHR)(surfacePtr)
+	coreDriver := instance.Driver()
+
+	surface := coreDriver.ObjectStore().GetOrCreate(driver.VulkanHandle(surfaceHandle), func() interface{} {
+		return &vulkanSurface{
+			handle:            surfaceHandle,
+			coreDriver:        coreDriver,
+			instance:          instance.Handle(),
+			driver:            surfaceDriver,
+			minimumAPIVersion: instance.APIVersion(),
+		}
+	}).(*vulkanSurface)
+	return surface, core1_0.VKSuccess, nil
 }
 
 func (s *vulkanSurface) Handle() VkSurfaceKHR {
@@ -69,6 +77,7 @@ func (s *vulkanSurface) Handle() VkSurfaceKHR {
 
 func (s *vulkanSurface) Destroy(callbacks *driver.AllocationCallbacks) {
 	s.driver.VkDestroySurfaceKHR(s.instance, s.handle, callbacks.Handle())
+	s.coreDriver.ObjectStore().Delete(driver.VulkanHandle(s.handle), s)
 }
 
 func (s *vulkanSurface) SupportsDevice(physicalDevice core1_0.PhysicalDevice, queueFamilyIndex int) (bool, common.VkResult, error) {

@@ -26,7 +26,7 @@ func TestVulkanSwapchain_AcquireNextImage(t *testing.T) {
 	device := mocks.EasyMockDevice(ctrl, coreDriver)
 	surface := mock_surface.EasyMockSurface(ctrl)
 
-	swapchainDriver.EXPECT().VkCreateSwapchainKHR(mocks.Exactly(device.Handle()), gomock.Not(gomock.Nil()), gomock.Nil(), gomock.Not(gomock.Nil())).
+	swapchainDriver.EXPECT().VkCreateSwapchainKHR(device.Handle(), gomock.Not(gomock.Nil()), gomock.Nil(), gomock.Not(gomock.Nil())).
 		DoAndReturn(func(device driver.VkDevice, pCreateInfo *khr_swapchain.VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *khr_swapchain.VkSwapchainKHR) (common.VkResult, error) {
 			*pSwapchain = mock_swapchain.NewFakeSwapchain()
 
@@ -39,8 +39,8 @@ func TestVulkanSwapchain_AcquireNextImage(t *testing.T) {
 	require.NoError(t, err)
 
 	swapchainDriver.EXPECT().VkAcquireNextImageKHR(
-		mocks.Exactly(device.Handle()),
-		mocks.Exactly(swapchain.Handle()),
+		device.Handle(),
+		swapchain.Handle(),
 		driver.Uint64(60000000000), // 60 billion nanoseconds = 1 minute
 		driver.VkSemaphore(unsafe.Pointer(nil)),
 		driver.VkFence(unsafe.Pointer(nil)),
@@ -67,7 +67,7 @@ func TestVulkanSwapchain_AcquireNextImage_NoTimeout(t *testing.T) {
 	device := mocks.EasyMockDevice(ctrl, coreDriver)
 	surface := mock_surface.EasyMockSurface(ctrl)
 
-	swapchainDriver.EXPECT().VkCreateSwapchainKHR(mocks.Exactly(device.Handle()), gomock.Not(gomock.Nil()), gomock.Nil(), gomock.Not(gomock.Nil())).
+	swapchainDriver.EXPECT().VkCreateSwapchainKHR(device.Handle(), gomock.Not(gomock.Nil()), gomock.Nil(), gomock.Not(gomock.Nil())).
 		DoAndReturn(func(device driver.VkDevice, pCreateInfo *khr_swapchain.VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *khr_swapchain.VkSwapchainKHR) (common.VkResult, error) {
 			*pSwapchain = mock_swapchain.NewFakeSwapchain()
 
@@ -80,8 +80,8 @@ func TestVulkanSwapchain_AcquireNextImage_NoTimeout(t *testing.T) {
 	require.NoError(t, err)
 
 	swapchainDriver.EXPECT().VkAcquireNextImageKHR(
-		mocks.Exactly(device.Handle()),
-		mocks.Exactly(swapchain.Handle()),
+		device.Handle(),
+		swapchain.Handle(),
 		driver.Uint64(^uint64(0)), // max uint64 = no timeout
 		driver.VkSemaphore(unsafe.Pointer(nil)),
 		driver.VkFence(unsafe.Pointer(nil)),
@@ -108,7 +108,7 @@ func TestVulkanSwapchain_AcquireNextImage_FenceAndSemaphore(t *testing.T) {
 	device := mocks.EasyMockDevice(ctrl, coreDriver)
 	surface := mock_surface.EasyMockSurface(ctrl)
 
-	swapchainDriver.EXPECT().VkCreateSwapchainKHR(mocks.Exactly(device.Handle()), gomock.Not(gomock.Nil()), gomock.Nil(), gomock.Not(gomock.Nil())).
+	swapchainDriver.EXPECT().VkCreateSwapchainKHR(device.Handle(), gomock.Not(gomock.Nil()), gomock.Nil(), gomock.Not(gomock.Nil())).
 		DoAndReturn(func(device driver.VkDevice, pCreateInfo *khr_swapchain.VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *khr_swapchain.VkSwapchainKHR) (common.VkResult, error) {
 			*pSwapchain = mock_swapchain.NewFakeSwapchain()
 
@@ -124,11 +124,11 @@ func TestVulkanSwapchain_AcquireNextImage_FenceAndSemaphore(t *testing.T) {
 	semaphore := mocks.EasyMockSemaphore(ctrl)
 
 	swapchainDriver.EXPECT().VkAcquireNextImageKHR(
-		mocks.Exactly(device.Handle()),
-		mocks.Exactly(swapchain.Handle()),
+		device.Handle(),
+		swapchain.Handle(),
 		driver.Uint64(60000000000), // 60 billion nanoseconds = 1 minute
-		mocks.Exactly(semaphore.Handle()),
-		mocks.Exactly(fence.Handle()),
+		semaphore.Handle(),
+		fence.Handle(),
 		gomock.Not(gomock.Nil),
 	).DoAndReturn(
 		func(device driver.VkDevice, swapchain khr_swapchain.VkSwapchainKHR, timeout driver.Uint64, semaphore driver.VkSemaphore, fence driver.VkFence, pImageIndex *driver.Uint32) (common.VkResult, error) {
@@ -152,7 +152,7 @@ func TestVulkanSwapchain_Images(t *testing.T) {
 	device := mocks.EasyMockDevice(ctrl, coreDriver)
 	surface := mock_surface.EasyMockSurface(ctrl)
 
-	swapchainDriver.EXPECT().VkCreateSwapchainKHR(mocks.Exactly(device.Handle()), gomock.Not(gomock.Nil()), gomock.Nil(), gomock.Not(gomock.Nil())).
+	swapchainDriver.EXPECT().VkCreateSwapchainKHR(device.Handle(), gomock.Not(gomock.Nil()), gomock.Nil(), gomock.Not(gomock.Nil())).
 		DoAndReturn(func(device driver.VkDevice, pCreateInfo *khr_swapchain.VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *khr_swapchain.VkSwapchainKHR) (common.VkResult, error) {
 			*pSwapchain = mock_swapchain.NewFakeSwapchain()
 
@@ -168,8 +168,8 @@ func TestVulkanSwapchain_Images(t *testing.T) {
 	image2 := mocks.EasyMockImage(ctrl)
 
 	swapchainDriver.EXPECT().VkGetSwapchainImagesKHR(
-		mocks.Exactly(device.Handle()),
-		mocks.Exactly(swapchain.Handle()),
+		device.Handle(),
+		swapchain.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Nil(),
 	).DoAndReturn(
@@ -180,8 +180,8 @@ func TestVulkanSwapchain_Images(t *testing.T) {
 		})
 
 	swapchainDriver.EXPECT().VkGetSwapchainImagesKHR(
-		mocks.Exactly(device.Handle()),
-		mocks.Exactly(swapchain.Handle()),
+		device.Handle(),
+		swapchain.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
@@ -195,14 +195,14 @@ func TestVulkanSwapchain_Images(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	swapchainDriver.EXPECT().CreateImage(mocks.Exactly(image1.Handle()), mocks.Exactly(device.Handle())).Return(image1)
-	swapchainDriver.EXPECT().CreateImage(mocks.Exactly(image2.Handle()), mocks.Exactly(device.Handle())).Return(image2)
+	swapchainDriver.EXPECT().CreateImage(image1.Handle(), device.Handle()).Return(image1)
+	swapchainDriver.EXPECT().CreateImage(image2.Handle(), device.Handle()).Return(image2)
 
 	images, _, err := swapchain.Images()
 	require.NoError(t, err)
 	require.Len(t, images, 2)
-	require.Same(t, image1.Handle(), images[0].Handle())
-	require.Same(t, image2.Handle(), images[1].Handle())
+	require.Equal(t, image1.Handle(), images[0].Handle())
+	require.Equal(t, image2.Handle(), images[1].Handle())
 }
 
 func TestVulkanSwapchain_Images_Incomplete(t *testing.T) {
@@ -215,7 +215,7 @@ func TestVulkanSwapchain_Images_Incomplete(t *testing.T) {
 	device := mocks.EasyMockDevice(ctrl, coreDriver)
 	surface := mock_surface.EasyMockSurface(ctrl)
 
-	swapchainDriver.EXPECT().VkCreateSwapchainKHR(mocks.Exactly(device.Handle()), gomock.Not(gomock.Nil()), gomock.Nil(), gomock.Not(gomock.Nil())).
+	swapchainDriver.EXPECT().VkCreateSwapchainKHR(device.Handle(), gomock.Not(gomock.Nil()), gomock.Nil(), gomock.Not(gomock.Nil())).
 		DoAndReturn(func(device driver.VkDevice, pCreateInfo *khr_swapchain.VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *khr_swapchain.VkSwapchainKHR) (common.VkResult, error) {
 			*pSwapchain = mock_swapchain.NewFakeSwapchain()
 
@@ -231,8 +231,8 @@ func TestVulkanSwapchain_Images_Incomplete(t *testing.T) {
 	image2 := mocks.EasyMockImage(ctrl)
 
 	swapchainDriver.EXPECT().VkGetSwapchainImagesKHR(
-		mocks.Exactly(device.Handle()),
-		mocks.Exactly(swapchain.Handle()),
+		device.Handle(),
+		swapchain.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Nil(),
 	).DoAndReturn(
@@ -243,8 +243,8 @@ func TestVulkanSwapchain_Images_Incomplete(t *testing.T) {
 		})
 
 	swapchainDriver.EXPECT().VkGetSwapchainImagesKHR(
-		mocks.Exactly(device.Handle()),
-		mocks.Exactly(swapchain.Handle()),
+		device.Handle(),
+		swapchain.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
@@ -258,8 +258,8 @@ func TestVulkanSwapchain_Images_Incomplete(t *testing.T) {
 		})
 
 	swapchainDriver.EXPECT().VkGetSwapchainImagesKHR(
-		mocks.Exactly(device.Handle()),
-		mocks.Exactly(swapchain.Handle()),
+		device.Handle(),
+		swapchain.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Nil(),
 	).DoAndReturn(
@@ -270,8 +270,8 @@ func TestVulkanSwapchain_Images_Incomplete(t *testing.T) {
 		})
 
 	swapchainDriver.EXPECT().VkGetSwapchainImagesKHR(
-		mocks.Exactly(device.Handle()),
-		mocks.Exactly(swapchain.Handle()),
+		device.Handle(),
+		swapchain.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
@@ -285,14 +285,14 @@ func TestVulkanSwapchain_Images_Incomplete(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	swapchainDriver.EXPECT().CreateImage(mocks.Exactly(image1.Handle()), mocks.Exactly(device.Handle())).Return(image1)
+	swapchainDriver.EXPECT().CreateImage(image1.Handle(), device.Handle()).Return(image1)
 
-	swapchainDriver.EXPECT().CreateImage(mocks.Exactly(image1.Handle()), mocks.Exactly(device.Handle())).Return(image1)
-	swapchainDriver.EXPECT().CreateImage(mocks.Exactly(image2.Handle()), mocks.Exactly(device.Handle())).Return(image2)
+	swapchainDriver.EXPECT().CreateImage(image1.Handle(), device.Handle()).Return(image1)
+	swapchainDriver.EXPECT().CreateImage(image2.Handle(), device.Handle()).Return(image2)
 
 	images, _, err := swapchain.Images()
 	require.NoError(t, err)
 	require.Len(t, images, 2)
-	require.Same(t, image1.Handle(), images[0].Handle())
-	require.Same(t, image2.Handle(), images[1].Handle())
+	require.Equal(t, image1.Handle(), images[0].Handle())
+	require.Equal(t, image2.Handle(), images[1].Handle())
 }

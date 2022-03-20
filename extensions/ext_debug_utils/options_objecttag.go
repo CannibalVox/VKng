@@ -40,11 +40,14 @@ func (t ObjectTagOptions) PopulateCPointer(allocator *cgoparam.Allocator, preall
 
 func (t ObjectTagOptions) PopulateOutData(cPointer unsafe.Pointer) (unsafe.Pointer, error) {
 	tagInfo := (*C.VkDebugUtilsObjectTagInfoEXT)(cPointer)
+	return tagInfo.pNext, nil
+}
+
+func (t *ObjectTagOptions) PopulateFromCPointer(cPointer unsafe.Pointer) {
+	tagInfo := (*C.VkDebugUtilsObjectTagInfoEXT)(cPointer)
 
 	t.Type = common.ObjectType(tagInfo.objectType)
 	t.Handle = uintptr(tagInfo.objectHandle)
 	t.TagName = uint64(tagInfo.tagName)
 	t.Tag = C.GoBytes(tagInfo.pTag, C.int(tagInfo.tagSize))
-
-	return tagInfo.pNext, nil
 }

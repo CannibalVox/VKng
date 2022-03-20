@@ -11,6 +11,7 @@ import (
 	"github.com/CannibalVox/VKng/core/common"
 	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/VKng/extensions/khr_surface"
+	"github.com/cockroachdb/errors"
 	"github.com/veandco/go-sdl2/sdl"
 	"unsafe"
 )
@@ -37,9 +38,9 @@ func CreateExtensionFromDriver(driver khr_surface.Driver) *VulkanExtension {
 }
 
 func (l *VulkanExtension) CreateSurface(instance core1_0.Instance, window *sdl.Window) (khr_surface.Surface, common.VkResult, error) {
-	surfacePtrUnsafe, err := window.VulkanCreateSurface(instance.Handle())
+	surfacePtrUnsafe, err := window.VulkanCreateSurface((*C.VkInstance)(unsafe.Pointer(instance.Handle())))
 	if err != nil {
-		return nil, core1_0.VKErrorUnknown, err
+		return nil, core1_0.VKErrorUnknown, errors.Wrap(err, "could not retrieve surface from SDL")
 	}
 
 	surfacePtr := (*C.VkSurfaceKHR)(surfacePtrUnsafe)

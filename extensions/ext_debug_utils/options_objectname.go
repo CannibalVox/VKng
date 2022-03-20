@@ -36,6 +36,11 @@ func (i ObjectNameOptions) PopulateCPointer(allocator *cgoparam.Allocator, preal
 
 func (i ObjectNameOptions) PopulateOutData(cDataPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
 	objectNameInfo := (*C.VkDebugUtilsObjectNameInfoEXT)(cDataPointer)
+	return objectNameInfo.pNext, nil
+}
+
+func (i *ObjectNameOptions) PopulateFromCPointer(cDataPointer unsafe.Pointer) {
+	objectNameInfo := (*C.VkDebugUtilsObjectNameInfoEXT)(cDataPointer)
 	i.Type = common.ObjectType(objectNameInfo.objectType)
 	i.Handle = uintptr(objectNameInfo.objectHandle)
 	i.Name = ""
@@ -43,6 +48,4 @@ func (i ObjectNameOptions) PopulateOutData(cDataPointer unsafe.Pointer) (next un
 	if objectNameInfo.pObjectName != nil {
 		i.Name = C.GoString(objectNameInfo.pObjectName)
 	}
-
-	return objectNameInfo.pNext, nil
 }

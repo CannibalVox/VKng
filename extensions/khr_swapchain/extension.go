@@ -51,12 +51,17 @@ func (l *VulkanExtension) CreateSwapchain(device core1_0.Device, allocation *dri
 		return nil, res, err
 	}
 
-	return &vulkanSwapchain{
-		handle:            swapchain,
-		device:            device.Handle(),
-		driver:            l.driver,
-		minimumAPIVersion: device.APIVersion(),
-	}, res, nil
+	coreDriver := device.Driver()
+	newSwapchain := coreDriver.ObjectStore().GetOrCreate(driver.VulkanHandle(swapchain), func() interface{} {
+		return &vulkanSwapchain{
+			handle:            swapchain,
+			device:            device.Handle(),
+			driver:            l.driver,
+			minimumAPIVersion: device.APIVersion(),
+			coreDriver:        coreDriver,
+		}
+	}).(*vulkanSwapchain)
+	return newSwapchain, res, nil
 }
 
 func (s *VulkanExtension) PresentToQueue(queue core1_0.Queue, o *PresentOptions) (common.VkResult, error) {
