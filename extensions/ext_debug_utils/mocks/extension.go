@@ -78,7 +78,7 @@ func (mr *MockExtensionMockRecorder) CmdInsertLabel(commandBuffer, label interfa
 }
 
 // CreateMessenger mocks base method.
-func (m *MockExtension) CreateMessenger(instance core1_0.Instance, allocation *driver.AllocationCallbacks, o *ext_debug_utils.CreationOptions) (ext_debug_utils.Messenger, common.VkResult, error) {
+func (m *MockExtension) CreateMessenger(instance core1_0.Instance, allocation *driver.AllocationCallbacks, o *ext_debug_utils.CreateOptions) (ext_debug_utils.Messenger, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateMessenger", instance, allocation, o)
 	ret0, _ := ret[0].(ext_debug_utils.Messenger)

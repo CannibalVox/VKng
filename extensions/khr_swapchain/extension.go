@@ -19,8 +19,8 @@ type VulkanExtension struct {
 }
 
 type Extension interface {
-	CreateSwapchain(device core1_0.Device, allocation *driver.AllocationCallbacks, options *CreationOptions) (Swapchain, common.VkResult, error)
-	PresentToQueue(queue core1_0.Queue, o *PresentOptions) (common.VkResult, error)
+	CreateSwapchain(device core1_0.Device, allocation *driver.AllocationCallbacks, options CreateOptions) (Swapchain, common.VkResult, error)
+	PresentToQueue(queue core1_0.Queue, o PresentOptions) (common.VkResult, error)
 }
 
 func CreateExtensionFromDevice(device core1_0.Device) *VulkanExtension {
@@ -35,7 +35,7 @@ func CreateExtensionFromDriver(driver Driver) *VulkanExtension {
 	}
 }
 
-func (l *VulkanExtension) CreateSwapchain(device core1_0.Device, allocation *driver.AllocationCallbacks, options *CreationOptions) (Swapchain, common.VkResult, error) {
+func (l *VulkanExtension) CreateSwapchain(device core1_0.Device, allocation *driver.AllocationCallbacks, options CreateOptions) (Swapchain, common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -64,7 +64,7 @@ func (l *VulkanExtension) CreateSwapchain(device core1_0.Device, allocation *dri
 	return newSwapchain, res, nil
 }
 
-func (s *VulkanExtension) PresentToQueue(queue core1_0.Queue, o *PresentOptions) (common.VkResult, error) {
+func (s *VulkanExtension) PresentToQueue(queue core1_0.Queue, o PresentOptions) (common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 

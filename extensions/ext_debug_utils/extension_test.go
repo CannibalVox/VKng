@@ -85,7 +85,7 @@ func TestVulkanExtension_CreateMessenger(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	messenger, _, err := extension.CreateMessenger(instance, nil, &ext_debug_utils.CreationOptions{
+	messenger, _, err := extension.CreateMessenger(instance, nil, ext_debug_utils.CreateOptions{
 		CaptureSeverities: ext_debug_utils.SeverityWarning,
 		CaptureTypes:      ext_debug_utils.TypeValidation,
 		Callback:          cb,

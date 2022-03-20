@@ -22,7 +22,7 @@ import (
 	"unsafe"
 )
 
-type CreationOptions struct {
+type CreateOptions struct {
 	Flags             CallbackDataFlags
 	CaptureSeverities MessageSeverities
 	CaptureTypes      MessageTypes
@@ -31,7 +31,7 @@ type CreationOptions struct {
 	common.HaveNext
 }
 
-func (o CreationOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o CreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == unsafe.Pointer(nil) {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof([1]C.VkDebugUtilsMessengerCreateInfoEXT{})))
 	}
@@ -48,7 +48,7 @@ func (o CreationOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallo
 	return preallocatedPointer, nil
 }
 
-func (o CreationOptions) PopulateOutData(cDataPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
+func (o CreateOptions) PopulateOutData(cDataPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
 	createInfo := (*C.VkDebugUtilsMessengerCreateInfoEXT)(cDataPointer)
 	return createInfo.pNext, nil
 }

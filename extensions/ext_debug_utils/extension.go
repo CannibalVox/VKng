@@ -15,7 +15,7 @@ type VulkanExtension struct {
 }
 
 type Extension interface {
-	CreateMessenger(instance core1_0.Instance, allocation *driver.AllocationCallbacks, o *CreationOptions) (Messenger, common.VkResult, error)
+	CreateMessenger(instance core1_0.Instance, allocation *driver.AllocationCallbacks, o CreateOptions) (Messenger, common.VkResult, error)
 
 	CmdBeginLabel(commandBuffer core1_0.CommandBuffer, label LabelOptions) error
 	CmdEndLabel(commandBuffer core1_0.CommandBuffer)
@@ -45,7 +45,7 @@ func CreateExtensionFromDriver(driver Driver) *VulkanExtension {
 	}
 }
 
-func (l *VulkanExtension) CreateMessenger(instance core1_0.Instance, allocation *driver.AllocationCallbacks, o *CreationOptions) (Messenger, common.VkResult, error) {
+func (l *VulkanExtension) CreateMessenger(instance core1_0.Instance, allocation *driver.AllocationCallbacks, o CreateOptions) (Messenger, common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 

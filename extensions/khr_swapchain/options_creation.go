@@ -13,7 +13,7 @@ import (
 	"unsafe"
 )
 
-type CreationOptions struct {
+type CreateOptions struct {
 	Surface ext_surface.Surface
 
 	Flags SwapchainCreateFlags
@@ -39,9 +39,9 @@ type CreationOptions struct {
 	common.HaveNext
 }
 
-func (o CreationOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o CreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if o.Surface == nil {
-		return nil, errors.New("khr_swapchain.CreationOptions.Surface cannot be nil")
+		return nil, errors.New("khr_swapchain.CreateOptions.Surface cannot be nil")
 	}
 
 	if preallocatedPointer == unsafe.Pointer(nil) {
@@ -94,7 +94,7 @@ func (o CreationOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallo
 	return preallocatedPointer, nil
 }
 
-func (o CreationOptions) PopulateOutData(cDataPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
+func (o CreateOptions) PopulateOutData(cDataPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
 	createInfo := (*C.VkSwapchainCreateInfoKHR)(cDataPointer)
 	return createInfo.pNext, nil
 }

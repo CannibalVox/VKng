@@ -33,7 +33,7 @@ func TestVulkanSwapchain_AcquireNextImage(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	swapchain, _, err := extension.CreateSwapchain(device, nil, &khr_swapchain.CreationOptions{
+	swapchain, _, err := extension.CreateSwapchain(device, nil, khr_swapchain.CreateOptions{
 		Surface: surface,
 	})
 	require.NoError(t, err)
@@ -74,7 +74,7 @@ func TestVulkanSwapchain_AcquireNextImage_NoTimeout(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	swapchain, _, err := extension.CreateSwapchain(device, nil, &khr_swapchain.CreationOptions{
+	swapchain, _, err := extension.CreateSwapchain(device, nil, khr_swapchain.CreateOptions{
 		Surface: surface,
 	})
 	require.NoError(t, err)
@@ -115,7 +115,7 @@ func TestVulkanSwapchain_AcquireNextImage_FenceAndSemaphore(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	swapchain, _, err := extension.CreateSwapchain(device, nil, &khr_swapchain.CreationOptions{
+	swapchain, _, err := extension.CreateSwapchain(device, nil, khr_swapchain.CreateOptions{
 		Surface: surface,
 	})
 	require.NoError(t, err)
@@ -159,7 +159,7 @@ func TestVulkanSwapchain_Images(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	swapchain, _, err := extension.CreateSwapchain(device, nil, &khr_swapchain.CreationOptions{
+	swapchain, _, err := extension.CreateSwapchain(device, nil, khr_swapchain.CreateOptions{
 		Surface: surface,
 	})
 	require.NoError(t, err)
@@ -222,7 +222,7 @@ func TestVulkanSwapchain_Images_Incomplete(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	swapchain, _, err := extension.CreateSwapchain(device, nil, &khr_swapchain.CreationOptions{
+	swapchain, _, err := extension.CreateSwapchain(device, nil, khr_swapchain.CreateOptions{
 		Surface: surface,
 	})
 	require.NoError(t, err)

@@ -38,7 +38,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 }
 
 // CreateSwapchain mocks base method.
-func (m *MockExtension) CreateSwapchain(device core1_0.Device, allocation *driver.AllocationCallbacks, options *khr_swapchain.CreationOptions) (khr_swapchain.Swapchain, common.VkResult, error) {
+func (m *MockExtension) CreateSwapchain(device core1_0.Device, allocation *driver.AllocationCallbacks, options *khr_swapchain.CreateOptions) (khr_swapchain.Swapchain, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateSwapchain", device, allocation, options)
 	ret0, _ := ret[0].(khr_swapchain.Swapchain)

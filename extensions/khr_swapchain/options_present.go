@@ -27,7 +27,7 @@ type PresentOptions struct {
 	OutData *PresentOptionsOutData
 }
 
-func (o *PresentOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o PresentOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == unsafe.Pointer(nil) {
 		preallocatedPointer = allocator.Malloc(C.sizeof_struct_VkPresentInfoKHR)
 	}
@@ -81,7 +81,7 @@ func (o *PresentOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallo
 	return preallocatedPointer, nil
 }
 
-func (o *PresentOptions) PopulateOutData(cDataPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
+func (o PresentOptions) PopulateOutData(cDataPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
 	createInfo := (*C.VkPresentInfoKHR)(cDataPointer)
 
 	if o.OutData == nil {

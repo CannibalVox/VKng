@@ -70,7 +70,7 @@ func TestVulkanExtension_CreateSwapchain(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	swapchain, _, err := extension.CreateSwapchain(device, nil, &khr_swapchain.CreationOptions{
+	swapchain, _, err := extension.CreateSwapchain(device, nil, khr_swapchain.CreateOptions{
 		Surface:            surface,
 		MinImageCount:      1,
 		ImageFormat:        core1_0.DataFormatA2B10G10R10SignedScaled,
@@ -136,12 +136,14 @@ func TestVulkanExtension_PresentToQueue_NullOutData(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	_, err := extension.PresentToQueue(queue, &khr_swapchain.PresentOptions{
+	options := khr_swapchain.PresentOptions{
 		WaitSemaphores: []core1_0.Semaphore{semaphore1, semaphore2},
 		Swapchains:     []khr_swapchain.Swapchain{swapchain},
 		ImageIndices:   []int{2},
-	})
+	}
+	_, err := extension.PresentToQueue(queue, options)
 	require.NoError(t, err)
+	require.Nil(t, options.OutData)
 }
 
 func TestVulkanExtension_PresentToQueue_RealOutData(t *testing.T) {
@@ -190,7 +192,7 @@ func TestVulkanExtension_PresentToQueue_RealOutData(t *testing.T) {
 		})
 
 	outData := khr_swapchain.PresentOptionsOutData{}
-	_, err := extension.PresentToQueue(queue, &khr_swapchain.PresentOptions{
+	_, err := extension.PresentToQueue(queue, khr_swapchain.PresentOptions{
 		WaitSemaphores: []core1_0.Semaphore{semaphore1, semaphore2},
 		Swapchains:     []khr_swapchain.Swapchain{swapchain},
 		ImageIndices:   []int{2},
