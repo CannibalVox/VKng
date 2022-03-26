@@ -9,7 +9,7 @@ import (
 
 	common "github.com/CannibalVox/VKng/core/common"
 	driver "github.com/CannibalVox/VKng/core/driver"
-	khr_surface "github.com/CannibalVox/VKng/extensions/khr_surface"
+	khr_surface_driver "github.com/CannibalVox/VKng/extensions/khr_surface/driver"
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -37,7 +37,7 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 }
 
 // VkDestroySurfaceKHR mocks base method.
-func (m *MockDriver) VkDestroySurfaceKHR(instance driver.VkInstance, surface khr_surface.VkSurfaceKHR, pAllocator *driver.VkAllocationCallbacks) {
+func (m *MockDriver) VkDestroySurfaceKHR(instance driver.VkInstance, surface khr_surface_driver.VkSurfaceKHR, pAllocator *driver.VkAllocationCallbacks) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkDestroySurfaceKHR", instance, surface, pAllocator)
 }
@@ -49,7 +49,7 @@ func (mr *MockDriverMockRecorder) VkDestroySurfaceKHR(instance, surface, pAlloca
 }
 
 // VkGetPhysicalDeviceSurfaceCapabilitiesKHR mocks base method.
-func (m *MockDriver) VkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pSurfaceCapabilities *khr_surface.VkSurfaceCapabilitiesKHR) (common.VkResult, error) {
+func (m *MockDriver) VkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice driver.VkPhysicalDevice, surface khr_surface_driver.VkSurfaceKHR, pSurfaceCapabilities *khr_surface_driver.VkSurfaceCapabilitiesKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkGetPhysicalDeviceSurfaceCapabilitiesKHR", physicalDevice, surface, pSurfaceCapabilities)
 	ret0, _ := ret[0].(common.VkResult)
@@ -64,7 +64,7 @@ func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceSurfaceCapabilitiesKHR(phys
 }
 
 // VkGetPhysicalDeviceSurfaceFormatsKHR mocks base method.
-func (m *MockDriver) VkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pSurfaceFormatCount *driver.Uint32, pSurfaceFormats *khr_surface.VkSurfaceFormatKHR) (common.VkResult, error) {
+func (m *MockDriver) VkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice driver.VkPhysicalDevice, surface khr_surface_driver.VkSurfaceKHR, pSurfaceFormatCount *driver.Uint32, pSurfaceFormats *khr_surface_driver.VkSurfaceFormatKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkGetPhysicalDeviceSurfaceFormatsKHR", physicalDevice, surface, pSurfaceFormatCount, pSurfaceFormats)
 	ret0, _ := ret[0].(common.VkResult)
@@ -79,7 +79,7 @@ func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceSurfaceFormatsKHR(physicalD
 }
 
 // VkGetPhysicalDeviceSurfacePresentModesKHR mocks base method.
-func (m *MockDriver) VkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *khr_surface.VkPresentModeKHR) (common.VkResult, error) {
+func (m *MockDriver) VkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice driver.VkPhysicalDevice, surface khr_surface_driver.VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *khr_surface_driver.VkPresentModeKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkGetPhysicalDeviceSurfacePresentModesKHR", physicalDevice, surface, pPresentModeCount, pPresentModes)
 	ret0, _ := ret[0].(common.VkResult)
@@ -94,7 +94,7 @@ func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceSurfacePresentModesKHR(phys
 }
 
 // VkGetPhysicalDeviceSurfaceSupportKHR mocks base method.
-func (m *MockDriver) VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice driver.VkPhysicalDevice, queueFamilyIndex driver.Uint32, surface khr_surface.VkSurfaceKHR, pSupported *driver.VkBool32) (common.VkResult, error) {
+func (m *MockDriver) VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice driver.VkPhysicalDevice, queueFamilyIndex driver.Uint32, surface khr_surface_driver.VkSurfaceKHR, pSupported *driver.VkBool32) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkGetPhysicalDeviceSurfaceSupportKHR", physicalDevice, queueFamilyIndex, surface, pSupported)
 	ret0, _ := ret[0].(common.VkResult)

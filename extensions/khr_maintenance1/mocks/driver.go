@@ -8,7 +8,7 @@ import (
 	reflect "reflect"
 
 	driver "github.com/CannibalVox/VKng/core/driver"
-	vk_khr_maintenance1 "github.com/CannibalVox/VKng/extensions/khr_maintenance1"
+	khr_maintenance1_driver "github.com/CannibalVox/VKng/extensions/khr_maintenance1/driver"
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -36,7 +36,7 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 }
 
 // VkTrimCommandPoolKHR mocks base method.
-func (m *MockDriver) VkTrimCommandPoolKHR(device driver.VkDevice, commandPool driver.VkCommandPool, flags vk_khr_maintenance1.VkCommandPoolTrimFlagsKHR) {
+func (m *MockDriver) VkTrimCommandPoolKHR(device driver.VkDevice, commandPool driver.VkCommandPool, flags khr_maintenance1_driver.VkCommandPoolTrimFlagsKHR) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkTrimCommandPoolKHR", device, commandPool, flags)
 }

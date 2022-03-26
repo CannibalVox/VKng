@@ -9,6 +9,7 @@ import (
 	"github.com/CannibalVox/VKng/core/mocks"
 	"github.com/CannibalVox/VKng/extensions/khr_16bit_storage"
 	"github.com/CannibalVox/VKng/extensions/khr_get_physical_device_properties2"
+	khr_get_physical_device_properties2_driver "github.com/CannibalVox/VKng/extensions/khr_get_physical_device_properties2/driver"
 	mock_get_physical_device_properties2 "github.com/CannibalVox/VKng/extensions/khr_get_physical_device_properties2/mocks"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/require"
@@ -83,7 +84,7 @@ func TestDevice16BitStorageOutData(t *testing.T) {
 	extension := khr_get_physical_device_properties2.CreateExtensionFromDriver(extDriver)
 
 	extDriver.EXPECT().VkGetPhysicalDeviceFeatures2KHR(physicalDevice.Handle(), gomock.Not(gomock.Nil())).
-		DoAndReturn(func(physicalDevice driver.VkPhysicalDevice, pFeatures *khr_get_physical_device_properties2.VkPhysicalDeviceFeatures2KHR) {
+		DoAndReturn(func(physicalDevice driver.VkPhysicalDevice, pFeatures *khr_get_physical_device_properties2_driver.VkPhysicalDeviceFeatures2KHR) {
 			val := reflect.ValueOf(pFeatures).Elem()
 
 			require.Equal(t, uint64(1000059000), val.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2_KHR

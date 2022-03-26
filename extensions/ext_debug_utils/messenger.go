@@ -11,20 +11,21 @@ import "C"
 import (
 	"fmt"
 	"github.com/CannibalVox/VKng/core/driver"
+	ext_driver "github.com/CannibalVox/VKng/extensions/ext_debug_utils/driver"
 	"runtime/cgo"
 	"unsafe"
 )
 
 type Messenger interface {
 	Destroy(callbacks *driver.AllocationCallbacks)
-	Handle() VkDebugUtilsMessengerEXT
+	Handle() ext_driver.VkDebugUtilsMessengerEXT
 }
 
 type vulkanMessenger struct {
 	instance   driver.VkInstance
-	handle     VkDebugUtilsMessengerEXT
+	handle     ext_driver.VkDebugUtilsMessengerEXT
 	coreDriver driver.Driver
-	driver     Driver
+	driver     ext_driver.Driver
 }
 
 func (m *vulkanMessenger) Destroy(callbacks *driver.AllocationCallbacks) {
@@ -32,7 +33,7 @@ func (m *vulkanMessenger) Destroy(callbacks *driver.AllocationCallbacks) {
 	m.coreDriver.ObjectStore().Delete(driver.VulkanHandle(m.handle), m)
 }
 
-func (m *vulkanMessenger) Handle() VkDebugUtilsMessengerEXT {
+func (m *vulkanMessenger) Handle() ext_driver.VkDebugUtilsMessengerEXT {
 	return m.handle
 }
 

@@ -9,7 +9,7 @@ import (
 
 	common "github.com/CannibalVox/VKng/core/common"
 	driver "github.com/CannibalVox/VKng/core/driver"
-	ext_debug_utils "github.com/CannibalVox/VKng/extensions/ext_debug_utils"
+	ext_debug_utils_driver "github.com/CannibalVox/VKng/extensions/ext_debug_utils/driver"
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -37,7 +37,7 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 }
 
 // VKCmdBeginDebugUtilsLabelEXT mocks base method.
-func (m *MockDriver) VKCmdBeginDebugUtilsLabelEXT(commandBuffer driver.VkCommandBuffer, pLabelInfo *ext_debug_utils.VkDebugUtilsLabelEXT) {
+func (m *MockDriver) VKCmdBeginDebugUtilsLabelEXT(commandBuffer driver.VkCommandBuffer, pLabelInfo *ext_debug_utils_driver.VkDebugUtilsLabelEXT) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VKCmdBeginDebugUtilsLabelEXT", commandBuffer, pLabelInfo)
 }
@@ -61,7 +61,7 @@ func (mr *MockDriverMockRecorder) VkCmdEndDebugUtilsLabelEXT(commandBuffer inter
 }
 
 // VkCmdInsertDebugUtilsLabelEXT mocks base method.
-func (m *MockDriver) VkCmdInsertDebugUtilsLabelEXT(commandBuffer driver.VkCommandBuffer, pLabelInfo *ext_debug_utils.VkDebugUtilsLabelEXT) {
+func (m *MockDriver) VkCmdInsertDebugUtilsLabelEXT(commandBuffer driver.VkCommandBuffer, pLabelInfo *ext_debug_utils_driver.VkDebugUtilsLabelEXT) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkCmdInsertDebugUtilsLabelEXT", commandBuffer, pLabelInfo)
 }
@@ -73,7 +73,7 @@ func (mr *MockDriverMockRecorder) VkCmdInsertDebugUtilsLabelEXT(commandBuffer, p
 }
 
 // VkCreateDebugUtilsMessengerEXT mocks base method.
-func (m *MockDriver) VkCreateDebugUtilsMessengerEXT(instance driver.VkInstance, pCreateInfo *ext_debug_utils.VkDebugUtilsMessengerCreateInfoEXT, pAllocator *driver.VkAllocationCallbacks, pDebugMessenger *ext_debug_utils.VkDebugUtilsMessengerEXT) (common.VkResult, error) {
+func (m *MockDriver) VkCreateDebugUtilsMessengerEXT(instance driver.VkInstance, pCreateInfo *ext_debug_utils_driver.VkDebugUtilsMessengerCreateInfoEXT, pAllocator *driver.VkAllocationCallbacks, pDebugMessenger *ext_debug_utils_driver.VkDebugUtilsMessengerEXT) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkCreateDebugUtilsMessengerEXT", instance, pCreateInfo, pAllocator, pDebugMessenger)
 	ret0, _ := ret[0].(common.VkResult)
@@ -88,7 +88,7 @@ func (mr *MockDriverMockRecorder) VkCreateDebugUtilsMessengerEXT(instance, pCrea
 }
 
 // VkDestroyDebugUtilsMessengerEXT mocks base method.
-func (m *MockDriver) VkDestroyDebugUtilsMessengerEXT(instance driver.VkInstance, debugMessenger ext_debug_utils.VkDebugUtilsMessengerEXT, pAllocator *driver.VkAllocationCallbacks) {
+func (m *MockDriver) VkDestroyDebugUtilsMessengerEXT(instance driver.VkInstance, debugMessenger ext_debug_utils_driver.VkDebugUtilsMessengerEXT, pAllocator *driver.VkAllocationCallbacks) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkDestroyDebugUtilsMessengerEXT", instance, debugMessenger, pAllocator)
 }
@@ -100,7 +100,7 @@ func (mr *MockDriverMockRecorder) VkDestroyDebugUtilsMessengerEXT(instance, debu
 }
 
 // VkQueueBeginDebugUtilsLabelEXT mocks base method.
-func (m *MockDriver) VkQueueBeginDebugUtilsLabelEXT(queue driver.VkQueue, pLabelInfo *ext_debug_utils.VkDebugUtilsLabelEXT) {
+func (m *MockDriver) VkQueueBeginDebugUtilsLabelEXT(queue driver.VkQueue, pLabelInfo *ext_debug_utils_driver.VkDebugUtilsLabelEXT) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkQueueBeginDebugUtilsLabelEXT", queue, pLabelInfo)
 }
@@ -124,7 +124,7 @@ func (mr *MockDriverMockRecorder) VkQueueEndDebugUtilsLabelEXT(queue interface{}
 }
 
 // VkQueueInsertDebugUtilsLabelEXT mocks base method.
-func (m *MockDriver) VkQueueInsertDebugUtilsLabelEXT(queue driver.VkQueue, pLabelInfo *ext_debug_utils.VkDebugUtilsLabelEXT) {
+func (m *MockDriver) VkQueueInsertDebugUtilsLabelEXT(queue driver.VkQueue, pLabelInfo *ext_debug_utils_driver.VkDebugUtilsLabelEXT) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkQueueInsertDebugUtilsLabelEXT", queue, pLabelInfo)
 }
@@ -136,7 +136,7 @@ func (mr *MockDriverMockRecorder) VkQueueInsertDebugUtilsLabelEXT(queue, pLabelI
 }
 
 // VkSetDebugUtilsObjectNameEXT mocks base method.
-func (m *MockDriver) VkSetDebugUtilsObjectNameEXT(device driver.VkDevice, pNameInfo *ext_debug_utils.VkDebugUtilsObjectNameInfoEXT) (common.VkResult, error) {
+func (m *MockDriver) VkSetDebugUtilsObjectNameEXT(device driver.VkDevice, pNameInfo *ext_debug_utils_driver.VkDebugUtilsObjectNameInfoEXT) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkSetDebugUtilsObjectNameEXT", device, pNameInfo)
 	ret0, _ := ret[0].(common.VkResult)
@@ -151,7 +151,7 @@ func (mr *MockDriverMockRecorder) VkSetDebugUtilsObjectNameEXT(device, pNameInfo
 }
 
 // VkSetDebugUtilsObjectTagEXT mocks base method.
-func (m *MockDriver) VkSetDebugUtilsObjectTagEXT(device driver.VkDevice, pTagInfo *ext_debug_utils.VkDebugUtilsObjectTagInfoEXT) (common.VkResult, error) {
+func (m *MockDriver) VkSetDebugUtilsObjectTagEXT(device driver.VkDevice, pTagInfo *ext_debug_utils_driver.VkDebugUtilsObjectTagInfoEXT) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkSetDebugUtilsObjectTagEXT", device, pTagInfo)
 	ret0, _ := ret[0].(common.VkResult)
@@ -166,7 +166,7 @@ func (mr *MockDriverMockRecorder) VkSetDebugUtilsObjectTagEXT(device, pTagInfo i
 }
 
 // VkSubmitDebugUtilsMessageEXT mocks base method.
-func (m *MockDriver) VkSubmitDebugUtilsMessageEXT(instance driver.VkInstance, messageSeverity ext_debug_utils.VkDebugUtilsMessageSeverityFlagBitsEXT, messageTypes ext_debug_utils.VkDebugUtilsMessageTypeFlagsEXT, pCallbackData *ext_debug_utils.VkDebugUtilsMessengerCallbackDataEXT) {
+func (m *MockDriver) VkSubmitDebugUtilsMessageEXT(instance driver.VkInstance, messageSeverity ext_debug_utils_driver.VkDebugUtilsMessageSeverityFlagBitsEXT, messageTypes ext_debug_utils_driver.VkDebugUtilsMessageTypeFlagsEXT, pCallbackData *ext_debug_utils_driver.VkDebugUtilsMessengerCallbackDataEXT) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkSubmitDebugUtilsMessageEXT", instance, messageSeverity, messageTypes, pCallbackData)
 }

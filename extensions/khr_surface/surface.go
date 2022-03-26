@@ -11,6 +11,7 @@ import (
 	"github.com/CannibalVox/VKng/core/common"
 	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/VKng/core/driver"
+	ext_driver "github.com/CannibalVox/VKng/extensions/khr_surface/driver"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
@@ -38,15 +39,15 @@ type Format struct {
 
 type vulkanSurface struct {
 	instance   driver.VkInstance
-	handle     VkSurfaceKHR
-	driver     Driver
+	handle     ext_driver.VkSurfaceKHR
+	driver     ext_driver.Driver
 	coreDriver driver.Driver
 
 	minimumAPIVersion common.APIVersion
 }
 
 type Surface interface {
-	Handle() VkSurfaceKHR
+	Handle() ext_driver.VkSurfaceKHR
 
 	Destroy(callbacks *driver.AllocationCallbacks)
 	SupportsDevice(physicalDevice core1_0.PhysicalDevice, queueFamilyIndex int) (bool, common.VkResult, error)
@@ -55,8 +56,8 @@ type Surface interface {
 	PresentModes(device core1_0.PhysicalDevice) ([]PresentMode, common.VkResult, error)
 }
 
-func CreateSurface(surfacePtr unsafe.Pointer, instance core1_0.Instance, surfaceDriver Driver) (Surface, common.VkResult, error) {
-	surfaceHandle := (VkSurfaceKHR)(surfacePtr)
+func CreateSurface(surfacePtr unsafe.Pointer, instance core1_0.Instance, surfaceDriver ext_driver.Driver) (Surface, common.VkResult, error) {
+	surfaceHandle := (ext_driver.VkSurfaceKHR)(surfacePtr)
 	coreDriver := instance.Driver()
 
 	surface := coreDriver.ObjectStore().GetOrCreate(driver.VulkanHandle(surfaceHandle), func() interface{} {
@@ -71,7 +72,7 @@ func CreateSurface(surfacePtr unsafe.Pointer, instance core1_0.Instance, surface
 	return surface, core1_0.VKSuccess, nil
 }
 
-func (s *vulkanSurface) Handle() VkSurfaceKHR {
+func (s *vulkanSurface) Handle() ext_driver.VkSurfaceKHR {
 	return s.handle
 }
 
@@ -93,9 +94,9 @@ func (s *vulkanSurface) Capabilities(device core1_0.PhysicalDevice) (*Capabiliti
 	defer cgoparam.ReturnAlloc(allocator)
 
 	capabilitiesPtr := allocator.Malloc(int(unsafe.Sizeof([1]C.VkSurfaceCapabilitiesKHR{})))
-	cCapabilities := (*VkSurfaceCapabilitiesKHR)(capabilitiesPtr)
+	cCapabilities := (*C.VkSurfaceCapabilitiesKHR)(capabilitiesPtr)
 
-	res, err := s.driver.VkGetPhysicalDeviceSurfaceCapabilitiesKHR(device.Handle(), s.handle, cCapabilities)
+	res, err := s.driver.VkGetPhysicalDeviceSurfaceCapabilitiesKHR(device.Handle(), s.handle, (*ext_driver.VkSurfaceCapabilitiesKHR)(unsafe.Pointer(cCapabilities)))
 	if err != nil {
 		return nil, res, err
 	}
@@ -145,12 +146,12 @@ func (s *vulkanSurface) attemptFormats(device core1_0.PhysicalDevice) ([]Format,
 
 	formatsPtr := allocator.Malloc(count * int(unsafe.Sizeof([1]C.VkSurfaceFormatKHR{})))
 
-	res, err = s.driver.VkGetPhysicalDeviceSurfaceFormatsKHR(device.Handle(), s.handle, formatCount, (*VkSurfaceFormatKHR)(formatsPtr))
+	res, err = s.driver.VkGetPhysicalDeviceSurfaceFormatsKHR(device.Handle(), s.handle, formatCount, (*ext_driver.VkSurfaceFormatKHR)(formatsPtr))
 	if err != nil || res == core1_0.VKIncomplete {
 		return nil, res, err
 	}
 
-	formatSlice := ([]VkSurfaceFormatKHR)(unsafe.Slice((*VkSurfaceFormatKHR)(formatsPtr), count))
+	formatSlice := ([]C.VkSurfaceFormatKHR)(unsafe.Slice((*C.VkSurfaceFormatKHR)(formatsPtr), count))
 	var result []Format
 	for i := 0; i < count; i++ {
 		result = append(result, Format{
@@ -191,14 +192,14 @@ func (s *vulkanSurface) attemptPresentModes(device core1_0.PhysicalDevice) ([]Pr
 	}
 
 	modesPtr := allocator.Malloc(count * int(unsafe.Sizeof(C.VkPresentModeKHR(0))))
-	presentModes := (*VkPresentModeKHR)(modesPtr)
+	presentModes := (*ext_driver.VkPresentModeKHR)(modesPtr)
 
 	res, err = s.driver.VkGetPhysicalDeviceSurfacePresentModesKHR(device.Handle(), s.handle, modeCount, presentModes)
 	if err != nil || res == core1_0.VKIncomplete {
 		return nil, res, err
 	}
 
-	presentModeSlice := ([]VkPresentModeKHR)(unsafe.Slice(presentModes, count))
+	presentModeSlice := ([]ext_driver.VkPresentModeKHR)(unsafe.Slice(presentModes, count))
 	var result []PresentMode
 	for i := 0; i < count; i++ {
 		result = append(result, PresentMode(presentModeSlice[i]))

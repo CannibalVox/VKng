@@ -8,6 +8,7 @@ import (
 	"github.com/CannibalVox/VKng/core/mocks"
 	mock_surface "github.com/CannibalVox/VKng/extensions/khr_surface/mocks"
 	"github.com/CannibalVox/VKng/extensions/khr_swapchain"
+	khr_swapchain_driver "github.com/CannibalVox/VKng/extensions/khr_swapchain/driver"
 	mock_swapchain "github.com/CannibalVox/VKng/extensions/khr_swapchain/mocks"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/require"
@@ -27,7 +28,7 @@ func TestVulkanSwapchain_AcquireNextImage(t *testing.T) {
 	surface := mock_surface.EasyMockSurface(ctrl)
 
 	swapchainDriver.EXPECT().VkCreateSwapchainKHR(device.Handle(), gomock.Not(gomock.Nil()), gomock.Nil(), gomock.Not(gomock.Nil())).
-		DoAndReturn(func(device driver.VkDevice, pCreateInfo *khr_swapchain.VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *khr_swapchain.VkSwapchainKHR) (common.VkResult, error) {
+		DoAndReturn(func(device driver.VkDevice, pCreateInfo *khr_swapchain_driver.VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *khr_swapchain_driver.VkSwapchainKHR) (common.VkResult, error) {
 			*pSwapchain = mock_swapchain.NewFakeSwapchain()
 
 			return core1_0.VKSuccess, nil
@@ -46,7 +47,7 @@ func TestVulkanSwapchain_AcquireNextImage(t *testing.T) {
 		driver.VkFence(unsafe.Pointer(nil)),
 		gomock.Not(gomock.Nil),
 	).DoAndReturn(
-		func(device driver.VkDevice, swapchain khr_swapchain.VkSwapchainKHR, timeout driver.Uint64, semaphore driver.VkSemaphore, fence driver.VkFence, pImageIndex *driver.Uint32) (common.VkResult, error) {
+		func(device driver.VkDevice, swapchain khr_swapchain_driver.VkSwapchainKHR, timeout driver.Uint64, semaphore driver.VkSemaphore, fence driver.VkFence, pImageIndex *driver.Uint32) (common.VkResult, error) {
 			*pImageIndex = driver.Uint32(3)
 
 			return core1_0.VKSuccess, nil
@@ -68,7 +69,7 @@ func TestVulkanSwapchain_AcquireNextImage_NoTimeout(t *testing.T) {
 	surface := mock_surface.EasyMockSurface(ctrl)
 
 	swapchainDriver.EXPECT().VkCreateSwapchainKHR(device.Handle(), gomock.Not(gomock.Nil()), gomock.Nil(), gomock.Not(gomock.Nil())).
-		DoAndReturn(func(device driver.VkDevice, pCreateInfo *khr_swapchain.VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *khr_swapchain.VkSwapchainKHR) (common.VkResult, error) {
+		DoAndReturn(func(device driver.VkDevice, pCreateInfo *khr_swapchain_driver.VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *khr_swapchain_driver.VkSwapchainKHR) (common.VkResult, error) {
 			*pSwapchain = mock_swapchain.NewFakeSwapchain()
 
 			return core1_0.VKSuccess, nil
@@ -87,7 +88,7 @@ func TestVulkanSwapchain_AcquireNextImage_NoTimeout(t *testing.T) {
 		driver.VkFence(unsafe.Pointer(nil)),
 		gomock.Not(gomock.Nil),
 	).DoAndReturn(
-		func(device driver.VkDevice, swapchain khr_swapchain.VkSwapchainKHR, timeout driver.Uint64, semaphore driver.VkSemaphore, fence driver.VkFence, pImageIndex *driver.Uint32) (common.VkResult, error) {
+		func(device driver.VkDevice, swapchain khr_swapchain_driver.VkSwapchainKHR, timeout driver.Uint64, semaphore driver.VkSemaphore, fence driver.VkFence, pImageIndex *driver.Uint32) (common.VkResult, error) {
 			*pImageIndex = driver.Uint32(3)
 
 			return core1_0.VKSuccess, nil
@@ -109,7 +110,7 @@ func TestVulkanSwapchain_AcquireNextImage_FenceAndSemaphore(t *testing.T) {
 	surface := mock_surface.EasyMockSurface(ctrl)
 
 	swapchainDriver.EXPECT().VkCreateSwapchainKHR(device.Handle(), gomock.Not(gomock.Nil()), gomock.Nil(), gomock.Not(gomock.Nil())).
-		DoAndReturn(func(device driver.VkDevice, pCreateInfo *khr_swapchain.VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *khr_swapchain.VkSwapchainKHR) (common.VkResult, error) {
+		DoAndReturn(func(device driver.VkDevice, pCreateInfo *khr_swapchain_driver.VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *khr_swapchain_driver.VkSwapchainKHR) (common.VkResult, error) {
 			*pSwapchain = mock_swapchain.NewFakeSwapchain()
 
 			return core1_0.VKSuccess, nil
@@ -131,7 +132,7 @@ func TestVulkanSwapchain_AcquireNextImage_FenceAndSemaphore(t *testing.T) {
 		fence.Handle(),
 		gomock.Not(gomock.Nil),
 	).DoAndReturn(
-		func(device driver.VkDevice, swapchain khr_swapchain.VkSwapchainKHR, timeout driver.Uint64, semaphore driver.VkSemaphore, fence driver.VkFence, pImageIndex *driver.Uint32) (common.VkResult, error) {
+		func(device driver.VkDevice, swapchain khr_swapchain_driver.VkSwapchainKHR, timeout driver.Uint64, semaphore driver.VkSemaphore, fence driver.VkFence, pImageIndex *driver.Uint32) (common.VkResult, error) {
 			*pImageIndex = driver.Uint32(3)
 
 			return core1_0.VKSuccess, nil
@@ -153,7 +154,7 @@ func TestVulkanSwapchain_Images(t *testing.T) {
 	surface := mock_surface.EasyMockSurface(ctrl)
 
 	swapchainDriver.EXPECT().VkCreateSwapchainKHR(device.Handle(), gomock.Not(gomock.Nil()), gomock.Nil(), gomock.Not(gomock.Nil())).
-		DoAndReturn(func(device driver.VkDevice, pCreateInfo *khr_swapchain.VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *khr_swapchain.VkSwapchainKHR) (common.VkResult, error) {
+		DoAndReturn(func(device driver.VkDevice, pCreateInfo *khr_swapchain_driver.VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *khr_swapchain_driver.VkSwapchainKHR) (common.VkResult, error) {
 			*pSwapchain = mock_swapchain.NewFakeSwapchain()
 
 			return core1_0.VKSuccess, nil
@@ -173,7 +174,7 @@ func TestVulkanSwapchain_Images(t *testing.T) {
 		gomock.Not(gomock.Nil()),
 		gomock.Nil(),
 	).DoAndReturn(
-		func(device driver.VkDevice, swapchain khr_swapchain.VkSwapchainKHR, pSwapchainImageCount *driver.Uint32, pSwapchainImages *driver.VkImage) (common.VkResult, error) {
+		func(device driver.VkDevice, swapchain khr_swapchain_driver.VkSwapchainKHR, pSwapchainImageCount *driver.Uint32, pSwapchainImages *driver.VkImage) (common.VkResult, error) {
 			*pSwapchainImageCount = driver.Uint32(2)
 
 			return core1_0.VKSuccess, nil
@@ -185,7 +186,7 @@ func TestVulkanSwapchain_Images(t *testing.T) {
 		gomock.Not(gomock.Nil()),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
-		func(device driver.VkDevice, swapchain khr_swapchain.VkSwapchainKHR, pSwapchainImageCount *driver.Uint32, pSwapchainImages *driver.VkImage) (common.VkResult, error) {
+		func(device driver.VkDevice, swapchain khr_swapchain_driver.VkSwapchainKHR, pSwapchainImageCount *driver.Uint32, pSwapchainImages *driver.VkImage) (common.VkResult, error) {
 			require.Equal(t, driver.Uint32(2), *pSwapchainImageCount)
 
 			imageSlice := ([]driver.VkImage)(unsafe.Slice(pSwapchainImages, 2))
@@ -216,7 +217,7 @@ func TestVulkanSwapchain_Images_Incomplete(t *testing.T) {
 	surface := mock_surface.EasyMockSurface(ctrl)
 
 	swapchainDriver.EXPECT().VkCreateSwapchainKHR(device.Handle(), gomock.Not(gomock.Nil()), gomock.Nil(), gomock.Not(gomock.Nil())).
-		DoAndReturn(func(device driver.VkDevice, pCreateInfo *khr_swapchain.VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *khr_swapchain.VkSwapchainKHR) (common.VkResult, error) {
+		DoAndReturn(func(device driver.VkDevice, pCreateInfo *khr_swapchain_driver.VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *khr_swapchain_driver.VkSwapchainKHR) (common.VkResult, error) {
 			*pSwapchain = mock_swapchain.NewFakeSwapchain()
 
 			return core1_0.VKSuccess, nil
@@ -236,7 +237,7 @@ func TestVulkanSwapchain_Images_Incomplete(t *testing.T) {
 		gomock.Not(gomock.Nil()),
 		gomock.Nil(),
 	).DoAndReturn(
-		func(device driver.VkDevice, swapchain khr_swapchain.VkSwapchainKHR, pSwapchainImageCount *driver.Uint32, pSwapchainImages *driver.VkImage) (common.VkResult, error) {
+		func(device driver.VkDevice, swapchain khr_swapchain_driver.VkSwapchainKHR, pSwapchainImageCount *driver.Uint32, pSwapchainImages *driver.VkImage) (common.VkResult, error) {
 			*pSwapchainImageCount = driver.Uint32(1)
 
 			return core1_0.VKSuccess, nil
@@ -248,7 +249,7 @@ func TestVulkanSwapchain_Images_Incomplete(t *testing.T) {
 		gomock.Not(gomock.Nil()),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
-		func(device driver.VkDevice, swapchain khr_swapchain.VkSwapchainKHR, pSwapchainImageCount *driver.Uint32, pSwapchainImages *driver.VkImage) (common.VkResult, error) {
+		func(device driver.VkDevice, swapchain khr_swapchain_driver.VkSwapchainKHR, pSwapchainImageCount *driver.Uint32, pSwapchainImages *driver.VkImage) (common.VkResult, error) {
 			require.Equal(t, driver.Uint32(1), *pSwapchainImageCount)
 
 			imageSlice := ([]driver.VkImage)(unsafe.Slice(pSwapchainImages, 1))
@@ -263,7 +264,7 @@ func TestVulkanSwapchain_Images_Incomplete(t *testing.T) {
 		gomock.Not(gomock.Nil()),
 		gomock.Nil(),
 	).DoAndReturn(
-		func(device driver.VkDevice, swapchain khr_swapchain.VkSwapchainKHR, pSwapchainImageCount *driver.Uint32, pSwapchainImages *driver.VkImage) (common.VkResult, error) {
+		func(device driver.VkDevice, swapchain khr_swapchain_driver.VkSwapchainKHR, pSwapchainImageCount *driver.Uint32, pSwapchainImages *driver.VkImage) (common.VkResult, error) {
 			*pSwapchainImageCount = driver.Uint32(2)
 
 			return core1_0.VKSuccess, nil
@@ -275,7 +276,7 @@ func TestVulkanSwapchain_Images_Incomplete(t *testing.T) {
 		gomock.Not(gomock.Nil()),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
-		func(device driver.VkDevice, swapchain khr_swapchain.VkSwapchainKHR, pSwapchainImageCount *driver.Uint32, pSwapchainImages *driver.VkImage) (common.VkResult, error) {
+		func(device driver.VkDevice, swapchain khr_swapchain_driver.VkSwapchainKHR, pSwapchainImageCount *driver.Uint32, pSwapchainImages *driver.VkImage) (common.VkResult, error) {
 			require.Equal(t, driver.Uint32(2), *pSwapchainImageCount)
 
 			imageSlice := ([]driver.VkImage)(unsafe.Slice(pSwapchainImages, 2))

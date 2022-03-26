@@ -7,6 +7,7 @@ import (
 	mock_driver "github.com/CannibalVox/VKng/core/driver/mocks"
 	"github.com/CannibalVox/VKng/core/mocks"
 	"github.com/CannibalVox/VKng/extensions/ext_debug_utils"
+	ext_debug_utils_driver "github.com/CannibalVox/VKng/extensions/ext_debug_utils/driver"
 	mock_debugutils "github.com/CannibalVox/VKng/extensions/ext_debug_utils/mocks"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/require"
@@ -66,7 +67,7 @@ func TestVulkanExtension_CreateMessenger(t *testing.T) {
 		gomock.Nil(),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
-		func(instance driver.VkInstance, pCreateInfo *ext_debug_utils.VkDebugUtilsMessengerCreateInfoEXT, pAllocator *driver.VkAllocationCallbacks, pDebugMessenger *ext_debug_utils.VkDebugUtilsMessengerEXT) (common.VkResult, error) {
+		func(instance driver.VkInstance, pCreateInfo *ext_debug_utils_driver.VkDebugUtilsMessengerCreateInfoEXT, pAllocator *driver.VkAllocationCallbacks, pDebugMessenger *ext_debug_utils_driver.VkDebugUtilsMessengerEXT) (common.VkResult, error) {
 			*pDebugMessenger = expectedMessenger.Handle()
 
 			val := reflect.ValueOf(*pCreateInfo)
@@ -112,7 +113,7 @@ func TestVulkanExtension_CmdBeginLabel(t *testing.T) {
 		commandBuffer.Handle(),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
-		func(commandBuffer driver.VkCommandBuffer, pLabel *ext_debug_utils.VkDebugUtilsLabelEXT) {
+		func(commandBuffer driver.VkCommandBuffer, pLabel *ext_debug_utils_driver.VkDebugUtilsLabelEXT) {
 			val := reflect.ValueOf(*pLabel)
 			require.Equal(t, uint64(1000128002), val.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_DEBUG_UTILS_LABEL_EXT
 			require.True(t, val.FieldByName("pNext").IsNil())
@@ -161,7 +162,7 @@ func TestVulkanExtension_CmdInsertLabel(t *testing.T) {
 		commandBuffer.Handle(),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
-		func(commandBuffer driver.VkCommandBuffer, pLabel *ext_debug_utils.VkDebugUtilsLabelEXT) {
+		func(commandBuffer driver.VkCommandBuffer, pLabel *ext_debug_utils_driver.VkDebugUtilsLabelEXT) {
 			val := reflect.ValueOf(*pLabel)
 			require.Equal(t, uint64(1000128002), val.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_DEBUG_UTILS_LABEL_EXT
 			require.True(t, val.FieldByName("pNext").IsNil())
@@ -197,7 +198,7 @@ func TestVulkanExtension_QueueBeginLabel(t *testing.T) {
 		queue.Handle(),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
-		func(queue driver.VkQueue, pLabel *ext_debug_utils.VkDebugUtilsLabelEXT) {
+		func(queue driver.VkQueue, pLabel *ext_debug_utils_driver.VkDebugUtilsLabelEXT) {
 			val := reflect.ValueOf(*pLabel)
 			require.Equal(t, uint64(1000128002), val.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_DEBUG_UTILS_LABEL_EXT
 			require.True(t, val.FieldByName("pNext").IsNil())
@@ -246,7 +247,7 @@ func TestVulkanExtension_QueueInsertLabel(t *testing.T) {
 		queue.Handle(),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
-		func(queue driver.VkQueue, pLabel *ext_debug_utils.VkDebugUtilsLabelEXT) {
+		func(queue driver.VkQueue, pLabel *ext_debug_utils_driver.VkDebugUtilsLabelEXT) {
 			val := reflect.ValueOf(*pLabel)
 			require.Equal(t, uint64(1000128002), val.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_DEBUG_UTILS_LABEL_EXT
 			require.True(t, val.FieldByName("pNext").IsNil())
@@ -285,7 +286,7 @@ func TestVulkanExtension_SetObjectName(t *testing.T) {
 		device.Handle(),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
-		func(device driver.VkDevice, pNameInfo *ext_debug_utils.VkDebugUtilsObjectNameInfoEXT) (common.VkResult, error) {
+		func(device driver.VkDevice, pNameInfo *ext_debug_utils_driver.VkDebugUtilsObjectNameInfoEXT) (common.VkResult, error) {
 			val := reflect.ValueOf(*pNameInfo)
 
 			require.Equal(t, uint64(1000128000), val.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_DEBUG_UTILS_OBJECT_NAME_INFO_EXT
@@ -325,7 +326,7 @@ func TestVulkanExtension_SetObjectTag(t *testing.T) {
 		device.Handle(),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
-		func(device driver.VkDevice, pTagInfo *ext_debug_utils.VkDebugUtilsObjectTagInfoEXT) (common.VkResult, error) {
+		func(device driver.VkDevice, pTagInfo *ext_debug_utils_driver.VkDebugUtilsObjectTagInfoEXT) (common.VkResult, error) {
 			val := reflect.ValueOf(*pTagInfo)
 
 			require.Equal(t, uint64(1000128001), val.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_DEBUG_UTILS_OBJECT_TAG_INFO_EXT
@@ -380,14 +381,14 @@ func TestVulkanExtension_SubmitMessage(t *testing.T) {
 
 	debugDriver.EXPECT().VkSubmitDebugUtilsMessageEXT(
 		instance.Handle(),
-		ext_debug_utils.VkDebugUtilsMessageSeverityFlagBitsEXT(0x00001000), // VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT
-		ext_debug_utils.VkDebugUtilsMessageTypeFlagsEXT(0x00000002),        // VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT
+		ext_debug_utils_driver.VkDebugUtilsMessageSeverityFlagBitsEXT(0x00001000), // VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT
+		ext_debug_utils_driver.VkDebugUtilsMessageTypeFlagsEXT(0x00000002),        // VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
 		func(instance driver.VkInstance,
-			severity ext_debug_utils.VkDebugUtilsMessageSeverityFlagBitsEXT,
-			messageType ext_debug_utils.VkDebugUtilsMessageTypeFlagsEXT,
-			pCallbackData *ext_debug_utils.VkDebugUtilsMessengerCallbackDataEXT) {
+			severity ext_debug_utils_driver.VkDebugUtilsMessageSeverityFlagBitsEXT,
+			messageType ext_debug_utils_driver.VkDebugUtilsMessageTypeFlagsEXT,
+			pCallbackData *ext_debug_utils_driver.VkDebugUtilsMessengerCallbackDataEXT) {
 
 			val := reflect.ValueOf(*pCallbackData)
 			require.Equal(t, uint64(1000128003), val.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT
@@ -408,8 +409,8 @@ func TestVulkanExtension_SubmitMessage(t *testing.T) {
 			require.Equal(t, uint64(1), val.FieldByName("objectCount").Uint())
 
 			// Queue Labels
-			queueLabelsPtr := (*ext_debug_utils.VkDebugUtilsLabelEXT)(unsafe.Pointer(val.FieldByName("pQueueLabels").Elem().UnsafeAddr()))
-			queueLabelSlice := ([]ext_debug_utils.VkDebugUtilsLabelEXT)(unsafe.Slice(queueLabelsPtr, 2))
+			queueLabelsPtr := (*ext_debug_utils_driver.VkDebugUtilsLabelEXT)(unsafe.Pointer(val.FieldByName("pQueueLabels").Elem().UnsafeAddr()))
+			queueLabelSlice := ([]ext_debug_utils_driver.VkDebugUtilsLabelEXT)(unsafe.Slice(queueLabelsPtr, 2))
 			labels := reflect.ValueOf(queueLabelSlice)
 
 			// Queue Label 1
@@ -441,8 +442,8 @@ func TestVulkanExtension_SubmitMessage(t *testing.T) {
 			require.InDelta(t, float64(1), label.FieldByName("color").Index(3).Float(), 0.002)
 
 			// CmdBufLabels
-			cmdBufLabelsPtr := (*ext_debug_utils.VkDebugUtilsLabelEXT)(unsafe.Pointer(val.FieldByName("pCmdBufLabels").Elem().UnsafeAddr()))
-			cmdBufLabelSlice := ([]ext_debug_utils.VkDebugUtilsLabelEXT)(unsafe.Slice(cmdBufLabelsPtr, 3))
+			cmdBufLabelsPtr := (*ext_debug_utils_driver.VkDebugUtilsLabelEXT)(unsafe.Pointer(val.FieldByName("pCmdBufLabels").Elem().UnsafeAddr()))
+			cmdBufLabelSlice := ([]ext_debug_utils_driver.VkDebugUtilsLabelEXT)(unsafe.Slice(cmdBufLabelsPtr, 3))
 			labels = reflect.ValueOf(cmdBufLabelSlice)
 
 			// Cmd Label 1
@@ -488,7 +489,7 @@ func TestVulkanExtension_SubmitMessage(t *testing.T) {
 			require.InDelta(t, float64(1), label.FieldByName("color").Index(3).Float(), 0.002)
 
 			// Objects
-			objectNamePtr := (*ext_debug_utils.VkDebugUtilsObjectNameInfoEXT)(unsafe.Pointer(val.FieldByName("pObjects").Elem().UnsafeAddr()))
+			objectNamePtr := (*ext_debug_utils_driver.VkDebugUtilsObjectNameInfoEXT)(unsafe.Pointer(val.FieldByName("pObjects").Elem().UnsafeAddr()))
 			objectName := reflect.ValueOf(*objectNamePtr)
 
 			require.Equal(t, uint64(1000128000), objectName.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_DEBUG_UTILS_OBJECT_NAME_INFO_EXT

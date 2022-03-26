@@ -11,13 +11,14 @@ import (
 	"github.com/CannibalVox/VKng/core/common"
 	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/VKng/extensions/khr_surface"
+	khr_surface_driver "github.com/CannibalVox/VKng/extensions/khr_surface/driver"
 	"github.com/cockroachdb/errors"
 	"github.com/veandco/go-sdl2/sdl"
 	"unsafe"
 )
 
 type VulkanExtension struct {
-	driver khr_surface.Driver
+	driver khr_surface_driver.Driver
 }
 
 type Extension interface {
@@ -25,13 +26,13 @@ type Extension interface {
 }
 
 func CreateExtensionFromInstance(instance core1_0.Instance) *VulkanExtension {
-	driver := khr_surface.CreateDriverFromCore(instance.Driver())
+	driver := khr_surface_driver.CreateDriverFromCore(instance.Driver())
 	return &VulkanExtension{
 		driver: driver,
 	}
 }
 
-func CreateExtensionFromDriver(driver khr_surface.Driver) *VulkanExtension {
+func CreateExtensionFromDriver(driver khr_surface_driver.Driver) *VulkanExtension {
 	return &VulkanExtension{
 		driver: driver,
 	}

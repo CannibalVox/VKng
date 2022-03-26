@@ -8,6 +8,7 @@ import (
 	mock_driver "github.com/CannibalVox/VKng/core/driver/mocks"
 	"github.com/CannibalVox/VKng/core/mocks"
 	"github.com/CannibalVox/VKng/extensions/khr_get_physical_device_properties2"
+	khr_get_physical_device_properties2_driver "github.com/CannibalVox/VKng/extensions/khr_get_physical_device_properties2/driver"
 	mock_get_physical_device_properties2 "github.com/CannibalVox/VKng/extensions/khr_get_physical_device_properties2/mocks"
 	"github.com/golang/mock/gomock"
 	"github.com/google/uuid"
@@ -28,7 +29,7 @@ func TestVulkanExtension_PhysicalDeviceFeatures(t *testing.T) {
 	physicalDevice := mocks.EasyMockPhysicalDevice(ctrl, coreDriver)
 
 	extDriver.EXPECT().VkGetPhysicalDeviceFeatures2KHR(physicalDevice.Handle(), gomock.Not(gomock.Nil())).
-		DoAndReturn(func(physicalDevice driver.VkPhysicalDevice, pFeatures *khr_get_physical_device_properties2.VkPhysicalDeviceFeatures2KHR) {
+		DoAndReturn(func(physicalDevice driver.VkPhysicalDevice, pFeatures *khr_get_physical_device_properties2_driver.VkPhysicalDeviceFeatures2KHR) {
 			val := reflect.ValueOf(pFeatures).Elem()
 
 			require.Equal(t, uint64(1000059000), val.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2_KHR
@@ -249,7 +250,7 @@ func TestVulkanDevice_CreateDeviceWithFeatures(t *testing.T) {
 			prioritySlice = ([]float32)(unsafe.Slice(priorityPtr, 1))
 			require.Equal(t, float32(13), prioritySlice[0])
 
-			nextPtr := (*khr_get_physical_device_properties2.VkPhysicalDeviceFeatures2KHR)(v.FieldByName("pNext").UnsafePointer())
+			nextPtr := (*khr_get_physical_device_properties2_driver.VkPhysicalDeviceFeatures2KHR)(v.FieldByName("pNext").UnsafePointer())
 			nextVal := reflect.ValueOf(nextPtr).Elem()
 			require.Equal(t, uint64(1000059000), nextVal.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2_KHR
 			require.True(t, nextVal.FieldByName("pNext").IsNil())
@@ -306,7 +307,7 @@ func TestVulkanExtension_PhysicalDeviceFormatProperties(t *testing.T) {
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(func(physicalDevice driver.VkPhysicalDevice,
 		format driver.VkFormat,
-		pFormatProperties *khr_get_physical_device_properties2.VkFormatProperties2KHR) {
+		pFormatProperties *khr_get_physical_device_properties2_driver.VkFormatProperties2KHR) {
 
 		val := reflect.ValueOf(pFormatProperties).Elem()
 		require.Equal(t, uint64(1000059002), val.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_FORMAT_PROPERTIES_2_KHR
@@ -342,8 +343,8 @@ func TestVulkanExtension_PhysicalDeviceImageFormatProperties(t *testing.T) {
 
 	extDriver.EXPECT().VkGetPhysicalDeviceImageFormatProperties2KHR(physicalDevice.Handle(), gomock.Not(gomock.Nil()), gomock.Not(gomock.Nil())).
 		DoAndReturn(func(physicalDevice driver.VkPhysicalDevice,
-			pImageFormatInfo *khr_get_physical_device_properties2.VkPhysicalDeviceImageFormatInfo2KHR,
-			pImageFormatProperties *khr_get_physical_device_properties2.VkImageFormatProperties2KHR,
+			pImageFormatInfo *khr_get_physical_device_properties2_driver.VkPhysicalDeviceImageFormatInfo2KHR,
+			pImageFormatProperties *khr_get_physical_device_properties2_driver.VkImageFormatProperties2KHR,
 		) (common.VkResult, error) {
 			optionVal := reflect.ValueOf(*pImageFormatInfo)
 
@@ -402,7 +403,7 @@ func TestVulkanExtension_PhysicalDeviceMemoryProperties(t *testing.T) {
 	physicalDevice := mocks.EasyMockPhysicalDevice(ctrl, coreDriver)
 
 	extDriver.EXPECT().VkGetPhysicalDeviceMemoryProperties2KHR(physicalDevice.Handle(), gomock.Not(gomock.Nil())).
-		DoAndReturn(func(physicalDevice driver.VkPhysicalDevice, pMemoryProperties *khr_get_physical_device_properties2.VkPhysicalDeviceMemoryProperties2KHR) {
+		DoAndReturn(func(physicalDevice driver.VkPhysicalDevice, pMemoryProperties *khr_get_physical_device_properties2_driver.VkPhysicalDeviceMemoryProperties2KHR) {
 			val := reflect.ValueOf(pMemoryProperties).Elem()
 
 			require.Equal(t, uint64(1000059006), val.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MEMORY_PROPERTIES_2_KHR
@@ -452,7 +453,7 @@ func TestVulkanExtension_PhysicalDeviceProperties(t *testing.T) {
 	require.NoError(t, err)
 
 	extDriver.EXPECT().VkGetPhysicalDeviceProperties2KHR(physicalDevice.Handle(), gomock.Not(gomock.Nil())).
-		DoAndReturn(func(physicalDevice driver.VkPhysicalDevice, pProperties *khr_get_physical_device_properties2.VkPhysicalDeviceProperties2KHR) {
+		DoAndReturn(func(physicalDevice driver.VkPhysicalDevice, pProperties *khr_get_physical_device_properties2_driver.VkPhysicalDeviceProperties2KHR) {
 			val := reflect.ValueOf(pProperties).Elem()
 
 			require.Equal(t, uint64(1000059001), val.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2_KHR
@@ -538,15 +539,15 @@ func TestVulkanExtension_PhysicalDeviceQueueFamilyProperties(t *testing.T) {
 	physicalDevice := mocks.EasyMockPhysicalDevice(ctrl, coreDriver)
 
 	extDriver.EXPECT().VkGetPhysicalDeviceQueueFamilyProperties2KHR(physicalDevice.Handle(), gomock.Not(gomock.Nil()), nil).
-		DoAndReturn(func(physicalDevice driver.VkPhysicalDevice, pQueueFamilyPropertyCount *driver.Uint32, pQueueFamilyProperties *khr_get_physical_device_properties2.VkQueueFamilyProperties2KHR) {
+		DoAndReturn(func(physicalDevice driver.VkPhysicalDevice, pQueueFamilyPropertyCount *driver.Uint32, pQueueFamilyProperties *khr_get_physical_device_properties2_driver.VkQueueFamilyProperties2KHR) {
 			*pQueueFamilyPropertyCount = 2
 		})
 
 	extDriver.EXPECT().VkGetPhysicalDeviceQueueFamilyProperties2KHR(physicalDevice.Handle(), gomock.Not(gomock.Nil()), gomock.Not(gomock.Nil())).
-		DoAndReturn(func(physicalDevice driver.VkPhysicalDevice, pQueueFamilyPropertyCount *driver.Uint32, pQueueFamilyProperties *khr_get_physical_device_properties2.VkQueueFamilyProperties2KHR) {
+		DoAndReturn(func(physicalDevice driver.VkPhysicalDevice, pQueueFamilyPropertyCount *driver.Uint32, pQueueFamilyProperties *khr_get_physical_device_properties2_driver.VkQueueFamilyProperties2KHR) {
 			require.Equal(t, driver.Uint32(2), *pQueueFamilyPropertyCount)
 
-			propertySlice := ([]khr_get_physical_device_properties2.VkQueueFamilyProperties2KHR)(unsafe.Slice(pQueueFamilyProperties, 2))
+			propertySlice := ([]khr_get_physical_device_properties2_driver.VkQueueFamilyProperties2KHR)(unsafe.Slice(pQueueFamilyProperties, 2))
 			val := reflect.ValueOf(propertySlice)
 			property := val.Index(0)
 
@@ -625,9 +626,9 @@ func TestVulkanExtension_PhysicalDeviceSparseImageFormatProperties(t *testing.T)
 		gomock.Not(gomock.Nil()),
 		gomock.Nil(),
 	).DoAndReturn(func(physicalDevice driver.VkPhysicalDevice,
-		pFormatInfo *khr_get_physical_device_properties2.VkPhysicalDeviceSparseImageFormatInfo2KHR,
+		pFormatInfo *khr_get_physical_device_properties2_driver.VkPhysicalDeviceSparseImageFormatInfo2KHR,
 		pPropertyCount *driver.Uint32,
-		pProperties *khr_get_physical_device_properties2.VkSparseImageFormatProperties2KHR) {
+		pProperties *khr_get_physical_device_properties2_driver.VkSparseImageFormatProperties2KHR) {
 
 		val := reflect.ValueOf(pFormatInfo).Elem()
 		require.Equal(t, uint64(1000059008), val.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2_KHR
@@ -647,9 +648,9 @@ func TestVulkanExtension_PhysicalDeviceSparseImageFormatProperties(t *testing.T)
 		gomock.Not(gomock.Nil()),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(func(physicalDevice driver.VkPhysicalDevice,
-		pFormatInfo *khr_get_physical_device_properties2.VkPhysicalDeviceSparseImageFormatInfo2KHR,
+		pFormatInfo *khr_get_physical_device_properties2_driver.VkPhysicalDeviceSparseImageFormatInfo2KHR,
 		pPropertyCount *driver.Uint32,
-		pProperties *khr_get_physical_device_properties2.VkSparseImageFormatProperties2KHR) {
+		pProperties *khr_get_physical_device_properties2_driver.VkSparseImageFormatProperties2KHR) {
 
 		val := reflect.ValueOf(pFormatInfo).Elem()
 		require.Equal(t, uint64(1000059008), val.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2_KHR
@@ -662,7 +663,7 @@ func TestVulkanExtension_PhysicalDeviceSparseImageFormatProperties(t *testing.T)
 
 		require.Equal(t, driver.Uint32(1), *pPropertyCount)
 
-		propertySlice := ([]khr_get_physical_device_properties2.VkSparseImageFormatProperties2KHR)(unsafe.Slice(pProperties, 1))
+		propertySlice := ([]khr_get_physical_device_properties2_driver.VkSparseImageFormatProperties2KHR)(unsafe.Slice(pProperties, 1))
 		outData := reflect.ValueOf(propertySlice)
 		prop := outData.Index(0)
 		require.Equal(t, uint64(1000059007), prop.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_SPARSE_IMAGE_FORMAT_PROPERTIES_2_KHR

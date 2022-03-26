@@ -11,29 +11,30 @@ import (
 	"github.com/CannibalVox/VKng/core/common"
 	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/VKng/core/driver"
+	khr_swapchain_driver "github.com/CannibalVox/VKng/extensions/khr_swapchain/driver"
 	"github.com/CannibalVox/cgoparam"
 	"time"
 	"unsafe"
 )
 
 type vulkanSwapchain struct {
-	handle     VkSwapchainKHR
+	handle     khr_swapchain_driver.VkSwapchainKHR
 	device     driver.VkDevice
-	driver     Driver
+	driver     khr_swapchain_driver.Driver
 	coreDriver driver.Driver
 
 	minimumAPIVersion common.APIVersion
 }
 
 type Swapchain interface {
-	Handle() VkSwapchainKHR
+	Handle() khr_swapchain_driver.VkSwapchainKHR
 
 	Destroy(callbacks *driver.AllocationCallbacks)
 	Images() ([]core1_0.Image, common.VkResult, error)
 	AcquireNextImage(timeout time.Duration, semaphore core1_0.Semaphore, fence core1_0.Fence) (int, common.VkResult, error)
 }
 
-func (s *vulkanSwapchain) Handle() VkSwapchainKHR {
+func (s *vulkanSwapchain) Handle() khr_swapchain_driver.VkSwapchainKHR {
 	return s.handle
 }
 

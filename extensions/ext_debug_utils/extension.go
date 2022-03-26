@@ -5,13 +5,14 @@ import (
 	"github.com/CannibalVox/VKng/core/common"
 	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/VKng/core/driver"
+	ext_driver "github.com/CannibalVox/VKng/extensions/ext_debug_utils/driver"
 	"github.com/CannibalVox/cgoparam"
 )
 
 //go:generate mockgen -source extension.go -destination ./mocks/extension.go -package mock_debugutils
 
 type VulkanExtension struct {
-	driver Driver
+	driver ext_driver.Driver
 }
 
 type Extension interface {
@@ -32,14 +33,14 @@ type Extension interface {
 }
 
 func CreateExtensionFromInstance(instance core1_0.Instance) *VulkanExtension {
-	driver := CreateDriverFromCore(instance.Driver())
+	driver := ext_driver.CreateDriverFromCore(instance.Driver())
 
 	return &VulkanExtension{
 		driver: driver,
 	}
 }
 
-func CreateExtensionFromDriver(driver Driver) *VulkanExtension {
+func CreateExtensionFromDriver(driver ext_driver.Driver) *VulkanExtension {
 	return &VulkanExtension{
 		driver: driver,
 	}
@@ -54,8 +55,8 @@ func (l *VulkanExtension) CreateMessenger(instance core1_0.Instance, allocation 
 		return nil, core1_0.VKErrorUnknown, err
 	}
 
-	var messenger VkDebugUtilsMessengerEXT
-	res, err := l.driver.VkCreateDebugUtilsMessengerEXT(instance.Handle(), (*VkDebugUtilsMessengerCreateInfoEXT)(createInfo), allocation.Handle(), &messenger)
+	var messenger ext_driver.VkDebugUtilsMessengerEXT
+	res, err := l.driver.VkCreateDebugUtilsMessengerEXT(instance.Handle(), (*ext_driver.VkDebugUtilsMessengerCreateInfoEXT)(createInfo), allocation.Handle(), &messenger)
 
 	if err != nil {
 		return nil, res, err
@@ -83,7 +84,7 @@ func (l *VulkanExtension) CmdBeginLabel(commandBuffer core1_0.CommandBuffer, lab
 		return err
 	}
 
-	l.driver.VKCmdBeginDebugUtilsLabelEXT(commandBuffer.Handle(), (*VkDebugUtilsLabelEXT)(labelPtr))
+	l.driver.VKCmdBeginDebugUtilsLabelEXT(commandBuffer.Handle(), (*ext_driver.VkDebugUtilsLabelEXT)(labelPtr))
 
 	return nil
 }
@@ -101,7 +102,7 @@ func (l *VulkanExtension) CmdInsertLabel(buffer core1_0.CommandBuffer, label Lab
 		return err
 	}
 
-	l.driver.VkCmdInsertDebugUtilsLabelEXT(buffer.Handle(), (*VkDebugUtilsLabelEXT)(labelPtr))
+	l.driver.VkCmdInsertDebugUtilsLabelEXT(buffer.Handle(), (*ext_driver.VkDebugUtilsLabelEXT)(labelPtr))
 
 	return nil
 }
@@ -115,7 +116,7 @@ func (l *VulkanExtension) QueueBeginLabel(queue core1_0.Queue, label LabelOption
 		return err
 	}
 
-	l.driver.VkQueueBeginDebugUtilsLabelEXT(queue.Handle(), (*VkDebugUtilsLabelEXT)(labelPtr))
+	l.driver.VkQueueBeginDebugUtilsLabelEXT(queue.Handle(), (*ext_driver.VkDebugUtilsLabelEXT)(labelPtr))
 
 	return nil
 }
@@ -133,7 +134,7 @@ func (l *VulkanExtension) QueueInsertLabel(queue core1_0.Queue, label LabelOptio
 		return err
 	}
 
-	l.driver.VkQueueInsertDebugUtilsLabelEXT(queue.Handle(), (*VkDebugUtilsLabelEXT)(labelPtr))
+	l.driver.VkQueueInsertDebugUtilsLabelEXT(queue.Handle(), (*ext_driver.VkDebugUtilsLabelEXT)(labelPtr))
 
 	return nil
 }
@@ -147,7 +148,7 @@ func (l *VulkanExtension) SetObjectName(device core1_0.Device, name ObjectNameOp
 		return core1_0.VKErrorUnknown, err
 	}
 
-	return l.driver.VkSetDebugUtilsObjectNameEXT(device.Handle(), (*VkDebugUtilsObjectNameInfoEXT)(namePtr))
+	return l.driver.VkSetDebugUtilsObjectNameEXT(device.Handle(), (*ext_driver.VkDebugUtilsObjectNameInfoEXT)(namePtr))
 }
 
 func (l *VulkanExtension) SetObjectTag(device core1_0.Device, tag ObjectTagOptions) (common.VkResult, error) {
@@ -159,7 +160,7 @@ func (l *VulkanExtension) SetObjectTag(device core1_0.Device, tag ObjectTagOptio
 		return core1_0.VKErrorUnknown, err
 	}
 
-	return l.driver.VkSetDebugUtilsObjectTagEXT(device.Handle(), (*VkDebugUtilsObjectTagInfoEXT)(tagPtr))
+	return l.driver.VkSetDebugUtilsObjectTagEXT(device.Handle(), (*ext_driver.VkDebugUtilsObjectTagInfoEXT)(tagPtr))
 }
 
 func (l *VulkanExtension) SubmitMessage(instance core1_0.Instance, severity MessageSeverities, types MessageTypes, data CallbackDataOptions) error {
@@ -172,9 +173,9 @@ func (l *VulkanExtension) SubmitMessage(instance core1_0.Instance, severity Mess
 	}
 
 	l.driver.VkSubmitDebugUtilsMessageEXT(instance.Handle(),
-		VkDebugUtilsMessageSeverityFlagBitsEXT(severity),
-		VkDebugUtilsMessageTypeFlagsEXT(types),
-		(*VkDebugUtilsMessengerCallbackDataEXT)(callbackPtr))
+		ext_driver.VkDebugUtilsMessageSeverityFlagBitsEXT(severity),
+		ext_driver.VkDebugUtilsMessageTypeFlagsEXT(types),
+		(*ext_driver.VkDebugUtilsMessengerCallbackDataEXT)(callbackPtr))
 
 	return nil
 }

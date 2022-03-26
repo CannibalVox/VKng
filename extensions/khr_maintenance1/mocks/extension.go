@@ -8,7 +8,7 @@ import (
 	reflect "reflect"
 
 	core1_0 "github.com/CannibalVox/VKng/core/core1_0"
-	vk_khr_maintenance1 "github.com/CannibalVox/VKng/extensions/khr_maintenance1"
+	khr_maintenance1 "github.com/CannibalVox/VKng/extensions/khr_maintenance1"
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -36,7 +36,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 }
 
 // TrimCommandPool mocks base method.
-func (m *MockExtension) TrimCommandPool(commandPool core1_0.CommandPool, flags vk_khr_maintenance1.CommandPoolTrimFlags) {
+func (m *MockExtension) TrimCommandPool(commandPool core1_0.CommandPool, flags khr_maintenance1.CommandPoolTrimFlags) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "TrimCommandPool", commandPool, flags)
 }

@@ -1,8 +1,8 @@
-package ext_debug_utils
+package ext_debug_utils_driver
 
 /*
 #include <stdlib.h>
-#include "../vulkan/vulkan.h"
+#include "../../vulkan/vulkan.h"
 
 VkResult cgoCreateDebugUtilsMessengerEXT(PFN_vkCreateDebugUtilsMessengerEXT fn, VkInstance instance, VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo, VkAllocationCallbacks *pAllocator, VkDebugUtilsMessengerEXT* pDebugMessenger) {
 	return fn(instance, pCreateInfo, pAllocator, pDebugMessenger);
@@ -56,7 +56,7 @@ import (
 	"unsafe"
 )
 
-//go:generate mockgen -source driver.go -destination ./mocks/driver.go -package mock_debugutils
+//go:generate mockgen -source driver.go -destination ../mocks/driver.go -package mock_debugutils
 
 type CDriver struct {
 	createDebugUtilsMessenger  C.PFN_vkCreateDebugUtilsMessengerEXT

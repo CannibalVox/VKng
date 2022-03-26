@@ -1,10 +1,10 @@
-package khr_maintenance1
+package khr_maintenance1_driver
 
-//go:generate mockgen -source driver.go -destination ./mocks/driver.go -package mock_maintenance1
+//go:generate mockgen -source driver.go -destination ../mocks/driver.go -package mock_maintenance1
 
 /*
 #include <stdlib.h>
-#include "vulkan/vulkan.h"
+#include "../../vulkan/vulkan.h"
 
 void cgoTrimCommandPoolKHR(PFN_vkTrimCommandPoolKHR fn, VkDevice device, VkCommandPool commandPool, VkCommandPoolTrimFlagsKHR flags) {
 	fn(device, commandPool, flags);

@@ -1,10 +1,10 @@
-package khr_surface
+package khr_surface_driver
 
-//go:generate mockgen -source driver.go -destination ./mocks/driver.go -package mock_surface
+//go:generate mockgen -source driver.go -destination ../mocks/driver.go -package mock_surface
 
 /*
 #include <stdlib.h>
-#include "../vulkan/vulkan.h"
+#include "../../vulkan/vulkan.h"
 
 VkResult cgoGetPhysicalDeviceSurfaceCapabilitiesKHR(PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR fn, VkPhysicalDevice physicalDevice, VkSurfaceKHR surface, VkSurfaceCapabilitiesKHR* pSurfaceCapabilities) {
 	return fn(physicalDevice, surface, pSurfaceCapabilities);

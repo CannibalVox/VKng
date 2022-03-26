@@ -8,7 +8,7 @@ import (
 	reflect "reflect"
 
 	driver "github.com/CannibalVox/VKng/core/driver"
-	ext_debug_utils "github.com/CannibalVox/VKng/extensions/ext_debug_utils"
+	ext_debug_utils_driver "github.com/CannibalVox/VKng/extensions/ext_debug_utils/driver"
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -48,10 +48,10 @@ func (mr *MockMessengerMockRecorder) Destroy(callbacks interface{}) *gomock.Call
 }
 
 // Handle mocks base method.
-func (m *MockMessenger) Handle() ext_debug_utils.VkDebugUtilsMessengerEXT {
+func (m *MockMessenger) Handle() ext_debug_utils_driver.VkDebugUtilsMessengerEXT {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Handle")
-	ret0, _ := ret[0].(ext_debug_utils.VkDebugUtilsMessengerEXT)
+	ret0, _ := ret[0].(ext_debug_utils_driver.VkDebugUtilsMessengerEXT)
 	return ret0
 }
 

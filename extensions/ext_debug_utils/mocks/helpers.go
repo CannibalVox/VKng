@@ -1,14 +1,14 @@
 package mock_debugutils
 
 import (
-	"github.com/CannibalVox/VKng/extensions/ext_debug_utils"
+	ext_driver "github.com/CannibalVox/VKng/extensions/ext_debug_utils/driver"
 	"github.com/golang/mock/gomock"
 	"math/rand"
 	"unsafe"
 )
 
-func NewFakeMessenger() ext_debug_utils.VkDebugUtilsMessengerEXT {
-	return ext_debug_utils.VkDebugUtilsMessengerEXT(unsafe.Pointer(uintptr(rand.Int())))
+func NewFakeMessenger() ext_driver.VkDebugUtilsMessengerEXT {
+	return ext_driver.VkDebugUtilsMessengerEXT(unsafe.Pointer(uintptr(rand.Int())))
 }
 
 func EasyMockMessenger(ctrl *gomock.Controller) *MockMessenger {

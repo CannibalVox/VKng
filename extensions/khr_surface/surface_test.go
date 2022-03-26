@@ -7,6 +7,7 @@ import (
 	mock_driver "github.com/CannibalVox/VKng/core/driver/mocks"
 	core_mocks "github.com/CannibalVox/VKng/core/mocks"
 	"github.com/CannibalVox/VKng/extensions/khr_surface"
+	khr_surface_driver "github.com/CannibalVox/VKng/extensions/khr_surface/driver"
 	"github.com/CannibalVox/VKng/extensions/khr_surface/mocks"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/require"
@@ -32,7 +33,7 @@ func TestVulkanSurface_PresentModes(t *testing.T) {
 		surface.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Nil()).DoAndReturn(
-		func(device driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *khr_surface.VkPresentModeKHR) (common.VkResult, error) {
+		func(device driver.VkPhysicalDevice, surface khr_surface_driver.VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *khr_surface_driver.VkPresentModeKHR) (common.VkResult, error) {
 			*pPresentModeCount = 2
 
 			return core1_0.VKSuccess, nil
@@ -43,12 +44,12 @@ func TestVulkanSurface_PresentModes(t *testing.T) {
 		surface.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Not(gomock.Nil())).DoAndReturn(
-		func(device driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *khr_surface.VkPresentModeKHR) (common.VkResult, error) {
+		func(device driver.VkPhysicalDevice, surface khr_surface_driver.VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *khr_surface_driver.VkPresentModeKHR) (common.VkResult, error) {
 			require.Equal(t, driver.Uint32(2), *pPresentModeCount)
 
-			presentModeSlice := ([]khr_surface.VkPresentModeKHR)(unsafe.Slice(pPresentModes, 2))
-			presentModeSlice[0] = khr_surface.VkPresentModeKHR(0) // VK_PRESENT_MODE_IMMEDIATE_KHR
-			presentModeSlice[1] = khr_surface.VkPresentModeKHR(3) // VK_PRESENT_MODE_FIFO_RELAXED_KHR
+			presentModeSlice := ([]khr_surface_driver.VkPresentModeKHR)(unsafe.Slice(pPresentModes, 2))
+			presentModeSlice[0] = khr_surface_driver.VkPresentModeKHR(0) // VK_PRESENT_MODE_IMMEDIATE_KHR
+			presentModeSlice[1] = khr_surface_driver.VkPresentModeKHR(3) // VK_PRESENT_MODE_FIFO_RELAXED_KHR
 
 			return core1_0.VKSuccess, nil
 		})
@@ -78,7 +79,7 @@ func TestVulkanSurface_PresentModes_Incomplete(t *testing.T) {
 		surface.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Nil()).DoAndReturn(
-		func(device driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *khr_surface.VkPresentModeKHR) (common.VkResult, error) {
+		func(device driver.VkPhysicalDevice, surface khr_surface_driver.VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *khr_surface_driver.VkPresentModeKHR) (common.VkResult, error) {
 			*pPresentModeCount = 1
 
 			return core1_0.VKSuccess, nil
@@ -89,11 +90,11 @@ func TestVulkanSurface_PresentModes_Incomplete(t *testing.T) {
 		surface.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Not(gomock.Nil())).DoAndReturn(
-		func(device driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *khr_surface.VkPresentModeKHR) (common.VkResult, error) {
+		func(device driver.VkPhysicalDevice, surface khr_surface_driver.VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *khr_surface_driver.VkPresentModeKHR) (common.VkResult, error) {
 			require.Equal(t, driver.Uint32(1), *pPresentModeCount)
 
-			presentModeSlice := ([]khr_surface.VkPresentModeKHR)(unsafe.Slice(pPresentModes, 1))
-			presentModeSlice[0] = khr_surface.VkPresentModeKHR(0) // VK_PRESENT_MODE_IMMEDIATE_KHR
+			presentModeSlice := ([]khr_surface_driver.VkPresentModeKHR)(unsafe.Slice(pPresentModes, 1))
+			presentModeSlice[0] = khr_surface_driver.VkPresentModeKHR(0) // VK_PRESENT_MODE_IMMEDIATE_KHR
 
 			return core1_0.VKIncomplete, nil
 		})
@@ -103,7 +104,7 @@ func TestVulkanSurface_PresentModes_Incomplete(t *testing.T) {
 		surface.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Nil()).DoAndReturn(
-		func(device driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *khr_surface.VkPresentModeKHR) (common.VkResult, error) {
+		func(device driver.VkPhysicalDevice, surface khr_surface_driver.VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *khr_surface_driver.VkPresentModeKHR) (common.VkResult, error) {
 			*pPresentModeCount = 2
 
 			return core1_0.VKSuccess, nil
@@ -114,12 +115,12 @@ func TestVulkanSurface_PresentModes_Incomplete(t *testing.T) {
 		surface.Handle(),
 		gomock.Not(gomock.Nil()),
 		gomock.Not(gomock.Nil())).DoAndReturn(
-		func(device driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *khr_surface.VkPresentModeKHR) (common.VkResult, error) {
+		func(device driver.VkPhysicalDevice, surface khr_surface_driver.VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *khr_surface_driver.VkPresentModeKHR) (common.VkResult, error) {
 			require.Equal(t, driver.Uint32(2), *pPresentModeCount)
 
-			presentModeSlice := ([]khr_surface.VkPresentModeKHR)(unsafe.Slice(pPresentModes, 2))
-			presentModeSlice[0] = khr_surface.VkPresentModeKHR(0) // VK_PRESENT_MODE_IMMEDIATE_KHR
-			presentModeSlice[1] = khr_surface.VkPresentModeKHR(3) // VK_PRESENT_MODE_FIFO_RELAXED_KHR
+			presentModeSlice := ([]khr_surface_driver.VkPresentModeKHR)(unsafe.Slice(pPresentModes, 2))
+			presentModeSlice[0] = khr_surface_driver.VkPresentModeKHR(0) // VK_PRESENT_MODE_IMMEDIATE_KHR
+			presentModeSlice[1] = khr_surface_driver.VkPresentModeKHR(3) // VK_PRESENT_MODE_FIFO_RELAXED_KHR
 
 			return core1_0.VKSuccess, nil
 		})
@@ -150,7 +151,7 @@ func TestVulkanSurface_SupportsDevice(t *testing.T) {
 		surface.Handle(),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
-		func(device driver.VkPhysicalDevice, queueFamilyIndex driver.Uint32, surface khr_surface.VkSurfaceKHR, pSupport *driver.VkBool32) (common.VkResult, error) {
+		func(device driver.VkPhysicalDevice, queueFamilyIndex driver.Uint32, surface khr_surface_driver.VkSurfaceKHR, pSupport *driver.VkBool32) (common.VkResult, error) {
 			*pSupport = driver.VkBool32(1)
 
 			return core1_0.VKSuccess, nil
@@ -178,7 +179,7 @@ func TestVulkanSurface_Capabilities(t *testing.T) {
 		surface.Handle(),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
-		func(device driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pCapabilities *khr_surface.VkSurfaceCapabilitiesKHR) (common.VkResult, error) {
+		func(device driver.VkPhysicalDevice, surface khr_surface_driver.VkSurfaceKHR, pCapabilities *khr_surface_driver.VkSurfaceCapabilitiesKHR) (common.VkResult, error) {
 			val := reflect.ValueOf(pCapabilities).Elem()
 
 			*(*uint32)(unsafe.Pointer(val.FieldByName("currentTransform").UnsafeAddr())) = uint32(0x00000002) // VK_SURFACE_TRANSFORM_ROTATE_90_BIT_KHR
@@ -242,7 +243,7 @@ func TestVulkanSurface_Formats(t *testing.T) {
 		gomock.Not(gomock.Nil()),
 		gomock.Nil(),
 	).DoAndReturn(
-		func(device driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pFormatCount *driver.Uint32, pFormats *khr_surface.VkSurfaceFormatKHR) (common.VkResult, error) {
+		func(device driver.VkPhysicalDevice, surface khr_surface_driver.VkSurfaceKHR, pFormatCount *driver.Uint32, pFormats *khr_surface_driver.VkSurfaceFormatKHR) (common.VkResult, error) {
 			*pFormatCount = driver.Uint32(2)
 
 			return core1_0.VKSuccess, nil
@@ -254,10 +255,10 @@ func TestVulkanSurface_Formats(t *testing.T) {
 		gomock.Not(gomock.Nil()),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
-		func(device driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pFormatCount *driver.Uint32, pFormats *khr_surface.VkSurfaceFormatKHR) (common.VkResult, error) {
+		func(device driver.VkPhysicalDevice, surface khr_surface_driver.VkSurfaceKHR, pFormatCount *driver.Uint32, pFormats *khr_surface_driver.VkSurfaceFormatKHR) (common.VkResult, error) {
 			require.Equal(t, driver.Uint32(2), *pFormatCount)
 
-			formatSlice := ([]khr_surface.VkSurfaceFormatKHR)(unsafe.Slice(pFormats, 2))
+			formatSlice := ([]khr_surface_driver.VkSurfaceFormatKHR)(unsafe.Slice(pFormats, 2))
 			val := reflect.ValueOf(formatSlice)
 
 			format := val.Index(0)
@@ -300,7 +301,7 @@ func TestVulkanSurface_Formats_Incomplete(t *testing.T) {
 		gomock.Not(gomock.Nil()),
 		gomock.Nil(),
 	).DoAndReturn(
-		func(device driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pFormatCount *driver.Uint32, pFormats *khr_surface.VkSurfaceFormatKHR) (common.VkResult, error) {
+		func(device driver.VkPhysicalDevice, surface khr_surface_driver.VkSurfaceKHR, pFormatCount *driver.Uint32, pFormats *khr_surface_driver.VkSurfaceFormatKHR) (common.VkResult, error) {
 			*pFormatCount = driver.Uint32(1)
 
 			return core1_0.VKSuccess, nil
@@ -312,10 +313,10 @@ func TestVulkanSurface_Formats_Incomplete(t *testing.T) {
 		gomock.Not(gomock.Nil()),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
-		func(device driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pFormatCount *driver.Uint32, pFormats *khr_surface.VkSurfaceFormatKHR) (common.VkResult, error) {
+		func(device driver.VkPhysicalDevice, surface khr_surface_driver.VkSurfaceKHR, pFormatCount *driver.Uint32, pFormats *khr_surface_driver.VkSurfaceFormatKHR) (common.VkResult, error) {
 			require.Equal(t, driver.Uint32(1), *pFormatCount)
 
-			formatSlice := ([]khr_surface.VkSurfaceFormatKHR)(unsafe.Slice(pFormats, 1))
+			formatSlice := ([]khr_surface_driver.VkSurfaceFormatKHR)(unsafe.Slice(pFormats, 1))
 			val := reflect.ValueOf(formatSlice)
 
 			format := val.Index(0)
@@ -331,7 +332,7 @@ func TestVulkanSurface_Formats_Incomplete(t *testing.T) {
 		gomock.Not(gomock.Nil()),
 		gomock.Nil(),
 	).DoAndReturn(
-		func(device driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pFormatCount *driver.Uint32, pFormats *khr_surface.VkSurfaceFormatKHR) (common.VkResult, error) {
+		func(device driver.VkPhysicalDevice, surface khr_surface_driver.VkSurfaceKHR, pFormatCount *driver.Uint32, pFormats *khr_surface_driver.VkSurfaceFormatKHR) (common.VkResult, error) {
 			*pFormatCount = driver.Uint32(2)
 
 			return core1_0.VKSuccess, nil
@@ -343,10 +344,10 @@ func TestVulkanSurface_Formats_Incomplete(t *testing.T) {
 		gomock.Not(gomock.Nil()),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(
-		func(device driver.VkPhysicalDevice, surface khr_surface.VkSurfaceKHR, pFormatCount *driver.Uint32, pFormats *khr_surface.VkSurfaceFormatKHR) (common.VkResult, error) {
+		func(device driver.VkPhysicalDevice, surface khr_surface_driver.VkSurfaceKHR, pFormatCount *driver.Uint32, pFormats *khr_surface_driver.VkSurfaceFormatKHR) (common.VkResult, error) {
 			require.Equal(t, driver.Uint32(2), *pFormatCount)
 
-			formatSlice := ([]khr_surface.VkSurfaceFormatKHR)(unsafe.Slice(pFormats, 2))
+			formatSlice := ([]khr_surface_driver.VkSurfaceFormatKHR)(unsafe.Slice(pFormats, 2))
 			val := reflect.ValueOf(formatSlice)
 
 			format := val.Index(0)

@@ -10,7 +10,7 @@ import (
 	common "github.com/CannibalVox/VKng/core/common"
 	core1_0 "github.com/CannibalVox/VKng/core/core1_0"
 	driver "github.com/CannibalVox/VKng/core/driver"
-	khr_swapchain "github.com/CannibalVox/VKng/extensions/khr_swapchain"
+	khr_swapchain_driver "github.com/CannibalVox/VKng/extensions/khr_swapchain/driver"
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -52,7 +52,7 @@ func (mr *MockDriverMockRecorder) CreateImage(imageHandle, deviceHandle interfac
 }
 
 // VkAcquireNextImageKHR mocks base method.
-func (m *MockDriver) VkAcquireNextImageKHR(device driver.VkDevice, swapchain khr_swapchain.VkSwapchainKHR, timeout driver.Uint64, semaphore driver.VkSemaphore, fence driver.VkFence, pImageIndex *driver.Uint32) (common.VkResult, error) {
+func (m *MockDriver) VkAcquireNextImageKHR(device driver.VkDevice, swapchain khr_swapchain_driver.VkSwapchainKHR, timeout driver.Uint64, semaphore driver.VkSemaphore, fence driver.VkFence, pImageIndex *driver.Uint32) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkAcquireNextImageKHR", device, swapchain, timeout, semaphore, fence, pImageIndex)
 	ret0, _ := ret[0].(common.VkResult)
@@ -67,7 +67,7 @@ func (mr *MockDriverMockRecorder) VkAcquireNextImageKHR(device, swapchain, timeo
 }
 
 // VkCreateSwapchainKHR mocks base method.
-func (m *MockDriver) VkCreateSwapchainKHR(device driver.VkDevice, pCreateInfo *khr_swapchain.VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *khr_swapchain.VkSwapchainKHR) (common.VkResult, error) {
+func (m *MockDriver) VkCreateSwapchainKHR(device driver.VkDevice, pCreateInfo *khr_swapchain_driver.VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *khr_swapchain_driver.VkSwapchainKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkCreateSwapchainKHR", device, pCreateInfo, pAllocator, pSwapchain)
 	ret0, _ := ret[0].(common.VkResult)
@@ -82,7 +82,7 @@ func (mr *MockDriverMockRecorder) VkCreateSwapchainKHR(device, pCreateInfo, pAll
 }
 
 // VkDestroySwapchainKHR mocks base method.
-func (m *MockDriver) VkDestroySwapchainKHR(device driver.VkDevice, swapchain khr_swapchain.VkSwapchainKHR, pAllocator *driver.VkAllocationCallbacks) {
+func (m *MockDriver) VkDestroySwapchainKHR(device driver.VkDevice, swapchain khr_swapchain_driver.VkSwapchainKHR, pAllocator *driver.VkAllocationCallbacks) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkDestroySwapchainKHR", device, swapchain, pAllocator)
 }
@@ -94,7 +94,7 @@ func (mr *MockDriverMockRecorder) VkDestroySwapchainKHR(device, swapchain, pAllo
 }
 
 // VkGetSwapchainImagesKHR mocks base method.
-func (m *MockDriver) VkGetSwapchainImagesKHR(device driver.VkDevice, swapchain khr_swapchain.VkSwapchainKHR, pSwapchainImageCount *driver.Uint32, pSwapchainImages *driver.VkImage) (common.VkResult, error) {
+func (m *MockDriver) VkGetSwapchainImagesKHR(device driver.VkDevice, swapchain khr_swapchain_driver.VkSwapchainKHR, pSwapchainImageCount *driver.Uint32, pSwapchainImages *driver.VkImage) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkGetSwapchainImagesKHR", device, swapchain, pSwapchainImageCount, pSwapchainImages)
 	ret0, _ := ret[0].(common.VkResult)
@@ -109,7 +109,7 @@ func (mr *MockDriverMockRecorder) VkGetSwapchainImagesKHR(device, swapchain, pSw
 }
 
 // VkQueuePresentKHR mocks base method.
-func (m *MockDriver) VkQueuePresentKHR(queue driver.VkQueue, pPresentInfo *khr_swapchain.VkPresentInfoKHR) (common.VkResult, error) {
+func (m *MockDriver) VkQueuePresentKHR(queue driver.VkQueue, pPresentInfo *khr_swapchain_driver.VkPresentInfoKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkQueuePresentKHR", queue, pPresentInfo)
 	ret0, _ := ret[0].(common.VkResult)

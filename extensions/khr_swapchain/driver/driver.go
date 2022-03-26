@@ -1,10 +1,10 @@
-package khr_swapchain
+package khr_swapchain_driver
 
-//go:generate mockgen -source driver.go -destination ./mocks/driver.go -package mock_swapchain
+//go:generate mockgen -source driver.go -destination ../mocks/driver.go -package mock_swapchain
 
 /*
 #include <stdlib.h>
-#include "vulkan/vulkan.h"
+#include "../../vulkan/vulkan.h"
 
 VkResult cgoAcquireNextImageKHR(PFN_vkAcquireNextImageKHR fn, VkDevice device, VkSwapchainKHR swapchain, uint64_t timeout, VkSemaphore semaphore, VkFence fence, uint32_t* pImageIndex) {
 	return fn(device, swapchain, timeout, semaphore, fence, pImageIndex);

@@ -1,10 +1,10 @@
-package khr_get_physical_device_properties2
+package khr_get_physical_device_properties2_driver
 
-//go:generate mockgen -source driver.go -destination ./mocks/driver.go -package mock_get_physical_device_properties2
+//go:generate mockgen -source driver.go -destination ../mocks/driver.go -package mock_get_physical_device_properties2
 
 /*
 #include <stdlib.h>
-#include "vulkan/vulkan.h"
+#include "../../vulkan/vulkan.h"
 
 void cgoGetPhysicalDeviceFeatures2KHR(PFN_vkGetPhysicalDeviceFeatures2KHR fn, VkPhysicalDevice physicalDevice, VkPhysicalDeviceFeatures2KHR *pFeatures) {
 	fn(physicalDevice, pFeatures);

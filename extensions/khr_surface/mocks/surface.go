@@ -11,6 +11,7 @@ import (
 	core1_0 "github.com/CannibalVox/VKng/core/core1_0"
 	driver "github.com/CannibalVox/VKng/core/driver"
 	khr_surface "github.com/CannibalVox/VKng/extensions/khr_surface"
+	khr_surface_driver "github.com/CannibalVox/VKng/extensions/khr_surface/driver"
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -82,10 +83,10 @@ func (mr *MockSurfaceMockRecorder) Formats(device interface{}) *gomock.Call {
 }
 
 // Handle mocks base method.
-func (m *MockSurface) Handle() khr_surface.VkSurfaceKHR {
+func (m *MockSurface) Handle() khr_surface_driver.VkSurfaceKHR {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Handle")
-	ret0, _ := ret[0].(khr_surface.VkSurfaceKHR)
+	ret0, _ := ret[0].(khr_surface_driver.VkSurfaceKHR)
 	return ret0
 }
 

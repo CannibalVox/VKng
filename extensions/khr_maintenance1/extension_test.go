@@ -5,6 +5,7 @@ import (
 	mock_driver "github.com/CannibalVox/VKng/core/driver/mocks"
 	"github.com/CannibalVox/VKng/core/mocks"
 	"github.com/CannibalVox/VKng/extensions/khr_maintenance1"
+	khr_maintenance1_driver "github.com/CannibalVox/VKng/extensions/khr_maintenance1/driver"
 	mock_maintenance1 "github.com/CannibalVox/VKng/extensions/khr_maintenance1/mocks"
 	"github.com/golang/mock/gomock"
 	"testing"
@@ -21,7 +22,7 @@ func TestVulkanExtension_TrimCommandPool(t *testing.T) {
 	maintDriver := mock_maintenance1.NewMockDriver(ctrl)
 	extension := khr_maintenance1.CreateExtensionFromDriver(maintDriver)
 
-	maintDriver.EXPECT().VkTrimCommandPoolKHR(device.Handle(), commandPool.Handle(), khr_maintenance1.VkCommandPoolTrimFlagsKHR(0))
+	maintDriver.EXPECT().VkTrimCommandPoolKHR(device.Handle(), commandPool.Handle(), khr_maintenance1_driver.VkCommandPoolTrimFlagsKHR(0))
 
 	extension.TrimCommandPool(commandPool, 0)
 }

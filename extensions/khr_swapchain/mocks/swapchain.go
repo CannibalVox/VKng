@@ -11,7 +11,7 @@ import (
 	common "github.com/CannibalVox/VKng/core/common"
 	core1_0 "github.com/CannibalVox/VKng/core/core1_0"
 	driver "github.com/CannibalVox/VKng/core/driver"
-	khr_swapchain "github.com/CannibalVox/VKng/extensions/khr_swapchain"
+	khr_swapchain_driver "github.com/CannibalVox/VKng/extensions/khr_swapchain/driver"
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -67,10 +67,10 @@ func (mr *MockSwapchainMockRecorder) Destroy(callbacks interface{}) *gomock.Call
 }
 
 // Handle mocks base method.
-func (m *MockSwapchain) Handle() khr_swapchain.VkSwapchainKHR {
+func (m *MockSwapchain) Handle() khr_swapchain_driver.VkSwapchainKHR {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Handle")
-	ret0, _ := ret[0].(khr_swapchain.VkSwapchainKHR)
+	ret0, _ := ret[0].(khr_swapchain_driver.VkSwapchainKHR)
 	return ret0
 }
 
@@ -94,20 +94,4 @@ func (m *MockSwapchain) Images() ([]core1_0.Image, common.VkResult, error) {
 func (mr *MockSwapchainMockRecorder) Images() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Images", reflect.TypeOf((*MockSwapchain)(nil).Images))
-}
-
-// PresentToQueue mocks base method.
-func (m *MockSwapchain) PresentToQueue(queue core1_0.Queue, o *khr_swapchain.PresentOptions) ([]common.VkResult, common.VkResult, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PresentToQueue", queue, o)
-	ret0, _ := ret[0].([]common.VkResult)
-	ret1, _ := ret[1].(common.VkResult)
-	ret2, _ := ret[2].(error)
-	return ret0, ret1, ret2
-}
-
-// PresentToQueue indicates an expected call of PresentToQueue.
-func (mr *MockSwapchainMockRecorder) PresentToQueue(queue, o interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PresentToQueue", reflect.TypeOf((*MockSwapchain)(nil).PresentToQueue), queue, o)
 }
