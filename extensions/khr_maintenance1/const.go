@@ -1,4 +1,4 @@
-package vk_khr_maintenance1
+package khr_maintenance1
 
 /*
 #include <stdlib.h>

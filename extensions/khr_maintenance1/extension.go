@@ -1,4 +1,4 @@
-package vk_khr_maintenance1
+package khr_maintenance1
 
 //go:generate mockgen -source extension.go -destination ./mocks/extension.go -package mock_maintenance1
 

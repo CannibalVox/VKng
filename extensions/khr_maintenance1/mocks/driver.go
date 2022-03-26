@@ -8,7 +8,7 @@ import (
 	reflect "reflect"
 
 	driver "github.com/CannibalVox/VKng/core/driver"
-	vk_khr_maintenance1 "github.com/CannibalVox/VKng/extensions/vk_khr_maintenance1"
+	vk_khr_maintenance1 "github.com/CannibalVox/VKng/extensions/khr_maintenance1"
 	gomock "github.com/golang/mock/gomock"
 )
 

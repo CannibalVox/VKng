@@ -1,4 +1,4 @@
-package vk_khr_maintenance1
+package khr_maintenance1
 
 //go:generate mockgen -source driver.go -destination ./mocks/driver.go -package mock_maintenance1
 

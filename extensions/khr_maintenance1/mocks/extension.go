@@ -8,7 +8,7 @@ import (
 	reflect "reflect"
 
 	core1_0 "github.com/CannibalVox/VKng/core/core1_0"
-	vk_khr_maintenance1 "github.com/CannibalVox/VKng/extensions/vk_khr_maintenance1"
+	vk_khr_maintenance1 "github.com/CannibalVox/VKng/extensions/khr_maintenance1"
 	gomock "github.com/golang/mock/gomock"
 )
 
