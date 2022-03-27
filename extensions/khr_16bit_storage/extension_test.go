@@ -8,6 +8,7 @@ import (
 	mock_driver "github.com/CannibalVox/VKng/core/driver/mocks"
 	"github.com/CannibalVox/VKng/core/mocks"
 	"github.com/CannibalVox/VKng/extensions/khr_16bit_storage"
+	khr_16bit_storage_driver "github.com/CannibalVox/VKng/extensions/khr_16bit_storage/driver"
 	"github.com/CannibalVox/VKng/extensions/khr_get_physical_device_properties2"
 	khr_get_physical_device_properties2_driver "github.com/CannibalVox/VKng/extensions/khr_get_physical_device_properties2/driver"
 	mock_get_physical_device_properties2 "github.com/CannibalVox/VKng/extensions/khr_get_physical_device_properties2/mocks"
@@ -39,7 +40,7 @@ func TestDevice16BitStorageOptions(t *testing.T) {
 			require.Equal(t, uint64(3), val.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO
 			require.Equal(t, uint64(0), val.FieldByName("flags").Uint())
 
-			storageFeatures := (*khr_16bit_storage.VkPhysicalDevice16BitStorageFeaturesKHR)(val.FieldByName("pNext").UnsafePointer())
+			storageFeatures := (*khr_16bit_storage_driver.VkPhysicalDevice16BitStorageFeaturesKHR)(val.FieldByName("pNext").UnsafePointer())
 			storageVal := reflect.ValueOf(storageFeatures).Elem()
 
 			require.Equal(t, uint64(1000083000), storageVal.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES_KHR
@@ -92,7 +93,7 @@ func TestDevice16BitStorageOutData(t *testing.T) {
 			featureVal := val.FieldByName("features")
 			*(*driver.VkBool32)(unsafe.Pointer(featureVal.FieldByName("fillModeNonSolid").UnsafeAddr())) = driver.VkBool32(1)
 
-			outDataPtr := (*khr_16bit_storage.VkPhysicalDevice16BitStorageFeaturesKHR)(val.FieldByName("pNext").UnsafePointer())
+			outDataPtr := (*khr_16bit_storage_driver.VkPhysicalDevice16BitStorageFeaturesKHR)(val.FieldByName("pNext").UnsafePointer())
 			outDataVal := reflect.ValueOf(outDataPtr).Elem()
 			*(*driver.VkBool32)(unsafe.Pointer(outDataVal.FieldByName("storageBuffer16BitAccess").UnsafeAddr())) = driver.VkBool32(0)
 			*(*driver.VkBool32)(unsafe.Pointer(outDataVal.FieldByName("uniformAndStorageBuffer16BitAccess").UnsafeAddr())) = driver.VkBool32(0)

@@ -12,3 +12,7 @@ const (
 
 	ImageCreateAlias common.ImageCreateFlags = C.VK_IMAGE_CREATE_ALIAS_BIT_KHR
 )
+
+func init() {
+	ImageCreateAlias.Register("Alias")
+}
