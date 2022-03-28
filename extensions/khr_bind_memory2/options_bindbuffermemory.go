@@ -15,7 +15,7 @@ import (
 type BindBufferMemoryOptions struct {
 	Buffer       core1_0.Buffer
 	Memory       core1_0.DeviceMemory
-	MemoryOffset uint64
+	MemoryOffset int
 
 	common.HaveNext
 }

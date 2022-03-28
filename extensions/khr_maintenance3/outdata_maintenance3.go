@@ -13,7 +13,7 @@ import (
 
 type Maintenance3OutData struct {
 	MaxPerSetDescriptors    int
-	MaxMemoryAllocationSize uint64
+	MaxMemoryAllocationSize int
 
 	common.HaveNext
 }
@@ -33,7 +33,7 @@ func (o *Maintenance3OutData) PopulateCPointer(allocator *cgoparam.Allocator, pr
 func (o *Maintenance3OutData) PopulateOutData(cPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
 	outData := (*C.VkPhysicalDeviceMaintenance3PropertiesKHR)(cPointer)
 
-	o.MaxMemoryAllocationSize = uint64(outData.maxMemoryAllocationSize)
+	o.MaxMemoryAllocationSize = int(outData.maxMemoryAllocationSize)
 	o.MaxPerSetDescriptors = int(outData.maxPerSetDescriptors)
 
 	return outData.pNext, nil

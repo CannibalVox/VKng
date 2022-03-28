@@ -44,7 +44,7 @@ func (o *MemoryPropertiesOutData) PopulateOutData(cDataPointer unsafe.Pointer) (
 	o.MemoryProperties.MemoryHeaps = make([]common.MemoryHeap, memoryHeapCount)
 
 	for i := 0; i < memoryHeapCount; i++ {
-		o.MemoryProperties.MemoryHeaps[i].Size = uint64(data.memoryProperties.memoryHeaps[i].size)
+		o.MemoryProperties.MemoryHeaps[i].Size = int(data.memoryProperties.memoryHeaps[i].size)
 		o.MemoryProperties.MemoryHeaps[i].Flags = common.MemoryHeapFlags(data.memoryProperties.memoryHeaps[i].flags)
 	}
 
