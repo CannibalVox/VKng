@@ -1,4 +1,4 @@
-package khr_surface_sdl2
+package vkng_surface_sdl2
 
 //go:generate mockgen -source extension.go -destination ./mocks/mocks.go -package mock_surface_sdl2
 
