@@ -59,6 +59,10 @@ func CreateDriverFromCore(coreDriver driver.Driver) *CDriver {
 }
 
 func (d *CDriver) VkGetBufferMemoryRequirements2KHR(device driver.VkDevice, pInfo *VkBufferMemoryRequirementsInfo2KHR, pMemoryRequirements *VkMemoryRequirements2KHR) {
+	if d.getBufferMemoryRequirements2 == nil {
+		panic("attempt to call extension method vkGetBufferMemoryRequirements2KHR when extension not present")
+	}
+
 	C.cgoGetBufferMemoryRequirements2KHR(d.getBufferMemoryRequirements2,
 		C.VkDevice(unsafe.Pointer(device)),
 		(*C.VkBufferMemoryRequirementsInfo2KHR)(pInfo),
@@ -66,6 +70,10 @@ func (d *CDriver) VkGetBufferMemoryRequirements2KHR(device driver.VkDevice, pInf
 }
 
 func (d *CDriver) VkGetImageMemoryRequirements2KHR(device driver.VkDevice, pInfo *VkImageMemoryRequirementsInfo2KHR, pMemoryRequirements *VkMemoryRequirements2KHR) {
+	if d.getImageMemoryRequirements2 == nil {
+		panic("attempt to call extension method vkGetImageMemoryRequirements2KHR when extension not present")
+	}
+
 	C.cgoGetImageMemoryRequirements2KHR(d.getImageMemoryRequirements2,
 		C.VkDevice(unsafe.Pointer(device)),
 		(*C.VkImageMemoryRequirementsInfo2KHR)(pInfo),
@@ -73,6 +81,10 @@ func (d *CDriver) VkGetImageMemoryRequirements2KHR(device driver.VkDevice, pInfo
 }
 
 func (d *CDriver) VkGetImageSparseMemoryRequirements2KHR(device driver.VkDevice, pInfo *VkImageSparseMemoryRequirementsInfo2KHR, pSparseMemoryRequirementCount *driver.Uint32, pSparseMemoryRequirements *VkSparseImageMemoryRequirements2KHR) {
+	if d.getImageSparseMemoryRequirements2 == nil {
+		panic("attempt to call extension method vkGetImageSparseMemoryRequirements2KHR when extension not present")
+	}
+
 	C.cgoGetImageSparseMemoryRequirements2KHR(d.getImageSparseMemoryRequirements2,
 		C.VkDevice(unsafe.Pointer(device)),
 		(*C.VkImageSparseMemoryRequirementsInfo2KHR)(pInfo),

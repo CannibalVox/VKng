@@ -42,6 +42,10 @@ func CreateDriverFromCore(coreDriver driver.Driver) *CDriver {
 }
 
 func (d *CDriver) VkGetDescriptorSetLayoutSupportKHR(device driver.VkDevice, pCreateInfo *driver.VkDescriptorSetLayoutCreateInfo, pSupport *VkDescriptorSetLayoutSupportKHR) {
+	if d.getDescriptorSetLayoutSupport == nil {
+		panic("attempt to call extension method vkGetDescriptorSetLayoutSupportKHR when extension not present")
+	}
+
 	C.cgoGetDescriptorSetLayoutSupportKHR(d.getDescriptorSetLayoutSupport,
 		(C.VkDevice)(unsafe.Pointer(device)),
 		(*C.VkDescriptorSetLayoutCreateInfo)(unsafe.Pointer(pCreateInfo)),

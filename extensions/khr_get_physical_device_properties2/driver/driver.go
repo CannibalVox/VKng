@@ -92,6 +92,10 @@ func CreateDriverFromCore(coreDriver driver.Driver) *CDriver {
 }
 
 func (d *CDriver) VkGetPhysicalDeviceFeatures2KHR(physicalDevice driver.VkPhysicalDevice, pFeatures *VkPhysicalDeviceFeatures2KHR) {
+	if d.getPhysicalDeviceFeatures2 == nil {
+		panic("attempt to call extension method vkGetPhysicalDeviceFeatures2KHR when extension not present")
+	}
+
 	C.cgoGetPhysicalDeviceFeatures2KHR(d.getPhysicalDeviceFeatures2,
 		C.VkPhysicalDevice(unsafe.Pointer(physicalDevice)),
 		(*C.VkPhysicalDeviceFeatures2KHR)(pFeatures),
@@ -99,6 +103,10 @@ func (d *CDriver) VkGetPhysicalDeviceFeatures2KHR(physicalDevice driver.VkPhysic
 }
 
 func (d *CDriver) VkGetPhysicalDeviceFormatProperties2KHR(physicalDevice driver.VkPhysicalDevice, format driver.VkFormat, pFormatProperties *VkFormatProperties2KHR) {
+	if d.getPhysicalDeviceFormatProperties2 == nil {
+		panic("attempt to call extension method vkGetPhysicalDeviceFormatProperties2KHR when extension not present")
+	}
+
 	C.cgoGetPhysicalDeviceFormatProperties2KHR(d.getPhysicalDeviceFormatProperties2,
 		C.VkPhysicalDevice(unsafe.Pointer(physicalDevice)),
 		C.VkFormat(format),
@@ -107,6 +115,10 @@ func (d *CDriver) VkGetPhysicalDeviceFormatProperties2KHR(physicalDevice driver.
 }
 
 func (d *CDriver) VkGetPhysicalDeviceImageFormatProperties2KHR(physicalDevice driver.VkPhysicalDevice, pImageFormatInfo *VkPhysicalDeviceImageFormatInfo2KHR, pImageFormatProperties *VkImageFormatProperties2KHR) (common.VkResult, error) {
+	if d.getPhysicalDeviceImageFormatProperties2 == nil {
+		panic("attempt to call extension method vkGetPhysicalDeviceImageFormatProperties2KHR when extension not present")
+	}
+
 	res := common.VkResult(C.cgoGetPhysicalDeviceImageFormatProperties2KHR(d.getPhysicalDeviceImageFormatProperties2,
 		C.VkPhysicalDevice(unsafe.Pointer(physicalDevice)),
 		(*C.VkPhysicalDeviceImageFormatInfo2KHR)(pImageFormatInfo),
@@ -115,18 +127,30 @@ func (d *CDriver) VkGetPhysicalDeviceImageFormatProperties2KHR(physicalDevice dr
 }
 
 func (d *CDriver) VkGetPhysicalDeviceMemoryProperties2KHR(physicalDevice driver.VkPhysicalDevice, pMemoryProperties *VkPhysicalDeviceMemoryProperties2KHR) {
+	if d.getPhysicalDeviceMemoryProperties2 == nil {
+		panic("attempt to call extension method vkGetPhysicalDeviceMemoryProperties2KHR when extension not present")
+	}
+
 	C.cgoGetPhysicalDeviceMemoryProperties2KHR(d.getPhysicalDeviceMemoryProperties2,
 		C.VkPhysicalDevice(unsafe.Pointer(physicalDevice)),
 		(*C.VkPhysicalDeviceMemoryProperties2KHR)(pMemoryProperties))
 }
 
 func (d *CDriver) VkGetPhysicalDeviceProperties2KHR(physicalDevice driver.VkPhysicalDevice, pProperties *VkPhysicalDeviceProperties2KHR) {
+	if d.getPhysicalDeviceProperties2 == nil {
+		panic("attempt to call extension method vkGetPhysicalDeviceProperties2KHR when extension not present")
+	}
+
 	C.cgoGetPhysicalDeviceProperties2KHR(d.getPhysicalDeviceProperties2,
 		C.VkPhysicalDevice(unsafe.Pointer(physicalDevice)),
 		(*C.VkPhysicalDeviceProperties2KHR)(pProperties))
 }
 
 func (d *CDriver) VkGetPhysicalDeviceQueueFamilyProperties2KHR(physicalDevice driver.VkPhysicalDevice, pQueueFamilyPropertyCount *driver.Uint32, pQueueFamilyProperties *VkQueueFamilyProperties2KHR) {
+	if d.getPhysicalDeviceQueueFamilyProperties2 == nil {
+		panic("attempt to call extension method vkGetPhysicalDeviceQueueFamilyProperties2KHR when extension not present")
+	}
+
 	C.cgoGetPhysicalDeviceQueueFamilyProperties2KHR(d.getPhysicalDeviceQueueFamilyProperties2,
 		C.VkPhysicalDevice(unsafe.Pointer(physicalDevice)),
 		(*C.uint32_t)(pQueueFamilyPropertyCount),
@@ -134,7 +158,11 @@ func (d *CDriver) VkGetPhysicalDeviceQueueFamilyProperties2KHR(physicalDevice dr
 }
 
 func (d *CDriver) VkGetPhysicalDeviceSparseImageFormatProperties2KHR(physicalDevice driver.VkPhysicalDevice, pFormatInfo *VkPhysicalDeviceSparseImageFormatInfo2KHR, pPropertyCount *driver.Uint32, pProperties *VkSparseImageFormatProperties2KHR) {
-	C.cgoGetPhysicalDeviceSparseImageFormatProperties2KHR(d.getPhysicalDeviceImageFormatProperties2,
+	if d.getPhysicalDeviceSparseImageFormatProperties2 == nil {
+		panic("attempt to call extension method vkGetPhysicalDeviceSparseImageFormatProperties2KHR when extension not present")
+	}
+
+	C.cgoGetPhysicalDeviceSparseImageFormatProperties2KHR(d.getPhysicalDeviceSparseImageFormatProperties2,
 		C.VkPhysicalDevice(unsafe.Pointer(physicalDevice)),
 		(*C.VkPhysicalDeviceSparseImageFormatInfo2KHR)(pFormatInfo),
 		(*C.uint32_t)(pPropertyCount),

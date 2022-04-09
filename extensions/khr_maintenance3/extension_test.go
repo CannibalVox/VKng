@@ -104,5 +104,5 @@ func TestMaintenance3OutData(t *testing.T) {
 
 	require.Equal(t, uint32(3), outData.Properties.VendorID)
 	require.Equal(t, 5, maintOutData.MaxPerSetDescriptors)
-	require.Equal(t, uint64(7), maintOutData.MaxMemoryAllocationSize)
+	require.Equal(t, 7, maintOutData.MaxMemoryAllocationSize)
 }
