@@ -66,8 +66,8 @@ func (c CallbackDataOptions) PopulateCPointer(allocator *cgoparam.Allocator, pre
 	return preallocatedPointer, nil
 }
 
-func (c CallbackDataOptions) PopulateOutData(cPointer unsafe.Pointer) (unsafe.Pointer, error) {
-	callbackData := (*C.VkDebugUtilsMessengerCallbackDataEXT)(cPointer)
+func (c CallbackDataOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (unsafe.Pointer, error) {
+	callbackData := (*C.VkDebugUtilsMessengerCallbackDataEXT)(cDataPointer)
 	return callbackData.pNext, nil
 }
 

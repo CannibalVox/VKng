@@ -35,7 +35,7 @@ func (o BindImageMemoryOptions) PopulateCPointer(allocator *cgoparam.Allocator, 
 	return preallocatedPointer, nil
 }
 
-func (o BindImageMemoryOptions) PopulateOutData(cPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
-	createInfo := (*C.VkBindImageMemoryInfo)(cPointer)
+func (o BindImageMemoryOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+	createInfo := (*C.VkBindImageMemoryInfo)(cDataPointer)
 	return createInfo.pNext, nil
 }

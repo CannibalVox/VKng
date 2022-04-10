@@ -29,8 +29,8 @@ func (o *MemoryRequirementsOutData) PopulateCPointer(allocator *cgoparam.Allocat
 	return preallocatedPointer, nil
 }
 
-func (o *MemoryRequirementsOutData) PopulateOutData(cPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
-	outData := (*C.VkMemoryRequirements2KHR)(cPointer)
+func (o *MemoryRequirementsOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+	outData := (*C.VkMemoryRequirements2KHR)(cDataPointer)
 	o.MemoryRequirements.Size = int(outData.memoryRequirements.size)
 	o.MemoryRequirements.Alignment = int(outData.memoryRequirements.alignment)
 	o.MemoryRequirements.MemoryType = uint32(outData.memoryRequirements.memoryTypeBits)

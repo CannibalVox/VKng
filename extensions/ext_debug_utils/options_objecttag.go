@@ -38,8 +38,8 @@ func (t ObjectTagOptions) PopulateCPointer(allocator *cgoparam.Allocator, preall
 	return preallocatedPointer, nil
 }
 
-func (t ObjectTagOptions) PopulateOutData(cPointer unsafe.Pointer) (unsafe.Pointer, error) {
-	tagInfo := (*C.VkDebugUtilsObjectTagInfoEXT)(cPointer)
+func (t ObjectTagOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (unsafe.Pointer, error) {
+	tagInfo := (*C.VkDebugUtilsObjectTagInfoEXT)(cDataPointer)
 	return tagInfo.pNext, nil
 }
 

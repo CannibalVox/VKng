@@ -28,9 +28,7 @@ VkResult cgoQueuePresentKHR(PFN_vkQueuePresentKHR fn, VkQueue queue, VkPresentIn
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/common"
-	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/VKng/core/driver"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
@@ -49,7 +47,6 @@ type VkSwapchainKHR driver.VulkanHandle
 type VkSwapchainCreateInfoKHR C.VkSwapchainCreateInfoKHR
 type VkPresentInfoKHR C.VkPresentInfoKHR
 type Driver interface {
-	CreateImage(imageHandle driver.VkImage, deviceHandle driver.VkDevice) core1_0.Image
 	VkCreateSwapchainKHR(device driver.VkDevice, pCreateInfo *VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *VkSwapchainKHR) (common.VkResult, error)
 	VkDestroySwapchainKHR(device driver.VkDevice, swapchain VkSwapchainKHR, pAllocator *driver.VkAllocationCallbacks)
 	VkGetSwapchainImagesKHR(device driver.VkDevice, swapchain VkSwapchainKHR, pSwapchainImageCount *driver.Uint32, pSwapchainImages *driver.VkImage) (common.VkResult, error)
@@ -69,10 +66,6 @@ func CreateDriverFromCore(coreDriver driver.Driver) *CDriver {
 		acquireNextFunc:  (C.PFN_vkAcquireNextImageKHR)(coreDriver.LoadProcAddr((*driver.Char)(arena.CString("vkAcquireNextImageKHR")))),
 		queuePresentFunc: (C.PFN_vkQueuePresentKHR)(coreDriver.LoadProcAddr((*driver.Char)(arena.CString("vkQueuePresentKHR")))),
 	}
-}
-
-func (d *CDriver) CreateImage(imageHandle driver.VkImage, deviceHandle driver.VkDevice) core1_0.Image {
-	return core.CreateImageFromHandles(imageHandle, deviceHandle, d.driver)
 }
 
 func (d *CDriver) VkCreateSwapchainKHR(device driver.VkDevice, pCreateInfo *VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *VkSwapchainKHR) (common.VkResult, error) {

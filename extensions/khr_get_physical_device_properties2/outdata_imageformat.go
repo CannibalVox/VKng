@@ -30,7 +30,7 @@ func (o *ImageFormatOutData) PopulateCPointer(allocator *cgoparam.Allocator, pre
 	return preallocatedPointer, nil
 }
 
-func (o *ImageFormatOutData) PopulateOutData(cDataPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
+func (o *ImageFormatOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	data := (*C.VkImageFormatProperties2KHR)(cDataPointer)
 	o.ImageFormatProperties.MaxExtent = common.Extent3D{
 		Width:  int(data.imageFormatProperties.maxExtent.width),

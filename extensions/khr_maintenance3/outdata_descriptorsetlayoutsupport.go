@@ -29,8 +29,8 @@ func (o *DescriptorSetLayoutSupportOutData) PopulateCPointer(allocator *cgoparam
 	return preallocatedPointer, nil
 }
 
-func (o *DescriptorSetLayoutSupportOutData) PopulateOutData(cPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
-	outData := (*C.VkDescriptorSetLayoutSupportKHR)(cPointer)
+func (o *DescriptorSetLayoutSupportOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+	outData := (*C.VkDescriptorSetLayoutSupportKHR)(cDataPointer)
 	o.Supported = outData.supported != C.VkBool32(0)
 
 	return outData.pNext, nil

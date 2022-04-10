@@ -29,7 +29,7 @@ func (o *SparseImageFormatPropertiesOutData) PopulateCPointer(allocator *cgopara
 	return preallocatedPointer, nil
 }
 
-func (o *SparseImageFormatPropertiesOutData) PopulateOutData(cDataPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
+func (o *SparseImageFormatPropertiesOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	data := (*C.VkSparseImageFormatProperties2KHR)(cDataPointer)
 
 	o.SparseImageFormatProperties.AspectMask = common.ImageAspectFlags(data.properties.aspectMask)

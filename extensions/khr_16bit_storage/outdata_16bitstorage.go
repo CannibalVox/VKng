@@ -32,7 +32,7 @@ func (o *Device16BitStorageOutData) PopulateCPointer(allocator *cgoparam.Allocat
 	return preallocatedPointer, nil
 }
 
-func (o *Device16BitStorageOutData) PopulateOutData(cDataPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
+func (o *Device16BitStorageOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	data := (*C.VkPhysicalDevice16BitStorageFeaturesKHR)(cDataPointer)
 
 	o.StorageBuffer16BitAccess = data.storageBuffer16BitAccess != C.VkBool32(0)

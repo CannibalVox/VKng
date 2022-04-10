@@ -81,7 +81,7 @@ func (o PresentOptions) PopulateCPointer(allocator *cgoparam.Allocator, prealloc
 	return preallocatedPointer, nil
 }
 
-func (o PresentOptions) PopulateOutData(cDataPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
+func (o PresentOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	createInfo := (*C.VkPresentInfoKHR)(cDataPointer)
 
 	if o.OutData == nil {

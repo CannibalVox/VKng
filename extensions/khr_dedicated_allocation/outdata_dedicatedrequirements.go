@@ -31,8 +31,8 @@ func (o *DedicatedAllocationOutData) PopulateCPointer(allocator *cgoparam.Alloca
 	return preallocatedPointer, nil
 }
 
-func (o *DedicatedAllocationOutData) PopulateOutData(cPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
-	outData := (*C.VkMemoryDedicatedRequirementsKHR)(cPointer)
+func (o *DedicatedAllocationOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+	outData := (*C.VkMemoryDedicatedRequirementsKHR)(cDataPointer)
 	o.DedicatedRequired = driver.VkBool32(outData.requiresDedicatedAllocation) != driver.VkBool32(0)
 	o.DedicatedPreferred = driver.VkBool32(outData.prefersDedicatedAllocation) != driver.VkBool32(0)
 

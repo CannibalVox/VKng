@@ -29,8 +29,8 @@ func (o *PointClippingOutData) PopulateCPointer(allocator *cgoparam.Allocator, p
 	return preallocatedPointer, nil
 }
 
-func (o *PointClippingOutData) PopulateOutData(cPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
-	properties := (*C.VkPhysicalDevicePointClippingPropertiesKHR)(cPointer)
+func (o *PointClippingOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+	properties := (*C.VkPhysicalDevicePointClippingPropertiesKHR)(cDataPointer)
 	o.PointClippingBehavior = PointClippingBehavior(properties.pointClippingBehavior)
 
 	return properties.pNext, nil

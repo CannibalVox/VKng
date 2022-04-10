@@ -31,7 +31,7 @@ func (o SparseImageRequirementsOptions) PopulateCPointer(allocator *cgoparam.All
 	return preallocatedPointer, nil
 }
 
-func (o SparseImageRequirementsOptions) PopulateOutData(cPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
-	options := (*C.VkImageSparseMemoryRequirementsInfo2KHR)(cPointer)
+func (o SparseImageRequirementsOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+	options := (*C.VkImageSparseMemoryRequirementsInfo2KHR)(cDataPointer)
 	return options.pNext, nil
 }

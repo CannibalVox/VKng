@@ -38,7 +38,7 @@ func (o SparseImageFormatOptions) PopulateCPointer(allocator *cgoparam.Allocator
 	return preallocatedPointer, nil
 }
 
-func (o SparseImageFormatOptions) PopulateOutData(cDataPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
+func (o SparseImageFormatOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	createInfo := (*C.VkPhysicalDeviceSparseImageFormatInfo2KHR)(cDataPointer)
 
 	return unsafe.Pointer(createInfo.pNext), nil

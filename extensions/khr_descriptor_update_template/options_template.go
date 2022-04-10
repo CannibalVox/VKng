@@ -63,7 +63,7 @@ func (o DescriptorTemplateOptions) PopulateCPointer(allocator *cgoparam.Allocato
 	return preallocatedPointer, nil
 }
 
-func (o DescriptorTemplateOptions) PopulateOutData(cPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
-	createInfo := (*C.VkDescriptorUpdateTemplateCreateInfoKHR)(cPointer)
+func (o DescriptorTemplateOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+	createInfo := (*C.VkDescriptorUpdateTemplateCreateInfoKHR)(cDataPointer)
 	return createInfo.pNext, nil
 }

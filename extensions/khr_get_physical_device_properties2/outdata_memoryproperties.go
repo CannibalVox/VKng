@@ -29,7 +29,7 @@ func (o *MemoryPropertiesOutData) PopulateCPointer(allocator *cgoparam.Allocator
 	return preallocatedPointer, nil
 }
 
-func (o *MemoryPropertiesOutData) PopulateOutData(cDataPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
+func (o *MemoryPropertiesOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	data := (*C.VkPhysicalDeviceMemoryProperties2KHR)(cDataPointer)
 
 	memoryTypeCount := int(data.memoryProperties.memoryTypeCount)

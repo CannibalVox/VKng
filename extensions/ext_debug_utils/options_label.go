@@ -38,7 +38,7 @@ func (l LabelOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocat
 	return preallocatedPointer, nil
 }
 
-func (l LabelOptions) PopulateOutData(cDataPointer unsafe.Pointer) (unsafe.Pointer, error) {
+func (l LabelOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (unsafe.Pointer, error) {
 	label := (*C.VkDebugUtilsLabelEXT)(cDataPointer)
 
 	return label.pNext, nil

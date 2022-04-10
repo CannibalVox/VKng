@@ -30,8 +30,8 @@ func (o *Maintenance3OutData) PopulateCPointer(allocator *cgoparam.Allocator, pr
 	return preallocatedPointer, nil
 }
 
-func (o *Maintenance3OutData) PopulateOutData(cPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
-	outData := (*C.VkPhysicalDeviceMaintenance3PropertiesKHR)(cPointer)
+func (o *Maintenance3OutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+	outData := (*C.VkPhysicalDeviceMaintenance3PropertiesKHR)(cDataPointer)
 
 	o.MaxMemoryAllocationSize = int(outData.maxMemoryAllocationSize)
 	o.MaxPerSetDescriptors = int(outData.maxPerSetDescriptors)

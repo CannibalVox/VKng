@@ -31,7 +31,7 @@ func (o ImageRequirementsOptions) PopulateCPointer(allocator *cgoparam.Allocator
 	return preallocatedPointer, nil
 }
 
-func (o ImageRequirementsOptions) PopulateOutData(cPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
-	options := (*C.VkImageMemoryRequirementsInfo2KHR)(cPointer)
+func (o ImageRequirementsOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+	options := (*C.VkImageMemoryRequirementsInfo2KHR)(cDataPointer)
 	return options.pNext, nil
 }

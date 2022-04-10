@@ -29,8 +29,8 @@ func (o TessellationDomainOriginOptions) PopulateCPointer(allocator *cgoparam.Al
 	return preallocatedPointer, nil
 }
 
-func (o TessellationDomainOriginOptions) PopulateOutData(cPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
-	createInfo := (*C.VkPipelineTessellationDomainOriginStateCreateInfoKHR)(cPointer)
+func (o TessellationDomainOriginOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+	createInfo := (*C.VkPipelineTessellationDomainOriginStateCreateInfoKHR)(cDataPointer)
 	return createInfo.pNext, nil
 }
 

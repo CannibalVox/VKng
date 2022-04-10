@@ -46,7 +46,7 @@ func (o DedicatedAllocationOptions) PopulateCPointer(allocator *cgoparam.Allocat
 	return preallocatedPointer, nil
 }
 
-func (o DedicatedAllocationOptions) PopulateOutData(cPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
-	createInfo := (*C.VkMemoryDedicatedAllocateInfo)(cPointer)
+func (o DedicatedAllocationOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+	createInfo := (*C.VkMemoryDedicatedAllocateInfo)(cDataPointer)
 	return createInfo.pNext, nil
 }

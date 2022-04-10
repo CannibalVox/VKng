@@ -196,9 +196,6 @@ func TestVulkanSwapchain_Images(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	swapchainDriver.EXPECT().CreateImage(image1.Handle(), device.Handle()).Return(image1)
-	swapchainDriver.EXPECT().CreateImage(image2.Handle(), device.Handle()).Return(image2)
-
 	images, _, err := swapchain.Images()
 	require.NoError(t, err)
 	require.Len(t, images, 2)
@@ -285,11 +282,6 @@ func TestVulkanSwapchain_Images_Incomplete(t *testing.T) {
 
 			return core1_0.VKSuccess, nil
 		})
-
-	swapchainDriver.EXPECT().CreateImage(image1.Handle(), device.Handle()).Return(image1)
-
-	swapchainDriver.EXPECT().CreateImage(image1.Handle(), device.Handle()).Return(image1)
-	swapchainDriver.EXPECT().CreateImage(image2.Handle(), device.Handle()).Return(image2)
 
 	images, _, err := swapchain.Images()
 	require.NoError(t, err)

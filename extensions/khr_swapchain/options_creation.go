@@ -94,7 +94,7 @@ func (o CreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, prealloca
 	return preallocatedPointer, nil
 }
 
-func (o CreateOptions) PopulateOutData(cDataPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
+func (o CreateOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	createInfo := (*C.VkSwapchainCreateInfoKHR)(cDataPointer)
 	return createInfo.pNext, nil
 }

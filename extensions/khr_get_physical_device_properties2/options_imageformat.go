@@ -37,7 +37,7 @@ func (o ImageFormatOptions) PopulateCPointer(allocator *cgoparam.Allocator, prea
 	return preallocatedPointer, nil
 }
 
-func (o ImageFormatOptions) PopulateOutData(cDataPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
+func (o ImageFormatOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	info := (*C.VkPhysicalDeviceImageFormatInfo2KHR)(cDataPointer)
 	return info.pNext, nil
 }

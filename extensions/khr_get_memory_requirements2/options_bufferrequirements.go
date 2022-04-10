@@ -31,7 +31,7 @@ func (o BufferRequirementsOptions) PopulateCPointer(allocator *cgoparam.Allocato
 	return preallocatedPointer, nil
 }
 
-func (o BufferRequirementsOptions) PopulateOutData(cPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
-	options := (*C.VkBufferMemoryRequirementsInfo2KHR)(cPointer)
+func (o BufferRequirementsOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+	options := (*C.VkBufferMemoryRequirementsInfo2KHR)(cDataPointer)
 	return options.pNext, nil
 }

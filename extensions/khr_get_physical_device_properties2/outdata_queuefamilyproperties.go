@@ -30,7 +30,7 @@ func (o *QueueFamilyOutData) PopulateCPointer(allocator *cgoparam.Allocator, pre
 	return preallocatedPointer, nil
 }
 
-func (o *QueueFamilyOutData) PopulateOutData(cDataPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
+func (o *QueueFamilyOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	data := (*C.VkQueueFamilyProperties2KHR)(cDataPointer)
 
 	o.QueueFamily.Flags = common.QueueFlags(data.queueFamilyProperties.queueFlags)

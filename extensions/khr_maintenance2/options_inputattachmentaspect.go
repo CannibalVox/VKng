@@ -42,8 +42,8 @@ func (o InputAttachmentAspectOptions) PopulateCPointer(allocator *cgoparam.Alloc
 	return preallocatedPointer, nil
 }
 
-func (o InputAttachmentAspectOptions) PopulateOutData(cPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
-	createInfo := (*C.VkRenderPassInputAttachmentAspectCreateInfoKHR)(cPointer)
+func (o InputAttachmentAspectOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+	createInfo := (*C.VkRenderPassInputAttachmentAspectCreateInfoKHR)(cDataPointer)
 	return createInfo.pNext, nil
 }
 

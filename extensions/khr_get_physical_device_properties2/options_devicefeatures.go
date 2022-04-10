@@ -31,7 +31,7 @@ func (o DeviceFeatureOptions) PopulateCPointer(allocator *cgoparam.Allocator, pr
 	return preallocatedPointer, err
 }
 
-func (o DeviceFeatureOptions) PopulateOutData(cDataPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
+func (o DeviceFeatureOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	data := (*C.VkPhysicalDeviceFeatures2KHR)(cDataPointer)
 
 	return data.pNext, nil

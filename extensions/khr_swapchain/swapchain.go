@@ -8,6 +8,7 @@ package khr_swapchain
 */
 import "C"
 import (
+	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/common"
 	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/VKng/core/driver"
@@ -69,9 +70,8 @@ func (s *vulkanSwapchain) attemptImages() ([]core1_0.Image, common.VkResult, err
 
 	imagesSlice := ([]driver.VkImage)(unsafe.Slice(imagesPtr, imageCount))
 	var result []core1_0.Image
-	deviceHandle := (driver.VkDevice)(unsafe.Pointer(s.device))
 	for i := 0; i < imageCount; i++ {
-		image := s.driver.CreateImage(imagesSlice[i], deviceHandle)
+		image := core.CreateImage(s.coreDriver, s.device, imagesSlice[i], s.minimumAPIVersion)
 		result = append(result, image)
 	}
 

@@ -30,7 +30,7 @@ func (o *FeaturesOutData) PopulateCPointer(allocator *cgoparam.Allocator, preall
 	return preallocatedPointer, nil
 }
 
-func (o *FeaturesOutData) PopulateOutData(cDataPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
+func (o *FeaturesOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	data := (*C.VkPhysicalDeviceFeatures2KHR)(cDataPointer)
 
 	(&o.Features).PopulateFromCPointer(unsafe.Pointer(&data.features))

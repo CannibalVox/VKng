@@ -30,8 +30,8 @@ func (o *SparseImageRequirementsOutData) PopulateCPointer(allocator *cgoparam.Al
 	return preallocatedPointer, nil
 }
 
-func (o *SparseImageRequirementsOutData) PopulateOutData(cPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
-	outData := (*C.VkSparseImageMemoryRequirements2KHR)(cPointer)
+func (o *SparseImageRequirementsOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+	outData := (*C.VkSparseImageMemoryRequirements2KHR)(cDataPointer)
 	o.MemoryRequirements.FormatProperties.Flags = common.SparseImageFormatFlags(outData.memoryRequirements.formatProperties.flags)
 	o.MemoryRequirements.FormatProperties.ImageGranularity = common.Extent3D{
 		Width:  int(outData.memoryRequirements.formatProperties.imageGranularity.width),

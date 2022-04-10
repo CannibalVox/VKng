@@ -35,7 +35,7 @@ func (o BindBufferMemoryOptions) PopulateCPointer(allocator *cgoparam.Allocator,
 	return preallocatedPointer, nil
 }
 
-func (o BindBufferMemoryOptions) PopulateOutData(cPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
-	createInfo := (*C.VkBindBufferMemoryInfoKHR)(cPointer)
+func (o BindBufferMemoryOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+	createInfo := (*C.VkBindBufferMemoryInfoKHR)(cDataPointer)
 	return createInfo.pNext, nil
 }

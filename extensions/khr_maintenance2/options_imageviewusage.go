@@ -30,8 +30,8 @@ func (o ImageViewUsageOptions) PopulateCPointer(allocator *cgoparam.Allocator, p
 	return preallocatedPointer, nil
 }
 
-func (o ImageViewUsageOptions) PopulateOutData(cPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
-	createInfo := (*C.VkImageViewUsageCreateInfoKHR)(cPointer)
+func (o ImageViewUsageOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+	createInfo := (*C.VkImageViewUsageCreateInfoKHR)(cDataPointer)
 	return createInfo.pNext, nil
 }
 

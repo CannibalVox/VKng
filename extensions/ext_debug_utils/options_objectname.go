@@ -34,7 +34,7 @@ func (i ObjectNameOptions) PopulateCPointer(allocator *cgoparam.Allocator, preal
 	return preallocatedPointer, nil
 }
 
-func (i ObjectNameOptions) PopulateOutData(cDataPointer unsafe.Pointer) (next unsafe.Pointer, err error) {
+func (i ObjectNameOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	objectNameInfo := (*C.VkDebugUtilsObjectNameInfoEXT)(cDataPointer)
 	return objectNameInfo.pNext, nil
 }
