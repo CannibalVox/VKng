@@ -62,9 +62,9 @@ func (mr *MockExtensionMockRecorder) CmdSetDeviceMask(commandBuffer, deviceMask 
 }
 
 // GetDeviceGroupPeerMemoryFeatures mocks base method.
-func (m *MockExtension) GetDeviceGroupPeerMemoryFeatures(device core1_0.Device, heapIndex, localDeviceIndex, remoteDeviceIndex int) khr_device_group.PeerMemoryFeatures {
+func (m *MockExtension) DeviceGroupPeerMemoryFeatures(device core1_0.Device, heapIndex, localDeviceIndex, remoteDeviceIndex int) khr_device_group.PeerMemoryFeatures {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetDeviceGroupPeerMemoryFeatures", device, heapIndex, localDeviceIndex, remoteDeviceIndex)
+	ret := m.ctrl.Call(m, "DeviceGroupPeerMemoryFeatures", device, heapIndex, localDeviceIndex, remoteDeviceIndex)
 	ret0, _ := ret[0].(khr_device_group.PeerMemoryFeatures)
 	return ret0
 }
@@ -72,7 +72,7 @@ func (m *MockExtension) GetDeviceGroupPeerMemoryFeatures(device core1_0.Device, 
 // GetDeviceGroupPeerMemoryFeatures indicates an expected call of GetDeviceGroupPeerMemoryFeatures.
 func (mr *MockExtensionMockRecorder) GetDeviceGroupPeerMemoryFeatures(device, heapIndex, localDeviceIndex, remoteDeviceIndex interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetDeviceGroupPeerMemoryFeatures", reflect.TypeOf((*MockExtension)(nil).GetDeviceGroupPeerMemoryFeatures), device, heapIndex, localDeviceIndex, remoteDeviceIndex)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeviceGroupPeerMemoryFeatures", reflect.TypeOf((*MockExtension)(nil).DeviceGroupPeerMemoryFeatures), device, heapIndex, localDeviceIndex, remoteDeviceIndex)
 }
 
 // WithKHRSurface mocks base method.
@@ -127,9 +127,9 @@ func (m *MockExtensionWithKHRSurface) EXPECT() *MockExtensionWithKHRSurfaceMockR
 }
 
 // GetDeviceGroupPresentCapabilities mocks base method.
-func (m *MockExtensionWithKHRSurface) GetDeviceGroupPresentCapabilities(device core1_0.Device, outData *khr_device_group.DeviceGroupPresentCapabilitiesOutData) (common.VkResult, error) {
+func (m *MockExtensionWithKHRSurface) DeviceGroupPresentCapabilities(device core1_0.Device, outData *khr_device_group.DeviceGroupPresentCapabilitiesOutData) (common.VkResult, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetDeviceGroupPresentCapabilities", device, outData)
+	ret := m.ctrl.Call(m, "DeviceGroupPresentCapabilities", device, outData)
 	ret0, _ := ret[0].(common.VkResult)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
@@ -138,13 +138,13 @@ func (m *MockExtensionWithKHRSurface) GetDeviceGroupPresentCapabilities(device c
 // GetDeviceGroupPresentCapabilities indicates an expected call of GetDeviceGroupPresentCapabilities.
 func (mr *MockExtensionWithKHRSurfaceMockRecorder) GetDeviceGroupPresentCapabilities(device, outData interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetDeviceGroupPresentCapabilities", reflect.TypeOf((*MockExtensionWithKHRSurface)(nil).GetDeviceGroupPresentCapabilities), device, outData)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeviceGroupPresentCapabilities", reflect.TypeOf((*MockExtensionWithKHRSurface)(nil).DeviceGroupPresentCapabilities), device, outData)
 }
 
 // GetDeviceGroupSurfacePresentModes mocks base method.
-func (m *MockExtensionWithKHRSurface) GetDeviceGroupSurfacePresentModes(device core1_0.Device, surface khr_surface.Surface) (khr_device_group.DeviceGroupPresentModeFlags, common.VkResult, error) {
+func (m *MockExtensionWithKHRSurface) DeviceGroupSurfacePresentModes(device core1_0.Device, surface khr_surface.Surface) (khr_device_group.DeviceGroupPresentModeFlags, common.VkResult, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetDeviceGroupSurfacePresentModes", device, surface)
+	ret := m.ctrl.Call(m, "DeviceGroupSurfacePresentModes", device, surface)
 	ret0, _ := ret[0].(khr_device_group.DeviceGroupPresentModeFlags)
 	ret1, _ := ret[1].(common.VkResult)
 	ret2, _ := ret[2].(error)
@@ -154,13 +154,13 @@ func (m *MockExtensionWithKHRSurface) GetDeviceGroupSurfacePresentModes(device c
 // GetDeviceGroupSurfacePresentModes indicates an expected call of GetDeviceGroupSurfacePresentModes.
 func (mr *MockExtensionWithKHRSurfaceMockRecorder) GetDeviceGroupSurfacePresentModes(device, surface interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetDeviceGroupSurfacePresentModes", reflect.TypeOf((*MockExtensionWithKHRSurface)(nil).GetDeviceGroupSurfacePresentModes), device, surface)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeviceGroupSurfacePresentModes", reflect.TypeOf((*MockExtensionWithKHRSurface)(nil).DeviceGroupSurfacePresentModes), device, surface)
 }
 
 // GetPhysicalDevicePresentRectangles mocks base method.
-func (m *MockExtensionWithKHRSurface) GetPhysicalDevicePresentRectangles(physicalDevice core1_0.PhysicalDevice, surface khr_surface.Surface) ([]common.Rect2D, common.VkResult, error) {
+func (m *MockExtensionWithKHRSurface) PhysicalDevicePresentRectangles(physicalDevice core1_0.PhysicalDevice, surface khr_surface.Surface) ([]common.Rect2D, common.VkResult, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetPhysicalDevicePresentRectangles", physicalDevice, surface)
+	ret := m.ctrl.Call(m, "PhysicalDevicePresentRectangles", physicalDevice, surface)
 	ret0, _ := ret[0].([]common.Rect2D)
 	ret1, _ := ret[1].(common.VkResult)
 	ret2, _ := ret[2].(error)
@@ -170,7 +170,7 @@ func (m *MockExtensionWithKHRSurface) GetPhysicalDevicePresentRectangles(physica
 // GetPhysicalDevicePresentRectangles indicates an expected call of GetPhysicalDevicePresentRectangles.
 func (mr *MockExtensionWithKHRSurfaceMockRecorder) GetPhysicalDevicePresentRectangles(physicalDevice, surface interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPhysicalDevicePresentRectangles", reflect.TypeOf((*MockExtensionWithKHRSurface)(nil).GetPhysicalDevicePresentRectangles), physicalDevice, surface)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PhysicalDevicePresentRectangles", reflect.TypeOf((*MockExtensionWithKHRSurface)(nil).PhysicalDevicePresentRectangles), physicalDevice, surface)
 }
 
 // MockExtensionWithKHRSwapchain is a mock of ExtensionWithKHRSwapchain interface.

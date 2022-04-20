@@ -92,7 +92,7 @@ func TestVulkanExtension_GetDeviceGroupPeerMemoryFeatures(t *testing.T) {
 		*pPeerMemoryFeatures = khr_device_group_driver.VkPeerMemoryFeatureFlagsKHR(1) // VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT_KHR
 	})
 
-	features := extension.GetDeviceGroupPeerMemoryFeatures(
+	features := extension.DeviceGroupPeerMemoryFeatures(
 		device,
 		1, 3, 5,
 	)
@@ -158,7 +158,7 @@ func TestVulkanExtensionWithKHRSurface_GetDeviceGroupPresentCapabilities(t *test
 	})
 
 	var outData khr_device_group.DeviceGroupPresentCapabilitiesOutData
-	_, err := extension.WithKHRSurface().GetDeviceGroupPresentCapabilities(
+	_, err := extension.WithKHRSurface().DeviceGroupPresentCapabilities(
 		device,
 		&outData,
 	)
@@ -194,7 +194,7 @@ func TestVulkanExtensionWithKHRSurface_GetDeviceGroupSurfacePresentModes(t *test
 		return core1_0.VKSuccess, nil
 	})
 
-	modes, _, err := extension.WithKHRSurface().GetDeviceGroupSurfacePresentModes(device, surface)
+	modes, _, err := extension.WithKHRSurface().DeviceGroupSurfacePresentModes(device, surface)
 	require.NoError(t, err)
 	require.Equal(t, khr_device_group.DeviceGroupPresentModeSum, modes)
 }
@@ -263,7 +263,7 @@ func TestVulkanExtensionWithKHRSurface_GetPhysicalDevicePresentRectangles(t *tes
 		return core1_0.VKSuccess, nil
 	})
 
-	rects, _, err := extension.WithKHRSurface().GetPhysicalDevicePresentRectangles(physicalDevice, surface)
+	rects, _, err := extension.WithKHRSurface().PhysicalDevicePresentRectangles(physicalDevice, surface)
 	require.NoError(t, err)
 	require.Equal(t, []common.Rect2D{
 		{
@@ -390,7 +390,7 @@ func TestVulkanExtensionWithKHRSurface_GetPhysicalDevicePresentRectangles_Incomp
 		return core1_0.VKSuccess, nil
 	})
 
-	rects, _, err := extension.WithKHRSurface().GetPhysicalDevicePresentRectangles(physicalDevice, surface)
+	rects, _, err := extension.WithKHRSurface().PhysicalDevicePresentRectangles(physicalDevice, surface)
 	require.NoError(t, err)
 	require.Equal(t, []common.Rect2D{
 		{

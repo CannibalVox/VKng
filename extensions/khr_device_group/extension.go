@@ -63,7 +63,7 @@ func (v *VulkanExtension) CmdSetDeviceMask(commandBuffer core1_0.CommandBuffer, 
 	v.driver.VkCmdSetDeviceMaskKHR(commandBuffer.Handle(), driver.Uint32(deviceMask))
 }
 
-func (v *VulkanExtension) GetDeviceGroupPeerMemoryFeatures(device core1_0.Device, heapIndex, localDeviceIndex, remoteDeviceIndex int) PeerMemoryFeatures {
+func (v *VulkanExtension) DeviceGroupPeerMemoryFeatures(device core1_0.Device, heapIndex, localDeviceIndex, remoteDeviceIndex int) PeerMemoryFeatures {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -84,7 +84,7 @@ type VulkanExtensionWithKHRSurface struct {
 	driver khr_device_group_driver.Driver
 }
 
-func (v *VulkanExtensionWithKHRSurface) GetDeviceGroupPresentCapabilities(device core1_0.Device, outData *DeviceGroupPresentCapabilitiesOutData) (common.VkResult, error) {
+func (v *VulkanExtensionWithKHRSurface) DeviceGroupPresentCapabilities(device core1_0.Device, outData *DeviceGroupPresentCapabilitiesOutData) (common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -109,7 +109,7 @@ func (v *VulkanExtensionWithKHRSurface) GetDeviceGroupPresentCapabilities(device
 	return res, nil
 }
 
-func (v *VulkanExtensionWithKHRSurface) GetDeviceGroupSurfacePresentModes(device core1_0.Device, surface khr_surface.Surface) (DeviceGroupPresentModeFlags, common.VkResult, error) {
+func (v *VulkanExtensionWithKHRSurface) DeviceGroupSurfacePresentModes(device core1_0.Device, surface khr_surface.Surface) (DeviceGroupPresentModeFlags, common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -171,7 +171,7 @@ func (v *VulkanExtensionWithKHRSurface) attemptGetPhysicalDevicePresentRectangle
 	return outRects, res, nil
 }
 
-func (v *VulkanExtensionWithKHRSurface) GetPhysicalDevicePresentRectangles(physicalDevice core1_0.PhysicalDevice, surface khr_surface.Surface) ([]common.Rect2D, common.VkResult, error) {
+func (v *VulkanExtensionWithKHRSurface) PhysicalDevicePresentRectangles(physicalDevice core1_0.PhysicalDevice, surface khr_surface.Surface) ([]common.Rect2D, common.VkResult, error) {
 	var outData []common.Rect2D
 	var result common.VkResult
 	var err error
