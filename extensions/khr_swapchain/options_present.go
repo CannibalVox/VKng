@@ -32,7 +32,7 @@ func (o PresentOptions) PopulateCPointer(allocator *cgoparam.Allocator, prealloc
 		preallocatedPointer = allocator.Malloc(C.sizeof_struct_VkPresentInfoKHR)
 	}
 	if len(o.Swapchains) != len(o.ImageIndices) {
-		return nil, errors.Newf("present: specified %d swapchains and %d image indices, but they should match")
+		return nil, errors.Newf("present: specified %d swapchains and %d image indices, but they should match", len(o.Swapchains), len(o.ImageIndices))
 	}
 
 	createInfo := (*C.VkPresentInfoKHR)(preallocatedPointer)

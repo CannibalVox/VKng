@@ -14,3 +14,7 @@ const (
 
 	MemoryHeapMultiInstance common.MemoryHeapFlags = C.VK_MEMORY_HEAP_MULTI_INSTANCE_BIT_KHR
 )
+
+func init() {
+	MemoryHeapMultiInstance.Register("Multi-Instance")
+}
