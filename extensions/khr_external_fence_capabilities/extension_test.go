@@ -101,9 +101,14 @@ func TestPhysicalDeviceIDOutData(t *testing.T) {
 				*(*byte)(unsafe.Pointer(val.FieldByName("driverUUID").Index(i).UnsafeAddr())) = driverUUID[i]
 			}
 
-			for i := 0; i < 8; i++ {
-				*(*byte)(unsafe.Pointer(val.FieldByName("deviceLUID").Index(i).UnsafeAddr())) = byte(i + 1)
-			}
+			*(*byte)(unsafe.Pointer(val.FieldByName("deviceLUID").Index(0).UnsafeAddr())) = byte(0xef)
+			*(*byte)(unsafe.Pointer(val.FieldByName("deviceLUID").Index(1).UnsafeAddr())) = byte(0xbe)
+			*(*byte)(unsafe.Pointer(val.FieldByName("deviceLUID").Index(2).UnsafeAddr())) = byte(0xad)
+			*(*byte)(unsafe.Pointer(val.FieldByName("deviceLUID").Index(3).UnsafeAddr())) = byte(0xde)
+			*(*byte)(unsafe.Pointer(val.FieldByName("deviceLUID").Index(4).UnsafeAddr())) = byte(0xef)
+			*(*byte)(unsafe.Pointer(val.FieldByName("deviceLUID").Index(5).UnsafeAddr())) = byte(0xbe)
+			*(*byte)(unsafe.Pointer(val.FieldByName("deviceLUID").Index(6).UnsafeAddr())) = byte(0xad)
+			*(*byte)(unsafe.Pointer(val.FieldByName("deviceLUID").Index(7).UnsafeAddr())) = byte(0xde)
 
 			*(*uint32)(unsafe.Pointer(val.FieldByName("deviceNodeMask").UnsafeAddr())) = uint32(7)
 			*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("deviceLUIDValid").UnsafeAddr())) = driver.VkBool32(1)
@@ -121,7 +126,7 @@ func TestPhysicalDeviceIDOutData(t *testing.T) {
 	require.Equal(t, khr_external_fence_capabilities.PhysicalDeviceIDOutData{
 		DeviceUUID:      deviceUUID,
 		DriverUUID:      driverUUID,
-		DeviceLUID:      [8]byte{1, 2, 3, 4, 5, 6, 7, 8},
+		DeviceLUID:      0xdeadbeefdeadbeef,
 		DeviceNodeMask:  7,
 		DeviceLUIDValid: true,
 	}, outData)

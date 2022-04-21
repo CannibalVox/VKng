@@ -16,7 +16,7 @@ import (
 type PhysicalDeviceIDOutData struct {
 	DeviceUUID      uuid.UUID
 	DriverUUID      uuid.UUID
-	DeviceLUID      [LUIDSize]byte
+	DeviceLUID      uint64
 	DeviceNodeMask  uint32
 	DeviceLUIDValid bool
 
@@ -49,10 +49,7 @@ func (o *PhysicalDeviceIDOutData) PopulateOutData(cDataPointer unsafe.Pointer, h
 		return nil, errors.Wrap(err, "vulkan provided invalid driver uuid")
 	}
 
-	for i := 0; i < LUIDSize; i++ {
-		o.DeviceLUID[i] = byte(info.deviceLUID[i])
-	}
-
+	o.DeviceLUID = *(*uint64)(unsafe.Pointer(&info.deviceLUID[0]))
 	o.DeviceNodeMask = uint32(info.deviceNodeMask)
 	o.DeviceLUIDValid = info.deviceLUIDValid != C.VkBool32(0)
 
