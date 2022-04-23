@@ -94,7 +94,7 @@ func TestVulkanExtension_PhysicalDeviceFeatures(t *testing.T) {
 
 		})
 
-	outData := &khr_get_physical_device_properties2.FeaturesOutData{}
+	outData := &khr_get_physical_device_properties2.DeviceFeaturesOutData{}
 	err := extension.PhysicalDeviceFeatures(physicalDevice, outData)
 	require.NoError(t, err)
 
@@ -264,14 +264,14 @@ func TestVulkanDevice_CreateDeviceWithFeatures(t *testing.T) {
 		})
 
 	options := core1_0.DeviceOptions{
-		QueueFamilies: []core1_0.QueueFamilyOptions{
+		QueueFamilies: []core1_0.DeviceQueueOptions{
 			{
-				QueueFamilyIndex: 1,
-				QueuePriorities:  []float32{3, 5, 7},
+				QueueFamilyIndex:       1,
+				CreatedQueuePriorities: []float32{3, 5, 7},
 			},
 			{
-				QueueFamilyIndex: 11,
-				QueuePriorities:  []float32{13},
+				QueueFamilyIndex:       11,
+				CreatedQueuePriorities: []float32{13},
 			},
 		},
 		ExtensionNames: []string{"a", "b"},

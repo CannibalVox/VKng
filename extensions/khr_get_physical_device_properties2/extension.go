@@ -30,7 +30,7 @@ func CreateExtensionFromDriver(driver ext_driver.Driver) *VulkanExtension {
 	}
 }
 
-func (e *VulkanExtension) PhysicalDeviceFeatures(physicalDevice core1_0.PhysicalDevice, out *FeaturesOutData) error {
+func (e *VulkanExtension) PhysicalDeviceFeatures(physicalDevice core1_0.PhysicalDevice, out *DeviceFeaturesOutData) error {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 

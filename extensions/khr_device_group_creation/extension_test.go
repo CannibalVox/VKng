@@ -350,9 +350,9 @@ func TestDeviceGroupOptions(t *testing.T) {
 	})
 
 	device, _, err := loader.CreateDevice(physicalDevice1, nil, core1_0.DeviceOptions{
-		QueueFamilies: []core1_0.QueueFamilyOptions{
+		QueueFamilies: []core1_0.DeviceQueueOptions{
 			{
-				QueuePriorities: []float32{0},
+				CreatedQueuePriorities: []float32{0},
 			},
 		},
 		HaveNext: common.HaveNext{Next: khr_device_group_creation.DeviceGroupOptions{

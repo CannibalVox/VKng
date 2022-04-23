@@ -72,6 +72,7 @@ func (s *vulkanSwapchain) attemptImages() ([]core1_0.Image, common.VkResult, err
 	var result []core1_0.Image
 	for i := 0; i < imageCount; i++ {
 		image := core.CreateImage(s.coreDriver, s.device, imagesSlice[i], s.minimumAPIVersion)
+		s.coreDriver.ObjectStore().SetParent(driver.VulkanHandle(s.handle), driver.VulkanHandle(imagesSlice[i]))
 		result = append(result, image)
 	}
 
