@@ -36,9 +36,9 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 }
 
 // PhysicalDeviceExternalFenceProperties mocks base method.
-func (m *MockExtension) PhysicalDeviceExternalFenceProperties(physicalDevice core1_0.PhysicalDevice, o khr_external_fence_capabilities.PhysicalDeviceExternalFenceOptions, outData *khr_external_fence_capabilities.ExternalFencePropertiesOutData) error {
+func (m *MockExtension) ExternalFenceProperties(physicalDevice core1_0.PhysicalDevice, o khr_external_fence_capabilities.ExternalFencePropertiesOptions, outData *khr_external_fence_capabilities.ExternalFencePropertiesOutData) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PhysicalDeviceExternalFenceProperties", physicalDevice, o, outData)
+	ret := m.ctrl.Call(m, "ExternalFenceProperties", physicalDevice, o, outData)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
@@ -46,5 +46,5 @@ func (m *MockExtension) PhysicalDeviceExternalFenceProperties(physicalDevice cor
 // PhysicalDeviceExternalFenceProperties indicates an expected call of PhysicalDeviceExternalFenceProperties.
 func (mr *MockExtensionMockRecorder) PhysicalDeviceExternalFenceProperties(physicalDevice, o, outData interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PhysicalDeviceExternalFenceProperties", reflect.TypeOf((*MockExtension)(nil).PhysicalDeviceExternalFenceProperties), physicalDevice, o, outData)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExternalFenceProperties", reflect.TypeOf((*MockExtension)(nil).ExternalFenceProperties), physicalDevice, o, outData)
 }

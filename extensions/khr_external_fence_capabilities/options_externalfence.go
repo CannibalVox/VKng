@@ -11,13 +11,13 @@ import (
 	"unsafe"
 )
 
-type PhysicalDeviceExternalFenceOptions struct {
+type ExternalFencePropertiesOptions struct {
 	HandleType ExternalFenceHandleTypes
 
 	common.HaveNext
 }
 
-func (o PhysicalDeviceExternalFenceOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o ExternalFencePropertiesOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceExternalFenceInfoKHR{})))
 	}
@@ -29,7 +29,7 @@ func (o PhysicalDeviceExternalFenceOptions) PopulateCPointer(allocator *cgoparam
 	return preallocatedPointer, nil
 }
 
-func (o PhysicalDeviceExternalFenceOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o ExternalFencePropertiesOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	info := (*C.VkPhysicalDeviceExternalFenceInfoKHR)(cDataPointer)
 	return info.pNext, nil
 }

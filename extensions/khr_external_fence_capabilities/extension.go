@@ -21,7 +21,7 @@ func CreateExtensionFromDriver(driver khr_external_fence_capabilities_driver.Dri
 	}
 }
 
-func (e *VulkanExtension) PhysicalDeviceExternalFenceProperties(physicalDevice core1_0.PhysicalDevice, o PhysicalDeviceExternalFenceOptions, outData *ExternalFencePropertiesOutData) error {
+func (e *VulkanExtension) ExternalFenceProperties(physicalDevice core1_0.PhysicalDevice, o ExternalFencePropertiesOptions, outData *ExternalFencePropertiesOutData) error {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 

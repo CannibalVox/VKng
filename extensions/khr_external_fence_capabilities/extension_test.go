@@ -49,9 +49,9 @@ func TestVulkanExtension_PhysicalDeviceExternalFenceProperties(t *testing.T) {
 	})
 
 	var outData khr_external_fence_capabilities.ExternalFencePropertiesOutData
-	err := extension.PhysicalDeviceExternalFenceProperties(
+	err := extension.ExternalFenceProperties(
 		physicalDevice,
-		khr_external_fence_capabilities.PhysicalDeviceExternalFenceOptions{
+		khr_external_fence_capabilities.ExternalFencePropertiesOptions{
 			HandleType: khr_external_fence_capabilities.ExternalFenceHandleTypeOpaqueWin32KMT,
 		},
 		&outData,
