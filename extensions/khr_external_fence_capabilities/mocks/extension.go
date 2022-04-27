@@ -36,7 +36,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 }
 
 // PhysicalDeviceExternalFenceProperties mocks base method.
-func (m *MockExtension) ExternalFenceProperties(physicalDevice core1_0.PhysicalDevice, o khr_external_fence_capabilities.ExternalFencePropertiesOptions, outData *khr_external_fence_capabilities.ExternalFencePropertiesOutData) error {
+func (m *MockExtension) ExternalFenceProperties(physicalDevice core1_0.PhysicalDevice, o khr_external_fence_capabilities.ExternalFencePropertiesOptions, outData *khr_external_fence_capabilities.ExternalFenceOutData) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ExternalFenceProperties", physicalDevice, o, outData)
 	ret0, _ := ret[0].(error)

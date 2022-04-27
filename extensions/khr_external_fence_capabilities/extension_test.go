@@ -48,7 +48,7 @@ func TestVulkanExtension_PhysicalDeviceExternalFenceProperties(t *testing.T) {
 		*(*uint32)(unsafe.Pointer(val.FieldByName("externalFenceFeatures").UnsafeAddr())) = uint32(1)         // VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT_KHR
 	})
 
-	var outData khr_external_fence_capabilities.ExternalFencePropertiesOutData
+	var outData khr_external_fence_capabilities.ExternalFenceOutData
 	err := extension.ExternalFenceProperties(
 		physicalDevice,
 		khr_external_fence_capabilities.ExternalFencePropertiesOptions{
@@ -57,7 +57,7 @@ func TestVulkanExtension_PhysicalDeviceExternalFenceProperties(t *testing.T) {
 		&outData,
 	)
 	require.NoError(t, err)
-	require.Equal(t, khr_external_fence_capabilities.ExternalFencePropertiesOutData{
+	require.Equal(t, khr_external_fence_capabilities.ExternalFenceOutData{
 		ExportFromImportedHandleTypes: khr_external_fence_capabilities.ExternalFenceHandleTypeSyncFD,
 		CompatibleHandleTypes:         khr_external_fence_capabilities.ExternalFenceHandleTypeOpaqueWin32KMT,
 		ExternalFenceFeatures:         khr_external_fence_capabilities.ExternalFenceFeatureExportable,
