@@ -497,7 +497,7 @@ func TestMemoryAllocateFlagsOptions(t *testing.T) {
 		})
 
 	memory, _, err := loader.AllocateMemory(device, nil,
-		core1_0.DeviceMemoryOptions{
+		core1_0.MemoryAllocateOptions{
 			AllocationSize:  1,
 			MemoryTypeIndex: 3,
 			HaveNext: common.HaveNext{Next: khr_device_group.MemoryAllocateFlagsOptions{

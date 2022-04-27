@@ -184,7 +184,7 @@ func TestMemoryDedicatedAllocateOptions(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	memory, _, err := loader.AllocateMemory(device, nil, core1_0.DeviceMemoryOptions{
+	memory, _, err := loader.AllocateMemory(device, nil, core1_0.MemoryAllocateOptions{
 		AllocationSize:  1,
 		MemoryTypeIndex: 3,
 		HaveNext: common.HaveNext{Next: khr_dedicated_allocation.DedicatedAllocationOptions{
