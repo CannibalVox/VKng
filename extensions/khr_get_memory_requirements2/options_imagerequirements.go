@@ -12,13 +12,13 @@ import (
 	"unsafe"
 )
 
-type ImageRequirementsOptions struct {
+type ImageMemoryRequirementsOptions struct {
 	Image core1_0.Image
 
 	common.HaveNext
 }
 
-func (o ImageRequirementsOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o ImageMemoryRequirementsOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkImageMemoryRequirementsInfo2KHR{})))
 	}
@@ -31,7 +31,7 @@ func (o ImageRequirementsOptions) PopulateCPointer(allocator *cgoparam.Allocator
 	return preallocatedPointer, nil
 }
 
-func (o ImageRequirementsOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o ImageMemoryRequirementsOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	options := (*C.VkImageMemoryRequirementsInfo2KHR)(cDataPointer)
 	return options.pNext, nil
 }

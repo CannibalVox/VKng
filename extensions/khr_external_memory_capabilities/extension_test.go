@@ -125,7 +125,7 @@ func TestExternalImageFormatOptions(t *testing.T) {
 	_, err := extension.PhysicalDeviceImageFormatProperties(
 		physicalDevice,
 		khr_get_physical_device_properties2.ImageFormatOptions{
-			Format: core1_0.DataFormatA2B10G10R10UnsignedInt,
+			Format: core1_0.DataFormatA2B10G10R10UnsignedIntPacked,
 			HaveNext: common.HaveNext{
 				khr_external_memory_capabilities.ExternalImageFormatOptions{
 					HandleType: khr_external_memory_capabilities.ExternalMemoryHandleTypeOpaqueFD,

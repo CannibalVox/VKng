@@ -121,7 +121,7 @@ func TestDedicatedMemoryRequirementsOutData_Image(t *testing.T) {
 		HaveNext: common.HaveNext{Next: &memReqs},
 	}
 	err := extension.ImageMemoryRequirements(device,
-		khr_get_memory_requirements2.ImageRequirementsOptions{
+		khr_get_memory_requirements2.ImageMemoryRequirementsOptions{
 			Image: image,
 		}, &outData)
 	require.NoError(t, err)

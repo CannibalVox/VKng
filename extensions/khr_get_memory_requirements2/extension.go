@@ -52,7 +52,7 @@ func (e *VulkanExtension) BufferMemoryRequirements(device core1_0.Device, o Buff
 	return common.PopulateOutData(out, outDataPtr)
 }
 
-func (e *VulkanExtension) ImageMemoryRequirements(device core1_0.Device, o ImageRequirementsOptions, out *MemoryRequirementsOutData) error {
+func (e *VulkanExtension) ImageMemoryRequirements(device core1_0.Device, o ImageMemoryRequirementsOptions, out *MemoryRequirementsOutData) error {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 

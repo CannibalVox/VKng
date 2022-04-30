@@ -98,7 +98,7 @@ func TestVulkanExtension_ImageMemoryRequirements(t *testing.T) {
 
 	var outData khr_get_memory_requirements2.MemoryRequirementsOutData
 	err := extension.ImageMemoryRequirements(device,
-		khr_get_memory_requirements2.ImageRequirementsOptions{
+		khr_get_memory_requirements2.ImageMemoryRequirementsOptions{
 			Image: image,
 		}, &outData)
 	require.NoError(t, err)

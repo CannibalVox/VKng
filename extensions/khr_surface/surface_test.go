@@ -276,7 +276,7 @@ func TestVulkanSurface_Formats(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, formats, 2)
 
-	require.Equal(t, core1_0.DataFormatA2B10G10R10UnsignedNormalized, formats[0].Format)
+	require.Equal(t, core1_0.DataFormatA2B10G10R10UnsignedNormalizedPacked, formats[0].Format)
 	require.Equal(t, khr_surface.ColorSpaceSRGBNonlinear, formats[0].ColorSpace)
 
 	require.Equal(t, core1_0.DataFormatASTC5x5_sRGB, formats[1].Format)
@@ -365,7 +365,7 @@ func TestVulkanSurface_Formats_Incomplete(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, formats, 2)
 
-	require.Equal(t, core1_0.DataFormatA2B10G10R10UnsignedNormalized, formats[0].Format)
+	require.Equal(t, core1_0.DataFormatA2B10G10R10UnsignedNormalizedPacked, formats[0].Format)
 	require.Equal(t, khr_surface.ColorSpaceSRGBNonlinear, formats[0].ColorSpace)
 
 	require.Equal(t, core1_0.DataFormatASTC5x5_sRGB, formats[1].Format)

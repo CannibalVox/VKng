@@ -75,7 +75,7 @@ func TestVulkanExtension_CreateSwapchain(t *testing.T) {
 	swapchain, _, err := extension.CreateSwapchain(device, nil, khr_swapchain.CreateOptions{
 		Surface:            surface,
 		MinImageCount:      1,
-		ImageFormat:        core1_0.DataFormatA2B10G10R10SignedScaled,
+		ImageFormat:        core1_0.DataFormatA2B10G10R10SignedScaledPacked,
 		ImageColorSpace:    khr_surface.ColorSpaceSRGBNonlinear,
 		ImageExtent:        common.Extent2D{Width: 3, Height: 5},
 		ImageArrayLayers:   7,

@@ -321,7 +321,7 @@ func TestVulkanExtension_PhysicalDeviceFormatProperties(t *testing.T) {
 
 	outData := khr_get_physical_device_properties2.FormatPropertiesOutData{}
 	err := extension.PhysicalDeviceFormatProperties(physicalDevice,
-		core1_0.DataFormatA2B10G10R10UnsignedNormalized,
+		core1_0.DataFormatA2B10G10R10UnsignedNormalizedPacked,
 		&outData)
 	require.NoError(t, err)
 
@@ -375,7 +375,7 @@ func TestVulkanExtension_PhysicalDeviceImageFormatProperties(t *testing.T) {
 
 	outData := khr_get_physical_device_properties2.ImageFormatOutData{}
 	_, err := extension.PhysicalDeviceImageFormatProperties(physicalDevice, khr_get_physical_device_properties2.ImageFormatOptions{
-		Format: core1_0.DataFormatA2B10G10R10UnsignedInt,
+		Format: core1_0.DataFormatA2B10G10R10UnsignedIntPacked,
 		Type:   core1_0.ImageType2D,
 		Tiling: core1_0.ImageTilingOptimal,
 		Usage:  core1_0.ImageUsageStorage,
@@ -679,7 +679,7 @@ func TestVulkanExtension_PhysicalDeviceSparseImageFormatProperties(t *testing.T)
 
 	outData, err := extension.PhysicalDeviceSparseImageFormatProperties(physicalDevice,
 		khr_get_physical_device_properties2.SparseImageFormatOptions{
-			Format:  core1_0.DataFormatA2B10G10R10UnsignedScaled,
+			Format:  core1_0.DataFormatA2B10G10R10UnsignedScaledPacked,
 			Type:    core1_0.ImageType3D,
 			Samples: core1_0.Samples32,
 			Usage:   core1_0.ImageUsageStorage,

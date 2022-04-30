@@ -50,7 +50,7 @@ func (mr *MockExtensionMockRecorder) BufferMemoryRequirements(device, o, out int
 }
 
 // ImageMemoryRequirements mocks base method.
-func (m *MockExtension) ImageMemoryRequirements(device core1_0.Device, o khr_get_memory_requirements2.ImageRequirementsOptions, out *khr_get_memory_requirements2.MemoryRequirementsOutData) error {
+func (m *MockExtension) ImageMemoryRequirements(device core1_0.Device, o khr_get_memory_requirements2.ImageMemoryRequirementsOptions, out *khr_get_memory_requirements2.MemoryRequirementsOutData) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ImageMemoryRequirements", device, o, out)
 	ret0, _ := ret[0].(error)

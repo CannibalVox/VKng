@@ -12,7 +12,7 @@ type VulkanExtension struct {
 	driver khr_descriptor_update_template_driver.Driver
 }
 
-func CreateExtensionFromInstance(device core1_0.Device) *VulkanExtension {
+func CreateExtensionFromDevice(device core1_0.Device) *VulkanExtension {
 	return &VulkanExtension{
 		driver: khr_descriptor_update_template_driver.CreateDriverFromCore(device.Driver()),
 	}
