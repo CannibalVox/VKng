@@ -3,7 +3,7 @@ module github.com/CannibalVox/VKng
 go 1.18
 
 require (
-	github.com/CannibalVox/cgoparam v0.0.0-20210911212540-41cbfa86f15d
+	github.com/CannibalVox/cgoparam v1.0.0
 	github.com/cockroachdb/errors v1.8.6
 	github.com/g3n/engine v0.2.0
 	github.com/go-gl/mathgl v1.0.0
