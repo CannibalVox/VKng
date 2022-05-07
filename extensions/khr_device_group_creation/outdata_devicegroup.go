@@ -61,9 +61,9 @@ func (o *DeviceGroupOutData) PopulateOutData(cPointer unsafe.Pointer, helpers ..
 			return nil, err
 		}
 
-		version := instance.APIVersion().Min(properties.APIVersion)
+		deviceVersion := instance.APIVersion().Min(properties.APIVersion)
 
-		o.PhysicalDevices[i] = core.CreatePhysicalDevice(instance.Driver(), instance.Handle(), handle, version)
+		o.PhysicalDevices[i] = core.CreatePhysicalDevice(instance.Driver(), instance.Handle(), handle, instance.APIVersion(), deviceVersion)
 	}
 
 	return createInfo.pNext, nil
