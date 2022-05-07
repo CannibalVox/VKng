@@ -37,9 +37,9 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 }
 
 // EnumeratePhysicalDeviceGroups mocks base method.
-func (m *MockExtension) EnumeratePhysicalDeviceGroups(instance core1_0.Instance, outDataFactory func() *khr_device_group_creation.DeviceGroupOutData) ([]*khr_device_group_creation.DeviceGroupOutData, common.VkResult, error) {
+func (m *MockExtension) PhysicalDeviceGroups(instance core1_0.Instance, outDataFactory func() *khr_device_group_creation.DeviceGroupOutData) ([]*khr_device_group_creation.DeviceGroupOutData, common.VkResult, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "EnumeratePhysicalDeviceGroups", instance, outDataFactory)
+	ret := m.ctrl.Call(m, "PhysicalDeviceGroups", instance, outDataFactory)
 	ret0, _ := ret[0].([]*khr_device_group_creation.DeviceGroupOutData)
 	ret1, _ := ret[1].(common.VkResult)
 	ret2, _ := ret[2].(error)
@@ -49,5 +49,5 @@ func (m *MockExtension) EnumeratePhysicalDeviceGroups(instance core1_0.Instance,
 // EnumeratePhysicalDeviceGroups indicates an expected call of EnumeratePhysicalDeviceGroups.
 func (mr *MockExtensionMockRecorder) EnumeratePhysicalDeviceGroups(instance, outDataFactory interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "EnumeratePhysicalDeviceGroups", reflect.TypeOf((*MockExtension)(nil).EnumeratePhysicalDeviceGroups), instance, outDataFactory)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PhysicalDeviceGroups", reflect.TypeOf((*MockExtension)(nil).PhysicalDeviceGroups), instance, outDataFactory)
 }

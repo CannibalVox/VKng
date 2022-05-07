@@ -8,5 +8,5 @@ import (
 //go:generate mockgen -source extiface.go -destination ./mocks/extension.go -package mock_device_group_creation
 
 type Extension interface {
-	EnumeratePhysicalDeviceGroups(instance core1_0.Instance, outDataFactory func() *DeviceGroupOutData) ([]*DeviceGroupOutData, common.VkResult, error)
+	PhysicalDeviceGroups(instance core1_0.Instance, outDataFactory func() *DeviceGroupOutData) ([]*DeviceGroupOutData, common.VkResult, error)
 }
