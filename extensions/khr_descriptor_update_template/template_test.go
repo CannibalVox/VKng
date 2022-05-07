@@ -64,7 +64,7 @@ func TestVulkanDescriptorTemplate_UpdateDescriptorSetFromBuffer(t *testing.T) {
 		require.Equal(t, uint64(3), info.FieldByName("_range").Uint())
 	})
 
-	template, _, err := extension.CreateDescriptorUpdateTemplate(device, khr_descriptor_update_template.DescriptorTemplateOptions{}, nil)
+	template, _, err := extension.CreateDescriptorUpdateTemplate(device, khr_descriptor_update_template.DescriptorUpdateTemplateCreateOptions{}, nil)
 	require.NoError(t, err)
 	require.NotNil(t, template)
 
@@ -124,7 +124,7 @@ func TestVulkanDescriptorTemplate_UpdateDescriptorSetFromImage(t *testing.T) {
 		require.Equal(t, uint64(7), info.FieldByName("imageLayout").Uint()) // VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL
 	})
 
-	template, _, err := extension.CreateDescriptorUpdateTemplate(device, khr_descriptor_update_template.DescriptorTemplateOptions{}, nil)
+	template, _, err := extension.CreateDescriptorUpdateTemplate(device, khr_descriptor_update_template.DescriptorUpdateTemplateCreateOptions{}, nil)
 	require.NoError(t, err)
 	require.NotNil(t, template)
 
@@ -180,7 +180,7 @@ func TestVulkanDescriptorTemplate_UpdateDescriptorSetFromObjectHandle(t *testing
 		require.Equal(t, bufferView.Handle(), info)
 	})
 
-	template, _, err := extension.CreateDescriptorUpdateTemplate(device, khr_descriptor_update_template.DescriptorTemplateOptions{}, nil)
+	template, _, err := extension.CreateDescriptorUpdateTemplate(device, khr_descriptor_update_template.DescriptorUpdateTemplateCreateOptions{}, nil)
 	require.NoError(t, err)
 	require.NotNil(t, template)
 

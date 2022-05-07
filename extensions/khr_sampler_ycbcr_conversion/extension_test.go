@@ -252,7 +252,7 @@ func TestSamplerYcbcrConversionOptions(t *testing.T) {
 	imageView, _, err := loader.CreateImageView(
 		device,
 		nil,
-		core1_0.ImageViewOptions{
+		core1_0.ImageViewCreateOptions{
 			Image:  image,
 			Format: khr_sampler_ycbcr_conversion.DataFormatB16G16R16G16HorizontalChroma,
 
@@ -306,7 +306,7 @@ func TestSamplerYcbcrFeaturesOptions(t *testing.T) {
 	device, _, err := loader.CreateDevice(
 		physicalDevice,
 		nil,
-		core1_0.DeviceOptions{
+		core1_0.DeviceCreateOptions{
 			QueueFamilies: []core1_0.DeviceQueueOptions{
 				{
 					CreatedQueuePriorities: []float32{0},

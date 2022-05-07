@@ -8,7 +8,7 @@ import (
 
 //go:generate mockgen -source iface.go -destination ./mocks/extension.go -package mock_descriptor_update_template
 
-type DescriptorTemplate interface {
+type DescriptorUpdateTemplate interface {
 	Handle() khr_descriptor_update_template_driver.VkDescriptorUpdateTemplateKHR
 	Destroy(allocator *driver.AllocationCallbacks)
 
@@ -18,5 +18,5 @@ type DescriptorTemplate interface {
 }
 
 type Extension interface {
-	CreateDescriptorUpdateTemplate(device core1_0.Device, o DescriptorTemplateOptions, allocator *driver.AllocationCallbacks) (DescriptorTemplate, driver.VkResult, error)
+	CreateDescriptorUpdateTemplate(device core1_0.Device, o DescriptorUpdateTemplateCreateOptions, allocator *driver.AllocationCallbacks) (DescriptorUpdateTemplate, driver.VkResult, error)
 }

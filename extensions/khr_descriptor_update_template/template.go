@@ -14,7 +14,7 @@ import (
 	"unsafe"
 )
 
-type vulkanDescriptorTemplate struct {
+type vulkanDescriptorUpdateTemplate struct {
 	coreDriver               driver.Driver
 	driver                   khr_descriptor_update_template_driver.Driver
 	device                   driver.VkDevice
@@ -23,15 +23,15 @@ type vulkanDescriptorTemplate struct {
 	maximumAPIVersion common.APIVersion
 }
 
-func (t *vulkanDescriptorTemplate) Handle() khr_descriptor_update_template_driver.VkDescriptorUpdateTemplateKHR {
+func (t *vulkanDescriptorUpdateTemplate) Handle() khr_descriptor_update_template_driver.VkDescriptorUpdateTemplateKHR {
 	return t.descriptorTemplateHandle
 }
 
-func (t *vulkanDescriptorTemplate) Destroy(allocator *driver.AllocationCallbacks) {
+func (t *vulkanDescriptorUpdateTemplate) Destroy(allocator *driver.AllocationCallbacks) {
 	t.driver.VkDestroyDescriptorUpdateTemplateKHR(t.device, t.descriptorTemplateHandle, allocator.Handle())
 }
 
-func (t *vulkanDescriptorTemplate) UpdateDescriptorSetFromImage(descriptorSet core1_0.DescriptorSet, data core1_0.DescriptorImageInfo) {
+func (t *vulkanDescriptorUpdateTemplate) UpdateDescriptorSetFromImage(descriptorSet core1_0.DescriptorSet, data core1_0.DescriptorImageInfo) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -49,7 +49,7 @@ func (t *vulkanDescriptorTemplate) UpdateDescriptorSetFromImage(descriptorSet co
 	)
 }
 
-func (t *vulkanDescriptorTemplate) UpdateDescriptorSetFromBuffer(descriptorSet core1_0.DescriptorSet, data core1_0.DescriptorBufferInfo) {
+func (t *vulkanDescriptorUpdateTemplate) UpdateDescriptorSetFromBuffer(descriptorSet core1_0.DescriptorSet, data core1_0.DescriptorBufferInfo) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -67,7 +67,7 @@ func (t *vulkanDescriptorTemplate) UpdateDescriptorSetFromBuffer(descriptorSet c
 	)
 }
 
-func (t *vulkanDescriptorTemplate) UpdateDescriptorSetFromObjectHandle(descriptorSet core1_0.DescriptorSet, data driver.VulkanHandle) {
+func (t *vulkanDescriptorUpdateTemplate) UpdateDescriptorSetFromObjectHandle(descriptorSet core1_0.DescriptorSet, data driver.VulkanHandle) {
 	t.driver.VkUpdateDescriptorSetWithTemplateKHR(
 		t.device,
 		descriptorSet.Handle(),

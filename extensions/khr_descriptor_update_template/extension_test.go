@@ -82,8 +82,8 @@ func TestVulkanExtension_CreateDescriptorUpdateTemplate(t *testing.T) {
 		gomock.Nil(),
 	)
 
-	template, _, err := extension.CreateDescriptorUpdateTemplate(device, khr_descriptor_update_template.DescriptorTemplateOptions{
-		Entries: []khr_descriptor_update_template.DescriptorTemplateEntry{
+	template, _, err := extension.CreateDescriptorUpdateTemplate(device, khr_descriptor_update_template.DescriptorUpdateTemplateCreateOptions{
+		Entries: []khr_descriptor_update_template.DescriptorUpdateTemplateEntry{
 			{
 				DstBinding:      1,
 				DstArrayElement: 3,

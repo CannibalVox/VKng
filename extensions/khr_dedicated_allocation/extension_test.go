@@ -64,7 +64,7 @@ func TestDedicatedMemoryRequirementsOutData_Buffer(t *testing.T) {
 		HaveNext: common.HaveNext{Next: &memReqs},
 	}
 	err := extension.BufferMemoryRequirements(device,
-		khr_get_memory_requirements2.BufferRequirementsOptions{
+		khr_get_memory_requirements2.BufferMemoryRequirementsOptions{
 			Buffer: buffer,
 		}, &outData)
 	require.NoError(t, err)
@@ -152,7 +152,7 @@ func TestMemoryDedicatedAllocateOptions(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	device, _, err := loader.CreateDevice(physicalDevice, nil, core1_0.DeviceOptions{
+	device, _, err := loader.CreateDevice(physicalDevice, nil, core1_0.DeviceCreateOptions{
 		QueueFamilies: []core1_0.DeviceQueueOptions{
 			{
 				CreatedQueuePriorities: []float32{0},

@@ -12,13 +12,13 @@ import (
 	"unsafe"
 )
 
-type BufferRequirementsOptions struct {
+type BufferMemoryRequirementsOptions struct {
 	Buffer core1_0.Buffer
 
 	common.HaveNext
 }
 
-func (o BufferRequirementsOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o BufferMemoryRequirementsOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkBufferMemoryRequirementsInfo2KHR{})))
 	}
@@ -31,7 +31,7 @@ func (o BufferRequirementsOptions) PopulateCPointer(allocator *cgoparam.Allocato
 	return preallocatedPointer, nil
 }
 
-func (o BufferRequirementsOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o BufferMemoryRequirementsOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	options := (*C.VkBufferMemoryRequirementsInfo2KHR)(cDataPointer)
 	return options.pNext, nil
 }

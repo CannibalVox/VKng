@@ -24,7 +24,7 @@ func (f FenceImportFlags) String() string {
 const (
 	ExtensionName string = C.VK_KHR_EXTERNAL_FENCE_EXTENSION_NAME
 
-	FenceImportTemporary FenceImportFlags = C.VK_FENCE_IMPORT_TEMPORARY_BIT
+	FenceImportTemporary FenceImportFlags = C.VK_FENCE_IMPORT_TEMPORARY_BIT_KHR
 )
 
 func init() {

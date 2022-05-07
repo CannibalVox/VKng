@@ -5,8 +5,6 @@ import (
 	"github.com/CannibalVox/VKng/core/driver"
 	mock_driver "github.com/CannibalVox/VKng/core/driver/mocks"
 	"github.com/CannibalVox/VKng/core/mocks"
-	"github.com/CannibalVox/VKng/extensions/khr_external_memory_capabilities"
-	khr_external_memory_capabilities_driver "github.com/CannibalVox/VKng/extensions/khr_external_memory_capabilities/driver"
 	"github.com/CannibalVox/VKng/extensions/khr_external_semaphore_capabilities"
 	khr_external_semaphore_capabilities_driver "github.com/CannibalVox/VKng/extensions/khr_external_semaphore_capabilities/driver"
 	mock_external_semaphore_capabilities "github.com/CannibalVox/VKng/extensions/khr_external_semaphore_capabilities/mocks"
@@ -48,7 +46,7 @@ func TestPhysicalDeviceIDOutData(t *testing.T) {
 			val := reflect.ValueOf(pProperties).Elem()
 			require.Equal(t, uint64(1000059001), val.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2_KHR
 
-			next := (*khr_external_memory_capabilities_driver.VkPhysicalDeviceIDPropertiesKHR)(val.FieldByName("pNext").UnsafePointer())
+			next := (*khr_external_semaphore_capabilities_driver.VkPhysicalDeviceIDPropertiesKHR)(val.FieldByName("pNext").UnsafePointer())
 			val = reflect.ValueOf(next).Elem()
 			require.Equal(t, uint64(1000071004), val.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ID_PROPERTIES_KHR
 			require.True(t, val.FieldByName("pNext").IsNil())
@@ -72,7 +70,7 @@ func TestPhysicalDeviceIDOutData(t *testing.T) {
 		})
 
 	var properties khr_get_physical_device_properties2.DevicePropertiesOutData
-	var outData khr_external_memory_capabilities.PhysicalDeviceIDOutData
+	var outData khr_external_semaphore_capabilities.PhysicalDeviceIDOutData
 	properties.HaveNext = common.HaveNext{&outData}
 
 	err = extension.PhysicalDeviceProperties(
@@ -80,7 +78,7 @@ func TestPhysicalDeviceIDOutData(t *testing.T) {
 		&properties,
 	)
 	require.NoError(t, err)
-	require.Equal(t, khr_external_memory_capabilities.PhysicalDeviceIDOutData{
+	require.Equal(t, khr_external_semaphore_capabilities.PhysicalDeviceIDOutData{
 		DeviceUUID:      deviceUUID,
 		DriverUUID:      driverUUID,
 		DeviceLUID:      0xdeadbeefdeadbeef,

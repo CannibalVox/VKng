@@ -857,7 +857,7 @@ func TestImageSwapchainCreateOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	image, _, err := loader.CreateImage(device, nil, core1_0.ImageOptions{
+	image, _, err := loader.CreateImage(device, nil, core1_0.ImageCreateOptions{
 		MipLevels:   1,
 		ArrayLayers: 3,
 		HaveNext: common.HaveNext{

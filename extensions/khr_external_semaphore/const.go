@@ -24,7 +24,7 @@ func (f SemaphoreImportFlags) String() string {
 const (
 	ExtensionName string = C.VK_KHR_EXTERNAL_SEMAPHORE_EXTENSION_NAME
 
-	SemaphoreImportTemporary SemaphoreImportFlags = C.VK_SEMAPHORE_IMPORT_TEMPORARY_BIT
+	SemaphoreImportTemporary SemaphoreImportFlags = C.VK_SEMAPHORE_IMPORT_TEMPORARY_BIT_KHR
 )
 
 func init() {

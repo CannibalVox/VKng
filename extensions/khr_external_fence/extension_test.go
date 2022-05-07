@@ -51,7 +51,7 @@ func TestExportFenceOptions(t *testing.T) {
 	fence, _, err := loader.CreateFence(
 		device,
 		nil,
-		core1_0.FenceOptions{
+		core1_0.FenceCreateOptions{
 			Flags: core1_0.FenceCreateSignaled,
 
 			HaveNext: common.HaveNext{

@@ -108,7 +108,7 @@ func TestMultiviewFeaturesOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	device, _, err := loader.CreateDevice(physicalDevice, nil, core1_0.DeviceOptions{
+	device, _, err := loader.CreateDevice(physicalDevice, nil, core1_0.DeviceCreateOptions{
 		QueueFamilies: []core1_0.DeviceQueueOptions{
 			{
 				CreatedQueuePriorities: []float32{3, 2, 1},
@@ -216,7 +216,7 @@ func TestRenderPassMultiviewOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	renderPass, _, err := loader.CreateRenderPass(device, nil, core1_0.RenderPassOptions{
+	renderPass, _, err := loader.CreateRenderPass(device, nil, core1_0.RenderPassCreateOptions{
 		HaveNext: common.HaveNext{
 			khr_multiview.RenderPassMultiviewOptions{
 				SubpassViewMasks:      []uint32{1, 2, 7},

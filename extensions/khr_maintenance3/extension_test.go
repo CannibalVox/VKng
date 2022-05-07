@@ -54,7 +54,7 @@ func TestVulkanExtension_DescriptorSetLayoutSupport(t *testing.T) {
 		})
 
 	outData := &khr_maintenance3.DescriptorSetLayoutSupportOutData{}
-	err := extension.DescriptorSetLayoutSupport(device, core1_0.DescriptorSetLayoutOptions{
+	err := extension.DescriptorSetLayoutSupport(device, core1_0.DescriptorSetLayoutCreateOptions{
 		Bindings: []core1_0.DescriptorLayoutBinding{
 			{
 				Binding:         1,

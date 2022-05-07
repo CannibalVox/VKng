@@ -30,7 +30,7 @@ func CreateExtensionFromDriver(driver khr_get_memory_requirements2_driver.Driver
 	}
 }
 
-func (e *VulkanExtension) BufferMemoryRequirements(device core1_0.Device, o BufferRequirementsOptions, out *MemoryRequirementsOutData) error {
+func (e *VulkanExtension) BufferMemoryRequirements(device core1_0.Device, o BufferMemoryRequirementsOptions, out *MemoryRequirementsOutData) error {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 

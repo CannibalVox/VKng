@@ -263,7 +263,7 @@ func TestVulkanDevice_CreateDeviceWithFeatures(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	options := core1_0.DeviceOptions{
+	options := core1_0.DeviceCreateOptions{
 		QueueFamilies: []core1_0.DeviceQueueOptions{
 			{
 				QueueFamilyIndex:       1,

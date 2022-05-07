@@ -51,7 +51,7 @@ func TestExportSemaphoreOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	semaphore, _, err := loader.CreateSemaphore(device, nil, core1_0.SemaphoreOptions{
+	semaphore, _, err := loader.CreateSemaphore(device, nil, core1_0.SemaphoreCreateOptions{
 		HaveNext: common.HaveNext{
 			khr_external_semaphore.ExportSemaphoreOptions{
 				HandleTypes: khr_external_semaphore_capabilities.ExternalSemaphoreHandleTypeOpaqueWin32KMT,

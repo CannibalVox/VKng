@@ -52,7 +52,7 @@ func TestVulkanExtension_BufferMemoryRequirements(t *testing.T) {
 
 	var outData khr_get_memory_requirements2.MemoryRequirementsOutData
 	err := extension.BufferMemoryRequirements(device,
-		khr_get_memory_requirements2.BufferRequirementsOptions{
+		khr_get_memory_requirements2.BufferMemoryRequirementsOptions{
 			Buffer: buffer,
 		}, &outData)
 	require.NoError(t, err)

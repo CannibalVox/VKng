@@ -22,10 +22,10 @@ type BindImageMemoryOptions struct {
 
 func (o BindImageMemoryOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
-		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkBindImageMemoryInfo{})))
+		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkBindImageMemoryInfoKHR{})))
 	}
 
-	createInfo := (*C.VkBindImageMemoryInfo)(preallocatedPointer)
+	createInfo := (*C.VkBindImageMemoryInfoKHR)(preallocatedPointer)
 	createInfo.sType = C.VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_INFO_KHR
 	createInfo.pNext = next
 	createInfo.image = (C.VkImage)(unsafe.Pointer(o.Image.Handle()))
@@ -36,6 +36,6 @@ func (o BindImageMemoryOptions) PopulateCPointer(allocator *cgoparam.Allocator, 
 }
 
 func (o BindImageMemoryOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	createInfo := (*C.VkBindImageMemoryInfo)(cDataPointer)
+	createInfo := (*C.VkBindImageMemoryInfoKHR)(cDataPointer)
 	return createInfo.pNext, nil
 }

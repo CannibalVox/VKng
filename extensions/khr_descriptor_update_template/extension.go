@@ -24,7 +24,7 @@ func CreateExtensionFromDriver(driver khr_descriptor_update_template_driver.Driv
 	}
 }
 
-func (e *VulkanExtension) CreateDescriptorUpdateTemplate(device core1_0.Device, o DescriptorTemplateOptions, allocator *driver.AllocationCallbacks) (DescriptorTemplate, common.VkResult, error) {
+func (e *VulkanExtension) CreateDescriptorUpdateTemplate(device core1_0.Device, o DescriptorUpdateTemplateCreateOptions, allocator *driver.AllocationCallbacks) (DescriptorUpdateTemplate, common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -45,7 +45,7 @@ func (e *VulkanExtension) CreateDescriptorUpdateTemplate(device core1_0.Device, 
 
 	descriptorTemplate := device.Driver().ObjectStore().GetOrCreate(driver.VulkanHandle(templateHandle),
 		func() interface{} {
-			template := &vulkanDescriptorTemplate{
+			template := &vulkanDescriptorUpdateTemplate{
 				driver:                   e.driver,
 				coreDriver:               device.Driver(),
 				device:                   device.Handle(),
@@ -54,7 +54,7 @@ func (e *VulkanExtension) CreateDescriptorUpdateTemplate(device core1_0.Device, 
 			}
 
 			return template
-		}).(*vulkanDescriptorTemplate)
+		}).(*vulkanDescriptorUpdateTemplate)
 	device.Driver().ObjectStore().SetParent(driver.VulkanHandle(device.Handle()), driver.VulkanHandle(templateHandle))
 
 	return descriptorTemplate, res, nil

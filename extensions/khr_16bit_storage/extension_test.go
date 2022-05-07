@@ -59,7 +59,7 @@ func TestDevice16BitStorageOptions(t *testing.T) {
 		StoragePushConstant16:              false,
 		StorageBuffer16BitAccess:           false,
 	}
-	device, _, err := loader.CreateDevice(physicalDevice, nil, core1_0.DeviceOptions{
+	device, _, err := loader.CreateDevice(physicalDevice, nil, core1_0.DeviceCreateOptions{
 		QueueFamilies: []core1_0.DeviceQueueOptions{
 			{
 				CreatedQueuePriorities: []float32{0},

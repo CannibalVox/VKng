@@ -11,8 +11,8 @@ func NewFakeDescriptorTemplate() khr_descriptor_update_template_driver.VkDescrip
 	return khr_descriptor_update_template_driver.VkDescriptorUpdateTemplateKHR(unsafe.Pointer(uintptr(rand.Int())))
 }
 
-func EasyMockDescriptorTemplate(ctrl *gomock.Controller) *MockDescriptorTemplate {
-	swapchain := NewMockDescriptorTemplate(ctrl)
+func EasyMockDescriptorTemplate(ctrl *gomock.Controller) *MockDescriptorUpdateTemplate {
+	swapchain := NewMockDescriptorUpdateTemplate(ctrl)
 	swapchain.EXPECT().Handle().Return(NewFakeDescriptorTemplate()).AnyTimes()
 
 	return swapchain

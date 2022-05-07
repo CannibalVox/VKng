@@ -27,7 +27,7 @@ func (o *DeviceGroupOutData) PopulateCPointer(allocator *cgoparam.Allocator, pre
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceGroupPropertiesKHR{})))
 	}
 
-	createInfo := (*C.VkPhysicalDeviceGroupProperties)(preallocatedPointer)
+	createInfo := (*C.VkPhysicalDeviceGroupPropertiesKHR)(preallocatedPointer)
 	createInfo.sType = C.VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GROUP_PROPERTIES_KHR
 	createInfo.pNext = next
 
@@ -38,7 +38,7 @@ func (o *DeviceGroupOutData) PopulateOutData(cPointer unsafe.Pointer, helpers ..
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
-	createInfo := (*C.VkPhysicalDeviceGroupProperties)(cPointer)
+	createInfo := (*C.VkPhysicalDeviceGroupPropertiesKHR)(cPointer)
 	o.SubsetAllocation = createInfo.subsetAllocation != C.VkBool32(0)
 
 	instance, ok := common.OfType[core1_0.Instance](helpers)

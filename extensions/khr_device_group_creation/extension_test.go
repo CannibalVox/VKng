@@ -349,7 +349,7 @@ func TestDeviceGroupOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	device, _, err := loader.CreateDevice(physicalDevice1, nil, core1_0.DeviceOptions{
+	device, _, err := loader.CreateDevice(physicalDevice1, nil, core1_0.DeviceCreateOptions{
 		QueueFamilies: []core1_0.DeviceQueueOptions{
 			{
 				CreatedQueuePriorities: []float32{0},

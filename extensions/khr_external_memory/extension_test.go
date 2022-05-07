@@ -108,7 +108,7 @@ func TestExternalMemoryImageOptions(t *testing.T) {
 	image, _, err := loader.CreateImage(
 		device,
 		nil,
-		core1_0.ImageOptions{
+		core1_0.ImageCreateOptions{
 			MipLevels:   1,
 			ArrayLayers: 3,
 
@@ -163,7 +163,7 @@ func TestExternalMemoryBufferOptions(t *testing.T) {
 	buffer, _, err := loader.CreateBuffer(
 		device,
 		nil,
-		core1_0.BufferOptions{
+		core1_0.BufferCreateOptions{
 			BufferSize: 1,
 			Usage:      core1_0.BufferUsageStorageTexelBuffer,
 

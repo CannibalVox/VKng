@@ -8,7 +8,6 @@ import (
 	reflect "reflect"
 
 	common "github.com/CannibalVox/VKng/core/common"
-	core1_0 "github.com/CannibalVox/VKng/core/core1_0"
 	driver "github.com/CannibalVox/VKng/core/driver"
 	khr_swapchain_driver "github.com/CannibalVox/VKng/extensions/khr_swapchain/driver"
 	gomock "github.com/golang/mock/gomock"
@@ -35,20 +34,6 @@ func NewMockDriver(ctrl *gomock.Controller) *MockDriver {
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 	return m.recorder
-}
-
-// CreateImage mocks base method.
-func (m *MockDriver) CreateImage(imageHandle driver.VkImage, deviceHandle driver.VkDevice) core1_0.Image {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateImage", imageHandle, deviceHandle)
-	ret0, _ := ret[0].(core1_0.Image)
-	return ret0
-}
-
-// CreateImage indicates an expected call of CreateImage.
-func (mr *MockDriverMockRecorder) CreateImage(imageHandle, deviceHandle interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateImage", reflect.TypeOf((*MockDriver)(nil).CreateImage), imageHandle, deviceHandle)
 }
 
 // VkAcquireNextImageKHR mocks base method.

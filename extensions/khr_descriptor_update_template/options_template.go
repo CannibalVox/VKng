@@ -12,9 +12,9 @@ import (
 	"unsafe"
 )
 
-type DescriptorTemplateOptions struct {
+type DescriptorUpdateTemplateCreateOptions struct {
 	Flags        DescriptorTemplateFlags
-	Entries      []DescriptorTemplateEntry
+	Entries      []DescriptorUpdateTemplateEntry
 	TemplateType DescriptorTemplateType
 
 	DescriptorSetLayout core1_0.DescriptorSetLayout
@@ -26,7 +26,7 @@ type DescriptorTemplateOptions struct {
 	common.HaveNext
 }
 
-func (o DescriptorTemplateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o DescriptorUpdateTemplateCreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkDescriptorUpdateTemplateCreateInfoKHR{})))
 	}
@@ -40,7 +40,7 @@ func (o DescriptorTemplateOptions) PopulateCPointer(allocator *cgoparam.Allocato
 	createInfo.descriptorUpdateEntryCount = C.uint32_t(entryCount)
 
 	var err error
-	createInfo.pDescriptorUpdateEntries, err = common.AllocSlice[C.VkDescriptorUpdateTemplateEntryKHR, DescriptorTemplateEntry](allocator, o.Entries)
+	createInfo.pDescriptorUpdateEntries, err = common.AllocSlice[C.VkDescriptorUpdateTemplateEntryKHR, DescriptorUpdateTemplateEntry](allocator, o.Entries)
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +63,7 @@ func (o DescriptorTemplateOptions) PopulateCPointer(allocator *cgoparam.Allocato
 	return preallocatedPointer, nil
 }
 
-func (o DescriptorTemplateOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o DescriptorUpdateTemplateCreateOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	createInfo := (*C.VkDescriptorUpdateTemplateCreateInfoKHR)(cDataPointer)
 	return createInfo.pNext, nil
 }

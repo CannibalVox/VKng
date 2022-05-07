@@ -11,7 +11,7 @@ import (
 	"unsafe"
 )
 
-type DescriptorTemplateEntry struct {
+type DescriptorUpdateTemplateEntry struct {
 	DstBinding      int
 	DstArrayElement int
 	DescriptorCount int
@@ -22,7 +22,7 @@ type DescriptorTemplateEntry struct {
 	Stride int
 }
 
-func (e DescriptorTemplateEntry) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer) (unsafe.Pointer, error) {
+func (e DescriptorUpdateTemplateEntry) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkDescriptorUpdateTemplateEntryKHR{})))
 	}

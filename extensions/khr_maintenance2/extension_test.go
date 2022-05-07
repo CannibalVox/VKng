@@ -47,7 +47,7 @@ func TestImageViewUsageOptions(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	imageView, _, err := loader.CreateImageView(device, nil, core1_0.ImageViewOptions{
+	imageView, _, err := loader.CreateImageView(device, nil, core1_0.ImageViewCreateOptions{
 		Image: image,
 		HaveNext: common.HaveNext{Next: ImageViewUsageOptions{
 			Usage: core1_0.ImageUsageInputAttachment,
@@ -100,7 +100,7 @@ func TestTessellationDomainOriginOptions(t *testing.T) {
 	domainOriginState := TessellationDomainOriginOptions{
 		DomainOrigin: TessellationDomainOriginLowerLeft,
 	}
-	pipelines, _, err := loader.CreateGraphicsPipelines(device, nil, nil, []core1_0.GraphicsPipelineOptions{
+	pipelines, _, err := loader.CreateGraphicsPipelines(device, nil, nil, []core1_0.GraphicsPipelineCreateOptions{
 		{
 			Tessellation: &core1_0.TessellationOptions{
 				PatchControlPoints: 1,
@@ -167,7 +167,7 @@ func TestInputAttachmentAspectOptions(t *testing.T) {
 			},
 		},
 	}
-	renderPass, _, err := loader.CreateRenderPass(device, nil, core1_0.RenderPassOptions{
+	renderPass, _, err := loader.CreateRenderPass(device, nil, core1_0.RenderPassCreateOptions{
 		HaveNext: common.HaveNext{Next: aspectOptions},
 	})
 	require.NoError(t, err)

@@ -31,7 +31,7 @@ type Swapchain interface {
 	Handle() khr_swapchain_driver.VkSwapchainKHR
 
 	Destroy(callbacks *driver.AllocationCallbacks)
-	Images() ([]core1_0.Image, common.VkResult, error)
+	Images() ([]core.Image, common.VkResult, error)
 	AcquireNextImage(timeout time.Duration, semaphore core1_0.Semaphore, fence core1_0.Fence) (int, common.VkResult, error)
 }
 
@@ -44,7 +44,7 @@ func (s *vulkanSwapchain) Destroy(callbacks *driver.AllocationCallbacks) {
 	s.coreDriver.ObjectStore().Delete(driver.VulkanHandle(s.handle), s)
 }
 
-func (s *vulkanSwapchain) attemptImages() ([]core1_0.Image, common.VkResult, error) {
+func (s *vulkanSwapchain) attemptImages() ([]core.Image, common.VkResult, error) {
 	allocator := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(allocator)
 
@@ -69,7 +69,7 @@ func (s *vulkanSwapchain) attemptImages() ([]core1_0.Image, common.VkResult, err
 	}
 
 	imagesSlice := ([]driver.VkImage)(unsafe.Slice(imagesPtr, imageCount))
-	var result []core1_0.Image
+	var result []core.Image
 	for i := 0; i < imageCount; i++ {
 		image := core.CreateImage(s.coreDriver, s.device, imagesSlice[i], s.minimumAPIVersion)
 		s.coreDriver.ObjectStore().SetParent(driver.VulkanHandle(s.handle), driver.VulkanHandle(imagesSlice[i]))
@@ -79,8 +79,8 @@ func (s *vulkanSwapchain) attemptImages() ([]core1_0.Image, common.VkResult, err
 	return result, res, nil
 }
 
-func (s *vulkanSwapchain) Images() ([]core1_0.Image, common.VkResult, error) {
-	var result []core1_0.Image
+func (s *vulkanSwapchain) Images() ([]core.Image, common.VkResult, error) {
+	var result []core.Image
 	var res common.VkResult
 	var err error
 
