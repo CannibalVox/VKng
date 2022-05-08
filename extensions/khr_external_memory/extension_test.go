@@ -58,7 +58,7 @@ func TestExternalMemoryAllocateOptions(t *testing.T) {
 		AllocationSize:  1,
 		MemoryTypeIndex: 3,
 		HaveNext: common.HaveNext{
-			khr_external_memory.ExternalMemoryAllocateOptions{
+			khr_external_memory.ExportMemoryAllocateOptions{
 				HandleTypes: khr_external_memory_capabilities.ExternalMemoryHandleTypeD3D11TextureKMT,
 			},
 		},

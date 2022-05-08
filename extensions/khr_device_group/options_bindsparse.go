@@ -20,10 +20,10 @@ type DeviceGroupBindSparseOptions struct {
 
 func (o DeviceGroupBindSparseOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
-		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkDeviceGroupBindSparseInfo{})))
+		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkDeviceGroupBindSparseInfoKHR{})))
 	}
 
-	createInfo := (*C.VkDeviceGroupBindSparseInfo)(preallocatedPointer)
+	createInfo := (*C.VkDeviceGroupBindSparseInfoKHR)(preallocatedPointer)
 	createInfo.sType = C.VK_STRUCTURE_TYPE_DEVICE_GROUP_BIND_SPARSE_INFO_KHR
 	createInfo.pNext = next
 	createInfo.resourceDeviceIndex = C.uint32_t(o.ResourceDeviceIndex)
@@ -33,6 +33,6 @@ func (o DeviceGroupBindSparseOptions) PopulateCPointer(allocator *cgoparam.Alloc
 }
 
 func (o DeviceGroupBindSparseOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	createInfo := (*C.VkDeviceGroupBindSparseInfo)(cDataPointer)
+	createInfo := (*C.VkDeviceGroupBindSparseInfoKHR)(cDataPointer)
 	return createInfo.pNext, nil
 }

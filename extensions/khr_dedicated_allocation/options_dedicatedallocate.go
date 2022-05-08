@@ -28,10 +28,10 @@ func (o DedicatedAllocationOptions) PopulateCPointer(allocator *cgoparam.Allocat
 	}
 
 	if preallocatedPointer == nil {
-		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkMemoryDedicatedAllocateInfo{})))
+		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkMemoryDedicatedAllocateInfoKHR{})))
 	}
 
-	createInfo := (*C.VkMemoryDedicatedAllocateInfo)(preallocatedPointer)
+	createInfo := (*C.VkMemoryDedicatedAllocateInfoKHR)(preallocatedPointer)
 	createInfo.sType = C.VK_STRUCTURE_TYPE_MEMORY_DEDICATED_ALLOCATE_INFO_KHR
 	createInfo.pNext = next
 	createInfo.image = nil
@@ -47,6 +47,6 @@ func (o DedicatedAllocationOptions) PopulateCPointer(allocator *cgoparam.Allocat
 }
 
 func (o DedicatedAllocationOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	createInfo := (*C.VkMemoryDedicatedAllocateInfo)(cDataPointer)
+	createInfo := (*C.VkMemoryDedicatedAllocateInfoKHR)(cDataPointer)
 	return createInfo.pNext, nil
 }

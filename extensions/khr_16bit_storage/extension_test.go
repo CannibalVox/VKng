@@ -53,7 +53,7 @@ func TestDevice16BitStorageOptions(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	storage := khr_16bit_storage.Device16BitStorageOptions{
+	storage := khr_16bit_storage.Device16BitStorageFeaturesOptions{
 		StorageInputOutput16:               true,
 		UniformAndStorageBuffer16BitAccess: true,
 		StoragePushConstant16:              false,
@@ -101,7 +101,7 @@ func TestDevice16BitStorageOutData(t *testing.T) {
 			*(*driver.VkBool32)(unsafe.Pointer(outDataVal.FieldByName("storageInputOutput16").UnsafeAddr())) = driver.VkBool32(1)
 		})
 
-	outData := &khr_16bit_storage.Device16BitStorageOutData{}
+	outData := &khr_16bit_storage.Device16BitStorageFeaturesOutData{}
 	features := &khr_get_physical_device_properties2.DeviceFeaturesOutData{
 		HaveNext: common.HaveNext{Next: outData},
 	}
