@@ -58,7 +58,7 @@ func (e *VulkanExtension) PhysicalDeviceFormatProperties(physicalDevice core1_0.
 	return common.PopulateOutData(out, outData)
 }
 
-func (e *VulkanExtension) PhysicalDeviceImageFormatProperties(physicalDevice core1_0.PhysicalDevice, options ImageFormatOptions, out *ImageFormatOutData) (common.VkResult, error) {
+func (e *VulkanExtension) PhysicalDeviceImageFormatProperties(physicalDevice core1_0.PhysicalDevice, options ImageFormatOptions, out *ImageFormatPropertiesOutData) (common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 

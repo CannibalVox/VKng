@@ -11,7 +11,7 @@ import (
 	"unsafe"
 )
 
-type MultiviewFeaturesOptions struct {
+type PhysicalDeviceMultiviewFeaturesOptions struct {
 	Multiview                   bool
 	MultiviewGeometryShader     bool
 	MultiviewTessellationShader bool
@@ -19,7 +19,7 @@ type MultiviewFeaturesOptions struct {
 	common.HaveNext
 }
 
-func (o MultiviewFeaturesOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o PhysicalDeviceMultiviewFeaturesOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceMultiviewFeaturesKHR{})))
 	}
@@ -45,7 +45,7 @@ func (o MultiviewFeaturesOptions) PopulateCPointer(allocator *cgoparam.Allocator
 	return preallocatedPointer, nil
 }
 
-func (o MultiviewFeaturesOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o PhysicalDeviceMultiviewFeaturesOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	info := (*C.VkPhysicalDeviceMultiviewFeaturesKHR)(cDataPointer)
 	return info.pNext, nil
 }

@@ -48,14 +48,14 @@ func TestMultiviewFeaturesOutData(t *testing.T) {
 		*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("multiviewTessellationShader").UnsafeAddr())) = driver.VkBool32(0)
 	})
 
-	var outData khr_multiview.MultiviewFeaturesOutData
+	var outData khr_multiview.PhysicalDeviceMultiviewFeaturesOutData
 	features := khr_get_physical_device_properties2.DeviceFeaturesOutData{
 		HaveNext: common.HaveNext{&outData},
 	}
 
 	err := extension.PhysicalDeviceFeatures(physicalDevice, &features)
 	require.NoError(t, err)
-	require.Equal(t, khr_multiview.MultiviewFeaturesOutData{
+	require.Equal(t, khr_multiview.PhysicalDeviceMultiviewFeaturesOutData{
 		Multiview:                   true,
 		MultiviewTessellationShader: false,
 		MultiviewGeometryShader:     true,
@@ -109,13 +109,13 @@ func TestMultiviewFeaturesOptions(t *testing.T) {
 	})
 
 	device, _, err := loader.CreateDevice(physicalDevice, nil, core1_0.DeviceCreateOptions{
-		QueueFamilies: []core1_0.DeviceQueueOptions{
+		QueueFamilies: []core1_0.DeviceQueueCreateOptions{
 			{
 				CreatedQueuePriorities: []float32{3, 2, 1},
 			},
 		},
 		HaveNext: common.HaveNext{
-			khr_multiview.MultiviewFeaturesOptions{
+			khr_multiview.PhysicalDeviceMultiviewFeaturesOptions{
 				Multiview:                   true,
 				MultiviewTessellationShader: true,
 				MultiviewGeometryShader:     false,
@@ -154,14 +154,14 @@ func TestMultiviewPropertiesOutData(t *testing.T) {
 		*(*uint32)(unsafe.Pointer(val.FieldByName("maxMultiviewInstanceIndex").UnsafeAddr())) = uint32(3)
 	})
 
-	var outData khr_multiview.MultiviewPropertiesOutData
+	var outData khr_multiview.PhysicalDeviceMultiviewOutData
 	properties := khr_get_physical_device_properties2.DevicePropertiesOutData{
 		HaveNext: common.HaveNext{&outData},
 	}
 
 	err := extension.PhysicalDeviceProperties(physicalDevice, &properties)
 	require.NoError(t, err)
-	require.Equal(t, khr_multiview.MultiviewPropertiesOutData{
+	require.Equal(t, khr_multiview.PhysicalDeviceMultiviewOutData{
 		MaxMultiviewInstanceIndex: 3,
 		MaxMultiviewViewCount:     5,
 	}, outData)

@@ -65,7 +65,7 @@ func (mr *MockExtensionMockRecorder) PhysicalDeviceFormatProperties(physicalDevi
 }
 
 // PhysicalDeviceImageFormatProperties mocks base method.
-func (m *MockExtension) PhysicalDeviceImageFormatProperties(physicalDevice core1_0.PhysicalDevice, options khr_get_physical_device_properties2.ImageFormatOptions, out *khr_get_physical_device_properties2.ImageFormatOutData) (common.VkResult, error) {
+func (m *MockExtension) PhysicalDeviceImageFormatProperties(physicalDevice core1_0.PhysicalDevice, options khr_get_physical_device_properties2.ImageFormatOptions, out *khr_get_physical_device_properties2.ImageFormatPropertiesOutData) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PhysicalDeviceImageFormatProperties", physicalDevice, options, out)
 	ret0, _ := ret[0].(common.VkResult)

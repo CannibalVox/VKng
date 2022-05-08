@@ -11,7 +11,7 @@ import (
 	"unsafe"
 )
 
-type Device16BitStorageFeaturesOptions struct {
+type PhysicalDevice16BitStorageFeaturesOptions struct {
 	StorageBuffer16BitAccess           bool
 	UniformAndStorageBuffer16BitAccess bool
 	StoragePushConstant16              bool
@@ -20,7 +20,7 @@ type Device16BitStorageFeaturesOptions struct {
 	common.HaveNext
 }
 
-func (o Device16BitStorageFeaturesOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o PhysicalDevice16BitStorageFeaturesOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDevice16BitStorageFeaturesKHR{})))
 	}
@@ -53,7 +53,7 @@ func (o Device16BitStorageFeaturesOptions) PopulateCPointer(allocator *cgoparam.
 	return preallocatedPointer, nil
 }
 
-func (o Device16BitStorageFeaturesOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o PhysicalDevice16BitStorageFeaturesOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	data := (*C.VkPhysicalDevice16BitStorageFeaturesKHR)(cDataPointer)
 
 	return data.pNext, nil

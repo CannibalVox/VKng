@@ -97,12 +97,12 @@ func TestTessellationDomainOriginOptions(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	domainOriginState := TessellationDomainOriginOptions{
+	domainOriginState := PipelineTessellationDomainOriginStateOptions{
 		DomainOrigin: TessellationDomainOriginLowerLeft,
 	}
 	pipelines, _, err := loader.CreateGraphicsPipelines(device, nil, nil, []core1_0.GraphicsPipelineCreateOptions{
 		{
-			Tessellation: &core1_0.TessellationOptions{
+			Tessellation: &core1_0.TessellationStateOptions{
 				PatchControlPoints: 1,
 				HaveNext:           common.HaveNext{Next: domainOriginState},
 			},
@@ -153,7 +153,7 @@ func TestInputAttachmentAspectOptions(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	aspectOptions := InputAttachmentAspectOptions{
+	aspectOptions := RenderPassInputAttachmentAspectOptions{
 		AspectReferences: []InputAttachmentAspectReference{
 			{
 				Subpass:              1,
@@ -205,7 +205,7 @@ func TestPointClippingOutData(t *testing.T) {
 			*behavior = khr_maintenance2_driver.VkPointClippingBehaviorKHR(1) // VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY_KHR
 		})
 
-	pointClipping := &PointClippingOutData{}
+	pointClipping := &PhysicalDevicePointClippingOutData{}
 	properties := &khr_get_physical_device_properties2.DevicePropertiesOutData{
 		HaveNext: common.HaveNext{Next: pointClipping},
 	}

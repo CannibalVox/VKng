@@ -307,14 +307,14 @@ func TestSamplerYcbcrFeaturesOptions(t *testing.T) {
 		physicalDevice,
 		nil,
 		core1_0.DeviceCreateOptions{
-			QueueFamilies: []core1_0.DeviceQueueOptions{
+			QueueFamilies: []core1_0.DeviceQueueCreateOptions{
 				{
 					CreatedQueuePriorities: []float32{0},
 				},
 			},
 
 			HaveNext: common.HaveNext{
-				khr_sampler_ycbcr_conversion.SamplerYcbcrFeaturesOptions{
+				khr_sampler_ycbcr_conversion.PhysicalDeviceSamplerYcbcrFeaturesOptions{
 					SamplerYcbcrConversion: true,
 				},
 			},
@@ -350,7 +350,7 @@ func TestSamplerYcbcrFeaturesOutData(t *testing.T) {
 			*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("samplerYcbcrConversion").UnsafeAddr())) = driver.VkBool32(1)
 		})
 
-	var outData khr_sampler_ycbcr_conversion.SamplerYcbcrFeaturesOutData
+	var outData khr_sampler_ycbcr_conversion.PhysicalDeviceSamplerYcbcrFeaturesOutData
 
 	err := extension.PhysicalDeviceFeatures(
 		physicalDevice,
@@ -360,7 +360,7 @@ func TestSamplerYcbcrFeaturesOutData(t *testing.T) {
 			},
 		})
 	require.NoError(t, err)
-	require.Equal(t, khr_sampler_ycbcr_conversion.SamplerYcbcrFeaturesOutData{
+	require.Equal(t, khr_sampler_ycbcr_conversion.PhysicalDeviceSamplerYcbcrFeaturesOutData{
 		SamplerYcbcrConversion: true,
 	}, outData)
 }
@@ -404,7 +404,7 @@ func TestSamplerYcbcrImageFormatOutData(t *testing.T) {
 	_, err := extension.PhysicalDeviceImageFormatProperties(
 		physicalDevice,
 		khr_get_physical_device_properties2.ImageFormatOptions{},
-		&khr_get_physical_device_properties2.ImageFormatOutData{
+		&khr_get_physical_device_properties2.ImageFormatPropertiesOutData{
 			HaveNext: common.HaveNext{&outData},
 		})
 	require.NoError(t, err)

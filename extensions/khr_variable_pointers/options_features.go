@@ -11,14 +11,14 @@ import (
 	"unsafe"
 )
 
-type VariablePointersFeatureOptions struct {
+type PhysicalDeviceVariablePointersFeatureOptions struct {
 	VariablePointersStorageBuffer bool
 	VariablePointers              bool
 
 	common.HaveNext
 }
 
-func (o VariablePointersFeatureOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o PhysicalDeviceVariablePointersFeatureOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceVariablePointersFeaturesKHR{})))
 	}
@@ -39,7 +39,7 @@ func (o VariablePointersFeatureOptions) PopulateCPointer(allocator *cgoparam.All
 	return preallocatedPointer, nil
 }
 
-func (o VariablePointersFeatureOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o PhysicalDeviceVariablePointersFeatureOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	createInfo := (*C.VkPhysicalDeviceVariablePointersFeaturesKHR)(cDataPointer)
 	return createInfo.pNext, nil
 }

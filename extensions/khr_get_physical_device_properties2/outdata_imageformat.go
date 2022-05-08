@@ -12,13 +12,13 @@ import (
 	"unsafe"
 )
 
-type ImageFormatOutData struct {
+type ImageFormatPropertiesOutData struct {
 	ImageFormatProperties core1_0.ImageFormatProperties
 
 	common.HaveNext
 }
 
-func (o *ImageFormatOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *ImageFormatPropertiesOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkImageFormatProperties2KHR{})))
 	}
@@ -30,7 +30,7 @@ func (o *ImageFormatOutData) PopulateCPointer(allocator *cgoparam.Allocator, pre
 	return preallocatedPointer, nil
 }
 
-func (o *ImageFormatOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *ImageFormatPropertiesOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	data := (*C.VkImageFormatProperties2KHR)(cDataPointer)
 	o.ImageFormatProperties.MaxExtent = common.Extent3D{
 		Width:  int(data.imageFormatProperties.maxExtent.width),

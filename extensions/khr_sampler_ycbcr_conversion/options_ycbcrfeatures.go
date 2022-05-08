@@ -11,13 +11,13 @@ import (
 	"unsafe"
 )
 
-type SamplerYcbcrFeaturesOptions struct {
+type PhysicalDeviceSamplerYcbcrFeaturesOptions struct {
 	SamplerYcbcrConversion bool
 
 	common.HaveNext
 }
 
-func (o SamplerYcbcrFeaturesOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o PhysicalDeviceSamplerYcbcrFeaturesOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR{})))
 	}
@@ -34,7 +34,7 @@ func (o SamplerYcbcrFeaturesOptions) PopulateCPointer(allocator *cgoparam.Alloca
 	return preallocatedPointer, nil
 }
 
-func (o SamplerYcbcrFeaturesOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o PhysicalDeviceSamplerYcbcrFeaturesOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	info := (*C.VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR)(cDataPointer)
 	return info.pNext, nil
 }

@@ -264,7 +264,7 @@ func TestVulkanDevice_CreateDeviceWithFeatures(t *testing.T) {
 		})
 
 	options := core1_0.DeviceCreateOptions{
-		QueueFamilies: []core1_0.DeviceQueueOptions{
+		QueueFamilies: []core1_0.DeviceQueueCreateOptions{
 			{
 				QueueFamilyIndex:       1,
 				CreatedQueuePriorities: []float32{3, 5, 7},
@@ -373,7 +373,7 @@ func TestVulkanExtension_PhysicalDeviceImageFormatProperties(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	outData := khr_get_physical_device_properties2.ImageFormatOutData{}
+	outData := khr_get_physical_device_properties2.ImageFormatPropertiesOutData{}
 	_, err := extension.PhysicalDeviceImageFormatProperties(physicalDevice, khr_get_physical_device_properties2.ImageFormatOptions{
 		Format: core1_0.DataFormatA2B10G10R10UnsignedIntPacked,
 		Type:   core1_0.ImageType2D,

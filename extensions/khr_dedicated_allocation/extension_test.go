@@ -59,7 +59,7 @@ func TestDedicatedMemoryRequirementsOutData_Buffer(t *testing.T) {
 			*(*driver.VkBool32)(unsafe.Pointer(dedicated.FieldByName("requiresDedicatedAllocation").UnsafeAddr())) = driver.VkBool32(0)
 		})
 
-	var memReqs khr_dedicated_allocation.DedicatedAllocationOutData
+	var memReqs khr_dedicated_allocation.MemoryDedicatedAllocationOutData
 	var outData = khr_get_memory_requirements2.MemoryRequirementsOutData{
 		HaveNext: common.HaveNext{Next: &memReqs},
 	}
@@ -116,7 +116,7 @@ func TestDedicatedMemoryRequirementsOutData_Image(t *testing.T) {
 			*(*driver.VkBool32)(unsafe.Pointer(dedicated.FieldByName("requiresDedicatedAllocation").UnsafeAddr())) = driver.VkBool32(0)
 		})
 
-	var memReqs khr_dedicated_allocation.DedicatedAllocationOutData
+	var memReqs khr_dedicated_allocation.MemoryDedicatedAllocationOutData
 	var outData = khr_get_memory_requirements2.MemoryRequirementsOutData{
 		HaveNext: common.HaveNext{Next: &memReqs},
 	}
@@ -153,7 +153,7 @@ func TestMemoryDedicatedAllocateOptions(t *testing.T) {
 		})
 
 	device, _, err := loader.CreateDevice(physicalDevice, nil, core1_0.DeviceCreateOptions{
-		QueueFamilies: []core1_0.DeviceQueueOptions{
+		QueueFamilies: []core1_0.DeviceQueueCreateOptions{
 			{
 				CreatedQueuePriorities: []float32{0},
 			},
@@ -187,7 +187,7 @@ func TestMemoryDedicatedAllocateOptions(t *testing.T) {
 	memory, _, err := loader.AllocateMemory(device, nil, core1_0.MemoryAllocateOptions{
 		AllocationSize:  1,
 		MemoryTypeIndex: 3,
-		HaveNext: common.HaveNext{Next: khr_dedicated_allocation.DedicatedAllocationOptions{
+		HaveNext: common.HaveNext{Next: khr_dedicated_allocation.MemoryDedicatedAllocationOptions{
 			Buffer: buffer,
 		}},
 	})

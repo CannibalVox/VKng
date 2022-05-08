@@ -58,13 +58,13 @@ func TestVariablePointersFeatureOptions(t *testing.T) {
 		})
 
 	device, _, err := loader.CreateDevice(physicalDevice, nil, core1_0.DeviceCreateOptions{
-		QueueFamilies: []core1_0.DeviceQueueOptions{
+		QueueFamilies: []core1_0.DeviceQueueCreateOptions{
 			{
 				CreatedQueuePriorities: []float32{0},
 			},
 		},
 
-		HaveNext: common.HaveNext{Next: khr_variable_pointers.VariablePointersFeatureOptions{
+		HaveNext: common.HaveNext{Next: khr_variable_pointers.PhysicalDeviceVariablePointersFeatureOptions{
 			VariablePointers:              true,
 			VariablePointersStorageBuffer: false,
 		}},
@@ -84,7 +84,7 @@ func TestVariablePointersFeatureOutData(t *testing.T) {
 	extDriver := mock_get_physical_device_properties2.NewMockDriver(ctrl)
 	extension := khr_get_physical_device_properties2.CreateExtensionFromDriver(extDriver)
 
-	var pointersOutData khr_variable_pointers.VariablePointersFeatureOutData
+	var pointersOutData khr_variable_pointers.PhysicalDeviceVariablePointersFeatureOutData
 
 	extDriver.EXPECT().VkGetPhysicalDeviceFeatures2KHR(
 		physicalDevice.Handle(),

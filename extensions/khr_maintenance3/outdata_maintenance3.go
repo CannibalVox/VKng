@@ -11,14 +11,14 @@ import (
 	"unsafe"
 )
 
-type Maintenance3OutData struct {
+type PhysicalDeviceMaintenance3OutData struct {
 	MaxPerSetDescriptors    int
 	MaxMemoryAllocationSize int
 
 	common.HaveNext
 }
 
-func (o *Maintenance3OutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDeviceMaintenance3OutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceMaintenance3PropertiesKHR{})))
 	}
@@ -30,7 +30,7 @@ func (o *Maintenance3OutData) PopulateCPointer(allocator *cgoparam.Allocator, pr
 	return preallocatedPointer, nil
 }
 
-func (o *Maintenance3OutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *PhysicalDeviceMaintenance3OutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	outData := (*C.VkPhysicalDeviceMaintenance3PropertiesKHR)(cDataPointer)
 
 	o.MaxMemoryAllocationSize = int(outData.maxMemoryAllocationSize)

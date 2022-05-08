@@ -53,14 +53,14 @@ func TestDevice16BitStorageOptions(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	storage := khr_16bit_storage.Device16BitStorageFeaturesOptions{
+	storage := khr_16bit_storage.PhysicalDevice16BitStorageFeaturesOptions{
 		StorageInputOutput16:               true,
 		UniformAndStorageBuffer16BitAccess: true,
 		StoragePushConstant16:              false,
 		StorageBuffer16BitAccess:           false,
 	}
 	device, _, err := loader.CreateDevice(physicalDevice, nil, core1_0.DeviceCreateOptions{
-		QueueFamilies: []core1_0.DeviceQueueOptions{
+		QueueFamilies: []core1_0.DeviceQueueCreateOptions{
 			{
 				CreatedQueuePriorities: []float32{0},
 			},
@@ -101,7 +101,7 @@ func TestDevice16BitStorageOutData(t *testing.T) {
 			*(*driver.VkBool32)(unsafe.Pointer(outDataVal.FieldByName("storageInputOutput16").UnsafeAddr())) = driver.VkBool32(1)
 		})
 
-	outData := &khr_16bit_storage.Device16BitStorageFeaturesOutData{}
+	outData := &khr_16bit_storage.PhysicalDevice16BitStorageFeaturesOutData{}
 	features := &khr_get_physical_device_properties2.DeviceFeaturesOutData{
 		HaveNext: common.HaveNext{Next: outData},
 	}

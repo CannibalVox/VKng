@@ -13,18 +13,18 @@ import (
 	"unsafe"
 )
 
-type DedicatedAllocationOptions struct {
+type MemoryDedicatedAllocationOptions struct {
 	Image  core1_0.Image
 	Buffer core1_0.Buffer
 
 	common.HaveNext
 }
 
-func (o DedicatedAllocationOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o MemoryDedicatedAllocationOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if o.Image != nil && o.Buffer != nil {
-		return nil, errors.New("both Image and Buffer fields are set in DedicatedAllocationOptions- only one must be set")
+		return nil, errors.New("both Image and Buffer fields are set in MemoryDedicatedAllocationOptions- only one must be set")
 	} else if o.Image == nil && o.Buffer == nil {
-		return nil, errors.New("neither Image nor Buffer fields are set in DedicatedAllocationOptions- one must be set")
+		return nil, errors.New("neither Image nor Buffer fields are set in MemoryDedicatedAllocationOptions- one must be set")
 	}
 
 	if preallocatedPointer == nil {
@@ -46,7 +46,7 @@ func (o DedicatedAllocationOptions) PopulateCPointer(allocator *cgoparam.Allocat
 	return preallocatedPointer, nil
 }
 
-func (o DedicatedAllocationOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o MemoryDedicatedAllocationOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	createInfo := (*C.VkMemoryDedicatedAllocateInfoKHR)(cDataPointer)
 	return createInfo.pNext, nil
 }

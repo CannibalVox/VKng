@@ -12,13 +12,13 @@ import (
 	"unsafe"
 )
 
-type InputAttachmentAspectOptions struct {
+type RenderPassInputAttachmentAspectOptions struct {
 	AspectReferences []InputAttachmentAspectReference
 
 	common.HaveNext
 }
 
-func (o InputAttachmentAspectOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o RenderPassInputAttachmentAspectOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkRenderPassInputAttachmentAspectCreateInfoKHR{})))
 	}
@@ -29,7 +29,7 @@ func (o InputAttachmentAspectOptions) PopulateCPointer(allocator *cgoparam.Alloc
 
 	count := len(o.AspectReferences)
 	if count < 1 {
-		return nil, errors.New("options InputAttachmentAspectOptions must include at least 1 entry in AspectReferences")
+		return nil, errors.New("options RenderPassInputAttachmentAspectOptions must include at least 1 entry in AspectReferences")
 	}
 
 	createInfo.aspectReferenceCount = C.uint32_t(count)
@@ -42,9 +42,9 @@ func (o InputAttachmentAspectOptions) PopulateCPointer(allocator *cgoparam.Alloc
 	return preallocatedPointer, nil
 }
 
-func (o InputAttachmentAspectOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o RenderPassInputAttachmentAspectOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	createInfo := (*C.VkRenderPassInputAttachmentAspectCreateInfoKHR)(cDataPointer)
 	return createInfo.pNext, nil
 }
 
-var _ common.Options = InputAttachmentAspectOptions{}
+var _ common.Options = RenderPassInputAttachmentAspectOptions{}
