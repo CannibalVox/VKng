@@ -36,7 +36,7 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 	return m.recorder
 }
 
-// VkDestroySurfaceKHR mocks base method.
+// VkDestroySurfaceKHR dummies base method.
 func (m *MockDriver) VkDestroySurfaceKHR(instance driver.VkInstance, surface khr_surface_driver.VkSurfaceKHR, pAllocator *driver.VkAllocationCallbacks) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkDestroySurfaceKHR", instance, surface, pAllocator)
@@ -48,7 +48,7 @@ func (mr *MockDriverMockRecorder) VkDestroySurfaceKHR(instance, surface, pAlloca
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkDestroySurfaceKHR", reflect.TypeOf((*MockDriver)(nil).VkDestroySurfaceKHR), instance, surface, pAllocator)
 }
 
-// VkGetPhysicalDeviceSurfaceCapabilitiesKHR mocks base method.
+// VkGetPhysicalDeviceSurfaceCapabilitiesKHR dummies base method.
 func (m *MockDriver) VkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice driver.VkPhysicalDevice, surface khr_surface_driver.VkSurfaceKHR, pSurfaceCapabilities *khr_surface_driver.VkSurfaceCapabilitiesKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkGetPhysicalDeviceSurfaceCapabilitiesKHR", physicalDevice, surface, pSurfaceCapabilities)
@@ -63,7 +63,7 @@ func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceSurfaceCapabilitiesKHR(phys
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceSurfaceCapabilitiesKHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceSurfaceCapabilitiesKHR), physicalDevice, surface, pSurfaceCapabilities)
 }
 
-// VkGetPhysicalDeviceSurfaceFormatsKHR mocks base method.
+// VkGetPhysicalDeviceSurfaceFormatsKHR dummies base method.
 func (m *MockDriver) VkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice driver.VkPhysicalDevice, surface khr_surface_driver.VkSurfaceKHR, pSurfaceFormatCount *driver.Uint32, pSurfaceFormats *khr_surface_driver.VkSurfaceFormatKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkGetPhysicalDeviceSurfaceFormatsKHR", physicalDevice, surface, pSurfaceFormatCount, pSurfaceFormats)
@@ -78,7 +78,7 @@ func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceSurfaceFormatsKHR(physicalD
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceSurfaceFormatsKHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceSurfaceFormatsKHR), physicalDevice, surface, pSurfaceFormatCount, pSurfaceFormats)
 }
 
-// VkGetPhysicalDeviceSurfacePresentModesKHR mocks base method.
+// VkGetPhysicalDeviceSurfacePresentModesKHR dummies base method.
 func (m *MockDriver) VkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice driver.VkPhysicalDevice, surface khr_surface_driver.VkSurfaceKHR, pPresentModeCount *driver.Uint32, pPresentModes *khr_surface_driver.VkPresentModeKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkGetPhysicalDeviceSurfacePresentModesKHR", physicalDevice, surface, pPresentModeCount, pPresentModes)
@@ -93,7 +93,7 @@ func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceSurfacePresentModesKHR(phys
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceSurfacePresentModesKHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceSurfacePresentModesKHR), physicalDevice, surface, pPresentModeCount, pPresentModes)
 }
 
-// VkGetPhysicalDeviceSurfaceSupportKHR mocks base method.
+// VkGetPhysicalDeviceSurfaceSupportKHR dummies base method.
 func (m *MockDriver) VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice driver.VkPhysicalDevice, queueFamilyIndex driver.Uint32, surface khr_surface_driver.VkSurfaceKHR, pSupported *driver.VkBool32) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkGetPhysicalDeviceSurfaceSupportKHR", physicalDevice, queueFamilyIndex, surface, pSupported)

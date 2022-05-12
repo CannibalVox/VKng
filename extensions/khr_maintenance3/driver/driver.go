@@ -7,7 +7,7 @@ import (
 	"unsafe"
 )
 
-//go:generate mockgen -source driver.go -destination ../mocks/driver.go -package mock_maintenance3
+//go:generate mockgen -source driver.go -destination ../dummies/driver.go -package mock_maintenance3
 
 /*
 #include <stdlib.h>

@@ -74,7 +74,7 @@ func (e *VulkanExtension) ImageMemoryRequirements(device core1_0.Device, o Image
 	return common.PopulateOutData(out, outDataPtr)
 }
 
-func (e *VulkanExtension) SparseImageMemoryRequirements(device core1_0.Device, o SparseImageRequirementsOptions, outDataFactory func() *SparseImageRequirementsOutData) ([]*SparseImageRequirementsOutData, error) {
+func (e *VulkanExtension) SparseImageMemoryRequirements(device core1_0.Device, o ImageSparseMemoryRequirementsOptions, outDataFactory func() *SparseImageMemoryRequirementsOutData) ([]*SparseImageMemoryRequirementsOutData, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -96,16 +96,16 @@ func (e *VulkanExtension) SparseImageMemoryRequirements(device core1_0.Device, o
 		return nil, nil
 	}
 
-	outDataSlice := make([]*SparseImageRequirementsOutData, count)
+	outDataSlice := make([]*SparseImageMemoryRequirementsOutData, count)
 	for i := 0; i < count; i++ {
 		if outDataFactory != nil {
 			outDataSlice[i] = outDataFactory()
 		} else {
-			outDataSlice[i] = &SparseImageRequirementsOutData{}
+			outDataSlice[i] = &SparseImageMemoryRequirementsOutData{}
 		}
 	}
 
-	outDataPtr, err := common.AllocOptionSlice[C.VkSparseImageMemoryRequirements2KHR, *SparseImageRequirementsOutData](arena, outDataSlice)
+	outDataPtr, err := common.AllocOptionSlice[C.VkSparseImageMemoryRequirements2KHR, *SparseImageMemoryRequirementsOutData](arena, outDataSlice)
 	if err != nil {
 		return nil, err
 	}
@@ -118,7 +118,7 @@ func (e *VulkanExtension) SparseImageMemoryRequirements(device core1_0.Device, o
 		(*khr_get_memory_requirements2_driver.VkSparseImageMemoryRequirements2KHR)(unsafe.Pointer(castOutDataPtr)),
 	)
 
-	err = common.PopulateOutDataSlice[C.VkSparseImageMemoryRequirements2KHR, *SparseImageRequirementsOutData](outDataSlice, unsafe.Pointer(outDataPtr))
+	err = common.PopulateOutDataSlice[C.VkSparseImageMemoryRequirements2KHR, *SparseImageMemoryRequirementsOutData](outDataSlice, unsafe.Pointer(outDataPtr))
 	if err != nil {
 		return nil, err
 	}

@@ -36,7 +36,7 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 	return m.recorder
 }
 
-// VkCreateSamplerYcbcrConversionKHR mocks base method.
+// VkCreateSamplerYcbcrConversionKHR dummies base method.
 func (m *MockDriver) VkCreateSamplerYcbcrConversionKHR(device driver.VkDevice, pCreateInfo *khr_sampler_ycbcr_conversion_driver.VkSamplerYcbcrConversionCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pYcbcrConversion *khr_sampler_ycbcr_conversion_driver.VkSamplerYcbcrConversionKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkCreateSamplerYcbcrConversionKHR", device, pCreateInfo, pAllocator, pYcbcrConversion)
@@ -51,7 +51,7 @@ func (mr *MockDriverMockRecorder) VkCreateSamplerYcbcrConversionKHR(device, pCre
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkCreateSamplerYcbcrConversionKHR", reflect.TypeOf((*MockDriver)(nil).VkCreateSamplerYcbcrConversionKHR), device, pCreateInfo, pAllocator, pYcbcrConversion)
 }
 
-// VkDestroySamplerYcbcrConversionKHR mocks base method.
+// VkDestroySamplerYcbcrConversionKHR dummies base method.
 func (m *MockDriver) VkDestroySamplerYcbcrConversionKHR(device driver.VkDevice, ycbcrConversion khr_sampler_ycbcr_conversion_driver.VkSamplerYcbcrConversionKHR, pAllocator *driver.VkAllocationCallbacks) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkDestroySamplerYcbcrConversionKHR", device, ycbcrConversion, pAllocator)

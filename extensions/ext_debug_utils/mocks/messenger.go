@@ -35,7 +35,7 @@ func (m *MockMessenger) EXPECT() *MockMessengerMockRecorder {
 	return m.recorder
 }
 
-// Destroy mocks base method.
+// Destroy dummies base method.
 func (m *MockMessenger) Destroy(callbacks *driver.AllocationCallbacks) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "Destroy", callbacks)
@@ -47,7 +47,7 @@ func (mr *MockMessengerMockRecorder) Destroy(callbacks interface{}) *gomock.Call
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Destroy", reflect.TypeOf((*MockMessenger)(nil).Destroy), callbacks)
 }
 
-// Handle mocks base method.
+// Handle dummies base method.
 func (m *MockMessenger) Handle() ext_debug_utils_driver.VkDebugUtilsMessengerEXT {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Handle")

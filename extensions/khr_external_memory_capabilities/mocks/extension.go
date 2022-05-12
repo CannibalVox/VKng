@@ -35,7 +35,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 	return m.recorder
 }
 
-// ExternalBufferProperties mocks base method.
+// ExternalBufferProperties dummies base method.
 func (m *MockExtension) ExternalBufferProperties(physicalDevice core1_0.PhysicalDevice, o khr_external_memory_capabilities.ExternalBufferOptions, outData *khr_external_memory_capabilities.ExternalBufferOutData) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ExternalBufferProperties", physicalDevice, o, outData)

@@ -200,11 +200,11 @@ func TestVulkanExtension_SparseImageMemoryRequirements(t *testing.T) {
 		})
 
 	outData, err := extension.SparseImageMemoryRequirements(device,
-		khr_get_memory_requirements2.SparseImageRequirementsOptions{
+		khr_get_memory_requirements2.ImageSparseMemoryRequirementsOptions{
 			Image: image,
 		}, nil)
 	require.NoError(t, err)
-	require.Equal(t, []*khr_get_memory_requirements2.SparseImageRequirementsOutData{
+	require.Equal(t, []*khr_get_memory_requirements2.SparseImageMemoryRequirementsOutData{
 		{
 			MemoryRequirements: core1_0.SparseImageMemoryRequirements{
 				FormatProperties: core1_0.SparseImageFormatProperties{

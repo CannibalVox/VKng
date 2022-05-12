@@ -35,7 +35,7 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 	return m.recorder
 }
 
-// VkGetPhysicalDeviceExternalSemaphorePropertiesKHR mocks base method.
+// VkGetPhysicalDeviceExternalSemaphorePropertiesKHR dummies base method.
 func (m *MockDriver) VkGetPhysicalDeviceExternalSemaphorePropertiesKHR(physicalDevice driver.VkPhysicalDevice, pExternalSemaphoreInfo *khr_external_semaphore_capabilities_driver.VkPhysicalDeviceExternalSemaphoreInfoKHR, pExternalSemaphoreProperties *khr_external_semaphore_capabilities_driver.VkExternalSemaphorePropertiesKHR) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkGetPhysicalDeviceExternalSemaphorePropertiesKHR", physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties)

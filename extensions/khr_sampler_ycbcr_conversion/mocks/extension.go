@@ -38,7 +38,7 @@ func (m *MockSamplerYcbcrConversion) EXPECT() *MockSamplerYcbcrConversionMockRec
 	return m.recorder
 }
 
-// Destroy mocks base method.
+// Destroy dummies base method.
 func (m *MockSamplerYcbcrConversion) Destroy(allocator *driver.AllocationCallbacks) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "Destroy", allocator)
@@ -50,7 +50,7 @@ func (mr *MockSamplerYcbcrConversionMockRecorder) Destroy(allocator interface{})
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Destroy", reflect.TypeOf((*MockSamplerYcbcrConversion)(nil).Destroy), allocator)
 }
 
-// Handle mocks base method.
+// Handle dummies base method.
 func (m *MockSamplerYcbcrConversion) Handle() khr_sampler_ycbcr_conversion_driver.VkSamplerYcbcrConversionKHR {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Handle")
@@ -87,7 +87,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 	return m.recorder
 }
 
-// CreateSamplerYcbcrConversion mocks base method.
+// CreateSamplerYcbcrConversion dummies base method.
 func (m *MockExtension) CreateSamplerYcbcrConversion(device core1_0.Device, o khr_sampler_ycbcr_conversion.SamplerYcbcrConversionCreateOptions, allocator *driver.AllocationCallbacks) (khr_sampler_ycbcr_conversion.SamplerYcbcrConversion, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateSamplerYcbcrConversion", device, o, allocator)

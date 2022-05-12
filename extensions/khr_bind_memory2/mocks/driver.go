@@ -36,7 +36,7 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 	return m.recorder
 }
 
-// VkBindBufferMemory2KHR mocks base method.
+// VkBindBufferMemory2KHR dummies base method.
 func (m *MockDriver) VkBindBufferMemory2KHR(device driver.VkDevice, bindInfoCount driver.Uint32, pBindInfos *khr_bind_memory2_driver.VkBindBufferMemoryInfoKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkBindBufferMemory2KHR", device, bindInfoCount, pBindInfos)
@@ -51,7 +51,7 @@ func (mr *MockDriverMockRecorder) VkBindBufferMemory2KHR(device, bindInfoCount, 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkBindBufferMemory2KHR", reflect.TypeOf((*MockDriver)(nil).VkBindBufferMemory2KHR), device, bindInfoCount, pBindInfos)
 }
 
-// VkBindImageMemory2KHR mocks base method.
+// VkBindImageMemory2KHR dummies base method.
 func (m *MockDriver) VkBindImageMemory2KHR(device driver.VkDevice, bindInfoCount driver.Uint32, pBindInfos *khr_bind_memory2_driver.VkBindImageMemoryInfoKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkBindImageMemory2KHR", device, bindInfoCount, pBindInfos)

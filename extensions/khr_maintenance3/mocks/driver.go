@@ -35,7 +35,7 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 	return m.recorder
 }
 
-// VkGetDescriptorSetLayoutSupportKHR mocks base method.
+// VkGetDescriptorSetLayoutSupportKHR dummies base method.
 func (m *MockDriver) VkGetDescriptorSetLayoutSupportKHR(device driver.VkDevice, pCreateInfo *driver.VkDescriptorSetLayoutCreateInfo, pSupport *khr_maintenance3_driver.VkDescriptorSetLayoutSupportKHR) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkGetDescriptorSetLayoutSupportKHR", device, pCreateInfo, pSupport)

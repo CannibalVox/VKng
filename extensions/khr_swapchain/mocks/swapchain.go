@@ -39,7 +39,7 @@ func (m *MockSwapchain) EXPECT() *MockSwapchainMockRecorder {
 	return m.recorder
 }
 
-// AcquireNextImage mocks base method.
+// AcquireNextImage dummies base method.
 func (m *MockSwapchain) AcquireNextImage(timeout time.Duration, semaphore core1_0.Semaphore, fence core1_0.Fence) (int, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AcquireNextImage", timeout, semaphore, fence)
@@ -55,7 +55,7 @@ func (mr *MockSwapchainMockRecorder) AcquireNextImage(timeout, semaphore, fence 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AcquireNextImage", reflect.TypeOf((*MockSwapchain)(nil).AcquireNextImage), timeout, semaphore, fence)
 }
 
-// Destroy mocks base method.
+// Destroy dummies base method.
 func (m *MockSwapchain) Destroy(callbacks *driver.AllocationCallbacks) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "Destroy", callbacks)
@@ -67,7 +67,7 @@ func (mr *MockSwapchainMockRecorder) Destroy(callbacks interface{}) *gomock.Call
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Destroy", reflect.TypeOf((*MockSwapchain)(nil).Destroy), callbacks)
 }
 
-// Handle mocks base method.
+// Handle dummies base method.
 func (m *MockSwapchain) Handle() khr_swapchain_driver.VkSwapchainKHR {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Handle")
@@ -81,7 +81,7 @@ func (mr *MockSwapchainMockRecorder) Handle() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Handle", reflect.TypeOf((*MockSwapchain)(nil).Handle))
 }
 
-// Images mocks base method.
+// Images dummies base method.
 func (m *MockSwapchain) Images() ([]core.Image, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Images")

@@ -35,7 +35,7 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 	return m.recorder
 }
 
-// VkTrimCommandPoolKHR mocks base method.
+// VkTrimCommandPoolKHR dummies base method.
 func (m *MockDriver) VkTrimCommandPoolKHR(device driver.VkDevice, commandPool driver.VkCommandPool, flags khr_maintenance1_driver.VkCommandPoolTrimFlagsKHR) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkTrimCommandPoolKHR", device, commandPool, flags)

@@ -37,7 +37,7 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 	return m.recorder
 }
 
-// VkCmdPushDescriptorSetWithTemplateKHR mocks base method.
+// VkCmdPushDescriptorSetWithTemplateKHR dummies base method.
 func (m *MockDriver) VkCmdPushDescriptorSetWithTemplateKHR(commandBuffer driver.VkCommandBuffer, descriptorUpdateTemplate khr_descriptor_update_template_driver.VkDescriptorUpdateTemplateKHR, layout driver.VkPipelineLayout, set driver.Uint32, pData unsafe.Pointer) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkCmdPushDescriptorSetWithTemplateKHR", commandBuffer, descriptorUpdateTemplate, layout, set, pData)
@@ -49,7 +49,7 @@ func (mr *MockDriverMockRecorder) VkCmdPushDescriptorSetWithTemplateKHR(commandB
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkCmdPushDescriptorSetWithTemplateKHR", reflect.TypeOf((*MockDriver)(nil).VkCmdPushDescriptorSetWithTemplateKHR), commandBuffer, descriptorUpdateTemplate, layout, set, pData)
 }
 
-// VkCreateDescriptorUpdateTemplateKHR mocks base method.
+// VkCreateDescriptorUpdateTemplateKHR dummies base method.
 func (m *MockDriver) VkCreateDescriptorUpdateTemplateKHR(device driver.VkDevice, pCreateInfo *khr_descriptor_update_template_driver.VkDescriptorUpdateTemplateCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pDescriptorUpdateTemplate *khr_descriptor_update_template_driver.VkDescriptorUpdateTemplateKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkCreateDescriptorUpdateTemplateKHR", device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate)
@@ -64,7 +64,7 @@ func (mr *MockDriverMockRecorder) VkCreateDescriptorUpdateTemplateKHR(device, pC
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkCreateDescriptorUpdateTemplateKHR", reflect.TypeOf((*MockDriver)(nil).VkCreateDescriptorUpdateTemplateKHR), device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate)
 }
 
-// VkDestroyDescriptorUpdateTemplateKHR mocks base method.
+// VkDestroyDescriptorUpdateTemplateKHR dummies base method.
 func (m *MockDriver) VkDestroyDescriptorUpdateTemplateKHR(device driver.VkDevice, descriptorUpdateTemplate khr_descriptor_update_template_driver.VkDescriptorUpdateTemplateKHR, pAllocator *driver.VkAllocationCallbacks) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkDestroyDescriptorUpdateTemplateKHR", device, descriptorUpdateTemplate, pAllocator)
@@ -76,7 +76,7 @@ func (mr *MockDriverMockRecorder) VkDestroyDescriptorUpdateTemplateKHR(device, d
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkDestroyDescriptorUpdateTemplateKHR", reflect.TypeOf((*MockDriver)(nil).VkDestroyDescriptorUpdateTemplateKHR), device, descriptorUpdateTemplate, pAllocator)
 }
 
-// VkUpdateDescriptorSetWithTemplateKHR mocks base method.
+// VkUpdateDescriptorSetWithTemplateKHR dummies base method.
 func (m *MockDriver) VkUpdateDescriptorSetWithTemplateKHR(device driver.VkDevice, descriptorSet driver.VkDescriptorSet, descriptorUpdateTemplate khr_descriptor_update_template_driver.VkDescriptorUpdateTemplateKHR, pData unsafe.Pointer) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkUpdateDescriptorSetWithTemplateKHR", device, descriptorSet, descriptorUpdateTemplate, pData)

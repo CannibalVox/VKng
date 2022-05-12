@@ -35,7 +35,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 	return m.recorder
 }
 
-// BufferMemoryRequirements mocks base method.
+// BufferMemoryRequirements dummies base method.
 func (m *MockExtension) BufferMemoryRequirements(device core1_0.Device, o khr_get_memory_requirements2.BufferMemoryRequirementsOptions, out *khr_get_memory_requirements2.MemoryRequirementsOutData) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "BufferMemoryRequirements", device, o, out)
@@ -49,7 +49,7 @@ func (mr *MockExtensionMockRecorder) BufferMemoryRequirements(device, o, out int
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BufferMemoryRequirements", reflect.TypeOf((*MockExtension)(nil).BufferMemoryRequirements), device, o, out)
 }
 
-// ImageMemoryRequirements mocks base method.
+// ImageMemoryRequirements dummies base method.
 func (m *MockExtension) ImageMemoryRequirements(device core1_0.Device, o khr_get_memory_requirements2.ImageMemoryRequirementsOptions, out *khr_get_memory_requirements2.MemoryRequirementsOutData) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ImageMemoryRequirements", device, o, out)
@@ -63,11 +63,11 @@ func (mr *MockExtensionMockRecorder) ImageMemoryRequirements(device, o, out inte
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ImageMemoryRequirements", reflect.TypeOf((*MockExtension)(nil).ImageMemoryRequirements), device, o, out)
 }
 
-// SparseImageMemoryRequirements mocks base method.
-func (m *MockExtension) SparseImageMemoryRequirements(device core1_0.Device, o khr_get_memory_requirements2.SparseImageRequirementsOptions, outDataFactory func() *khr_get_memory_requirements2.SparseImageRequirementsOutData) ([]*khr_get_memory_requirements2.SparseImageRequirementsOutData, error) {
+// SparseImageMemoryRequirements dummies base method.
+func (m *MockExtension) SparseImageMemoryRequirements(device core1_0.Device, o khr_get_memory_requirements2.ImageSparseMemoryRequirementsOptions, outDataFactory func() *khr_get_memory_requirements2.SparseImageMemoryRequirementsOutData) ([]*khr_get_memory_requirements2.SparseImageMemoryRequirementsOutData, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SparseImageMemoryRequirements", device, o, outDataFactory)
-	ret0, _ := ret[0].([]*khr_get_memory_requirements2.SparseImageRequirementsOutData)
+	ret0, _ := ret[0].([]*khr_get_memory_requirements2.SparseImageMemoryRequirementsOutData)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

@@ -36,7 +36,7 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 	return m.recorder
 }
 
-// VkAcquireNextImageKHR mocks base method.
+// VkAcquireNextImageKHR dummies base method.
 func (m *MockDriver) VkAcquireNextImageKHR(device driver.VkDevice, swapchain khr_swapchain_driver.VkSwapchainKHR, timeout driver.Uint64, semaphore driver.VkSemaphore, fence driver.VkFence, pImageIndex *driver.Uint32) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkAcquireNextImageKHR", device, swapchain, timeout, semaphore, fence, pImageIndex)
@@ -51,7 +51,7 @@ func (mr *MockDriverMockRecorder) VkAcquireNextImageKHR(device, swapchain, timeo
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkAcquireNextImageKHR", reflect.TypeOf((*MockDriver)(nil).VkAcquireNextImageKHR), device, swapchain, timeout, semaphore, fence, pImageIndex)
 }
 
-// VkCreateSwapchainKHR mocks base method.
+// VkCreateSwapchainKHR dummies base method.
 func (m *MockDriver) VkCreateSwapchainKHR(device driver.VkDevice, pCreateInfo *khr_swapchain_driver.VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *khr_swapchain_driver.VkSwapchainKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkCreateSwapchainKHR", device, pCreateInfo, pAllocator, pSwapchain)
@@ -66,7 +66,7 @@ func (mr *MockDriverMockRecorder) VkCreateSwapchainKHR(device, pCreateInfo, pAll
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkCreateSwapchainKHR", reflect.TypeOf((*MockDriver)(nil).VkCreateSwapchainKHR), device, pCreateInfo, pAllocator, pSwapchain)
 }
 
-// VkDestroySwapchainKHR mocks base method.
+// VkDestroySwapchainKHR dummies base method.
 func (m *MockDriver) VkDestroySwapchainKHR(device driver.VkDevice, swapchain khr_swapchain_driver.VkSwapchainKHR, pAllocator *driver.VkAllocationCallbacks) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkDestroySwapchainKHR", device, swapchain, pAllocator)
@@ -78,7 +78,7 @@ func (mr *MockDriverMockRecorder) VkDestroySwapchainKHR(device, swapchain, pAllo
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkDestroySwapchainKHR", reflect.TypeOf((*MockDriver)(nil).VkDestroySwapchainKHR), device, swapchain, pAllocator)
 }
 
-// VkGetSwapchainImagesKHR mocks base method.
+// VkGetSwapchainImagesKHR dummies base method.
 func (m *MockDriver) VkGetSwapchainImagesKHR(device driver.VkDevice, swapchain khr_swapchain_driver.VkSwapchainKHR, pSwapchainImageCount *driver.Uint32, pSwapchainImages *driver.VkImage) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkGetSwapchainImagesKHR", device, swapchain, pSwapchainImageCount, pSwapchainImages)
@@ -93,7 +93,7 @@ func (mr *MockDriverMockRecorder) VkGetSwapchainImagesKHR(device, swapchain, pSw
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetSwapchainImagesKHR", reflect.TypeOf((*MockDriver)(nil).VkGetSwapchainImagesKHR), device, swapchain, pSwapchainImageCount, pSwapchainImages)
 }
 
-// VkQueuePresentKHR mocks base method.
+// VkQueuePresentKHR dummies base method.
 func (m *MockDriver) VkQueuePresentKHR(queue driver.VkQueue, pPresentInfo *khr_swapchain_driver.VkPresentInfoKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkQueuePresentKHR", queue, pPresentInfo)

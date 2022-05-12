@@ -12,13 +12,13 @@ import (
 	"unsafe"
 )
 
-type SparseImageRequirementsOptions struct {
+type ImageSparseMemoryRequirementsOptions struct {
 	Image core1_0.Image
 
 	common.HaveNext
 }
 
-func (o SparseImageRequirementsOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o ImageSparseMemoryRequirementsOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkImageSparseMemoryRequirementsInfo2KHR{})))
 	}
@@ -31,7 +31,7 @@ func (o SparseImageRequirementsOptions) PopulateCPointer(allocator *cgoparam.All
 	return preallocatedPointer, nil
 }
 
-func (o SparseImageRequirementsOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o ImageSparseMemoryRequirementsOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	options := (*C.VkImageSparseMemoryRequirementsInfo2KHR)(cDataPointer)
 	return options.pNext, nil
 }

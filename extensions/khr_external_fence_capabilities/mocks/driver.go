@@ -35,7 +35,7 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 	return m.recorder
 }
 
-// VkGetPhysicalDeviceExternalFencePropertiesKHR mocks base method.
+// VkGetPhysicalDeviceExternalFencePropertiesKHR dummies base method.
 func (m *MockDriver) VkGetPhysicalDeviceExternalFencePropertiesKHR(physicalDevice driver.VkPhysicalDevice, pExternalFenceInfo *khr_external_fence_capabilities_driver.VkPhysicalDeviceExternalFenceInfoKHR, pExternalFenceProperties *khr_external_fence_capabilities_driver.VkExternalFencePropertiesKHR) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkGetPhysicalDeviceExternalFencePropertiesKHR", physicalDevice, pExternalFenceInfo, pExternalFenceProperties)

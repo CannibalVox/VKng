@@ -36,7 +36,7 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 	return m.recorder
 }
 
-// VkGetPhysicalDeviceFeatures2KHR mocks base method.
+// VkGetPhysicalDeviceFeatures2KHR dummies base method.
 func (m *MockDriver) VkGetPhysicalDeviceFeatures2KHR(physicalDevice driver.VkPhysicalDevice, pFeatures *khr_get_physical_device_properties2_driver.VkPhysicalDeviceFeatures2KHR) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkGetPhysicalDeviceFeatures2KHR", physicalDevice, pFeatures)
@@ -48,7 +48,7 @@ func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceFeatures2KHR(physicalDevice
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceFeatures2KHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceFeatures2KHR), physicalDevice, pFeatures)
 }
 
-// VkGetPhysicalDeviceFormatProperties2KHR mocks base method.
+// VkGetPhysicalDeviceFormatProperties2KHR dummies base method.
 func (m *MockDriver) VkGetPhysicalDeviceFormatProperties2KHR(physicalDevice driver.VkPhysicalDevice, format driver.VkFormat, pFormatProperties *khr_get_physical_device_properties2_driver.VkFormatProperties2KHR) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkGetPhysicalDeviceFormatProperties2KHR", physicalDevice, format, pFormatProperties)
@@ -60,7 +60,7 @@ func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceFormatProperties2KHR(physic
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceFormatProperties2KHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceFormatProperties2KHR), physicalDevice, format, pFormatProperties)
 }
 
-// VkGetPhysicalDeviceImageFormatProperties2KHR mocks base method.
+// VkGetPhysicalDeviceImageFormatProperties2KHR dummies base method.
 func (m *MockDriver) VkGetPhysicalDeviceImageFormatProperties2KHR(physicalDevice driver.VkPhysicalDevice, pImageFormatInfo *khr_get_physical_device_properties2_driver.VkPhysicalDeviceImageFormatInfo2KHR, pImageFormatProperties *khr_get_physical_device_properties2_driver.VkImageFormatProperties2KHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkGetPhysicalDeviceImageFormatProperties2KHR", physicalDevice, pImageFormatInfo, pImageFormatProperties)
@@ -75,7 +75,7 @@ func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceImageFormatProperties2KHR(p
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceImageFormatProperties2KHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceImageFormatProperties2KHR), physicalDevice, pImageFormatInfo, pImageFormatProperties)
 }
 
-// VkGetPhysicalDeviceMemoryProperties2KHR mocks base method.
+// VkGetPhysicalDeviceMemoryProperties2KHR dummies base method.
 func (m *MockDriver) VkGetPhysicalDeviceMemoryProperties2KHR(physicalDevice driver.VkPhysicalDevice, pMemoryProperties *khr_get_physical_device_properties2_driver.VkPhysicalDeviceMemoryProperties2KHR) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkGetPhysicalDeviceMemoryProperties2KHR", physicalDevice, pMemoryProperties)
@@ -87,7 +87,7 @@ func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceMemoryProperties2KHR(physic
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceMemoryProperties2KHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceMemoryProperties2KHR), physicalDevice, pMemoryProperties)
 }
 
-// VkGetPhysicalDeviceProperties2KHR mocks base method.
+// VkGetPhysicalDeviceProperties2KHR dummies base method.
 func (m *MockDriver) VkGetPhysicalDeviceProperties2KHR(physicalDevice driver.VkPhysicalDevice, pProperties *khr_get_physical_device_properties2_driver.VkPhysicalDeviceProperties2KHR) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkGetPhysicalDeviceProperties2KHR", physicalDevice, pProperties)
@@ -99,7 +99,7 @@ func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceProperties2KHR(physicalDevi
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceProperties2KHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceProperties2KHR), physicalDevice, pProperties)
 }
 
-// VkGetPhysicalDeviceQueueFamilyProperties2KHR mocks base method.
+// VkGetPhysicalDeviceQueueFamilyProperties2KHR dummies base method.
 func (m *MockDriver) VkGetPhysicalDeviceQueueFamilyProperties2KHR(physicalDevice driver.VkPhysicalDevice, pQueueFamilyPropertyCount *driver.Uint32, pQueueFamilyProperties *khr_get_physical_device_properties2_driver.VkQueueFamilyProperties2KHR) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkGetPhysicalDeviceQueueFamilyProperties2KHR", physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties)
@@ -111,7 +111,7 @@ func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceQueueFamilyProperties2KHR(p
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceQueueFamilyProperties2KHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceQueueFamilyProperties2KHR), physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties)
 }
 
-// VkGetPhysicalDeviceSparseImageFormatProperties2KHR mocks base method.
+// VkGetPhysicalDeviceSparseImageFormatProperties2KHR dummies base method.
 func (m *MockDriver) VkGetPhysicalDeviceSparseImageFormatProperties2KHR(physicalDevice driver.VkPhysicalDevice, pFormatInfo *khr_get_physical_device_properties2_driver.VkPhysicalDeviceSparseImageFormatInfo2KHR, pPropertyCount *driver.Uint32, pProperties *khr_get_physical_device_properties2_driver.VkSparseImageFormatProperties2KHR) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkGetPhysicalDeviceSparseImageFormatProperties2KHR", physicalDevice, pFormatInfo, pPropertyCount, pProperties)

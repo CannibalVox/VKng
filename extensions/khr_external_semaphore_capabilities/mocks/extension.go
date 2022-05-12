@@ -35,7 +35,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 	return m.recorder
 }
 
-// ExternalSemaphoreProperties mocks base method.
+// ExternalSemaphoreProperties dummies base method.
 func (m *MockExtension) ExternalSemaphoreProperties(physicalDevice core1_0.PhysicalDevice, o khr_external_semaphore_capabilities.ExternalSemaphoreOptions, outData *khr_external_semaphore_capabilities.ExternalSemaphoreOutData) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ExternalSemaphoreProperties", physicalDevice, o, outData)

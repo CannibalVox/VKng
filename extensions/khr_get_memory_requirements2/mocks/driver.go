@@ -35,7 +35,7 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 	return m.recorder
 }
 
-// VkGetBufferMemoryRequirements2KHR mocks base method.
+// VkGetBufferMemoryRequirements2KHR dummies base method.
 func (m *MockDriver) VkGetBufferMemoryRequirements2KHR(device driver.VkDevice, pInfo *khr_get_memory_requirements2_driver.VkBufferMemoryRequirementsInfo2KHR, pMemoryRequirements *khr_get_memory_requirements2_driver.VkMemoryRequirements2KHR) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkGetBufferMemoryRequirements2KHR", device, pInfo, pMemoryRequirements)
@@ -47,7 +47,7 @@ func (mr *MockDriverMockRecorder) VkGetBufferMemoryRequirements2KHR(device, pInf
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetBufferMemoryRequirements2KHR", reflect.TypeOf((*MockDriver)(nil).VkGetBufferMemoryRequirements2KHR), device, pInfo, pMemoryRequirements)
 }
 
-// VkGetImageMemoryRequirements2KHR mocks base method.
+// VkGetImageMemoryRequirements2KHR dummies base method.
 func (m *MockDriver) VkGetImageMemoryRequirements2KHR(device driver.VkDevice, pInfo *khr_get_memory_requirements2_driver.VkImageMemoryRequirementsInfo2KHR, pMemoryRequirements *khr_get_memory_requirements2_driver.VkMemoryRequirements2KHR) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkGetImageMemoryRequirements2KHR", device, pInfo, pMemoryRequirements)
@@ -59,7 +59,7 @@ func (mr *MockDriverMockRecorder) VkGetImageMemoryRequirements2KHR(device, pInfo
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetImageMemoryRequirements2KHR", reflect.TypeOf((*MockDriver)(nil).VkGetImageMemoryRequirements2KHR), device, pInfo, pMemoryRequirements)
 }
 
-// VkGetImageSparseMemoryRequirements2KHR mocks base method.
+// VkGetImageSparseMemoryRequirements2KHR dummies base method.
 func (m *MockDriver) VkGetImageSparseMemoryRequirements2KHR(device driver.VkDevice, pInfo *khr_get_memory_requirements2_driver.VkImageSparseMemoryRequirementsInfo2KHR, pSparseMemoryRequirementCount *driver.Uint32, pSparseMemoryRequirements *khr_get_memory_requirements2_driver.VkSparseImageMemoryRequirements2KHR) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkGetImageSparseMemoryRequirements2KHR", device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements)

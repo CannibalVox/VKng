@@ -38,7 +38,7 @@ func (m *MockSurface) EXPECT() *MockSurfaceMockRecorder {
 	return m.recorder
 }
 
-// Capabilities mocks base method.
+// Capabilities dummies base method.
 func (m *MockSurface) Capabilities(device core1_0.PhysicalDevice) (*khr_surface.Capabilities, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Capabilities", device)
@@ -54,7 +54,7 @@ func (mr *MockSurfaceMockRecorder) Capabilities(device interface{}) *gomock.Call
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Capabilities", reflect.TypeOf((*MockSurface)(nil).Capabilities), device)
 }
 
-// Destroy mocks base method.
+// Destroy dummies base method.
 func (m *MockSurface) Destroy(callbacks *driver.AllocationCallbacks) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "Destroy", callbacks)
@@ -66,7 +66,7 @@ func (mr *MockSurfaceMockRecorder) Destroy(callbacks interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Destroy", reflect.TypeOf((*MockSurface)(nil).Destroy), callbacks)
 }
 
-// Formats mocks base method.
+// Formats dummies base method.
 func (m *MockSurface) Formats(device core1_0.PhysicalDevice) ([]khr_surface.Format, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Formats", device)
@@ -82,7 +82,7 @@ func (mr *MockSurfaceMockRecorder) Formats(device interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Formats", reflect.TypeOf((*MockSurface)(nil).Formats), device)
 }
 
-// Handle mocks base method.
+// Handle dummies base method.
 func (m *MockSurface) Handle() khr_surface_driver.VkSurfaceKHR {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Handle")
@@ -96,7 +96,7 @@ func (mr *MockSurfaceMockRecorder) Handle() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Handle", reflect.TypeOf((*MockSurface)(nil).Handle))
 }
 
-// PresentModes mocks base method.
+// PresentModes dummies base method.
 func (m *MockSurface) PresentModes(device core1_0.PhysicalDevice) ([]khr_surface.PresentMode, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PresentModes", device)
@@ -112,7 +112,7 @@ func (mr *MockSurfaceMockRecorder) PresentModes(device interface{}) *gomock.Call
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PresentModes", reflect.TypeOf((*MockSurface)(nil).PresentModes), device)
 }
 
-// SupportsDevice mocks base method.
+// SupportsDevice dummies base method.
 func (m *MockSurface) SupportsDevice(physicalDevice core1_0.PhysicalDevice, queueFamilyIndex int) (bool, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SupportsDevice", physicalDevice, queueFamilyIndex)

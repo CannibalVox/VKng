@@ -37,7 +37,7 @@ func (m *MockDescriptorUpdateTemplate) EXPECT() *MockDescriptorUpdateTemplateMoc
 	return m.recorder
 }
 
-// Destroy mocks base method.
+// Destroy dummies base method.
 func (m *MockDescriptorUpdateTemplate) Destroy(allocator *driver.AllocationCallbacks) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "Destroy", allocator)
@@ -49,7 +49,7 @@ func (mr *MockDescriptorUpdateTemplateMockRecorder) Destroy(allocator interface{
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Destroy", reflect.TypeOf((*MockDescriptorUpdateTemplate)(nil).Destroy), allocator)
 }
 
-// Handle mocks base method.
+// Handle dummies base method.
 func (m *MockDescriptorUpdateTemplate) Handle() khr_descriptor_update_template_driver.VkDescriptorUpdateTemplateKHR {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Handle")
@@ -63,7 +63,7 @@ func (mr *MockDescriptorUpdateTemplateMockRecorder) Handle() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Handle", reflect.TypeOf((*MockDescriptorUpdateTemplate)(nil).Handle))
 }
 
-// UpdateDescriptorSetFromBuffer mocks base method.
+// UpdateDescriptorSetFromBuffer dummies base method.
 func (m *MockDescriptorUpdateTemplate) UpdateDescriptorSetFromBuffer(descriptorSet core1_0.DescriptorSet, data core1_0.DescriptorBufferInfo) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "UpdateDescriptorSetFromBuffer", descriptorSet, data)
@@ -75,7 +75,7 @@ func (mr *MockDescriptorUpdateTemplateMockRecorder) UpdateDescriptorSetFromBuffe
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateDescriptorSetFromBuffer", reflect.TypeOf((*MockDescriptorUpdateTemplate)(nil).UpdateDescriptorSetFromBuffer), descriptorSet, data)
 }
 
-// UpdateDescriptorSetFromImage mocks base method.
+// UpdateDescriptorSetFromImage dummies base method.
 func (m *MockDescriptorUpdateTemplate) UpdateDescriptorSetFromImage(descriptorSet core1_0.DescriptorSet, data core1_0.DescriptorImageInfo) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "UpdateDescriptorSetFromImage", descriptorSet, data)
@@ -87,7 +87,7 @@ func (mr *MockDescriptorUpdateTemplateMockRecorder) UpdateDescriptorSetFromImage
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateDescriptorSetFromImage", reflect.TypeOf((*MockDescriptorUpdateTemplate)(nil).UpdateDescriptorSetFromImage), descriptorSet, data)
 }
 
-// UpdateDescriptorSetFromObjectHandle mocks base method.
+// UpdateDescriptorSetFromObjectHandle dummies base method.
 func (m *MockDescriptorUpdateTemplate) UpdateDescriptorSetFromObjectHandle(descriptorSet core1_0.DescriptorSet, data driver.VulkanHandle) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "UpdateDescriptorSetFromObjectHandle", descriptorSet, data)
@@ -122,7 +122,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 	return m.recorder
 }
 
-// CreateDescriptorUpdateTemplate mocks base method.
+// CreateDescriptorUpdateTemplate dummies base method.
 func (m *MockExtension) CreateDescriptorUpdateTemplate(device core1_0.Device, o khr_descriptor_update_template.DescriptorUpdateTemplateCreateOptions, allocator *driver.AllocationCallbacks) (khr_descriptor_update_template.DescriptorUpdateTemplate, driver.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateDescriptorUpdateTemplate", device, o, allocator)

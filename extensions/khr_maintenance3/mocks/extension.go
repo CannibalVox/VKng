@@ -35,7 +35,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 	return m.recorder
 }
 
-// DescriptorSetLayoutSupport mocks base method.
+// DescriptorSetLayoutSupport dummies base method.
 func (m *MockExtension) DescriptorSetLayoutSupport(device core1_0.Device, setLayoutOptions core1_0.DescriptorSetLayoutCreateOptions, support *khr_maintenance3.DescriptorSetLayoutSupportOutData) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DescriptorSetLayoutSupport", device, setLayoutOptions, support)

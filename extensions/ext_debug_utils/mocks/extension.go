@@ -37,7 +37,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 	return m.recorder
 }
 
-// CmdBeginLabel mocks base method.
+// CmdBeginLabel dummies base method.
 func (m *MockExtension) CmdBeginLabel(commandBuffer core1_0.CommandBuffer, label ext_debug_utils.LabelOptions) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CmdBeginLabel", commandBuffer, label)
@@ -51,7 +51,7 @@ func (mr *MockExtensionMockRecorder) CmdBeginLabel(commandBuffer, label interfac
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CmdBeginLabel", reflect.TypeOf((*MockExtension)(nil).CmdBeginLabel), commandBuffer, label)
 }
 
-// CmdEndLabel mocks base method.
+// CmdEndLabel dummies base method.
 func (m *MockExtension) CmdEndLabel(commandBuffer core1_0.CommandBuffer) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "CmdEndLabel", commandBuffer)
@@ -63,7 +63,7 @@ func (mr *MockExtensionMockRecorder) CmdEndLabel(commandBuffer interface{}) *gom
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CmdEndLabel", reflect.TypeOf((*MockExtension)(nil).CmdEndLabel), commandBuffer)
 }
 
-// CmdInsertLabel mocks base method.
+// CmdInsertLabel dummies base method.
 func (m *MockExtension) CmdInsertLabel(commandBuffer core1_0.CommandBuffer, label ext_debug_utils.LabelOptions) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CmdInsertLabel", commandBuffer, label)
@@ -77,7 +77,7 @@ func (mr *MockExtensionMockRecorder) CmdInsertLabel(commandBuffer, label interfa
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CmdInsertLabel", reflect.TypeOf((*MockExtension)(nil).CmdInsertLabel), commandBuffer, label)
 }
 
-// CreateMessenger mocks base method.
+// CreateMessenger dummies base method.
 func (m *MockExtension) CreateMessenger(instance core1_0.Instance, allocation *driver.AllocationCallbacks, o ext_debug_utils.CreateOptions) (ext_debug_utils.Messenger, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateMessenger", instance, allocation, o)
@@ -93,7 +93,7 @@ func (mr *MockExtensionMockRecorder) CreateMessenger(instance, allocation, o int
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateMessenger", reflect.TypeOf((*MockExtension)(nil).CreateMessenger), instance, allocation, o)
 }
 
-// QueueBeginLabel mocks base method.
+// QueueBeginLabel dummies base method.
 func (m *MockExtension) QueueBeginLabel(queue core1_0.Queue, label ext_debug_utils.LabelOptions) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "QueueBeginLabel", queue, label)
@@ -107,7 +107,7 @@ func (mr *MockExtensionMockRecorder) QueueBeginLabel(queue, label interface{}) *
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueueBeginLabel", reflect.TypeOf((*MockExtension)(nil).QueueBeginLabel), queue, label)
 }
 
-// QueueEndLabel mocks base method.
+// QueueEndLabel dummies base method.
 func (m *MockExtension) QueueEndLabel(queue core1_0.Queue) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "QueueEndLabel", queue)
@@ -119,7 +119,7 @@ func (mr *MockExtensionMockRecorder) QueueEndLabel(queue interface{}) *gomock.Ca
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueueEndLabel", reflect.TypeOf((*MockExtension)(nil).QueueEndLabel), queue)
 }
 
-// QueueInsertLabel mocks base method.
+// QueueInsertLabel dummies base method.
 func (m *MockExtension) QueueInsertLabel(queue core1_0.Queue, label ext_debug_utils.LabelOptions) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "QueueInsertLabel", queue, label)
@@ -133,7 +133,7 @@ func (mr *MockExtensionMockRecorder) QueueInsertLabel(queue, label interface{}) 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueueInsertLabel", reflect.TypeOf((*MockExtension)(nil).QueueInsertLabel), queue, label)
 }
 
-// SetObjectName mocks base method.
+// SetObjectName dummies base method.
 func (m *MockExtension) SetObjectName(instance core1_0.Device, name ext_debug_utils.ObjectNameOptions) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SetObjectName", instance, name)
@@ -148,7 +148,7 @@ func (mr *MockExtensionMockRecorder) SetObjectName(instance, name interface{}) *
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetObjectName", reflect.TypeOf((*MockExtension)(nil).SetObjectName), instance, name)
 }
 
-// SetObjectTag mocks base method.
+// SetObjectTag dummies base method.
 func (m *MockExtension) SetObjectTag(instance core1_0.Device, tag ext_debug_utils.ObjectTagOptions) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SetObjectTag", instance, tag)
@@ -163,7 +163,7 @@ func (mr *MockExtensionMockRecorder) SetObjectTag(instance, tag interface{}) *go
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetObjectTag", reflect.TypeOf((*MockExtension)(nil).SetObjectTag), instance, tag)
 }
 
-// SubmitMessage mocks base method.
+// SubmitMessage dummies base method.
 func (m *MockExtension) SubmitMessage(instance core1_0.Instance, severity ext_debug_utils.MessageSeverities, types ext_debug_utils.MessageTypes, data ext_debug_utils.CallbackDataOptions) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubmitMessage", instance, severity, types, data)

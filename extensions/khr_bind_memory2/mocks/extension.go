@@ -36,7 +36,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 	return m.recorder
 }
 
-// BindBufferMemory mocks base method.
+// BindBufferMemory dummies base method.
 func (m *MockExtension) BindBufferMemory(device core1_0.Device, options []khr_bind_memory2.BindBufferMemoryOptions) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "BindBufferMemory", device, options)
@@ -51,7 +51,7 @@ func (mr *MockExtensionMockRecorder) BindBufferMemory(device, options interface{
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BindBufferMemory", reflect.TypeOf((*MockExtension)(nil).BindBufferMemory), device, options)
 }
 
-// BindImageMemory mocks base method.
+// BindImageMemory dummies base method.
 func (m *MockExtension) BindImageMemory(device core1_0.Device, options []khr_bind_memory2.BindImageMemoryOptions) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "BindImageMemory", device, options)
