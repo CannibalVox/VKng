@@ -37,7 +37,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 	return m.recorder
 }
 
-// CreateSwapchain dummies base method.
+// CreateSwapchain mocks base method.
 func (m *MockExtension) CreateSwapchain(device core1_0.Device, allocation *driver.AllocationCallbacks, options khr_swapchain.CreateOptions) (khr_swapchain.Swapchain, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateSwapchain", device, allocation, options)
@@ -53,7 +53,7 @@ func (mr *MockExtensionMockRecorder) CreateSwapchain(device, allocation, options
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSwapchain", reflect.TypeOf((*MockExtension)(nil).CreateSwapchain), device, allocation, options)
 }
 
-// PresentToQueue dummies base method.
+// PresentToQueue mocks base method.
 func (m *MockExtension) PresentToQueue(queue core1_0.Queue, o khr_swapchain.PresentOptions) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PresentToQueue", queue, o)

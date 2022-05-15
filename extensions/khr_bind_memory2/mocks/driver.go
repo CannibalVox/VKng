@@ -46,7 +46,7 @@ func (m *MockDriver) VkBindBufferMemory2KHR(device driver.VkDevice, bindInfoCoun
 }
 
 // VkBindBufferMemory2KHR indicates an expected call of VkBindBufferMemory2KHR.
-func (mr *MockDriverMockRecorder) VkBindBufferMemory2KHR(device, bindInfoCount, pBindInfos interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkBindBufferMemory2KHR(device, bindInfoCount, pBindInfos any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkBindBufferMemory2KHR", reflect.TypeOf((*MockDriver)(nil).VkBindBufferMemory2KHR), device, bindInfoCount, pBindInfos)
 }
@@ -61,7 +61,7 @@ func (m *MockDriver) VkBindImageMemory2KHR(device driver.VkDevice, bindInfoCount
 }
 
 // VkBindImageMemory2KHR indicates an expected call of VkBindImageMemory2KHR.
-func (mr *MockDriverMockRecorder) VkBindImageMemory2KHR(device, bindInfoCount, pBindInfos interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkBindImageMemory2KHR(device, bindInfoCount, pBindInfos any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkBindImageMemory2KHR", reflect.TypeOf((*MockDriver)(nil).VkBindImageMemory2KHR), device, bindInfoCount, pBindInfos)
 }

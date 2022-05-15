@@ -44,7 +44,7 @@ func (m *MockExtension) CmdDispatchBase(commandBuffer core1_0.CommandBuffer, bas
 }
 
 // CmdDispatchBase indicates an expected call of CmdDispatchBase.
-func (mr *MockExtensionMockRecorder) CmdDispatchBase(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) CmdDispatchBase(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CmdDispatchBase", reflect.TypeOf((*MockExtension)(nil).CmdDispatchBase), commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ)
 }
@@ -56,7 +56,7 @@ func (m *MockExtension) CmdSetDeviceMask(commandBuffer core1_0.CommandBuffer, de
 }
 
 // CmdSetDeviceMask indicates an expected call of CmdSetDeviceMask.
-func (mr *MockExtensionMockRecorder) CmdSetDeviceMask(commandBuffer, deviceMask interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) CmdSetDeviceMask(commandBuffer, deviceMask any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CmdSetDeviceMask", reflect.TypeOf((*MockExtension)(nil).CmdSetDeviceMask), commandBuffer, deviceMask)
 }
@@ -70,7 +70,7 @@ func (m *MockExtension) DeviceGroupPeerMemoryFeatures(device core1_0.Device, hea
 }
 
 // DeviceGroupPeerMemoryFeatures indicates an expected call of DeviceGroupPeerMemoryFeatures.
-func (mr *MockExtensionMockRecorder) DeviceGroupPeerMemoryFeatures(device, heapIndex, localDeviceIndex, remoteDeviceIndex interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) DeviceGroupPeerMemoryFeatures(device, heapIndex, localDeviceIndex, remoteDeviceIndex any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeviceGroupPeerMemoryFeatures", reflect.TypeOf((*MockExtension)(nil).DeviceGroupPeerMemoryFeatures), device, heapIndex, localDeviceIndex, remoteDeviceIndex)
 }
@@ -136,7 +136,7 @@ func (m *MockExtensionWithKHRSurface) DeviceGroupPresentCapabilities(device core
 }
 
 // DeviceGroupPresentCapabilities indicates an expected call of DeviceGroupPresentCapabilities.
-func (mr *MockExtensionWithKHRSurfaceMockRecorder) DeviceGroupPresentCapabilities(device, outData interface{}) *gomock.Call {
+func (mr *MockExtensionWithKHRSurfaceMockRecorder) DeviceGroupPresentCapabilities(device, outData any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeviceGroupPresentCapabilities", reflect.TypeOf((*MockExtensionWithKHRSurface)(nil).DeviceGroupPresentCapabilities), device, outData)
 }
@@ -152,7 +152,7 @@ func (m *MockExtensionWithKHRSurface) DeviceGroupSurfacePresentModes(device core
 }
 
 // DeviceGroupSurfacePresentModes indicates an expected call of DeviceGroupSurfacePresentModes.
-func (mr *MockExtensionWithKHRSurfaceMockRecorder) DeviceGroupSurfacePresentModes(device, surface interface{}) *gomock.Call {
+func (mr *MockExtensionWithKHRSurfaceMockRecorder) DeviceGroupSurfacePresentModes(device, surface any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeviceGroupSurfacePresentModes", reflect.TypeOf((*MockExtensionWithKHRSurface)(nil).DeviceGroupSurfacePresentModes), device, surface)
 }
@@ -168,7 +168,7 @@ func (m *MockExtensionWithKHRSurface) PhysicalDevicePresentRectangles(physicalDe
 }
 
 // PhysicalDevicePresentRectangles indicates an expected call of PhysicalDevicePresentRectangles.
-func (mr *MockExtensionWithKHRSurfaceMockRecorder) PhysicalDevicePresentRectangles(physicalDevice, surface interface{}) *gomock.Call {
+func (mr *MockExtensionWithKHRSurfaceMockRecorder) PhysicalDevicePresentRectangles(physicalDevice, surface any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PhysicalDevicePresentRectangles", reflect.TypeOf((*MockExtensionWithKHRSurface)(nil).PhysicalDevicePresentRectangles), physicalDevice, surface)
 }
@@ -207,7 +207,7 @@ func (m *MockExtensionWithKHRSwapchain) AcquireNextImage(device core1_0.Device, 
 }
 
 // AcquireNextImage indicates an expected call of AcquireNextImage.
-func (mr *MockExtensionWithKHRSwapchainMockRecorder) AcquireNextImage(device, o interface{}) *gomock.Call {
+func (mr *MockExtensionWithKHRSwapchainMockRecorder) AcquireNextImage(device, o any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AcquireNextImage", reflect.TypeOf((*MockExtensionWithKHRSwapchain)(nil).AcquireNextImage), device, o)
 }

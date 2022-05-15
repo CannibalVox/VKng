@@ -44,7 +44,7 @@ func (m *MockExtension) ExternalSemaphoreProperties(physicalDevice core1_0.Physi
 }
 
 // ExternalSemaphoreProperties indicates an expected call of ExternalSemaphoreProperties.
-func (mr *MockExtensionMockRecorder) ExternalSemaphoreProperties(physicalDevice, o, outData interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) ExternalSemaphoreProperties(physicalDevice, o, outData any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExternalSemaphoreProperties", reflect.TypeOf((*MockExtension)(nil).ExternalSemaphoreProperties), physicalDevice, o, outData)
 }

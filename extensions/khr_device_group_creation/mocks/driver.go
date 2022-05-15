@@ -46,7 +46,7 @@ func (m *MockDriver) VkEnumeratePhysicalDeviceGroupsKHR(instance driver.VkInstan
 }
 
 // VkEnumeratePhysicalDeviceGroupsKHR indicates an expected call of VkEnumeratePhysicalDeviceGroupsKHR.
-func (mr *MockDriverMockRecorder) VkEnumeratePhysicalDeviceGroupsKHR(instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkEnumeratePhysicalDeviceGroupsKHR(instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkEnumeratePhysicalDeviceGroupsKHR", reflect.TypeOf((*MockDriver)(nil).VkEnumeratePhysicalDeviceGroupsKHR), instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties)
 }

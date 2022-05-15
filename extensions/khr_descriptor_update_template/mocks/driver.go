@@ -44,7 +44,7 @@ func (m *MockDriver) VkCmdPushDescriptorSetWithTemplateKHR(commandBuffer driver.
 }
 
 // VkCmdPushDescriptorSetWithTemplateKHR indicates an expected call of VkCmdPushDescriptorSetWithTemplateKHR.
-func (mr *MockDriverMockRecorder) VkCmdPushDescriptorSetWithTemplateKHR(commandBuffer, descriptorUpdateTemplate, layout, set, pData interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkCmdPushDescriptorSetWithTemplateKHR(commandBuffer, descriptorUpdateTemplate, layout, set, pData any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkCmdPushDescriptorSetWithTemplateKHR", reflect.TypeOf((*MockDriver)(nil).VkCmdPushDescriptorSetWithTemplateKHR), commandBuffer, descriptorUpdateTemplate, layout, set, pData)
 }
@@ -59,7 +59,7 @@ func (m *MockDriver) VkCreateDescriptorUpdateTemplateKHR(device driver.VkDevice,
 }
 
 // VkCreateDescriptorUpdateTemplateKHR indicates an expected call of VkCreateDescriptorUpdateTemplateKHR.
-func (mr *MockDriverMockRecorder) VkCreateDescriptorUpdateTemplateKHR(device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkCreateDescriptorUpdateTemplateKHR(device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkCreateDescriptorUpdateTemplateKHR", reflect.TypeOf((*MockDriver)(nil).VkCreateDescriptorUpdateTemplateKHR), device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate)
 }
@@ -71,7 +71,7 @@ func (m *MockDriver) VkDestroyDescriptorUpdateTemplateKHR(device driver.VkDevice
 }
 
 // VkDestroyDescriptorUpdateTemplateKHR indicates an expected call of VkDestroyDescriptorUpdateTemplateKHR.
-func (mr *MockDriverMockRecorder) VkDestroyDescriptorUpdateTemplateKHR(device, descriptorUpdateTemplate, pAllocator interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkDestroyDescriptorUpdateTemplateKHR(device, descriptorUpdateTemplate, pAllocator any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkDestroyDescriptorUpdateTemplateKHR", reflect.TypeOf((*MockDriver)(nil).VkDestroyDescriptorUpdateTemplateKHR), device, descriptorUpdateTemplate, pAllocator)
 }
@@ -83,7 +83,7 @@ func (m *MockDriver) VkUpdateDescriptorSetWithTemplateKHR(device driver.VkDevice
 }
 
 // VkUpdateDescriptorSetWithTemplateKHR indicates an expected call of VkUpdateDescriptorSetWithTemplateKHR.
-func (mr *MockDriverMockRecorder) VkUpdateDescriptorSetWithTemplateKHR(device, descriptorSet, descriptorUpdateTemplate, pData interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkUpdateDescriptorSetWithTemplateKHR(device, descriptorSet, descriptorUpdateTemplate, pData any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkUpdateDescriptorSetWithTemplateKHR", reflect.TypeOf((*MockDriver)(nil).VkUpdateDescriptorSetWithTemplateKHR), device, descriptorSet, descriptorUpdateTemplate, pData)
 }

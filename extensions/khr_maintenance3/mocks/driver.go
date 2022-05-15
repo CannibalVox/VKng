@@ -42,7 +42,7 @@ func (m *MockDriver) VkGetDescriptorSetLayoutSupportKHR(device driver.VkDevice, 
 }
 
 // VkGetDescriptorSetLayoutSupportKHR indicates an expected call of VkGetDescriptorSetLayoutSupportKHR.
-func (mr *MockDriverMockRecorder) VkGetDescriptorSetLayoutSupportKHR(device, pCreateInfo, pSupport interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetDescriptorSetLayoutSupportKHR(device, pCreateInfo, pSupport any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetDescriptorSetLayoutSupportKHR", reflect.TypeOf((*MockDriver)(nil).VkGetDescriptorSetLayoutSupportKHR), device, pCreateInfo, pSupport)
 }

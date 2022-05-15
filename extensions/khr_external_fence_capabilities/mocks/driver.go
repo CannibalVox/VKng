@@ -42,7 +42,7 @@ func (m *MockDriver) VkGetPhysicalDeviceExternalFencePropertiesKHR(physicalDevic
 }
 
 // VkGetPhysicalDeviceExternalFencePropertiesKHR indicates an expected call of VkGetPhysicalDeviceExternalFencePropertiesKHR.
-func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceExternalFencePropertiesKHR(physicalDevice, pExternalFenceInfo, pExternalFenceProperties interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceExternalFencePropertiesKHR(physicalDevice, pExternalFenceInfo, pExternalFenceProperties any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceExternalFencePropertiesKHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceExternalFencePropertiesKHR), physicalDevice, pExternalFenceInfo, pExternalFenceProperties)
 }

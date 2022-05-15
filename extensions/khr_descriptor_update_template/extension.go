@@ -43,8 +43,8 @@ func (e *VulkanExtension) CreateDescriptorUpdateTemplate(device core1_0.Device, 
 		return nil, res, err
 	}
 
-	descriptorTemplate := device.Driver().ObjectStore().GetOrCreate(driver.VulkanHandle(templateHandle),
-		func() interface{} {
+	descriptorTemplate := device.Driver().ObjectStore().GetOrCreate(driver.VulkanHandle(templateHandle), driver.Core1_1,
+		func() any {
 			template := &vulkanDescriptorUpdateTemplate{
 				driver:                   e.driver,
 				coreDriver:               device.Driver(),

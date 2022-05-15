@@ -44,7 +44,7 @@ func (m *MockExtension) ExternalBufferProperties(physicalDevice core1_0.Physical
 }
 
 // ExternalBufferProperties indicates an expected call of ExternalBufferProperties.
-func (mr *MockExtensionMockRecorder) ExternalBufferProperties(physicalDevice, o, outData interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) ExternalBufferProperties(physicalDevice, o, outData any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExternalBufferProperties", reflect.TypeOf((*MockExtension)(nil).ExternalBufferProperties), physicalDevice, o, outData)
 }

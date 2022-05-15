@@ -42,7 +42,7 @@ func (m *MockDriver) VkGetPhysicalDeviceExternalBufferPropertiesKHR(physicalDevi
 }
 
 // VkGetPhysicalDeviceExternalBufferPropertiesKHR indicates an expected call of VkGetPhysicalDeviceExternalBufferPropertiesKHR.
-func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceExternalBufferPropertiesKHR(physicalDevice, pExternalBufferInfo, pExternalBufferProperties interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceExternalBufferPropertiesKHR(physicalDevice, pExternalBufferInfo, pExternalBufferProperties any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceExternalBufferPropertiesKHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceExternalBufferPropertiesKHR), physicalDevice, pExternalBufferInfo, pExternalBufferProperties)
 }

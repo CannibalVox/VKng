@@ -43,7 +43,7 @@ func (m *MockDriver) VkGetPhysicalDeviceFeatures2KHR(physicalDevice driver.VkPhy
 }
 
 // VkGetPhysicalDeviceFeatures2KHR indicates an expected call of VkGetPhysicalDeviceFeatures2KHR.
-func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceFeatures2KHR(physicalDevice, pFeatures interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceFeatures2KHR(physicalDevice, pFeatures any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceFeatures2KHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceFeatures2KHR), physicalDevice, pFeatures)
 }
@@ -55,7 +55,7 @@ func (m *MockDriver) VkGetPhysicalDeviceFormatProperties2KHR(physicalDevice driv
 }
 
 // VkGetPhysicalDeviceFormatProperties2KHR indicates an expected call of VkGetPhysicalDeviceFormatProperties2KHR.
-func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceFormatProperties2KHR(physicalDevice, format, pFormatProperties interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceFormatProperties2KHR(physicalDevice, format, pFormatProperties any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceFormatProperties2KHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceFormatProperties2KHR), physicalDevice, format, pFormatProperties)
 }
@@ -70,7 +70,7 @@ func (m *MockDriver) VkGetPhysicalDeviceImageFormatProperties2KHR(physicalDevice
 }
 
 // VkGetPhysicalDeviceImageFormatProperties2KHR indicates an expected call of VkGetPhysicalDeviceImageFormatProperties2KHR.
-func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceImageFormatProperties2KHR(physicalDevice, pImageFormatInfo, pImageFormatProperties interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceImageFormatProperties2KHR(physicalDevice, pImageFormatInfo, pImageFormatProperties any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceImageFormatProperties2KHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceImageFormatProperties2KHR), physicalDevice, pImageFormatInfo, pImageFormatProperties)
 }
@@ -82,7 +82,7 @@ func (m *MockDriver) VkGetPhysicalDeviceMemoryProperties2KHR(physicalDevice driv
 }
 
 // VkGetPhysicalDeviceMemoryProperties2KHR indicates an expected call of VkGetPhysicalDeviceMemoryProperties2KHR.
-func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceMemoryProperties2KHR(physicalDevice, pMemoryProperties interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceMemoryProperties2KHR(physicalDevice, pMemoryProperties any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceMemoryProperties2KHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceMemoryProperties2KHR), physicalDevice, pMemoryProperties)
 }
@@ -94,7 +94,7 @@ func (m *MockDriver) VkGetPhysicalDeviceProperties2KHR(physicalDevice driver.VkP
 }
 
 // VkGetPhysicalDeviceProperties2KHR indicates an expected call of VkGetPhysicalDeviceProperties2KHR.
-func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceProperties2KHR(physicalDevice, pProperties interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceProperties2KHR(physicalDevice, pProperties any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceProperties2KHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceProperties2KHR), physicalDevice, pProperties)
 }
@@ -106,7 +106,7 @@ func (m *MockDriver) VkGetPhysicalDeviceQueueFamilyProperties2KHR(physicalDevice
 }
 
 // VkGetPhysicalDeviceQueueFamilyProperties2KHR indicates an expected call of VkGetPhysicalDeviceQueueFamilyProperties2KHR.
-func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceQueueFamilyProperties2KHR(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceQueueFamilyProperties2KHR(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceQueueFamilyProperties2KHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceQueueFamilyProperties2KHR), physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties)
 }
@@ -118,7 +118,7 @@ func (m *MockDriver) VkGetPhysicalDeviceSparseImageFormatProperties2KHR(physical
 }
 
 // VkGetPhysicalDeviceSparseImageFormatProperties2KHR indicates an expected call of VkGetPhysicalDeviceSparseImageFormatProperties2KHR.
-func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceSparseImageFormatProperties2KHR(physicalDevice, pFormatInfo, pPropertyCount, pProperties interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceSparseImageFormatProperties2KHR(physicalDevice, pFormatInfo, pPropertyCount, pProperties any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceSparseImageFormatProperties2KHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceSparseImageFormatProperties2KHR), physicalDevice, pFormatInfo, pPropertyCount, pProperties)
 }

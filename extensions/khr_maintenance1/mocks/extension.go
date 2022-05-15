@@ -42,7 +42,7 @@ func (m *MockExtension) TrimCommandPool(commandPool core1_0.CommandPool, flags k
 }
 
 // TrimCommandPool indicates an expected call of TrimCommandPool.
-func (mr *MockExtensionMockRecorder) TrimCommandPool(commandPool, flags interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) TrimCommandPool(commandPool, flags any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "TrimCommandPool", reflect.TypeOf((*MockExtension)(nil).TrimCommandPool), commandPool, flags)
 }

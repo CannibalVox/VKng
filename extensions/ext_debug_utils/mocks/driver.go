@@ -43,7 +43,7 @@ func (m *MockDriver) VKCmdBeginDebugUtilsLabelEXT(commandBuffer driver.VkCommand
 }
 
 // VKCmdBeginDebugUtilsLabelEXT indicates an expected call of VKCmdBeginDebugUtilsLabelEXT.
-func (mr *MockDriverMockRecorder) VKCmdBeginDebugUtilsLabelEXT(commandBuffer, pLabelInfo interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VKCmdBeginDebugUtilsLabelEXT(commandBuffer, pLabelInfo any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VKCmdBeginDebugUtilsLabelEXT", reflect.TypeOf((*MockDriver)(nil).VKCmdBeginDebugUtilsLabelEXT), commandBuffer, pLabelInfo)
 }
@@ -55,7 +55,7 @@ func (m *MockDriver) VkCmdEndDebugUtilsLabelEXT(commandBuffer driver.VkCommandBu
 }
 
 // VkCmdEndDebugUtilsLabelEXT indicates an expected call of VkCmdEndDebugUtilsLabelEXT.
-func (mr *MockDriverMockRecorder) VkCmdEndDebugUtilsLabelEXT(commandBuffer interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkCmdEndDebugUtilsLabelEXT(commandBuffer any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkCmdEndDebugUtilsLabelEXT", reflect.TypeOf((*MockDriver)(nil).VkCmdEndDebugUtilsLabelEXT), commandBuffer)
 }
@@ -67,7 +67,7 @@ func (m *MockDriver) VkCmdInsertDebugUtilsLabelEXT(commandBuffer driver.VkComman
 }
 
 // VkCmdInsertDebugUtilsLabelEXT indicates an expected call of VkCmdInsertDebugUtilsLabelEXT.
-func (mr *MockDriverMockRecorder) VkCmdInsertDebugUtilsLabelEXT(commandBuffer, pLabelInfo interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkCmdInsertDebugUtilsLabelEXT(commandBuffer, pLabelInfo any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkCmdInsertDebugUtilsLabelEXT", reflect.TypeOf((*MockDriver)(nil).VkCmdInsertDebugUtilsLabelEXT), commandBuffer, pLabelInfo)
 }
@@ -82,7 +82,7 @@ func (m *MockDriver) VkCreateDebugUtilsMessengerEXT(instance driver.VkInstance, 
 }
 
 // VkCreateDebugUtilsMessengerEXT indicates an expected call of VkCreateDebugUtilsMessengerEXT.
-func (mr *MockDriverMockRecorder) VkCreateDebugUtilsMessengerEXT(instance, pCreateInfo, pAllocator, pDebugMessenger interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkCreateDebugUtilsMessengerEXT(instance, pCreateInfo, pAllocator, pDebugMessenger any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkCreateDebugUtilsMessengerEXT", reflect.TypeOf((*MockDriver)(nil).VkCreateDebugUtilsMessengerEXT), instance, pCreateInfo, pAllocator, pDebugMessenger)
 }
@@ -94,7 +94,7 @@ func (m *MockDriver) VkDestroyDebugUtilsMessengerEXT(instance driver.VkInstance,
 }
 
 // VkDestroyDebugUtilsMessengerEXT indicates an expected call of VkDestroyDebugUtilsMessengerEXT.
-func (mr *MockDriverMockRecorder) VkDestroyDebugUtilsMessengerEXT(instance, debugMessenger, pAllocator interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkDestroyDebugUtilsMessengerEXT(instance, debugMessenger, pAllocator any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkDestroyDebugUtilsMessengerEXT", reflect.TypeOf((*MockDriver)(nil).VkDestroyDebugUtilsMessengerEXT), instance, debugMessenger, pAllocator)
 }
@@ -106,7 +106,7 @@ func (m *MockDriver) VkQueueBeginDebugUtilsLabelEXT(queue driver.VkQueue, pLabel
 }
 
 // VkQueueBeginDebugUtilsLabelEXT indicates an expected call of VkQueueBeginDebugUtilsLabelEXT.
-func (mr *MockDriverMockRecorder) VkQueueBeginDebugUtilsLabelEXT(queue, pLabelInfo interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkQueueBeginDebugUtilsLabelEXT(queue, pLabelInfo any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkQueueBeginDebugUtilsLabelEXT", reflect.TypeOf((*MockDriver)(nil).VkQueueBeginDebugUtilsLabelEXT), queue, pLabelInfo)
 }
@@ -118,7 +118,7 @@ func (m *MockDriver) VkQueueEndDebugUtilsLabelEXT(queue driver.VkQueue) {
 }
 
 // VkQueueEndDebugUtilsLabelEXT indicates an expected call of VkQueueEndDebugUtilsLabelEXT.
-func (mr *MockDriverMockRecorder) VkQueueEndDebugUtilsLabelEXT(queue interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkQueueEndDebugUtilsLabelEXT(queue any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkQueueEndDebugUtilsLabelEXT", reflect.TypeOf((*MockDriver)(nil).VkQueueEndDebugUtilsLabelEXT), queue)
 }
@@ -130,7 +130,7 @@ func (m *MockDriver) VkQueueInsertDebugUtilsLabelEXT(queue driver.VkQueue, pLabe
 }
 
 // VkQueueInsertDebugUtilsLabelEXT indicates an expected call of VkQueueInsertDebugUtilsLabelEXT.
-func (mr *MockDriverMockRecorder) VkQueueInsertDebugUtilsLabelEXT(queue, pLabelInfo interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkQueueInsertDebugUtilsLabelEXT(queue, pLabelInfo any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkQueueInsertDebugUtilsLabelEXT", reflect.TypeOf((*MockDriver)(nil).VkQueueInsertDebugUtilsLabelEXT), queue, pLabelInfo)
 }
@@ -145,7 +145,7 @@ func (m *MockDriver) VkSetDebugUtilsObjectNameEXT(device driver.VkDevice, pNameI
 }
 
 // VkSetDebugUtilsObjectNameEXT indicates an expected call of VkSetDebugUtilsObjectNameEXT.
-func (mr *MockDriverMockRecorder) VkSetDebugUtilsObjectNameEXT(device, pNameInfo interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkSetDebugUtilsObjectNameEXT(device, pNameInfo any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkSetDebugUtilsObjectNameEXT", reflect.TypeOf((*MockDriver)(nil).VkSetDebugUtilsObjectNameEXT), device, pNameInfo)
 }
@@ -160,7 +160,7 @@ func (m *MockDriver) VkSetDebugUtilsObjectTagEXT(device driver.VkDevice, pTagInf
 }
 
 // VkSetDebugUtilsObjectTagEXT indicates an expected call of VkSetDebugUtilsObjectTagEXT.
-func (mr *MockDriverMockRecorder) VkSetDebugUtilsObjectTagEXT(device, pTagInfo interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkSetDebugUtilsObjectTagEXT(device, pTagInfo any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkSetDebugUtilsObjectTagEXT", reflect.TypeOf((*MockDriver)(nil).VkSetDebugUtilsObjectTagEXT), device, pTagInfo)
 }
@@ -172,7 +172,7 @@ func (m *MockDriver) VkSubmitDebugUtilsMessageEXT(instance driver.VkInstance, me
 }
 
 // VkSubmitDebugUtilsMessageEXT indicates an expected call of VkSubmitDebugUtilsMessageEXT.
-func (mr *MockDriverMockRecorder) VkSubmitDebugUtilsMessageEXT(instance, messageSeverity, messageTypes, pCallbackData interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkSubmitDebugUtilsMessageEXT(instance, messageSeverity, messageTypes, pCallbackData any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkSubmitDebugUtilsMessageEXT", reflect.TypeOf((*MockDriver)(nil).VkSubmitDebugUtilsMessageEXT), instance, messageSeverity, messageTypes, pCallbackData)
 }

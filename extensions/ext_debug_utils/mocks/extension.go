@@ -46,7 +46,7 @@ func (m *MockExtension) CmdBeginLabel(commandBuffer core1_0.CommandBuffer, label
 }
 
 // CmdBeginLabel indicates an expected call of CmdBeginLabel.
-func (mr *MockExtensionMockRecorder) CmdBeginLabel(commandBuffer, label interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) CmdBeginLabel(commandBuffer, label any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CmdBeginLabel", reflect.TypeOf((*MockExtension)(nil).CmdBeginLabel), commandBuffer, label)
 }
@@ -58,7 +58,7 @@ func (m *MockExtension) CmdEndLabel(commandBuffer core1_0.CommandBuffer) {
 }
 
 // CmdEndLabel indicates an expected call of CmdEndLabel.
-func (mr *MockExtensionMockRecorder) CmdEndLabel(commandBuffer interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) CmdEndLabel(commandBuffer any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CmdEndLabel", reflect.TypeOf((*MockExtension)(nil).CmdEndLabel), commandBuffer)
 }
@@ -72,7 +72,7 @@ func (m *MockExtension) CmdInsertLabel(commandBuffer core1_0.CommandBuffer, labe
 }
 
 // CmdInsertLabel indicates an expected call of CmdInsertLabel.
-func (mr *MockExtensionMockRecorder) CmdInsertLabel(commandBuffer, label interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) CmdInsertLabel(commandBuffer, label any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CmdInsertLabel", reflect.TypeOf((*MockExtension)(nil).CmdInsertLabel), commandBuffer, label)
 }
@@ -88,7 +88,7 @@ func (m *MockExtension) CreateMessenger(instance core1_0.Instance, allocation *d
 }
 
 // CreateMessenger indicates an expected call of CreateMessenger.
-func (mr *MockExtensionMockRecorder) CreateMessenger(instance, allocation, o interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) CreateMessenger(instance, allocation, o any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateMessenger", reflect.TypeOf((*MockExtension)(nil).CreateMessenger), instance, allocation, o)
 }
@@ -102,7 +102,7 @@ func (m *MockExtension) QueueBeginLabel(queue core1_0.Queue, label ext_debug_uti
 }
 
 // QueueBeginLabel indicates an expected call of QueueBeginLabel.
-func (mr *MockExtensionMockRecorder) QueueBeginLabel(queue, label interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) QueueBeginLabel(queue, label any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueueBeginLabel", reflect.TypeOf((*MockExtension)(nil).QueueBeginLabel), queue, label)
 }
@@ -114,7 +114,7 @@ func (m *MockExtension) QueueEndLabel(queue core1_0.Queue) {
 }
 
 // QueueEndLabel indicates an expected call of QueueEndLabel.
-func (mr *MockExtensionMockRecorder) QueueEndLabel(queue interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) QueueEndLabel(queue any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueueEndLabel", reflect.TypeOf((*MockExtension)(nil).QueueEndLabel), queue)
 }
@@ -128,7 +128,7 @@ func (m *MockExtension) QueueInsertLabel(queue core1_0.Queue, label ext_debug_ut
 }
 
 // QueueInsertLabel indicates an expected call of QueueInsertLabel.
-func (mr *MockExtensionMockRecorder) QueueInsertLabel(queue, label interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) QueueInsertLabel(queue, label any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueueInsertLabel", reflect.TypeOf((*MockExtension)(nil).QueueInsertLabel), queue, label)
 }
@@ -143,7 +143,7 @@ func (m *MockExtension) SetObjectName(instance core1_0.Device, name ext_debug_ut
 }
 
 // SetObjectName indicates an expected call of SetObjectName.
-func (mr *MockExtensionMockRecorder) SetObjectName(instance, name interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) SetObjectName(instance, name any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetObjectName", reflect.TypeOf((*MockExtension)(nil).SetObjectName), instance, name)
 }
@@ -158,7 +158,7 @@ func (m *MockExtension) SetObjectTag(instance core1_0.Device, tag ext_debug_util
 }
 
 // SetObjectTag indicates an expected call of SetObjectTag.
-func (mr *MockExtensionMockRecorder) SetObjectTag(instance, tag interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) SetObjectTag(instance, tag any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetObjectTag", reflect.TypeOf((*MockExtension)(nil).SetObjectTag), instance, tag)
 }
@@ -172,7 +172,7 @@ func (m *MockExtension) SubmitMessage(instance core1_0.Instance, severity ext_de
 }
 
 // SubmitMessage indicates an expected call of SubmitMessage.
-func (mr *MockExtensionMockRecorder) SubmitMessage(instance, severity, types, data interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) SubmitMessage(instance, severity, types, data any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SubmitMessage", reflect.TypeOf((*MockExtension)(nil).SubmitMessage), instance, severity, types, data)
 }

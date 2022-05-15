@@ -42,7 +42,7 @@ func (m *MockMessenger) Destroy(callbacks *driver.AllocationCallbacks) {
 }
 
 // Destroy indicates an expected call of Destroy.
-func (mr *MockMessengerMockRecorder) Destroy(callbacks interface{}) *gomock.Call {
+func (mr *MockMessengerMockRecorder) Destroy(callbacks any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Destroy", reflect.TypeOf((*MockMessenger)(nil).Destroy), callbacks)
 }

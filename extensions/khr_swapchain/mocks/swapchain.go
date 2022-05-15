@@ -8,7 +8,6 @@ import (
 	reflect "reflect"
 	time "time"
 
-	core "github.com/CannibalVox/VKng/core"
 	common "github.com/CannibalVox/VKng/core/common"
 	core1_0 "github.com/CannibalVox/VKng/core/core1_0"
 	driver "github.com/CannibalVox/VKng/core/driver"
@@ -39,7 +38,7 @@ func (m *MockSwapchain) EXPECT() *MockSwapchainMockRecorder {
 	return m.recorder
 }
 
-// AcquireNextImage dummies base method.
+// AcquireNextImage mocks base method.
 func (m *MockSwapchain) AcquireNextImage(timeout time.Duration, semaphore core1_0.Semaphore, fence core1_0.Fence) (int, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AcquireNextImage", timeout, semaphore, fence)
@@ -55,7 +54,7 @@ func (mr *MockSwapchainMockRecorder) AcquireNextImage(timeout, semaphore, fence 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AcquireNextImage", reflect.TypeOf((*MockSwapchain)(nil).AcquireNextImage), timeout, semaphore, fence)
 }
 
-// Destroy dummies base method.
+// Destroy mocks base method.
 func (m *MockSwapchain) Destroy(callbacks *driver.AllocationCallbacks) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "Destroy", callbacks)
@@ -67,7 +66,7 @@ func (mr *MockSwapchainMockRecorder) Destroy(callbacks interface{}) *gomock.Call
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Destroy", reflect.TypeOf((*MockSwapchain)(nil).Destroy), callbacks)
 }
 
-// Handle dummies base method.
+// Handle mocks base method.
 func (m *MockSwapchain) Handle() khr_swapchain_driver.VkSwapchainKHR {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Handle")
@@ -81,11 +80,11 @@ func (mr *MockSwapchainMockRecorder) Handle() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Handle", reflect.TypeOf((*MockSwapchain)(nil).Handle))
 }
 
-// Images dummies base method.
-func (m *MockSwapchain) Images() ([]core.Image, common.VkResult, error) {
+// Images mocks base method.
+func (m *MockSwapchain) Images() ([]core1_0.Image, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Images")
-	ret0, _ := ret[0].([]core.Image)
+	ret0, _ := ret[0].([]core1_0.Image)
 	ret1, _ := ret[1].(common.VkResult)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2

@@ -43,7 +43,7 @@ func (m *MockDriver) VkDestroySurfaceKHR(instance driver.VkInstance, surface khr
 }
 
 // VkDestroySurfaceKHR indicates an expected call of VkDestroySurfaceKHR.
-func (mr *MockDriverMockRecorder) VkDestroySurfaceKHR(instance, surface, pAllocator interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkDestroySurfaceKHR(instance, surface, pAllocator any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkDestroySurfaceKHR", reflect.TypeOf((*MockDriver)(nil).VkDestroySurfaceKHR), instance, surface, pAllocator)
 }
@@ -58,7 +58,7 @@ func (m *MockDriver) VkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice dr
 }
 
 // VkGetPhysicalDeviceSurfaceCapabilitiesKHR indicates an expected call of VkGetPhysicalDeviceSurfaceCapabilitiesKHR.
-func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice, surface, pSurfaceCapabilities interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice, surface, pSurfaceCapabilities any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceSurfaceCapabilitiesKHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceSurfaceCapabilitiesKHR), physicalDevice, surface, pSurfaceCapabilities)
 }
@@ -73,7 +73,7 @@ func (m *MockDriver) VkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice driver.
 }
 
 // VkGetPhysicalDeviceSurfaceFormatsKHR indicates an expected call of VkGetPhysicalDeviceSurfaceFormatsKHR.
-func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice, surface, pSurfaceFormatCount, pSurfaceFormats interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice, surface, pSurfaceFormatCount, pSurfaceFormats any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceSurfaceFormatsKHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceSurfaceFormatsKHR), physicalDevice, surface, pSurfaceFormatCount, pSurfaceFormats)
 }
@@ -88,7 +88,7 @@ func (m *MockDriver) VkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice dr
 }
 
 // VkGetPhysicalDeviceSurfacePresentModesKHR indicates an expected call of VkGetPhysicalDeviceSurfacePresentModesKHR.
-func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, surface, pPresentModeCount, pPresentModes interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, surface, pPresentModeCount, pPresentModes any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceSurfacePresentModesKHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceSurfacePresentModesKHR), physicalDevice, surface, pPresentModeCount, pPresentModes)
 }
@@ -103,7 +103,7 @@ func (m *MockDriver) VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice driver.
 }
 
 // VkGetPhysicalDeviceSurfaceSupportKHR indicates an expected call of VkGetPhysicalDeviceSurfaceSupportKHR.
-func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice, queueFamilyIndex, surface, pSupported interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice, queueFamilyIndex, surface, pSupported any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceSurfaceSupportKHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceSurfaceSupportKHR), physicalDevice, queueFamilyIndex, surface, pSupported)
 }

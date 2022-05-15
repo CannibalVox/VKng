@@ -44,7 +44,7 @@ func (m *MockExtension) BufferMemoryRequirements(device core1_0.Device, o khr_ge
 }
 
 // BufferMemoryRequirements indicates an expected call of BufferMemoryRequirements.
-func (mr *MockExtensionMockRecorder) BufferMemoryRequirements(device, o, out interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) BufferMemoryRequirements(device, o, out any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BufferMemoryRequirements", reflect.TypeOf((*MockExtension)(nil).BufferMemoryRequirements), device, o, out)
 }
@@ -58,7 +58,7 @@ func (m *MockExtension) ImageMemoryRequirements(device core1_0.Device, o khr_get
 }
 
 // ImageMemoryRequirements indicates an expected call of ImageMemoryRequirements.
-func (mr *MockExtensionMockRecorder) ImageMemoryRequirements(device, o, out interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) ImageMemoryRequirements(device, o, out any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ImageMemoryRequirements", reflect.TypeOf((*MockExtension)(nil).ImageMemoryRequirements), device, o, out)
 }
@@ -73,7 +73,7 @@ func (m *MockExtension) SparseImageMemoryRequirements(device core1_0.Device, o k
 }
 
 // SparseImageMemoryRequirements indicates an expected call of SparseImageMemoryRequirements.
-func (mr *MockExtensionMockRecorder) SparseImageMemoryRequirements(device, o, outDataFactory interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) SparseImageMemoryRequirements(device, o, outDataFactory any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SparseImageMemoryRequirements", reflect.TypeOf((*MockExtension)(nil).SparseImageMemoryRequirements), device, o, outDataFactory)
 }

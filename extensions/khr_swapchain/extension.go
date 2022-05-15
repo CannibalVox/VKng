@@ -25,9 +25,7 @@ type Extension interface {
 }
 
 func CreateExtensionFromDevice(device core1_0.Device) *VulkanExtension {
-	return &VulkanExtension{
-		driver: khr_swapchain_driver.CreateDriverFromCore(device.Driver()),
-	}
+	return CreateExtensionFromDriver(khr_swapchain_driver.CreateDriverFromCore(device.Driver()))
 }
 
 func CreateExtensionFromDriver(driver khr_swapchain_driver.Driver) *VulkanExtension {
@@ -53,7 +51,7 @@ func (l *VulkanExtension) CreateSwapchain(device core1_0.Device, allocation *dri
 	}
 
 	coreDriver := device.Driver()
-	newSwapchain := coreDriver.ObjectStore().GetOrCreate(driver.VulkanHandle(swapchain), func() interface{} {
+	newSwapchain := coreDriver.ObjectStore().GetOrCreate(driver.VulkanHandle(swapchain), driver.Core1_0, func() any {
 		return &vulkanSwapchain{
 			handle:            swapchain,
 			device:            device.Handle(),

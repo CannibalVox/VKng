@@ -47,7 +47,7 @@ func (m *MockExtension) PhysicalDeviceGroups(instance core1_0.Instance, outDataF
 }
 
 // EnumeratePhysicalDeviceGroups indicates an expected call of EnumeratePhysicalDeviceGroups.
-func (mr *MockExtensionMockRecorder) EnumeratePhysicalDeviceGroups(instance, outDataFactory interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) EnumeratePhysicalDeviceGroups(instance, outDataFactory any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PhysicalDeviceGroups", reflect.TypeOf((*MockExtension)(nil).PhysicalDeviceGroups), instance, outDataFactory)
 }

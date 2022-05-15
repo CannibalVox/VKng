@@ -48,7 +48,7 @@ func (m *MockExtension) CreateSurface(instance core1_0.Instance, window *sdl.Win
 }
 
 // CreateSurface indicates an expected call of CreateSurface.
-func (mr *MockExtensionMockRecorder) CreateSurface(instance, window interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) CreateSurface(instance, window any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSurface", reflect.TypeOf((*MockExtension)(nil).CreateSurface), instance, window)
 }

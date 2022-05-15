@@ -42,7 +42,7 @@ func (m *MockDriver) VkTrimCommandPoolKHR(device driver.VkDevice, commandPool dr
 }
 
 // VkTrimCommandPoolKHR indicates an expected call of VkTrimCommandPoolKHR.
-func (mr *MockDriverMockRecorder) VkTrimCommandPoolKHR(device, commandPool, flags interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkTrimCommandPoolKHR(device, commandPool, flags any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkTrimCommandPoolKHR", reflect.TypeOf((*MockDriver)(nil).VkTrimCommandPoolKHR), device, commandPool, flags)
 }

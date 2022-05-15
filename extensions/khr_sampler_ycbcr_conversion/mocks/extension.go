@@ -45,7 +45,7 @@ func (m *MockSamplerYcbcrConversion) Destroy(allocator *driver.AllocationCallbac
 }
 
 // Destroy indicates an expected call of Destroy.
-func (mr *MockSamplerYcbcrConversionMockRecorder) Destroy(allocator interface{}) *gomock.Call {
+func (mr *MockSamplerYcbcrConversionMockRecorder) Destroy(allocator any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Destroy", reflect.TypeOf((*MockSamplerYcbcrConversion)(nil).Destroy), allocator)
 }
@@ -98,7 +98,7 @@ func (m *MockExtension) CreateSamplerYcbcrConversion(device core1_0.Device, o kh
 }
 
 // CreateSamplerYcbcrConversion indicates an expected call of CreateSamplerYcbcrConversion.
-func (mr *MockExtensionMockRecorder) CreateSamplerYcbcrConversion(device, o, allocator interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) CreateSamplerYcbcrConversion(device, o, allocator any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSamplerYcbcrConversion", reflect.TypeOf((*MockExtension)(nil).CreateSamplerYcbcrConversion), device, o, allocator)
 }

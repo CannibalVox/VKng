@@ -42,7 +42,7 @@ func (m *MockDriver) VkGetBufferMemoryRequirements2KHR(device driver.VkDevice, p
 }
 
 // VkGetBufferMemoryRequirements2KHR indicates an expected call of VkGetBufferMemoryRequirements2KHR.
-func (mr *MockDriverMockRecorder) VkGetBufferMemoryRequirements2KHR(device, pInfo, pMemoryRequirements interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetBufferMemoryRequirements2KHR(device, pInfo, pMemoryRequirements any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetBufferMemoryRequirements2KHR", reflect.TypeOf((*MockDriver)(nil).VkGetBufferMemoryRequirements2KHR), device, pInfo, pMemoryRequirements)
 }
@@ -54,7 +54,7 @@ func (m *MockDriver) VkGetImageMemoryRequirements2KHR(device driver.VkDevice, pI
 }
 
 // VkGetImageMemoryRequirements2KHR indicates an expected call of VkGetImageMemoryRequirements2KHR.
-func (mr *MockDriverMockRecorder) VkGetImageMemoryRequirements2KHR(device, pInfo, pMemoryRequirements interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetImageMemoryRequirements2KHR(device, pInfo, pMemoryRequirements any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetImageMemoryRequirements2KHR", reflect.TypeOf((*MockDriver)(nil).VkGetImageMemoryRequirements2KHR), device, pInfo, pMemoryRequirements)
 }
@@ -66,7 +66,7 @@ func (m *MockDriver) VkGetImageSparseMemoryRequirements2KHR(device driver.VkDevi
 }
 
 // VkGetImageSparseMemoryRequirements2KHR indicates an expected call of VkGetImageSparseMemoryRequirements2KHR.
-func (mr *MockDriverMockRecorder) VkGetImageSparseMemoryRequirements2KHR(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetImageSparseMemoryRequirements2KHR(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetImageSparseMemoryRequirements2KHR", reflect.TypeOf((*MockDriver)(nil).VkGetImageSparseMemoryRequirements2KHR), device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
 }

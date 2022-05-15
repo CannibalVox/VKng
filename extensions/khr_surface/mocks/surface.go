@@ -49,7 +49,7 @@ func (m *MockSurface) Capabilities(device core1_0.PhysicalDevice) (*khr_surface.
 }
 
 // Capabilities indicates an expected call of Capabilities.
-func (mr *MockSurfaceMockRecorder) Capabilities(device interface{}) *gomock.Call {
+func (mr *MockSurfaceMockRecorder) Capabilities(device any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Capabilities", reflect.TypeOf((*MockSurface)(nil).Capabilities), device)
 }
@@ -61,7 +61,7 @@ func (m *MockSurface) Destroy(callbacks *driver.AllocationCallbacks) {
 }
 
 // Destroy indicates an expected call of Destroy.
-func (mr *MockSurfaceMockRecorder) Destroy(callbacks interface{}) *gomock.Call {
+func (mr *MockSurfaceMockRecorder) Destroy(callbacks any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Destroy", reflect.TypeOf((*MockSurface)(nil).Destroy), callbacks)
 }
@@ -77,7 +77,7 @@ func (m *MockSurface) Formats(device core1_0.PhysicalDevice) ([]khr_surface.Form
 }
 
 // Formats indicates an expected call of Formats.
-func (mr *MockSurfaceMockRecorder) Formats(device interface{}) *gomock.Call {
+func (mr *MockSurfaceMockRecorder) Formats(device any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Formats", reflect.TypeOf((*MockSurface)(nil).Formats), device)
 }
@@ -107,7 +107,7 @@ func (m *MockSurface) PresentModes(device core1_0.PhysicalDevice) ([]khr_surface
 }
 
 // PresentModes indicates an expected call of PresentModes.
-func (mr *MockSurfaceMockRecorder) PresentModes(device interface{}) *gomock.Call {
+func (mr *MockSurfaceMockRecorder) PresentModes(device any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PresentModes", reflect.TypeOf((*MockSurface)(nil).PresentModes), device)
 }
@@ -123,7 +123,7 @@ func (m *MockSurface) SupportsDevice(physicalDevice core1_0.PhysicalDevice, queu
 }
 
 // SupportsDevice indicates an expected call of SupportsDevice.
-func (mr *MockSurfaceMockRecorder) SupportsDevice(physicalDevice, queueFamilyIndex interface{}) *gomock.Call {
+func (mr *MockSurfaceMockRecorder) SupportsDevice(physicalDevice, queueFamilyIndex any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SupportsDevice", reflect.TypeOf((*MockSurface)(nil).SupportsDevice), physicalDevice, queueFamilyIndex)
 }

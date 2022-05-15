@@ -42,7 +42,7 @@ func (m *MockDriver) VkGetPhysicalDeviceExternalSemaphorePropertiesKHR(physicalD
 }
 
 // VkGetPhysicalDeviceExternalSemaphorePropertiesKHR indicates an expected call of VkGetPhysicalDeviceExternalSemaphorePropertiesKHR.
-func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceExternalSemaphorePropertiesKHR(physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties interface{}) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceExternalSemaphorePropertiesKHR(physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceExternalSemaphorePropertiesKHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceExternalSemaphorePropertiesKHR), physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties)
 }

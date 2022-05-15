@@ -30,7 +30,7 @@ type vulkanMessenger struct {
 
 func (m *vulkanMessenger) Destroy(callbacks *driver.AllocationCallbacks) {
 	m.driver.VkDestroyDebugUtilsMessengerEXT(m.instance, m.handle, callbacks.Handle())
-	m.coreDriver.ObjectStore().Delete(driver.VulkanHandle(m.handle), m)
+	m.coreDriver.ObjectStore().Delete(driver.VulkanHandle(m.handle))
 }
 
 func (m *vulkanMessenger) Handle() ext_driver.VkDebugUtilsMessengerEXT {

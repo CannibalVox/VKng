@@ -60,7 +60,7 @@ func CreateSurface(surfacePtr unsafe.Pointer, instance core1_0.Instance, surface
 	surfaceHandle := (ext_driver.VkSurfaceKHR)(surfacePtr)
 	coreDriver := instance.Driver()
 
-	surface := coreDriver.ObjectStore().GetOrCreate(driver.VulkanHandle(surfaceHandle), func() interface{} {
+	surface := coreDriver.ObjectStore().GetOrCreate(driver.VulkanHandle(surfaceHandle), driver.Core1_0, func() any {
 		return &vulkanSurface{
 			handle:            surfaceHandle,
 			coreDriver:        coreDriver,
@@ -78,7 +78,7 @@ func (s *vulkanSurface) Handle() ext_driver.VkSurfaceKHR {
 
 func (s *vulkanSurface) Destroy(callbacks *driver.AllocationCallbacks) {
 	s.driver.VkDestroySurfaceKHR(s.instance, s.handle, callbacks.Handle())
-	s.coreDriver.ObjectStore().Delete(driver.VulkanHandle(s.handle), s)
+	s.coreDriver.ObjectStore().Delete(driver.VulkanHandle(s.handle))
 }
 
 func (s *vulkanSurface) SupportsDevice(physicalDevice core1_0.PhysicalDevice, queueFamilyIndex int) (bool, common.VkResult, error) {

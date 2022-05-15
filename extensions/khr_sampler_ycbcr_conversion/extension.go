@@ -44,8 +44,8 @@ func (e *VulkanExtension) CreateSamplerYcbcrConversion(device core1_0.Device, o 
 		return nil, res, err
 	}
 
-	ycbcr := device.Driver().ObjectStore().GetOrCreate(driver.VulkanHandle(ycbcrHandle),
-		func() interface{} {
+	ycbcr := device.Driver().ObjectStore().GetOrCreate(driver.VulkanHandle(ycbcrHandle), driver.Core1_1,
+		func() any {
 			return &vulkanSamplerYcbcrConversion{
 				coreDriver:        device.Driver(),
 				driver:            e.driver,

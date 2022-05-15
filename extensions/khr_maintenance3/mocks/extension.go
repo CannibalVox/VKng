@@ -44,7 +44,7 @@ func (m *MockExtension) DescriptorSetLayoutSupport(device core1_0.Device, setLay
 }
 
 // DescriptorSetLayoutSupport indicates an expected call of DescriptorSetLayoutSupport.
-func (mr *MockExtensionMockRecorder) DescriptorSetLayoutSupport(device, setLayoutOptions, support interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) DescriptorSetLayoutSupport(device, setLayoutOptions, support any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DescriptorSetLayoutSupport", reflect.TypeOf((*MockExtension)(nil).DescriptorSetLayoutSupport), device, setLayoutOptions, support)
 }

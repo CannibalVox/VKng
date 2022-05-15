@@ -63,7 +63,7 @@ func (l *VulkanExtension) CreateMessenger(instance core1_0.Instance, allocation 
 	}
 
 	coreDriver := instance.Driver()
-	newMessenger := coreDriver.ObjectStore().GetOrCreate(driver.VulkanHandle(messenger), func() interface{} {
+	newMessenger := coreDriver.ObjectStore().GetOrCreate(driver.VulkanHandle(messenger), driver.Core1_0, func() any {
 		return &vulkanMessenger{
 			coreDriver: coreDriver,
 			handle:     messenger,

@@ -44,7 +44,7 @@ func (m *MockDescriptorUpdateTemplate) Destroy(allocator *driver.AllocationCallb
 }
 
 // Destroy indicates an expected call of Destroy.
-func (mr *MockDescriptorUpdateTemplateMockRecorder) Destroy(allocator interface{}) *gomock.Call {
+func (mr *MockDescriptorUpdateTemplateMockRecorder) Destroy(allocator any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Destroy", reflect.TypeOf((*MockDescriptorUpdateTemplate)(nil).Destroy), allocator)
 }
@@ -70,7 +70,7 @@ func (m *MockDescriptorUpdateTemplate) UpdateDescriptorSetFromBuffer(descriptorS
 }
 
 // UpdateDescriptorSetFromBuffer indicates an expected call of UpdateDescriptorSetFromBuffer.
-func (mr *MockDescriptorUpdateTemplateMockRecorder) UpdateDescriptorSetFromBuffer(descriptorSet, data interface{}) *gomock.Call {
+func (mr *MockDescriptorUpdateTemplateMockRecorder) UpdateDescriptorSetFromBuffer(descriptorSet, data any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateDescriptorSetFromBuffer", reflect.TypeOf((*MockDescriptorUpdateTemplate)(nil).UpdateDescriptorSetFromBuffer), descriptorSet, data)
 }
@@ -82,7 +82,7 @@ func (m *MockDescriptorUpdateTemplate) UpdateDescriptorSetFromImage(descriptorSe
 }
 
 // UpdateDescriptorSetFromImage indicates an expected call of UpdateDescriptorSetFromImage.
-func (mr *MockDescriptorUpdateTemplateMockRecorder) UpdateDescriptorSetFromImage(descriptorSet, data interface{}) *gomock.Call {
+func (mr *MockDescriptorUpdateTemplateMockRecorder) UpdateDescriptorSetFromImage(descriptorSet, data any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateDescriptorSetFromImage", reflect.TypeOf((*MockDescriptorUpdateTemplate)(nil).UpdateDescriptorSetFromImage), descriptorSet, data)
 }
@@ -94,7 +94,7 @@ func (m *MockDescriptorUpdateTemplate) UpdateDescriptorSetFromObjectHandle(descr
 }
 
 // UpdateDescriptorSetFromObjectHandle indicates an expected call of UpdateDescriptorSetFromObjectHandle.
-func (mr *MockDescriptorUpdateTemplateMockRecorder) UpdateDescriptorSetFromObjectHandle(descriptorSet, data interface{}) *gomock.Call {
+func (mr *MockDescriptorUpdateTemplateMockRecorder) UpdateDescriptorSetFromObjectHandle(descriptorSet, data any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateDescriptorSetFromObjectHandle", reflect.TypeOf((*MockDescriptorUpdateTemplate)(nil).UpdateDescriptorSetFromObjectHandle), descriptorSet, data)
 }
@@ -133,7 +133,7 @@ func (m *MockExtension) CreateDescriptorUpdateTemplate(device core1_0.Device, o 
 }
 
 // CreateDescriptorUpdateTemplate indicates an expected call of CreateDescriptorUpdateTemplate.
-func (mr *MockExtensionMockRecorder) CreateDescriptorUpdateTemplate(device, o, allocator interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) CreateDescriptorUpdateTemplate(device, o, allocator any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateDescriptorUpdateTemplate", reflect.TypeOf((*MockExtension)(nil).CreateDescriptorUpdateTemplate), device, o, allocator)
 }

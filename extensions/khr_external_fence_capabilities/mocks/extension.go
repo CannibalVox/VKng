@@ -44,7 +44,7 @@ func (m *MockExtension) ExternalFenceProperties(physicalDevice core1_0.PhysicalD
 }
 
 // ExternalFenceProperties indicates an expected call of ExternalFenceProperties.
-func (mr *MockExtensionMockRecorder) ExternalFenceProperties(physicalDevice, o, outData interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) ExternalFenceProperties(physicalDevice, o, outData any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExternalFenceProperties", reflect.TypeOf((*MockExtension)(nil).ExternalFenceProperties), physicalDevice, o, outData)
 }
