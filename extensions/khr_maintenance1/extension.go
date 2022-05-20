@@ -16,6 +16,10 @@ type VulkanExtension struct {
 }
 
 func CreateExtensionFromDevice(device core1_0.Device) *VulkanExtension {
+	if !device.IsDeviceExtensionActive(ExtensionName) {
+		return nil
+	}
+
 	return &VulkanExtension{
 		driver: khr_maintenance1_driver.CreateDriverFromCore(device.Driver()),
 	}

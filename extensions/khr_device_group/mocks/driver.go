@@ -37,35 +37,7 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 	return m.recorder
 }
 
-// HasKHRSurfaceInteraction dummies base method.
-func (m *MockDriver) HasKHRSurfaceInteraction() bool {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "HasKHRSurfaceInteraction")
-	ret0, _ := ret[0].(bool)
-	return ret0
-}
-
-// HasKHRSurfaceInteraction indicates an expected call of HasKHRSurfaceInteraction.
-func (mr *MockDriverMockRecorder) HasKHRSurfaceInteraction() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HasKHRSurfaceInteraction", reflect.TypeOf((*MockDriver)(nil).HasKHRSurfaceInteraction))
-}
-
-// HasKHRSwapchainInteraction dummies base method.
-func (m *MockDriver) HasKHRSwapchainInteraction() bool {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "HasKHRSwapchainInteraction")
-	ret0, _ := ret[0].(bool)
-	return ret0
-}
-
-// HasKHRSwapchainInteraction indicates an expected call of HasKHRSwapchainInteraction.
-func (mr *MockDriverMockRecorder) HasKHRSwapchainInteraction() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HasKHRSwapchainInteraction", reflect.TypeOf((*MockDriver)(nil).HasKHRSwapchainInteraction))
-}
-
-// VkAcquireNextImage2KHR dummies base method.
+// VkAcquireNextImage2KHR mocks base method.
 func (m *MockDriver) VkAcquireNextImage2KHR(device driver.VkDevice, pAcquireInfo *khr_device_group_driver.VkAcquireNextImageInfoKHR, pImageIndex *driver.Uint32) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkAcquireNextImage2KHR", device, pAcquireInfo, pImageIndex)
@@ -75,48 +47,48 @@ func (m *MockDriver) VkAcquireNextImage2KHR(device driver.VkDevice, pAcquireInfo
 }
 
 // VkAcquireNextImage2KHR indicates an expected call of VkAcquireNextImage2KHR.
-func (mr *MockDriverMockRecorder) VkAcquireNextImage2KHR(device, pAcquireInfo, pImageIndex any) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkAcquireNextImage2KHR(device, pAcquireInfo, pImageIndex interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkAcquireNextImage2KHR", reflect.TypeOf((*MockDriver)(nil).VkAcquireNextImage2KHR), device, pAcquireInfo, pImageIndex)
 }
 
-// VkCmdDispatchBaseKHR dummies base method.
+// VkCmdDispatchBaseKHR mocks base method.
 func (m *MockDriver) VkCmdDispatchBaseKHR(commandBuffer driver.VkCommandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ driver.Uint32) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkCmdDispatchBaseKHR", commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ)
 }
 
 // VkCmdDispatchBaseKHR indicates an expected call of VkCmdDispatchBaseKHR.
-func (mr *MockDriverMockRecorder) VkCmdDispatchBaseKHR(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ any) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkCmdDispatchBaseKHR(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkCmdDispatchBaseKHR", reflect.TypeOf((*MockDriver)(nil).VkCmdDispatchBaseKHR), commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ)
 }
 
-// VkCmdSetDeviceMaskKHR dummies base method.
+// VkCmdSetDeviceMaskKHR mocks base method.
 func (m *MockDriver) VkCmdSetDeviceMaskKHR(commandBuffer driver.VkCommandBuffer, deviceMask driver.Uint32) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkCmdSetDeviceMaskKHR", commandBuffer, deviceMask)
 }
 
 // VkCmdSetDeviceMaskKHR indicates an expected call of VkCmdSetDeviceMaskKHR.
-func (mr *MockDriverMockRecorder) VkCmdSetDeviceMaskKHR(commandBuffer, deviceMask any) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkCmdSetDeviceMaskKHR(commandBuffer, deviceMask interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkCmdSetDeviceMaskKHR", reflect.TypeOf((*MockDriver)(nil).VkCmdSetDeviceMaskKHR), commandBuffer, deviceMask)
 }
 
-// VkGetDeviceGroupPeerMemoryFeaturesKHR dummies base method.
+// VkGetDeviceGroupPeerMemoryFeaturesKHR mocks base method.
 func (m *MockDriver) VkGetDeviceGroupPeerMemoryFeaturesKHR(device driver.VkDevice, heapIndex, localDeviceIndex, remoteDeviceIndex driver.Uint32, pPeerMemoryFeatures *khr_device_group_driver.VkPeerMemoryFeatureFlagsKHR) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkGetDeviceGroupPeerMemoryFeaturesKHR", device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures)
 }
 
 // VkGetDeviceGroupPeerMemoryFeaturesKHR indicates an expected call of VkGetDeviceGroupPeerMemoryFeaturesKHR.
-func (mr *MockDriverMockRecorder) VkGetDeviceGroupPeerMemoryFeaturesKHR(device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures any) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetDeviceGroupPeerMemoryFeaturesKHR(device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetDeviceGroupPeerMemoryFeaturesKHR", reflect.TypeOf((*MockDriver)(nil).VkGetDeviceGroupPeerMemoryFeaturesKHR), device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures)
 }
 
-// VkGetDeviceGroupPresentCapabilitiesKHR dummies base method.
+// VkGetDeviceGroupPresentCapabilitiesKHR mocks base method.
 func (m *MockDriver) VkGetDeviceGroupPresentCapabilitiesKHR(device driver.VkDevice, pDeviceGroupPresentCapabilities *khr_device_group_driver.VkDeviceGroupPresentCapabilitiesKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkGetDeviceGroupPresentCapabilitiesKHR", device, pDeviceGroupPresentCapabilities)
@@ -126,12 +98,12 @@ func (m *MockDriver) VkGetDeviceGroupPresentCapabilitiesKHR(device driver.VkDevi
 }
 
 // VkGetDeviceGroupPresentCapabilitiesKHR indicates an expected call of VkGetDeviceGroupPresentCapabilitiesKHR.
-func (mr *MockDriverMockRecorder) VkGetDeviceGroupPresentCapabilitiesKHR(device, pDeviceGroupPresentCapabilities any) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetDeviceGroupPresentCapabilitiesKHR(device, pDeviceGroupPresentCapabilities interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetDeviceGroupPresentCapabilitiesKHR", reflect.TypeOf((*MockDriver)(nil).VkGetDeviceGroupPresentCapabilitiesKHR), device, pDeviceGroupPresentCapabilities)
 }
 
-// VkGetDeviceGroupSurfacePresentModesKHR dummies base method.
+// VkGetDeviceGroupSurfacePresentModesKHR mocks base method.
 func (m *MockDriver) VkGetDeviceGroupSurfacePresentModesKHR(device driver.VkDevice, surface khr_surface_driver.VkSurfaceKHR, pModes *khr_device_group_driver.VkDeviceGroupPresentModeFlagsKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkGetDeviceGroupSurfacePresentModesKHR", device, surface, pModes)
@@ -141,12 +113,12 @@ func (m *MockDriver) VkGetDeviceGroupSurfacePresentModesKHR(device driver.VkDevi
 }
 
 // VkGetDeviceGroupSurfacePresentModesKHR indicates an expected call of VkGetDeviceGroupSurfacePresentModesKHR.
-func (mr *MockDriverMockRecorder) VkGetDeviceGroupSurfacePresentModesKHR(device, surface, pModes any) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetDeviceGroupSurfacePresentModesKHR(device, surface, pModes interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetDeviceGroupSurfacePresentModesKHR", reflect.TypeOf((*MockDriver)(nil).VkGetDeviceGroupSurfacePresentModesKHR), device, surface, pModes)
 }
 
-// VkGetPhysicalDevicePresentRectanglesKHR dummies base method.
+// VkGetPhysicalDevicePresentRectanglesKHR mocks base method.
 func (m *MockDriver) VkGetPhysicalDevicePresentRectanglesKHR(physicalDevice driver.VkPhysicalDevice, surface khr_surface_driver.VkSurfaceKHR, pRectCount *driver.Uint32, pRects *driver.VkRect2D) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkGetPhysicalDevicePresentRectanglesKHR", physicalDevice, surface, pRectCount, pRects)
@@ -156,7 +128,7 @@ func (m *MockDriver) VkGetPhysicalDevicePresentRectanglesKHR(physicalDevice driv
 }
 
 // VkGetPhysicalDevicePresentRectanglesKHR indicates an expected call of VkGetPhysicalDevicePresentRectanglesKHR.
-func (mr *MockDriverMockRecorder) VkGetPhysicalDevicePresentRectanglesKHR(physicalDevice, surface, pRectCount, pRects any) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetPhysicalDevicePresentRectanglesKHR(physicalDevice, surface, pRectCount, pRects interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDevicePresentRectanglesKHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDevicePresentRectanglesKHR), physicalDevice, surface, pRectCount, pRects)
 }

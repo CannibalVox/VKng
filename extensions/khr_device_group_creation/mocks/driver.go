@@ -36,7 +36,7 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 	return m.recorder
 }
 
-// VkEnumeratePhysicalDeviceGroupsKHR dummies base method.
+// VkEnumeratePhysicalDeviceGroupsKHR mocks base method.
 func (m *MockDriver) VkEnumeratePhysicalDeviceGroupsKHR(instance driver.VkInstance, pPhysicalDeviceGroupCount *driver.Uint32, pPhysicalDeviceGroupProperties *khr_device_group_creation_driver.VkPhysicalDeviceGroupPropertiesKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkEnumeratePhysicalDeviceGroupsKHR", instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties)
@@ -46,7 +46,7 @@ func (m *MockDriver) VkEnumeratePhysicalDeviceGroupsKHR(instance driver.VkInstan
 }
 
 // VkEnumeratePhysicalDeviceGroupsKHR indicates an expected call of VkEnumeratePhysicalDeviceGroupsKHR.
-func (mr *MockDriverMockRecorder) VkEnumeratePhysicalDeviceGroupsKHR(instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties any) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkEnumeratePhysicalDeviceGroupsKHR(instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkEnumeratePhysicalDeviceGroupsKHR", reflect.TypeOf((*MockDriver)(nil).VkEnumeratePhysicalDeviceGroupsKHR), instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties)
 }

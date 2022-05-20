@@ -35,9 +35,11 @@ type Extension interface {
 func CreateExtensionFromInstance(instance core1_0.Instance) *VulkanExtension {
 	driver := ext_driver.CreateDriverFromCore(instance.Driver())
 
-	return &VulkanExtension{
-		driver: driver,
+	if !instance.IsInstanceExtensionActive(ExtensionName) {
+		return nil
 	}
+
+	return CreateExtensionFromDriver(driver)
 }
 
 func CreateExtensionFromDriver(driver ext_driver.Driver) *VulkanExtension {

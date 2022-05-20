@@ -35,14 +35,14 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 	return m.recorder
 }
 
-// VkGetPhysicalDeviceExternalBufferPropertiesKHR dummies base method.
+// VkGetPhysicalDeviceExternalBufferPropertiesKHR mocks base method.
 func (m *MockDriver) VkGetPhysicalDeviceExternalBufferPropertiesKHR(physicalDevice driver.VkPhysicalDevice, pExternalBufferInfo *khr_external_memory_capabilities_driver.VkPhysicalDeviceExternalBufferInfoKHR, pExternalBufferProperties *khr_external_memory_capabilities_driver.VkExternalBufferPropertiesKHR) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkGetPhysicalDeviceExternalBufferPropertiesKHR", physicalDevice, pExternalBufferInfo, pExternalBufferProperties)
 }
 
 // VkGetPhysicalDeviceExternalBufferPropertiesKHR indicates an expected call of VkGetPhysicalDeviceExternalBufferPropertiesKHR.
-func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceExternalBufferPropertiesKHR(physicalDevice, pExternalBufferInfo, pExternalBufferProperties any) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceExternalBufferPropertiesKHR(physicalDevice, pExternalBufferInfo, pExternalBufferProperties interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceExternalBufferPropertiesKHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceExternalBufferPropertiesKHR), physicalDevice, pExternalBufferInfo, pExternalBufferProperties)
 }

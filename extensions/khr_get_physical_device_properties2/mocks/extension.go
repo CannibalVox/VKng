@@ -36,7 +36,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 	return m.recorder
 }
 
-// PhysicalDeviceFeatures dummies base method.
+// PhysicalDeviceFeatures mocks base method.
 func (m *MockExtension) PhysicalDeviceFeatures(physicalDevice core1_0.PhysicalDevice, out *khr_get_physical_device_properties2.DeviceFeaturesOutData) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PhysicalDeviceFeatures", physicalDevice, out)
@@ -45,12 +45,12 @@ func (m *MockExtension) PhysicalDeviceFeatures(physicalDevice core1_0.PhysicalDe
 }
 
 // PhysicalDeviceFeatures indicates an expected call of PhysicalDeviceFeatures.
-func (mr *MockExtensionMockRecorder) PhysicalDeviceFeatures(physicalDevice, out any) *gomock.Call {
+func (mr *MockExtensionMockRecorder) PhysicalDeviceFeatures(physicalDevice, out interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PhysicalDeviceFeatures", reflect.TypeOf((*MockExtension)(nil).PhysicalDeviceFeatures), physicalDevice, out)
 }
 
-// PhysicalDeviceFormatProperties dummies base method.
+// PhysicalDeviceFormatProperties mocks base method.
 func (m *MockExtension) PhysicalDeviceFormatProperties(physicalDevice core1_0.PhysicalDevice, format common.DataFormat, out *khr_get_physical_device_properties2.FormatPropertiesOutData) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PhysicalDeviceFormatProperties", physicalDevice, format, out)
@@ -59,12 +59,12 @@ func (m *MockExtension) PhysicalDeviceFormatProperties(physicalDevice core1_0.Ph
 }
 
 // PhysicalDeviceFormatProperties indicates an expected call of PhysicalDeviceFormatProperties.
-func (mr *MockExtensionMockRecorder) PhysicalDeviceFormatProperties(physicalDevice, format, out any) *gomock.Call {
+func (mr *MockExtensionMockRecorder) PhysicalDeviceFormatProperties(physicalDevice, format, out interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PhysicalDeviceFormatProperties", reflect.TypeOf((*MockExtension)(nil).PhysicalDeviceFormatProperties), physicalDevice, format, out)
 }
 
-// PhysicalDeviceImageFormatProperties dummies base method.
+// PhysicalDeviceImageFormatProperties mocks base method.
 func (m *MockExtension) PhysicalDeviceImageFormatProperties(physicalDevice core1_0.PhysicalDevice, options khr_get_physical_device_properties2.ImageFormatOptions, out *khr_get_physical_device_properties2.ImageFormatPropertiesOutData) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PhysicalDeviceImageFormatProperties", physicalDevice, options, out)
@@ -74,12 +74,12 @@ func (m *MockExtension) PhysicalDeviceImageFormatProperties(physicalDevice core1
 }
 
 // PhysicalDeviceImageFormatProperties indicates an expected call of PhysicalDeviceImageFormatProperties.
-func (mr *MockExtensionMockRecorder) PhysicalDeviceImageFormatProperties(physicalDevice, options, out any) *gomock.Call {
+func (mr *MockExtensionMockRecorder) PhysicalDeviceImageFormatProperties(physicalDevice, options, out interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PhysicalDeviceImageFormatProperties", reflect.TypeOf((*MockExtension)(nil).PhysicalDeviceImageFormatProperties), physicalDevice, options, out)
 }
 
-// PhysicalDeviceMemoryProperties dummies base method.
+// PhysicalDeviceMemoryProperties mocks base method.
 func (m *MockExtension) PhysicalDeviceMemoryProperties(physicalDevice core1_0.PhysicalDevice, out *khr_get_physical_device_properties2.MemoryPropertiesOutData) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PhysicalDeviceMemoryProperties", physicalDevice, out)
@@ -88,12 +88,12 @@ func (m *MockExtension) PhysicalDeviceMemoryProperties(physicalDevice core1_0.Ph
 }
 
 // PhysicalDeviceMemoryProperties indicates an expected call of PhysicalDeviceMemoryProperties.
-func (mr *MockExtensionMockRecorder) PhysicalDeviceMemoryProperties(physicalDevice, out any) *gomock.Call {
+func (mr *MockExtensionMockRecorder) PhysicalDeviceMemoryProperties(physicalDevice, out interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PhysicalDeviceMemoryProperties", reflect.TypeOf((*MockExtension)(nil).PhysicalDeviceMemoryProperties), physicalDevice, out)
 }
 
-// PhysicalDeviceProperties dummies base method.
+// PhysicalDeviceProperties mocks base method.
 func (m *MockExtension) PhysicalDeviceProperties(physicalDevice core1_0.PhysicalDevice, out *khr_get_physical_device_properties2.DevicePropertiesOutData) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PhysicalDeviceProperties", physicalDevice, out)
@@ -102,12 +102,12 @@ func (m *MockExtension) PhysicalDeviceProperties(physicalDevice core1_0.Physical
 }
 
 // PhysicalDeviceProperties indicates an expected call of PhysicalDeviceProperties.
-func (mr *MockExtensionMockRecorder) PhysicalDeviceProperties(physicalDevice, out any) *gomock.Call {
+func (mr *MockExtensionMockRecorder) PhysicalDeviceProperties(physicalDevice, out interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PhysicalDeviceProperties", reflect.TypeOf((*MockExtension)(nil).PhysicalDeviceProperties), physicalDevice, out)
 }
 
-// PhysicalDeviceQueueFamilyProperties dummies base method.
+// PhysicalDeviceQueueFamilyProperties mocks base method.
 func (m *MockExtension) PhysicalDeviceQueueFamilyProperties(physicalDevice core1_0.PhysicalDevice, outDataFactory func() *khr_get_physical_device_properties2.QueueFamilyOutData) ([]*khr_get_physical_device_properties2.QueueFamilyOutData, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PhysicalDeviceQueueFamilyProperties", physicalDevice, outDataFactory)
@@ -117,12 +117,12 @@ func (m *MockExtension) PhysicalDeviceQueueFamilyProperties(physicalDevice core1
 }
 
 // PhysicalDeviceQueueFamilyProperties indicates an expected call of PhysicalDeviceQueueFamilyProperties.
-func (mr *MockExtensionMockRecorder) PhysicalDeviceQueueFamilyProperties(physicalDevice, outDataFactory any) *gomock.Call {
+func (mr *MockExtensionMockRecorder) PhysicalDeviceQueueFamilyProperties(physicalDevice, outDataFactory interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PhysicalDeviceQueueFamilyProperties", reflect.TypeOf((*MockExtension)(nil).PhysicalDeviceQueueFamilyProperties), physicalDevice, outDataFactory)
 }
 
-// PhysicalDeviceSparseImageFormatProperties dummies base method.
+// PhysicalDeviceSparseImageFormatProperties mocks base method.
 func (m *MockExtension) PhysicalDeviceSparseImageFormatProperties(physicalDevice core1_0.PhysicalDevice, options khr_get_physical_device_properties2.SparseImageFormatOptions, outDataFactory func() *khr_get_physical_device_properties2.SparseImageFormatPropertiesOutData) ([]*khr_get_physical_device_properties2.SparseImageFormatPropertiesOutData, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PhysicalDeviceSparseImageFormatProperties", physicalDevice, options, outDataFactory)
@@ -132,7 +132,7 @@ func (m *MockExtension) PhysicalDeviceSparseImageFormatProperties(physicalDevice
 }
 
 // PhysicalDeviceSparseImageFormatProperties indicates an expected call of PhysicalDeviceSparseImageFormatProperties.
-func (mr *MockExtensionMockRecorder) PhysicalDeviceSparseImageFormatProperties(physicalDevice, options, outDataFactory any) *gomock.Call {
+func (mr *MockExtensionMockRecorder) PhysicalDeviceSparseImageFormatProperties(physicalDevice, options, outDataFactory interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PhysicalDeviceSparseImageFormatProperties", reflect.TypeOf((*MockExtension)(nil).PhysicalDeviceSparseImageFormatProperties), physicalDevice, options, outDataFactory)
 }

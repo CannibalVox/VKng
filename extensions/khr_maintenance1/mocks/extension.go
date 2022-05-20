@@ -35,14 +35,14 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 	return m.recorder
 }
 
-// TrimCommandPool dummies base method.
+// TrimCommandPool mocks base method.
 func (m *MockExtension) TrimCommandPool(commandPool core1_0.CommandPool, flags khr_maintenance1.CommandPoolTrimFlags) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "TrimCommandPool", commandPool, flags)
 }
 
 // TrimCommandPool indicates an expected call of TrimCommandPool.
-func (mr *MockExtensionMockRecorder) TrimCommandPool(commandPool, flags any) *gomock.Call {
+func (mr *MockExtensionMockRecorder) TrimCommandPool(commandPool, flags interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "TrimCommandPool", reflect.TypeOf((*MockExtension)(nil).TrimCommandPool), commandPool, flags)
 }

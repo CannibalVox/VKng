@@ -36,7 +36,7 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 	return m.recorder
 }
 
-// VkBindBufferMemory2KHR dummies base method.
+// VkBindBufferMemory2KHR mocks base method.
 func (m *MockDriver) VkBindBufferMemory2KHR(device driver.VkDevice, bindInfoCount driver.Uint32, pBindInfos *khr_bind_memory2_driver.VkBindBufferMemoryInfoKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkBindBufferMemory2KHR", device, bindInfoCount, pBindInfos)
@@ -46,12 +46,12 @@ func (m *MockDriver) VkBindBufferMemory2KHR(device driver.VkDevice, bindInfoCoun
 }
 
 // VkBindBufferMemory2KHR indicates an expected call of VkBindBufferMemory2KHR.
-func (mr *MockDriverMockRecorder) VkBindBufferMemory2KHR(device, bindInfoCount, pBindInfos any) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkBindBufferMemory2KHR(device, bindInfoCount, pBindInfos interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkBindBufferMemory2KHR", reflect.TypeOf((*MockDriver)(nil).VkBindBufferMemory2KHR), device, bindInfoCount, pBindInfos)
 }
 
-// VkBindImageMemory2KHR dummies base method.
+// VkBindImageMemory2KHR mocks base method.
 func (m *MockDriver) VkBindImageMemory2KHR(device driver.VkDevice, bindInfoCount driver.Uint32, pBindInfos *khr_bind_memory2_driver.VkBindImageMemoryInfoKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkBindImageMemory2KHR", device, bindInfoCount, pBindInfos)
@@ -61,7 +61,7 @@ func (m *MockDriver) VkBindImageMemory2KHR(device driver.VkDevice, bindInfoCount
 }
 
 // VkBindImageMemory2KHR indicates an expected call of VkBindImageMemory2KHR.
-func (mr *MockDriverMockRecorder) VkBindImageMemory2KHR(device, bindInfoCount, pBindInfos any) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkBindImageMemory2KHR(device, bindInfoCount, pBindInfos interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkBindImageMemory2KHR", reflect.TypeOf((*MockDriver)(nil).VkBindImageMemory2KHR), device, bindInfoCount, pBindInfos)
 }

@@ -48,12 +48,10 @@ type Driver interface {
 	VkCmdSetDeviceMaskKHR(commandBuffer driver.VkCommandBuffer, deviceMask driver.Uint32)
 	VkGetDeviceGroupPeerMemoryFeaturesKHR(device driver.VkDevice, heapIndex, localDeviceIndex, remoteDeviceIndex driver.Uint32, pPeerMemoryFeatures *VkPeerMemoryFeatureFlagsKHR)
 
-	HasKHRSurfaceInteraction() bool
 	VkGetDeviceGroupPresentCapabilitiesKHR(device driver.VkDevice, pDeviceGroupPresentCapabilities *VkDeviceGroupPresentCapabilitiesKHR) (common.VkResult, error)
 	VkGetDeviceGroupSurfacePresentModesKHR(device driver.VkDevice, surface khr_surface_driver.VkSurfaceKHR, pModes *VkDeviceGroupPresentModeFlagsKHR) (common.VkResult, error)
 	VkGetPhysicalDevicePresentRectanglesKHR(physicalDevice driver.VkPhysicalDevice, surface khr_surface_driver.VkSurfaceKHR, pRectCount *driver.Uint32, pRects *driver.VkRect2D) (common.VkResult, error)
 
-	HasKHRSwapchainInteraction() bool
 	VkAcquireNextImage2KHR(device driver.VkDevice, pAcquireInfo *VkAcquireNextImageInfoKHR, pImageIndex *driver.Uint32) (common.VkResult, error)
 }
 
@@ -101,14 +99,6 @@ func CreateDriverFromCore(coreDriver driver.Driver) *CDriver {
 		getPhysicalDevicePresentRectangles: (C.PFN_vkGetPhysicalDevicePresentRectanglesKHR)(coreDriver.LoadProcAddr((*driver.Char)(arena.CString("vkGetPhysicalDevicePresentRectanglesKHR")))),
 		acquireNextImage:                   (C.PFN_vkAcquireNextImage2KHR)(coreDriver.LoadProcAddr((*driver.Char)(arena.CString("vkAcquireNextImage2KHR")))),
 	}
-}
-
-func (d *CDriver) HasKHRSurfaceInteraction() bool {
-	return d.getDeviceGroupPresentCapabilities != nil
-}
-
-func (d *CDriver) HasKHRSwapchainInteraction() bool {
-	return d.acquireNextImage != nil
 }
 
 func (d *CDriver) VkCmdDispatchBaseKHR(commandBuffer driver.VkCommandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ driver.Uint32) {

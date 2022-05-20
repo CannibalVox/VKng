@@ -19,6 +19,10 @@ type VulkanExtension struct {
 }
 
 func CreateExtensionFromInstance(instance core1_0.Instance) *VulkanExtension {
+	if !instance.IsInstanceExtensionActive(ExtensionName) {
+		return nil
+	}
+
 	return &VulkanExtension{
 		driver: ext_driver.CreateDriverFromCore(instance.Driver()),
 	}

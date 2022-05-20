@@ -6,7 +6,7 @@ import (
 	"github.com/CannibalVox/VKng/extensions/khr_surface"
 )
 
-//go:generate mockgen -source extiface.go -destination ../mocks/extension1_1.go -package mock_swapchain -mock_names Extension=Extension1_1
+//go:generate mockgen -source extiface.go -destination ../mocks/extension1_1.go -package mock_swapchain -mock_names Extension=MockExtension1_1
 
 type Extension interface {
 	AcquireNextImage(device core1_0.Device, o AcquireNextImageOptions) (int, common.VkResult, error)

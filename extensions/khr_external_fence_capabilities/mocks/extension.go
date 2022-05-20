@@ -35,7 +35,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 	return m.recorder
 }
 
-// ExternalFenceProperties dummies base method.
+// ExternalFenceProperties mocks base method.
 func (m *MockExtension) ExternalFenceProperties(physicalDevice core1_0.PhysicalDevice, o khr_external_fence_capabilities.ExternalFenceOptions, outData *khr_external_fence_capabilities.ExternalFenceOutData) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ExternalFenceProperties", physicalDevice, o, outData)
@@ -44,7 +44,7 @@ func (m *MockExtension) ExternalFenceProperties(physicalDevice core1_0.PhysicalD
 }
 
 // ExternalFenceProperties indicates an expected call of ExternalFenceProperties.
-func (mr *MockExtensionMockRecorder) ExternalFenceProperties(physicalDevice, o, outData any) *gomock.Call {
+func (mr *MockExtensionMockRecorder) ExternalFenceProperties(physicalDevice, o, outData interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExternalFenceProperties", reflect.TypeOf((*MockExtension)(nil).ExternalFenceProperties), physicalDevice, o, outData)
 }

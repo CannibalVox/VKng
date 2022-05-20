@@ -46,7 +46,6 @@ import "C"
 import (
 	"github.com/CannibalVox/VKng/core/common"
 	"github.com/CannibalVox/VKng/core/driver"
-	khr_device_group_driver "github.com/CannibalVox/VKng/extensions/khr_device_group/driver"
 	khr_surface_driver "github.com/CannibalVox/VKng/extensions/khr_surface/driver"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
@@ -75,6 +74,7 @@ type VkBindImageMemorySwapchainInfoKHR C.VkBindImageMemorySwapchainInfoKHR
 type VkImageSwapchainCreateInfoKHR C.VkImageSwapchainCreateInfoKHR
 type VkDeviceGroupPresentInfoKHR C.VkDeviceGroupPresentInfoKHR
 type VkDeviceGroupSwapchainCreateInfoKHR C.VkDeviceGroupSwapchainCreateInfoKHR
+type VkDeviceGroupPresentModeFlagsKHR C.VkDeviceGroupPresentModeFlagsKHR
 
 type Driver interface {
 	VkCreateSwapchainKHR(device driver.VkDevice, pCreateInfo *VkSwapchainCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pSwapchain *VkSwapchainKHR) (common.VkResult, error)
@@ -84,7 +84,7 @@ type Driver interface {
 	VkQueuePresentKHR(queue driver.VkQueue, pPresentInfo *VkPresentInfoKHR) (common.VkResult, error)
 	VkAcquireNextImage2KHR(device driver.VkDevice, pAcquireInfo *VkAcquireNextImageInfoKHR, pImageIndex *driver.Uint32) (common.VkResult, error)
 	VkGetDeviceGroupPresentCapabilitiesKHR(device driver.VkDevice, pDeviceGroupPresentCapabilities *VkDeviceGroupPresentCapabilitiesKHR) (common.VkResult, error)
-	VkGetDeviceGroupSurfacePresentModesKHR(device driver.VkDevice, surface khr_surface_driver.VkSurfaceKHR, pModes *khr_device_group_driver.VkDeviceGroupPresentModeFlagsKHR) (common.VkResult, error)
+	VkGetDeviceGroupSurfacePresentModesKHR(device driver.VkDevice, surface khr_surface_driver.VkSurfaceKHR, pModes *VkDeviceGroupPresentModeFlagsKHR) (common.VkResult, error)
 	VkGetPhysicalDevicePresentRectanglesKHR(physicalDevice driver.VkPhysicalDevice, surface khr_surface_driver.VkSurfaceKHR, pRectCount *driver.Uint32, pRects *driver.VkRect2D) (common.VkResult, error)
 }
 
@@ -202,7 +202,7 @@ func (d *CDriver) VkGetDeviceGroupPresentCapabilitiesKHR(device driver.VkDevice,
 	return res, res.ToError()
 }
 
-func (d *CDriver) VkGetDeviceGroupSurfacePresentModesKHR(device driver.VkDevice, surface khr_surface_driver.VkSurfaceKHR, pModes *khr_device_group_driver.VkDeviceGroupPresentModeFlagsKHR) (common.VkResult, error) {
+func (d *CDriver) VkGetDeviceGroupSurfacePresentModesKHR(device driver.VkDevice, surface khr_surface_driver.VkSurfaceKHR, pModes *VkDeviceGroupPresentModeFlagsKHR) (common.VkResult, error) {
 	if d.getDeviceGroupSurfacePresentModesFunc == nil {
 		panic("attempt to call extension method vkGetDeviceGroupSurfacePresentModesKHR when extension (or core1.1) not present")
 	}

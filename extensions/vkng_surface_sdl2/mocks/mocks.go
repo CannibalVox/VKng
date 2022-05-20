@@ -37,7 +37,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 	return m.recorder
 }
 
-// CreateSurface dummies base method.
+// CreateSurface mocks base method.
 func (m *MockExtension) CreateSurface(instance core1_0.Instance, window *sdl.Window) (khr_surface.Surface, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateSurface", instance, window)
@@ -48,7 +48,7 @@ func (m *MockExtension) CreateSurface(instance core1_0.Instance, window *sdl.Win
 }
 
 // CreateSurface indicates an expected call of CreateSurface.
-func (mr *MockExtensionMockRecorder) CreateSurface(instance, window any) *gomock.Call {
+func (mr *MockExtensionMockRecorder) CreateSurface(instance, window interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSurface", reflect.TypeOf((*MockExtension)(nil).CreateSurface), instance, window)
 }

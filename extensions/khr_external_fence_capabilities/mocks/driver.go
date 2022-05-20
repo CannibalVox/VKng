@@ -35,14 +35,14 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 	return m.recorder
 }
 
-// VkGetPhysicalDeviceExternalFencePropertiesKHR dummies base method.
+// VkGetPhysicalDeviceExternalFencePropertiesKHR mocks base method.
 func (m *MockDriver) VkGetPhysicalDeviceExternalFencePropertiesKHR(physicalDevice driver.VkPhysicalDevice, pExternalFenceInfo *khr_external_fence_capabilities_driver.VkPhysicalDeviceExternalFenceInfoKHR, pExternalFenceProperties *khr_external_fence_capabilities_driver.VkExternalFencePropertiesKHR) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkGetPhysicalDeviceExternalFencePropertiesKHR", physicalDevice, pExternalFenceInfo, pExternalFenceProperties)
 }
 
 // VkGetPhysicalDeviceExternalFencePropertiesKHR indicates an expected call of VkGetPhysicalDeviceExternalFencePropertiesKHR.
-func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceExternalFencePropertiesKHR(physicalDevice, pExternalFenceInfo, pExternalFenceProperties any) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceExternalFencePropertiesKHR(physicalDevice, pExternalFenceInfo, pExternalFenceProperties interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceExternalFencePropertiesKHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceExternalFencePropertiesKHR), physicalDevice, pExternalFenceInfo, pExternalFenceProperties)
 }

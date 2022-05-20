@@ -12,6 +12,10 @@ type VulkanExtension struct {
 }
 
 func CreateExtensionFromDevice(device core1_0.Device) *VulkanExtension {
+	if !device.IsDeviceExtensionActive(ExtensionName) {
+		return nil
+	}
+
 	return CreateExtensionFromDriver(khr_external_semaphore_capabilities_driver.CreateDriverFromCore(device.Driver()))
 }
 

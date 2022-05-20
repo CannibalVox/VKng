@@ -35,7 +35,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 	return m.recorder
 }
 
-// DescriptorSetLayoutSupport dummies base method.
+// DescriptorSetLayoutSupport mocks base method.
 func (m *MockExtension) DescriptorSetLayoutSupport(device core1_0.Device, setLayoutOptions core1_0.DescriptorSetLayoutCreateOptions, support *khr_maintenance3.DescriptorSetLayoutSupportOutData) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DescriptorSetLayoutSupport", device, setLayoutOptions, support)
@@ -44,7 +44,7 @@ func (m *MockExtension) DescriptorSetLayoutSupport(device core1_0.Device, setLay
 }
 
 // DescriptorSetLayoutSupport indicates an expected call of DescriptorSetLayoutSupport.
-func (mr *MockExtensionMockRecorder) DescriptorSetLayoutSupport(device, setLayoutOptions, support any) *gomock.Call {
+func (mr *MockExtensionMockRecorder) DescriptorSetLayoutSupport(device, setLayoutOptions, support interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DescriptorSetLayoutSupport", reflect.TypeOf((*MockExtension)(nil).DescriptorSetLayoutSupport), device, setLayoutOptions, support)
 }

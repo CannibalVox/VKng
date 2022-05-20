@@ -36,7 +36,7 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 	return m.recorder
 }
 
-// VkCreateSamplerYcbcrConversionKHR dummies base method.
+// VkCreateSamplerYcbcrConversionKHR mocks base method.
 func (m *MockDriver) VkCreateSamplerYcbcrConversionKHR(device driver.VkDevice, pCreateInfo *khr_sampler_ycbcr_conversion_driver.VkSamplerYcbcrConversionCreateInfoKHR, pAllocator *driver.VkAllocationCallbacks, pYcbcrConversion *khr_sampler_ycbcr_conversion_driver.VkSamplerYcbcrConversionKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkCreateSamplerYcbcrConversionKHR", device, pCreateInfo, pAllocator, pYcbcrConversion)
@@ -46,19 +46,19 @@ func (m *MockDriver) VkCreateSamplerYcbcrConversionKHR(device driver.VkDevice, p
 }
 
 // VkCreateSamplerYcbcrConversionKHR indicates an expected call of VkCreateSamplerYcbcrConversionKHR.
-func (mr *MockDriverMockRecorder) VkCreateSamplerYcbcrConversionKHR(device, pCreateInfo, pAllocator, pYcbcrConversion any) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkCreateSamplerYcbcrConversionKHR(device, pCreateInfo, pAllocator, pYcbcrConversion interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkCreateSamplerYcbcrConversionKHR", reflect.TypeOf((*MockDriver)(nil).VkCreateSamplerYcbcrConversionKHR), device, pCreateInfo, pAllocator, pYcbcrConversion)
 }
 
-// VkDestroySamplerYcbcrConversionKHR dummies base method.
+// VkDestroySamplerYcbcrConversionKHR mocks base method.
 func (m *MockDriver) VkDestroySamplerYcbcrConversionKHR(device driver.VkDevice, ycbcrConversion khr_sampler_ycbcr_conversion_driver.VkSamplerYcbcrConversionKHR, pAllocator *driver.VkAllocationCallbacks) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkDestroySamplerYcbcrConversionKHR", device, ycbcrConversion, pAllocator)
 }
 
 // VkDestroySamplerYcbcrConversionKHR indicates an expected call of VkDestroySamplerYcbcrConversionKHR.
-func (mr *MockDriverMockRecorder) VkDestroySamplerYcbcrConversionKHR(device, ycbcrConversion, pAllocator any) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkDestroySamplerYcbcrConversionKHR(device, ycbcrConversion, pAllocator interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkDestroySamplerYcbcrConversionKHR", reflect.TypeOf((*MockDriver)(nil).VkDestroySamplerYcbcrConversionKHR), device, ycbcrConversion, pAllocator)
 }

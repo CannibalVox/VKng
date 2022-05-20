@@ -31,9 +31,7 @@ func TestVulkanExtension_CmdDispatchBase(t *testing.T) {
 	defer ctrl.Finish()
 
 	extDriver := mock_device_group.NewMockDriver(ctrl)
-	extDriver.EXPECT().HasKHRSurfaceInteraction().Return(false)
-	extDriver.EXPECT().HasKHRSwapchainInteraction().Return(false)
-	extension := khr_device_group.CreateExtensionFromDriver(extDriver)
+	extension := khr_device_group.CreateExtensionFromDriver(extDriver, false, false)
 
 	commandBuffer := mocks.EasyMockCommandBuffer(ctrl)
 
@@ -55,9 +53,7 @@ func TestVulkanExtension_CmdSetDeviceMask(t *testing.T) {
 	defer ctrl.Finish()
 
 	extDriver := mock_device_group.NewMockDriver(ctrl)
-	extDriver.EXPECT().HasKHRSurfaceInteraction().Return(false)
-	extDriver.EXPECT().HasKHRSwapchainInteraction().Return(false)
-	extension := khr_device_group.CreateExtensionFromDriver(extDriver)
+	extension := khr_device_group.CreateExtensionFromDriver(extDriver, false, false)
 
 	commandBuffer := mocks.EasyMockCommandBuffer(ctrl)
 
@@ -71,9 +67,7 @@ func TestVulkanExtension_GetDeviceGroupPeerMemoryFeatures(t *testing.T) {
 	defer ctrl.Finish()
 
 	extDriver := mock_device_group.NewMockDriver(ctrl)
-	extDriver.EXPECT().HasKHRSurfaceInteraction().Return(false)
-	extDriver.EXPECT().HasKHRSwapchainInteraction().Return(false)
-	extension := khr_device_group.CreateExtensionFromDriver(extDriver)
+	extension := khr_device_group.CreateExtensionFromDriver(extDriver, false, false)
 
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
 	device := mocks.EasyMockDevice(ctrl, coreDriver)
@@ -104,9 +98,7 @@ func TestVulkanExtension_WithKHRSurface(t *testing.T) {
 	defer ctrl.Finish()
 
 	extDriver := mock_device_group.NewMockDriver(ctrl)
-	extDriver.EXPECT().HasKHRSurfaceInteraction().Return(true)
-	extDriver.EXPECT().HasKHRSwapchainInteraction().Return(true)
-	extension := khr_device_group.CreateExtensionFromDriver(extDriver)
+	extension := khr_device_group.CreateExtensionFromDriver(extDriver, true, true)
 	require.NotNil(t, extension.WithKHRSurface())
 	require.NotNil(t, extension.WithKHRSwapchain())
 }
@@ -116,9 +108,7 @@ func TestVulkanExtension_WithKHRSurface_None(t *testing.T) {
 	defer ctrl.Finish()
 
 	extDriver := mock_device_group.NewMockDriver(ctrl)
-	extDriver.EXPECT().HasKHRSurfaceInteraction().Return(false)
-	extDriver.EXPECT().HasKHRSwapchainInteraction().Return(false)
-	extension := khr_device_group.CreateExtensionFromDriver(extDriver)
+	extension := khr_device_group.CreateExtensionFromDriver(extDriver, false, false)
 	require.Nil(t, extension.WithKHRSurface())
 	require.Nil(t, extension.WithKHRSwapchain())
 }
@@ -128,9 +118,7 @@ func TestVulkanExtensionWithKHRSurface_GetDeviceGroupPresentCapabilities(t *test
 	defer ctrl.Finish()
 
 	extDriver := mock_device_group.NewMockDriver(ctrl)
-	extDriver.EXPECT().HasKHRSurfaceInteraction().Return(true)
-	extDriver.EXPECT().HasKHRSwapchainInteraction().Return(false)
-	extension := khr_device_group.CreateExtensionFromDriver(extDriver)
+	extension := khr_device_group.CreateExtensionFromDriver(extDriver, true, false)
 
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
 	device := mocks.EasyMockDevice(ctrl, coreDriver)
@@ -173,9 +161,7 @@ func TestVulkanExtensionWithKHRSurface_GetDeviceGroupSurfacePresentModes(t *test
 	defer ctrl.Finish()
 
 	extDriver := mock_device_group.NewMockDriver(ctrl)
-	extDriver.EXPECT().HasKHRSurfaceInteraction().Return(true)
-	extDriver.EXPECT().HasKHRSwapchainInteraction().Return(false)
-	extension := khr_device_group.CreateExtensionFromDriver(extDriver)
+	extension := khr_device_group.CreateExtensionFromDriver(extDriver, true, false)
 
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
 	device := mocks.EasyMockDevice(ctrl, coreDriver)
@@ -204,9 +190,7 @@ func TestVulkanExtensionWithKHRSurface_GetPhysicalDevicePresentRectangles(t *tes
 	defer ctrl.Finish()
 
 	extDriver := mock_device_group.NewMockDriver(ctrl)
-	extDriver.EXPECT().HasKHRSurfaceInteraction().Return(true)
-	extDriver.EXPECT().HasKHRSwapchainInteraction().Return(false)
-	extension := khr_device_group.CreateExtensionFromDriver(extDriver)
+	extension := khr_device_group.CreateExtensionFromDriver(extDriver, true, false)
 
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
 	physicalDevice := mocks.EasyMockPhysicalDevice(ctrl, coreDriver)
@@ -286,9 +270,7 @@ func TestVulkanExtensionWithKHRSurface_GetPhysicalDevicePresentRectangles_Incomp
 	defer ctrl.Finish()
 
 	extDriver := mock_device_group.NewMockDriver(ctrl)
-	extDriver.EXPECT().HasKHRSurfaceInteraction().Return(true)
-	extDriver.EXPECT().HasKHRSwapchainInteraction().Return(false)
-	extension := khr_device_group.CreateExtensionFromDriver(extDriver)
+	extension := khr_device_group.CreateExtensionFromDriver(extDriver, true, false)
 
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
 	physicalDevice := mocks.EasyMockPhysicalDevice(ctrl, coreDriver)
@@ -413,9 +395,7 @@ func TestVulkanExtensionWithKHRSwapchain_AcquireNextImage(t *testing.T) {
 	defer ctrl.Finish()
 
 	extDriver := mock_device_group.NewMockDriver(ctrl)
-	extDriver.EXPECT().HasKHRSurfaceInteraction().Return(false)
-	extDriver.EXPECT().HasKHRSwapchainInteraction().Return(true)
-	extension := khr_device_group.CreateExtensionFromDriver(extDriver)
+	extension := khr_device_group.CreateExtensionFromDriver(extDriver, false, true)
 
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
 	device := mocks.EasyMockDevice(ctrl, coreDriver)

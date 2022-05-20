@@ -35,14 +35,14 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 	return m.recorder
 }
 
-// VkGetPhysicalDeviceExternalSemaphorePropertiesKHR dummies base method.
+// VkGetPhysicalDeviceExternalSemaphorePropertiesKHR mocks base method.
 func (m *MockDriver) VkGetPhysicalDeviceExternalSemaphorePropertiesKHR(physicalDevice driver.VkPhysicalDevice, pExternalSemaphoreInfo *khr_external_semaphore_capabilities_driver.VkPhysicalDeviceExternalSemaphoreInfoKHR, pExternalSemaphoreProperties *khr_external_semaphore_capabilities_driver.VkExternalSemaphorePropertiesKHR) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkGetPhysicalDeviceExternalSemaphorePropertiesKHR", physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties)
 }
 
 // VkGetPhysicalDeviceExternalSemaphorePropertiesKHR indicates an expected call of VkGetPhysicalDeviceExternalSemaphorePropertiesKHR.
-func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceExternalSemaphorePropertiesKHR(physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties any) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetPhysicalDeviceExternalSemaphorePropertiesKHR(physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetPhysicalDeviceExternalSemaphorePropertiesKHR", reflect.TypeOf((*MockDriver)(nil).VkGetPhysicalDeviceExternalSemaphorePropertiesKHR), physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties)
 }

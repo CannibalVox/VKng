@@ -35,38 +35,38 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 	return m.recorder
 }
 
-// VkGetBufferMemoryRequirements2KHR dummies base method.
+// VkGetBufferMemoryRequirements2KHR mocks base method.
 func (m *MockDriver) VkGetBufferMemoryRequirements2KHR(device driver.VkDevice, pInfo *khr_get_memory_requirements2_driver.VkBufferMemoryRequirementsInfo2KHR, pMemoryRequirements *khr_get_memory_requirements2_driver.VkMemoryRequirements2KHR) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkGetBufferMemoryRequirements2KHR", device, pInfo, pMemoryRequirements)
 }
 
 // VkGetBufferMemoryRequirements2KHR indicates an expected call of VkGetBufferMemoryRequirements2KHR.
-func (mr *MockDriverMockRecorder) VkGetBufferMemoryRequirements2KHR(device, pInfo, pMemoryRequirements any) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetBufferMemoryRequirements2KHR(device, pInfo, pMemoryRequirements interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetBufferMemoryRequirements2KHR", reflect.TypeOf((*MockDriver)(nil).VkGetBufferMemoryRequirements2KHR), device, pInfo, pMemoryRequirements)
 }
 
-// VkGetImageMemoryRequirements2KHR dummies base method.
+// VkGetImageMemoryRequirements2KHR mocks base method.
 func (m *MockDriver) VkGetImageMemoryRequirements2KHR(device driver.VkDevice, pInfo *khr_get_memory_requirements2_driver.VkImageMemoryRequirementsInfo2KHR, pMemoryRequirements *khr_get_memory_requirements2_driver.VkMemoryRequirements2KHR) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkGetImageMemoryRequirements2KHR", device, pInfo, pMemoryRequirements)
 }
 
 // VkGetImageMemoryRequirements2KHR indicates an expected call of VkGetImageMemoryRequirements2KHR.
-func (mr *MockDriverMockRecorder) VkGetImageMemoryRequirements2KHR(device, pInfo, pMemoryRequirements any) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetImageMemoryRequirements2KHR(device, pInfo, pMemoryRequirements interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetImageMemoryRequirements2KHR", reflect.TypeOf((*MockDriver)(nil).VkGetImageMemoryRequirements2KHR), device, pInfo, pMemoryRequirements)
 }
 
-// VkGetImageSparseMemoryRequirements2KHR dummies base method.
+// VkGetImageSparseMemoryRequirements2KHR mocks base method.
 func (m *MockDriver) VkGetImageSparseMemoryRequirements2KHR(device driver.VkDevice, pInfo *khr_get_memory_requirements2_driver.VkImageSparseMemoryRequirementsInfo2KHR, pSparseMemoryRequirementCount *driver.Uint32, pSparseMemoryRequirements *khr_get_memory_requirements2_driver.VkSparseImageMemoryRequirements2KHR) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "VkGetImageSparseMemoryRequirements2KHR", device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
 }
 
 // VkGetImageSparseMemoryRequirements2KHR indicates an expected call of VkGetImageSparseMemoryRequirements2KHR.
-func (mr *MockDriverMockRecorder) VkGetImageSparseMemoryRequirements2KHR(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements any) *gomock.Call {
+func (mr *MockDriverMockRecorder) VkGetImageSparseMemoryRequirements2KHR(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkGetImageSparseMemoryRequirements2KHR", reflect.TypeOf((*MockDriver)(nil).VkGetImageSparseMemoryRequirements2KHR), device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
 }

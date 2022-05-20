@@ -11,6 +11,7 @@ import (
 	core1_0 "github.com/CannibalVox/VKng/core/core1_0"
 	driver "github.com/CannibalVox/VKng/core/driver"
 	khr_swapchain "github.com/CannibalVox/VKng/extensions/khr_swapchain"
+	khr_swapchain_driver "github.com/CannibalVox/VKng/extensions/khr_swapchain/driver"
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -37,6 +38,20 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 	return m.recorder
 }
 
+// APIVersion mocks base method.
+func (m *MockExtension) APIVersion() common.APIVersion {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "APIVersion")
+	ret0, _ := ret[0].(common.APIVersion)
+	return ret0
+}
+
+// APIVersion indicates an expected call of APIVersion.
+func (mr *MockExtensionMockRecorder) APIVersion() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "APIVersion", reflect.TypeOf((*MockExtension)(nil).APIVersion))
+}
+
 // CreateSwapchain mocks base method.
 func (m *MockExtension) CreateSwapchain(device core1_0.Device, allocation *driver.AllocationCallbacks, options khr_swapchain.CreateOptions) (khr_swapchain.Swapchain, common.VkResult, error) {
 	m.ctrl.T.Helper()
@@ -51,6 +66,20 @@ func (m *MockExtension) CreateSwapchain(device core1_0.Device, allocation *drive
 func (mr *MockExtensionMockRecorder) CreateSwapchain(device, allocation, options interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSwapchain", reflect.TypeOf((*MockExtension)(nil).CreateSwapchain), device, allocation, options)
+}
+
+// Driver mocks base method.
+func (m *MockExtension) Driver() khr_swapchain_driver.Driver {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Driver")
+	ret0, _ := ret[0].(khr_swapchain_driver.Driver)
+	return ret0
+}
+
+// Driver indicates an expected call of Driver.
+func (mr *MockExtensionMockRecorder) Driver() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Driver", reflect.TypeOf((*MockExtension)(nil).Driver))
 }
 
 // PresentToQueue mocks base method.

@@ -37,31 +37,31 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 	return m.recorder
 }
 
-// CmdDispatchBase dummies base method.
+// CmdDispatchBase mocks base method.
 func (m *MockExtension) CmdDispatchBase(commandBuffer core1_0.CommandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ int) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "CmdDispatchBase", commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ)
 }
 
 // CmdDispatchBase indicates an expected call of CmdDispatchBase.
-func (mr *MockExtensionMockRecorder) CmdDispatchBase(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ any) *gomock.Call {
+func (mr *MockExtensionMockRecorder) CmdDispatchBase(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CmdDispatchBase", reflect.TypeOf((*MockExtension)(nil).CmdDispatchBase), commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ)
 }
 
-// CmdSetDeviceMask dummies base method.
+// CmdSetDeviceMask mocks base method.
 func (m *MockExtension) CmdSetDeviceMask(commandBuffer core1_0.CommandBuffer, deviceMask uint32) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "CmdSetDeviceMask", commandBuffer, deviceMask)
 }
 
 // CmdSetDeviceMask indicates an expected call of CmdSetDeviceMask.
-func (mr *MockExtensionMockRecorder) CmdSetDeviceMask(commandBuffer, deviceMask any) *gomock.Call {
+func (mr *MockExtensionMockRecorder) CmdSetDeviceMask(commandBuffer, deviceMask interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CmdSetDeviceMask", reflect.TypeOf((*MockExtension)(nil).CmdSetDeviceMask), commandBuffer, deviceMask)
 }
 
-// DeviceGroupPeerMemoryFeatures dummies base method.
+// DeviceGroupPeerMemoryFeatures mocks base method.
 func (m *MockExtension) DeviceGroupPeerMemoryFeatures(device core1_0.Device, heapIndex, localDeviceIndex, remoteDeviceIndex int) khr_device_group.PeerMemoryFeatures {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DeviceGroupPeerMemoryFeatures", device, heapIndex, localDeviceIndex, remoteDeviceIndex)
@@ -70,12 +70,12 @@ func (m *MockExtension) DeviceGroupPeerMemoryFeatures(device core1_0.Device, hea
 }
 
 // DeviceGroupPeerMemoryFeatures indicates an expected call of DeviceGroupPeerMemoryFeatures.
-func (mr *MockExtensionMockRecorder) DeviceGroupPeerMemoryFeatures(device, heapIndex, localDeviceIndex, remoteDeviceIndex any) *gomock.Call {
+func (mr *MockExtensionMockRecorder) DeviceGroupPeerMemoryFeatures(device, heapIndex, localDeviceIndex, remoteDeviceIndex interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeviceGroupPeerMemoryFeatures", reflect.TypeOf((*MockExtension)(nil).DeviceGroupPeerMemoryFeatures), device, heapIndex, localDeviceIndex, remoteDeviceIndex)
 }
 
-// WithKHRSurface dummies base method.
+// WithKHRSurface mocks base method.
 func (m *MockExtension) WithKHRSurface() khr_device_group.ExtensionWithKHRSurface {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "WithKHRSurface")
@@ -89,7 +89,7 @@ func (mr *MockExtensionMockRecorder) WithKHRSurface() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WithKHRSurface", reflect.TypeOf((*MockExtension)(nil).WithKHRSurface))
 }
 
-// WithKHRSwapchain dummies base method.
+// WithKHRSwapchain mocks base method.
 func (m *MockExtension) WithKHRSwapchain() khr_device_group.ExtensionWithKHRSwapchain {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "WithKHRSwapchain")
@@ -126,7 +126,7 @@ func (m *MockExtensionWithKHRSurface) EXPECT() *MockExtensionWithKHRSurfaceMockR
 	return m.recorder
 }
 
-// DeviceGroupPresentCapabilities dummies base method.
+// DeviceGroupPresentCapabilities mocks base method.
 func (m *MockExtensionWithKHRSurface) DeviceGroupPresentCapabilities(device core1_0.Device, outData *khr_device_group.DeviceGroupPresentCapabilitiesOutData) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DeviceGroupPresentCapabilities", device, outData)
@@ -136,12 +136,12 @@ func (m *MockExtensionWithKHRSurface) DeviceGroupPresentCapabilities(device core
 }
 
 // DeviceGroupPresentCapabilities indicates an expected call of DeviceGroupPresentCapabilities.
-func (mr *MockExtensionWithKHRSurfaceMockRecorder) DeviceGroupPresentCapabilities(device, outData any) *gomock.Call {
+func (mr *MockExtensionWithKHRSurfaceMockRecorder) DeviceGroupPresentCapabilities(device, outData interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeviceGroupPresentCapabilities", reflect.TypeOf((*MockExtensionWithKHRSurface)(nil).DeviceGroupPresentCapabilities), device, outData)
 }
 
-// DeviceGroupSurfacePresentModes dummies base method.
+// DeviceGroupSurfacePresentModes mocks base method.
 func (m *MockExtensionWithKHRSurface) DeviceGroupSurfacePresentModes(device core1_0.Device, surface khr_surface.Surface) (khr_device_group.DeviceGroupPresentModeFlags, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DeviceGroupSurfacePresentModes", device, surface)
@@ -152,12 +152,12 @@ func (m *MockExtensionWithKHRSurface) DeviceGroupSurfacePresentModes(device core
 }
 
 // DeviceGroupSurfacePresentModes indicates an expected call of DeviceGroupSurfacePresentModes.
-func (mr *MockExtensionWithKHRSurfaceMockRecorder) DeviceGroupSurfacePresentModes(device, surface any) *gomock.Call {
+func (mr *MockExtensionWithKHRSurfaceMockRecorder) DeviceGroupSurfacePresentModes(device, surface interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeviceGroupSurfacePresentModes", reflect.TypeOf((*MockExtensionWithKHRSurface)(nil).DeviceGroupSurfacePresentModes), device, surface)
 }
 
-// PhysicalDevicePresentRectangles dummies base method.
+// PhysicalDevicePresentRectangles mocks base method.
 func (m *MockExtensionWithKHRSurface) PhysicalDevicePresentRectangles(physicalDevice core1_0.PhysicalDevice, surface khr_surface.Surface) ([]common.Rect2D, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PhysicalDevicePresentRectangles", physicalDevice, surface)
@@ -168,7 +168,7 @@ func (m *MockExtensionWithKHRSurface) PhysicalDevicePresentRectangles(physicalDe
 }
 
 // PhysicalDevicePresentRectangles indicates an expected call of PhysicalDevicePresentRectangles.
-func (mr *MockExtensionWithKHRSurfaceMockRecorder) PhysicalDevicePresentRectangles(physicalDevice, surface any) *gomock.Call {
+func (mr *MockExtensionWithKHRSurfaceMockRecorder) PhysicalDevicePresentRectangles(physicalDevice, surface interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PhysicalDevicePresentRectangles", reflect.TypeOf((*MockExtensionWithKHRSurface)(nil).PhysicalDevicePresentRectangles), physicalDevice, surface)
 }
@@ -196,7 +196,7 @@ func (m *MockExtensionWithKHRSwapchain) EXPECT() *MockExtensionWithKHRSwapchainM
 	return m.recorder
 }
 
-// AcquireNextImage dummies base method.
+// AcquireNextImage mocks base method.
 func (m *MockExtensionWithKHRSwapchain) AcquireNextImage(device core1_0.Device, o khr_device_group.AcquireNextImageOptions) (int, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AcquireNextImage", device, o)
@@ -207,7 +207,7 @@ func (m *MockExtensionWithKHRSwapchain) AcquireNextImage(device core1_0.Device, 
 }
 
 // AcquireNextImage indicates an expected call of AcquireNextImage.
-func (mr *MockExtensionWithKHRSwapchainMockRecorder) AcquireNextImage(device, o any) *gomock.Call {
+func (mr *MockExtensionWithKHRSwapchainMockRecorder) AcquireNextImage(device, o interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AcquireNextImage", reflect.TypeOf((*MockExtensionWithKHRSwapchain)(nil).AcquireNextImage), device, o)
 }

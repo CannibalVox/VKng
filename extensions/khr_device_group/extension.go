@@ -11,6 +11,7 @@ import (
 	"github.com/CannibalVox/VKng/core/driver"
 	khr_device_group_driver "github.com/CannibalVox/VKng/extensions/khr_device_group/driver"
 	"github.com/CannibalVox/VKng/extensions/khr_surface"
+	"github.com/CannibalVox/VKng/extensions/khr_swapchain"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
@@ -21,20 +22,27 @@ type VulkanExtension struct {
 	withSwapchain *VulkanExtensionWithKHRSwapchain
 }
 
-func CreateExtensionFromDevice(device core1_0.Device) *VulkanExtension {
-	return CreateExtensionFromDriver(khr_device_group_driver.CreateDriverFromCore(device.Driver()))
+func CreateExtensionFromDevice(device core1_0.Device, instance core1_0.Instance) *VulkanExtension {
+	if !device.IsDeviceExtensionActive(ExtensionName) {
+		return nil
+	}
+
+	surfaceInteraction := instance.IsInstanceExtensionActive(khr_surface.ExtensionName)
+	swapchainInteraction := device.IsDeviceExtensionActive(khr_swapchain.ExtensionName)
+
+	return CreateExtensionFromDriver(khr_device_group_driver.CreateDriverFromCore(device.Driver()), surfaceInteraction, swapchainInteraction)
 }
 
-func CreateExtensionFromDriver(driver khr_device_group_driver.Driver) *VulkanExtension {
+func CreateExtensionFromDriver(driver khr_device_group_driver.Driver, khrSurfaceInteraction bool, khrSwapchainInteraction bool) *VulkanExtension {
 	ext := &VulkanExtension{
 		driver: driver,
 	}
 
-	if driver.HasKHRSurfaceInteraction() {
+	if khrSurfaceInteraction {
 		ext.withSurface = &VulkanExtensionWithKHRSurface{driver: driver}
 	}
 
-	if driver.HasKHRSwapchainInteraction() {
+	if khrSwapchainInteraction {
 		ext.withSwapchain = &VulkanExtensionWithKHRSwapchain{driver: driver}
 	}
 

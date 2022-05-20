@@ -38,19 +38,19 @@ func (m *MockSamplerYcbcrConversion) EXPECT() *MockSamplerYcbcrConversionMockRec
 	return m.recorder
 }
 
-// Destroy dummies base method.
+// Destroy mocks base method.
 func (m *MockSamplerYcbcrConversion) Destroy(allocator *driver.AllocationCallbacks) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "Destroy", allocator)
 }
 
 // Destroy indicates an expected call of Destroy.
-func (mr *MockSamplerYcbcrConversionMockRecorder) Destroy(allocator any) *gomock.Call {
+func (mr *MockSamplerYcbcrConversionMockRecorder) Destroy(allocator interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Destroy", reflect.TypeOf((*MockSamplerYcbcrConversion)(nil).Destroy), allocator)
 }
 
-// Handle dummies base method.
+// Handle mocks base method.
 func (m *MockSamplerYcbcrConversion) Handle() khr_sampler_ycbcr_conversion_driver.VkSamplerYcbcrConversionKHR {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Handle")
@@ -87,7 +87,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 	return m.recorder
 }
 
-// CreateSamplerYcbcrConversion dummies base method.
+// CreateSamplerYcbcrConversion mocks base method.
 func (m *MockExtension) CreateSamplerYcbcrConversion(device core1_0.Device, o khr_sampler_ycbcr_conversion.SamplerYcbcrConversionCreateOptions, allocator *driver.AllocationCallbacks) (khr_sampler_ycbcr_conversion.SamplerYcbcrConversion, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateSamplerYcbcrConversion", device, o, allocator)
@@ -98,7 +98,7 @@ func (m *MockExtension) CreateSamplerYcbcrConversion(device core1_0.Device, o kh
 }
 
 // CreateSamplerYcbcrConversion indicates an expected call of CreateSamplerYcbcrConversion.
-func (mr *MockExtensionMockRecorder) CreateSamplerYcbcrConversion(device, o, allocator any) *gomock.Call {
+func (mr *MockExtensionMockRecorder) CreateSamplerYcbcrConversion(device, o, allocator interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSamplerYcbcrConversion", reflect.TypeOf((*MockExtension)(nil).CreateSamplerYcbcrConversion), device, o, allocator)
 }

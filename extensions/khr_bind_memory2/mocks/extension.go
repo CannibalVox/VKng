@@ -36,7 +36,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 	return m.recorder
 }
 
-// BindBufferMemory dummies base method.
+// BindBufferMemory mocks base method.
 func (m *MockExtension) BindBufferMemory(device core1_0.Device, options []khr_bind_memory2.BindBufferMemoryOptions) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "BindBufferMemory", device, options)
@@ -46,12 +46,12 @@ func (m *MockExtension) BindBufferMemory(device core1_0.Device, options []khr_bi
 }
 
 // BindBufferMemory indicates an expected call of BindBufferMemory.
-func (mr *MockExtensionMockRecorder) BindBufferMemory(device, options any) *gomock.Call {
+func (mr *MockExtensionMockRecorder) BindBufferMemory(device, options interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BindBufferMemory", reflect.TypeOf((*MockExtension)(nil).BindBufferMemory), device, options)
 }
 
-// BindImageMemory dummies base method.
+// BindImageMemory mocks base method.
 func (m *MockExtension) BindImageMemory(device core1_0.Device, options []khr_bind_memory2.BindImageMemoryOptions) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "BindImageMemory", device, options)
@@ -61,7 +61,7 @@ func (m *MockExtension) BindImageMemory(device core1_0.Device, options []khr_bin
 }
 
 // BindImageMemory indicates an expected call of BindImageMemory.
-func (mr *MockExtensionMockRecorder) BindImageMemory(device, options any) *gomock.Call {
+func (mr *MockExtensionMockRecorder) BindImageMemory(device, options interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BindImageMemory", reflect.TypeOf((*MockExtension)(nil).BindImageMemory), device, options)
 }

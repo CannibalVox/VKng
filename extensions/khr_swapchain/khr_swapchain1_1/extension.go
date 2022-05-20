@@ -9,20 +9,35 @@ import (
 	"github.com/CannibalVox/VKng/core/common"
 	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/VKng/core/driver"
-	khr_device_group_driver "github.com/CannibalVox/VKng/extensions/khr_device_group/driver"
 	"github.com/CannibalVox/VKng/extensions/khr_surface"
+	"github.com/CannibalVox/VKng/extensions/khr_swapchain"
 	khr_swapchain_driver "github.com/CannibalVox/VKng/extensions/khr_swapchain/driver"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
 
 type VulkanExtension struct {
+	khr_swapchain.Extension
+
 	driver khr_swapchain_driver.Driver
+}
+
+func PromoteExtension(extension khr_swapchain.Extension) *VulkanExtension {
+	if extension == nil || !extension.APIVersion().IsAtLeast(common.Vulkan1_1) {
+		return nil
+	}
+
+	return &VulkanExtension{
+		Extension: extension,
+
+		driver: extension.Driver(),
+	}
 }
 
 func CreateExtensionFromDriver(driver khr_swapchain_driver.Driver) *VulkanExtension {
 	return &VulkanExtension{
-		driver: driver,
+		Extension: khr_swapchain.CreateExtensionFromDriver(driver),
+		driver:    driver,
 	}
 }
 
@@ -78,7 +93,7 @@ func (v *VulkanExtension) DeviceGroupSurfacePresentModes(device core1_0.Device, 
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
-	flagsPtr := (*khr_device_group_driver.VkDeviceGroupPresentModeFlagsKHR)(arena.Malloc(int(unsafe.Sizeof(C.VkDeviceGroupPresentModeFlagsKHR(0)))))
+	flagsPtr := (*khr_swapchain_driver.VkDeviceGroupPresentModeFlagsKHR)(arena.Malloc(int(unsafe.Sizeof(C.VkDeviceGroupPresentModeFlagsKHR(0)))))
 
 	res, err := v.driver.VkGetDeviceGroupSurfacePresentModesKHR(
 		device.Handle(),

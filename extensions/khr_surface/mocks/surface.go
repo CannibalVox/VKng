@@ -38,7 +38,7 @@ func (m *MockSurface) EXPECT() *MockSurfaceMockRecorder {
 	return m.recorder
 }
 
-// Capabilities dummies base method.
+// Capabilities mocks base method.
 func (m *MockSurface) Capabilities(device core1_0.PhysicalDevice) (*khr_surface.Capabilities, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Capabilities", device)
@@ -49,24 +49,24 @@ func (m *MockSurface) Capabilities(device core1_0.PhysicalDevice) (*khr_surface.
 }
 
 // Capabilities indicates an expected call of Capabilities.
-func (mr *MockSurfaceMockRecorder) Capabilities(device any) *gomock.Call {
+func (mr *MockSurfaceMockRecorder) Capabilities(device interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Capabilities", reflect.TypeOf((*MockSurface)(nil).Capabilities), device)
 }
 
-// Destroy dummies base method.
+// Destroy mocks base method.
 func (m *MockSurface) Destroy(callbacks *driver.AllocationCallbacks) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "Destroy", callbacks)
 }
 
 // Destroy indicates an expected call of Destroy.
-func (mr *MockSurfaceMockRecorder) Destroy(callbacks any) *gomock.Call {
+func (mr *MockSurfaceMockRecorder) Destroy(callbacks interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Destroy", reflect.TypeOf((*MockSurface)(nil).Destroy), callbacks)
 }
 
-// Formats dummies base method.
+// Formats mocks base method.
 func (m *MockSurface) Formats(device core1_0.PhysicalDevice) ([]khr_surface.Format, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Formats", device)
@@ -77,12 +77,12 @@ func (m *MockSurface) Formats(device core1_0.PhysicalDevice) ([]khr_surface.Form
 }
 
 // Formats indicates an expected call of Formats.
-func (mr *MockSurfaceMockRecorder) Formats(device any) *gomock.Call {
+func (mr *MockSurfaceMockRecorder) Formats(device interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Formats", reflect.TypeOf((*MockSurface)(nil).Formats), device)
 }
 
-// Handle dummies base method.
+// Handle mocks base method.
 func (m *MockSurface) Handle() khr_surface_driver.VkSurfaceKHR {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Handle")
@@ -96,7 +96,7 @@ func (mr *MockSurfaceMockRecorder) Handle() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Handle", reflect.TypeOf((*MockSurface)(nil).Handle))
 }
 
-// PresentModes dummies base method.
+// PresentModes mocks base method.
 func (m *MockSurface) PresentModes(device core1_0.PhysicalDevice) ([]khr_surface.PresentMode, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PresentModes", device)
@@ -107,12 +107,12 @@ func (m *MockSurface) PresentModes(device core1_0.PhysicalDevice) ([]khr_surface
 }
 
 // PresentModes indicates an expected call of PresentModes.
-func (mr *MockSurfaceMockRecorder) PresentModes(device any) *gomock.Call {
+func (mr *MockSurfaceMockRecorder) PresentModes(device interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PresentModes", reflect.TypeOf((*MockSurface)(nil).PresentModes), device)
 }
 
-// SupportsDevice dummies base method.
+// SupportsDevice mocks base method.
 func (m *MockSurface) SupportsDevice(physicalDevice core1_0.PhysicalDevice, queueFamilyIndex int) (bool, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SupportsDevice", physicalDevice, queueFamilyIndex)
@@ -123,7 +123,7 @@ func (m *MockSurface) SupportsDevice(physicalDevice core1_0.PhysicalDevice, queu
 }
 
 // SupportsDevice indicates an expected call of SupportsDevice.
-func (mr *MockSurfaceMockRecorder) SupportsDevice(physicalDevice, queueFamilyIndex any) *gomock.Call {
+func (mr *MockSurfaceMockRecorder) SupportsDevice(physicalDevice, queueFamilyIndex interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SupportsDevice", reflect.TypeOf((*MockSurface)(nil).SupportsDevice), physicalDevice, queueFamilyIndex)
 }

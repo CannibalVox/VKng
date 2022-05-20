@@ -9,7 +9,6 @@ import (
 
 	common "github.com/CannibalVox/VKng/core/common"
 	driver "github.com/CannibalVox/VKng/core/driver"
-	khr_device_group_driver "github.com/CannibalVox/VKng/extensions/khr_device_group/driver"
 	khr_surface_driver "github.com/CannibalVox/VKng/extensions/khr_surface/driver"
 	khr_swapchain_driver "github.com/CannibalVox/VKng/extensions/khr_swapchain/driver"
 	gomock "github.com/golang/mock/gomock"
@@ -111,7 +110,7 @@ func (mr *MockDriverMockRecorder) VkGetDeviceGroupPresentCapabilitiesKHR(device,
 }
 
 // VkGetDeviceGroupSurfacePresentModesKHR mocks base method.
-func (m *MockDriver) VkGetDeviceGroupSurfacePresentModesKHR(device driver.VkDevice, surface khr_surface_driver.VkSurfaceKHR, pModes *khr_device_group_driver.VkDeviceGroupPresentModeFlagsKHR) (common.VkResult, error) {
+func (m *MockDriver) VkGetDeviceGroupSurfacePresentModesKHR(device driver.VkDevice, surface khr_surface_driver.VkSurfaceKHR, pModes *khr_swapchain_driver.VkDeviceGroupPresentModeFlagsKHR) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkGetDeviceGroupSurfacePresentModesKHR", device, surface, pModes)
 	ret0, _ := ret[0].(common.VkResult)

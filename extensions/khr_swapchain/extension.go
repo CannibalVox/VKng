@@ -13,28 +13,49 @@ import (
 	"github.com/CannibalVox/VKng/core/driver"
 	khr_swapchain_driver "github.com/CannibalVox/VKng/extensions/khr_swapchain/driver"
 	"github.com/CannibalVox/cgoparam"
+	"math"
 )
 
 type VulkanExtension struct {
-	driver khr_swapchain_driver.Driver
+	driver  khr_swapchain_driver.Driver
+	version common.APIVersion
 }
 
 type Extension interface {
+	Driver() khr_swapchain_driver.Driver
+	APIVersion() common.APIVersion
+
 	CreateSwapchain(device core1_0.Device, allocation *driver.AllocationCallbacks, options CreateOptions) (Swapchain, common.VkResult, error)
 	PresentToQueue(queue core1_0.Queue, o PresentOptions) (common.VkResult, error)
 }
 
 func CreateExtensionFromDevice(device core1_0.Device) *VulkanExtension {
-	return CreateExtensionFromDriver(khr_swapchain_driver.CreateDriverFromCore(device.Driver()))
+	if !device.IsDeviceExtensionActive(ExtensionName) {
+		return nil
+	}
+
+	return &VulkanExtension{
+		driver:  khr_swapchain_driver.CreateDriverFromCore(device.Driver()),
+		version: device.APIVersion(),
+	}
 }
 
 func CreateExtensionFromDriver(driver khr_swapchain_driver.Driver) *VulkanExtension {
 	return &VulkanExtension{
-		driver: driver,
+		driver:  driver,
+		version: common.APIVersion(math.MaxUint32),
 	}
 }
 
-func (l *VulkanExtension) CreateSwapchain(device core1_0.Device, allocation *driver.AllocationCallbacks, options CreateOptions) (Swapchain, common.VkResult, error) {
+func (e *VulkanExtension) Driver() khr_swapchain_driver.Driver {
+	return e.driver
+}
+
+func (e *VulkanExtension) APIVersion() common.APIVersion {
+	return e.version
+}
+
+func (e *VulkanExtension) CreateSwapchain(device core1_0.Device, allocation *driver.AllocationCallbacks, options CreateOptions) (Swapchain, common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -45,7 +66,7 @@ func (l *VulkanExtension) CreateSwapchain(device core1_0.Device, allocation *dri
 
 	var swapchain khr_swapchain_driver.VkSwapchainKHR
 
-	res, err := l.driver.VkCreateSwapchainKHR(device.Handle(), (*khr_swapchain_driver.VkSwapchainCreateInfoKHR)(createInfo), allocation.Handle(), &swapchain)
+	res, err := e.driver.VkCreateSwapchainKHR(device.Handle(), (*khr_swapchain_driver.VkSwapchainCreateInfoKHR)(createInfo), allocation.Handle(), &swapchain)
 	if err != nil {
 		return nil, res, err
 	}
@@ -55,7 +76,7 @@ func (l *VulkanExtension) CreateSwapchain(device core1_0.Device, allocation *dri
 		return &vulkanSwapchain{
 			handle:            swapchain,
 			device:            device.Handle(),
-			driver:            l.driver,
+			driver:            e.driver,
 			minimumAPIVersion: device.APIVersion(),
 			coreDriver:        coreDriver,
 		}
@@ -63,7 +84,7 @@ func (l *VulkanExtension) CreateSwapchain(device core1_0.Device, allocation *dri
 	return newSwapchain, res, nil
 }
 
-func (s *VulkanExtension) PresentToQueue(queue core1_0.Queue, o PresentOptions) (common.VkResult, error) {
+func (e *VulkanExtension) PresentToQueue(queue core1_0.Queue, o PresentOptions) (common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -73,7 +94,7 @@ func (s *VulkanExtension) PresentToQueue(queue core1_0.Queue, o PresentOptions) 
 	}
 
 	createInfoPtr := (*khr_swapchain_driver.VkPresentInfoKHR)(createInfo)
-	res, err := s.driver.VkQueuePresentKHR(queue.Handle(), createInfoPtr)
+	res, err := e.driver.VkQueuePresentKHR(queue.Handle(), createInfoPtr)
 	popErr := common.PopulateOutData(o, createInfo)
 
 	if popErr != nil {
