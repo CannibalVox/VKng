@@ -25,7 +25,7 @@ func (o PhysicalDevice8BitStorageFeaturesOptions) PopulateCPointer(allocator *cg
 	}
 
 	info := (*C.VkPhysicalDevice8BitStorageFeatures)(preallocatedPointer)
-	info.sType = C.VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES
+	info.sType = C.VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES_KHR
 	info.pNext = next
 	info.storageBuffer8BitAccess = C.VkBool32(0)
 	info.uniformAndStorageBuffer8BitAccess = C.VkBool32(0)
