@@ -12,13 +12,13 @@ import (
 	"unsafe"
 )
 
-type DeviceFeatureOptions struct {
+type DeviceFeaturesOptions struct {
 	Features core1_0.PhysicalDeviceFeatures
 
 	common.HaveNext
 }
 
-func (o DeviceFeatureOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o DeviceFeaturesOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceFeatures2KHR{})))
 	}
@@ -31,7 +31,7 @@ func (o DeviceFeatureOptions) PopulateCPointer(allocator *cgoparam.Allocator, pr
 	return preallocatedPointer, err
 }
 
-func (o DeviceFeatureOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o DeviceFeaturesOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	data := (*C.VkPhysicalDeviceFeatures2KHR)(cDataPointer)
 
 	return data.pNext, nil

@@ -19,7 +19,7 @@ import (
 	"unsafe"
 )
 
-func TestVariablePointersFeatureOptions(t *testing.T) {
+func TestVariablePointersFeaturesOptions(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
@@ -64,7 +64,7 @@ func TestVariablePointersFeatureOptions(t *testing.T) {
 			},
 		},
 
-		HaveNext: common.HaveNext{Next: khr_variable_pointers.PhysicalDeviceVariablePointersFeatureOptions{
+		HaveNext: common.HaveNext{Next: khr_variable_pointers.PhysicalDeviceVariablePointersFeaturesOptions{
 			VariablePointers:              true,
 			VariablePointersStorageBuffer: false,
 		}},
@@ -74,7 +74,7 @@ func TestVariablePointersFeatureOptions(t *testing.T) {
 	require.Equal(t, mockDevice.Handle(), device.Handle())
 }
 
-func TestVariablePointersFeatureOutData(t *testing.T) {
+func TestVariablePointersFeaturesOutData(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
@@ -84,7 +84,7 @@ func TestVariablePointersFeatureOutData(t *testing.T) {
 	extDriver := mock_get_physical_device_properties2.NewMockDriver(ctrl)
 	extension := khr_get_physical_device_properties2.CreateExtensionFromDriver(extDriver)
 
-	var pointersOutData khr_variable_pointers.PhysicalDeviceVariablePointersFeatureOutData
+	var pointersOutData khr_variable_pointers.PhysicalDeviceVariablePointersFeaturesOutData
 
 	extDriver.EXPECT().VkGetPhysicalDeviceFeatures2KHR(
 		physicalDevice.Handle(),

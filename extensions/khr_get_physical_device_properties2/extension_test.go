@@ -277,7 +277,7 @@ func TestVulkanDevice_CreateDeviceWithFeatures(t *testing.T) {
 		ExtensionNames: []string{"a", "b"},
 		LayerNames:     []string{"c"},
 	}
-	features := khr_get_physical_device_properties2.DeviceFeatureOptions{
+	features := khr_get_physical_device_properties2.DeviceFeaturesOptions{
 		Features: core1_0.PhysicalDeviceFeatures{
 			TextureCompressionEtc2: true,
 			DepthBounds:            true,
