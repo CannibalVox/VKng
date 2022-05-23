@@ -1,8 +1,8 @@
 package khr_device_group_creation_test
 
 import (
-	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/common/extensions"
 	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/VKng/core/driver"
 	mock_driver "github.com/CannibalVox/VKng/core/driver/mocks"
@@ -313,7 +313,7 @@ func TestDeviceGroupOptions(t *testing.T) {
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
 	coreDriver.EXPECT().CreateDeviceDriver(gomock.Any()).Return(coreDriver, nil)
 	instance := mocks.EasyMockInstance(ctrl, coreDriver)
-	physicalDevice1 := core.CreatePhysicalDevice(coreDriver, instance.Handle(), mocks.NewFakePhysicalDeviceHandle(), common.Vulkan1_0, common.Vulkan1_0)
+	physicalDevice1 := extensions.CreatePhysicalDeviceObject(coreDriver, instance.Handle(), mocks.NewFakePhysicalDeviceHandle(), common.Vulkan1_0, common.Vulkan1_0)
 
 	physicalDevice2 := mocks.EasyMockPhysicalDevice(ctrl, coreDriver)
 	physicalDevice3 := mocks.EasyMockPhysicalDevice(ctrl, coreDriver)

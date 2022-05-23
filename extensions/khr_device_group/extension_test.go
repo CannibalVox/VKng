@@ -1,8 +1,8 @@
 package khr_device_group_test
 
 import (
-	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/common/extensions"
 	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/VKng/core/driver"
 	mock_driver "github.com/CannibalVox/VKng/core/driver/mocks"
@@ -443,7 +443,7 @@ func TestMemoryAllocateFlagsOptions(t *testing.T) {
 
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
 	mockMemory := mocks.EasyMockDeviceMemory(ctrl)
-	device := core.CreateDevice(coreDriver, mocks.NewFakeDeviceHandle(), common.Vulkan1_0)
+	device := extensions.CreateDeviceObject(coreDriver, mocks.NewFakeDeviceHandle(), common.Vulkan1_0)
 
 	coreDriver.EXPECT().VkAllocateMemory(
 		device.Handle(),
@@ -495,7 +495,7 @@ func TestDeviceGroupCommandBufferBeginOptions(t *testing.T) {
 	commandPool := mocks.EasyMockCommandPool(ctrl, device)
 	mockCommandBuffer := mocks.EasyMockCommandBuffer(ctrl)
 
-	commandBuffer := core.CreateCommandBuffer(coreDriver, commandPool.Handle(), device.Handle(), mockCommandBuffer.Handle(), common.Vulkan1_0)
+	commandBuffer := extensions.CreateCommandBufferObject(coreDriver, commandPool.Handle(), device.Handle(), mockCommandBuffer.Handle(), common.Vulkan1_0)
 
 	coreDriver.EXPECT().VkBeginCommandBuffer(
 		commandBuffer.Handle(),
@@ -745,7 +745,7 @@ func TestDeviceGroupBindSparseOptions(t *testing.T) {
 	semaphore2 := mocks.EasyMockSemaphore(ctrl)
 	semaphore3 := mocks.EasyMockSemaphore(ctrl)
 
-	queue := core.CreateQueue(coreDriver, device.Handle(), mockQueue.Handle(), common.Vulkan1_0)
+	queue := extensions.CreateQueueObject(coreDriver, device.Handle(), mockQueue.Handle(), common.Vulkan1_0)
 
 	coreDriver.EXPECT().VkQueueBindSparse(
 		queue.Handle(),
@@ -801,7 +801,7 @@ func TestImageSwapchainCreateOptions(t *testing.T) {
 	defer ctrl.Finish()
 
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
-	device := core.CreateDevice(coreDriver, mocks.NewFakeDeviceHandle(), common.Vulkan1_0)
+	device := extensions.CreateDeviceObject(coreDriver, mocks.NewFakeDeviceHandle(), common.Vulkan1_0)
 	mockImage := mocks.EasyMockImage(ctrl)
 	swapchain := mock_swapchain.EasyMockSwapchain(ctrl)
 
@@ -902,7 +902,7 @@ func TestDeviceGroupRenderPassBeginOptions(t *testing.T) {
 	commandPool := mocks.EasyMockCommandPool(ctrl, device)
 	mockCommandBuffer := mocks.EasyMockCommandBuffer(ctrl)
 
-	commandBuffer := core.CreateCommandBuffer(coreDriver, commandPool.Handle(), device.Handle(), mockCommandBuffer.Handle(), common.Vulkan1_0)
+	commandBuffer := extensions.CreateCommandBufferObject(coreDriver, commandPool.Handle(), device.Handle(), mockCommandBuffer.Handle(), common.Vulkan1_0)
 	renderPass := mocks.EasyMockRenderPass(ctrl)
 	framebuffer := mocks.EasyMockFramebuffer(ctrl)
 
@@ -984,7 +984,7 @@ func TestDeviceGroupSubmitOptions(t *testing.T) {
 	semaphore2 := mocks.EasyMockSemaphore(ctrl)
 	semaphore3 := mocks.EasyMockSemaphore(ctrl)
 
-	queue := core.CreateQueue(coreDriver, device.Handle(), mockQueue.Handle(), common.Vulkan1_0)
+	queue := extensions.CreateQueueObject(coreDriver, device.Handle(), mockQueue.Handle(), common.Vulkan1_0)
 
 	coreDriver.EXPECT().VkQueueSubmit(
 		queue.Handle(),

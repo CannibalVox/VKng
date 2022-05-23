@@ -6,8 +6,8 @@ package khr_device_group_creation
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core"
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/common/extensions"
 	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/VKng/core/driver"
 	"github.com/CannibalVox/cgoparam"
@@ -63,7 +63,7 @@ func (o *DeviceGroupOutData) PopulateOutData(cPointer unsafe.Pointer, helpers ..
 
 		deviceVersion := instance.APIVersion().Min(properties.APIVersion)
 
-		o.PhysicalDevices[i] = core.CreatePhysicalDevice(instance.Driver(), instance.Handle(), handle, instance.APIVersion(), deviceVersion)
+		o.PhysicalDevices[i] = extensions.CreatePhysicalDeviceObject(instance.Driver(), instance.Handle(), handle, instance.APIVersion(), deviceVersion)
 	}
 
 	return createInfo.pNext, nil
