@@ -60,7 +60,7 @@ func TestPhysicalDevicePortabilitySubsetFeaturesOutData(t *testing.T) {
 		})
 
 	var subsetFeatures PhysicalDevicePortabilitySubsetFeaturesOutData
-	err := extension.PhysicalDeviceFeatures(
+	err := extension.PhysicalDeviceFeatures2(
 		physicalDevice,
 		&khr_get_physical_device_properties2.DeviceFeaturesOutData{
 			HaveNext: common.HaveNext{&subsetFeatures},
@@ -105,7 +105,7 @@ func TestPhysicalDevicePortabilitySubsetOutData(t *testing.T) {
 		})
 
 	var subsetProperties PhysicalDevicePortabilitySubsetOutData
-	err := extension.PhysicalDeviceProperties(
+	err := extension.PhysicalDeviceProperties2(
 		physicalDevice,
 		&khr_get_physical_device_properties2.DevicePropertiesOutData{
 			HaveNext: common.HaveNext{&subsetProperties},

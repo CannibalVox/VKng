@@ -104,7 +104,7 @@ func TestDevice16BitStorageOutData(t *testing.T) {
 		HaveNext: common.HaveNext{Next: outData},
 	}
 
-	err := extension.PhysicalDeviceFeatures(physicalDevice, features)
+	err := extension.PhysicalDeviceFeatures2(physicalDevice, features)
 	require.NoError(t, err)
 
 	require.True(t, outData.StoragePushConstant16)

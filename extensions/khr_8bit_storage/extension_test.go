@@ -104,7 +104,7 @@ func TestPhysicalDevice8BitStorageFeaturesOutData(t *testing.T) {
 	})
 
 	var outData PhysicalDevice8BitStorageFeaturesOutData
-	err := extension.PhysicalDeviceFeatures(
+	err := extension.PhysicalDeviceFeatures2(
 		physicalDevice,
 		&khr_get_physical_device_properties2.DeviceFeaturesOutData{
 			HaveNext: common.HaveNext{&outData},

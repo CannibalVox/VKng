@@ -95,7 +95,7 @@ func TestVulkanExtension_PhysicalDeviceFeatures(t *testing.T) {
 		})
 
 	outData := &khr_get_physical_device_properties2.DeviceFeaturesOutData{}
-	err := extension.PhysicalDeviceFeatures(physicalDevice, outData)
+	err := extension.PhysicalDeviceFeatures2(physicalDevice, outData)
 	require.NoError(t, err)
 
 	features := outData.Features
@@ -317,7 +317,7 @@ func TestVulkanExtension_PhysicalDeviceFormatProperties(t *testing.T) {
 	})
 
 	outData := khr_get_physical_device_properties2.FormatPropertiesOutData{}
-	err := extension.PhysicalDeviceFormatProperties(physicalDevice,
+	err := extension.PhysicalDeviceFormatProperties2(physicalDevice,
 		core1_0.DataFormatA2B10G10R10UnsignedNormalizedPacked,
 		&outData)
 	require.NoError(t, err)
@@ -371,7 +371,7 @@ func TestVulkanExtension_PhysicalDeviceImageFormatProperties(t *testing.T) {
 		})
 
 	outData := khr_get_physical_device_properties2.ImageFormatPropertiesOutData{}
-	_, err := extension.PhysicalDeviceImageFormatProperties(physicalDevice, khr_get_physical_device_properties2.ImageFormatOptions{
+	_, err := extension.PhysicalDeviceImageFormatProperties2(physicalDevice, khr_get_physical_device_properties2.ImageFormatOptions{
 		Format: core1_0.DataFormatA2B10G10R10UnsignedIntPacked,
 		Type:   core1_0.ImageType2D,
 		Tiling: core1_0.ImageTilingOptimal,
@@ -420,7 +420,7 @@ func TestVulkanExtension_PhysicalDeviceMemoryProperties(t *testing.T) {
 		})
 
 	outData := khr_get_physical_device_properties2.MemoryPropertiesOutData{}
-	err := extension.PhysicalDeviceMemoryProperties(physicalDevice, &outData)
+	err := extension.PhysicalDeviceMemoryProperties2(physicalDevice, &outData)
 	require.NoError(t, err)
 	require.Equal(t, []common.MemoryType{
 		{
@@ -500,7 +500,7 @@ func TestVulkanExtension_PhysicalDeviceProperties(t *testing.T) {
 		})
 
 	outData := khr_get_physical_device_properties2.DevicePropertiesOutData{}
-	err = extension.PhysicalDeviceProperties(physicalDevice, &outData)
+	err = extension.PhysicalDeviceProperties2(physicalDevice, &outData)
 	require.NoError(t, err)
 
 	require.Equal(t, common.Vulkan1_1, outData.Properties.APIVersion)
@@ -576,7 +576,7 @@ func TestVulkanExtension_PhysicalDeviceQueueFamilyProperties(t *testing.T) {
 			*(*uint32)(unsafe.Pointer(propertyExtent.FieldByName("depth").UnsafeAddr())) = uint32(31)
 		})
 
-	outData, err := extension.PhysicalDeviceQueueFamilyProperties(physicalDevice, nil)
+	outData, err := extension.PhysicalDeviceQueueFamilyProperties2(physicalDevice, nil)
 	require.NoError(t, err)
 
 	require.Equal(t, []*khr_get_physical_device_properties2.QueueFamilyOutData{
@@ -674,7 +674,7 @@ func TestVulkanExtension_PhysicalDeviceSparseImageFormatProperties(t *testing.T)
 		*(*uint32)(unsafe.Pointer(sparseProps.FieldByName("flags").UnsafeAddr())) = uint32(4) // VK_SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_SIZE_BIT
 	})
 
-	outData, err := extension.PhysicalDeviceSparseImageFormatProperties(physicalDevice,
+	outData, err := extension.PhysicalDeviceSparseImageFormatProperties2(physicalDevice,
 		khr_get_physical_device_properties2.SparseImageFormatOptions{
 			Format:  core1_0.DataFormatA2B10G10R10UnsignedScaledPacked,
 			Type:    core1_0.ImageType3D,

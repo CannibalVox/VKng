@@ -8,11 +8,11 @@ import (
 )
 
 type Extension interface {
-	PhysicalDeviceFeatures(physicalDevice core1_0.PhysicalDevice, out *DeviceFeaturesOutData) error
-	PhysicalDeviceFormatProperties(physicalDevice core1_0.PhysicalDevice, format common.DataFormat, out *FormatPropertiesOutData) error
-	PhysicalDeviceImageFormatProperties(physicalDevice core1_0.PhysicalDevice, options ImageFormatOptions, out *ImageFormatPropertiesOutData) (common.VkResult, error)
-	PhysicalDeviceMemoryProperties(physicalDevice core1_0.PhysicalDevice, out *MemoryPropertiesOutData) error
-	PhysicalDeviceProperties(physicalDevice core1_0.PhysicalDevice, out *DevicePropertiesOutData) error
-	PhysicalDeviceQueueFamilyProperties(physicalDevice core1_0.PhysicalDevice, outDataFactory func() *QueueFamilyOutData) ([]*QueueFamilyOutData, error)
-	PhysicalDeviceSparseImageFormatProperties(physicalDevice core1_0.PhysicalDevice, options SparseImageFormatOptions, outDataFactory func() *SparseImageFormatPropertiesOutData) ([]*SparseImageFormatPropertiesOutData, error)
+	PhysicalDeviceFeatures2(physicalDevice core1_0.PhysicalDevice, out *DeviceFeaturesOutData) error
+	PhysicalDeviceFormatProperties2(physicalDevice core1_0.PhysicalDevice, format common.DataFormat, out *FormatPropertiesOutData) error
+	PhysicalDeviceImageFormatProperties2(physicalDevice core1_0.PhysicalDevice, options ImageFormatOptions, out *ImageFormatPropertiesOutData) (common.VkResult, error)
+	PhysicalDeviceMemoryProperties2(physicalDevice core1_0.PhysicalDevice, out *MemoryPropertiesOutData) error
+	PhysicalDeviceProperties2(physicalDevice core1_0.PhysicalDevice, out *DevicePropertiesOutData) error
+	PhysicalDeviceQueueFamilyProperties2(physicalDevice core1_0.PhysicalDevice, outDataFactory func() *QueueFamilyOutData) ([]*QueueFamilyOutData, error)
+	PhysicalDeviceSparseImageFormatProperties2(physicalDevice core1_0.PhysicalDevice, options SparseImageFormatOptions, outDataFactory func() *SparseImageFormatPropertiesOutData) ([]*SparseImageFormatPropertiesOutData, error)
 }

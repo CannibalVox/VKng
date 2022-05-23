@@ -34,7 +34,7 @@ func CreateExtensionFromDriver(driver ext_driver.Driver) *VulkanExtension {
 	}
 }
 
-func (e *VulkanExtension) PhysicalDeviceFeatures(physicalDevice core1_0.PhysicalDevice, out *DeviceFeaturesOutData) error {
+func (e *VulkanExtension) PhysicalDeviceFeatures2(physicalDevice core1_0.PhysicalDevice, out *DeviceFeaturesOutData) error {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -48,7 +48,7 @@ func (e *VulkanExtension) PhysicalDeviceFeatures(physicalDevice core1_0.Physical
 	return common.PopulateOutData(out, outData)
 }
 
-func (e *VulkanExtension) PhysicalDeviceFormatProperties(physicalDevice core1_0.PhysicalDevice, format common.DataFormat, out *FormatPropertiesOutData) error {
+func (e *VulkanExtension) PhysicalDeviceFormatProperties2(physicalDevice core1_0.PhysicalDevice, format common.DataFormat, out *FormatPropertiesOutData) error {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -62,7 +62,7 @@ func (e *VulkanExtension) PhysicalDeviceFormatProperties(physicalDevice core1_0.
 	return common.PopulateOutData(out, outData)
 }
 
-func (e *VulkanExtension) PhysicalDeviceImageFormatProperties(physicalDevice core1_0.PhysicalDevice, options ImageFormatOptions, out *ImageFormatPropertiesOutData) (common.VkResult, error) {
+func (e *VulkanExtension) PhysicalDeviceImageFormatProperties2(physicalDevice core1_0.PhysicalDevice, options ImageFormatOptions, out *ImageFormatPropertiesOutData) (common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -89,7 +89,7 @@ func (e *VulkanExtension) PhysicalDeviceImageFormatProperties(physicalDevice cor
 	return res, nil
 }
 
-func (e *VulkanExtension) PhysicalDeviceMemoryProperties(physicalDevice core1_0.PhysicalDevice, out *MemoryPropertiesOutData) error {
+func (e *VulkanExtension) PhysicalDeviceMemoryProperties2(physicalDevice core1_0.PhysicalDevice, out *MemoryPropertiesOutData) error {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -103,7 +103,7 @@ func (e *VulkanExtension) PhysicalDeviceMemoryProperties(physicalDevice core1_0.
 	return common.PopulateOutData(out, outData)
 }
 
-func (e *VulkanExtension) PhysicalDeviceProperties(physicalDevice core1_0.PhysicalDevice, out *DevicePropertiesOutData) error {
+func (e *VulkanExtension) PhysicalDeviceProperties2(physicalDevice core1_0.PhysicalDevice, out *DevicePropertiesOutData) error {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -117,7 +117,7 @@ func (e *VulkanExtension) PhysicalDeviceProperties(physicalDevice core1_0.Physic
 	return common.PopulateOutData(out, outData)
 }
 
-func (e *VulkanExtension) PhysicalDeviceQueueFamilyProperties(physicalDevice core1_0.PhysicalDevice, outDataFactory func() *QueueFamilyOutData) ([]*QueueFamilyOutData, error) {
+func (e *VulkanExtension) PhysicalDeviceQueueFamilyProperties2(physicalDevice core1_0.PhysicalDevice, outDataFactory func() *QueueFamilyOutData) ([]*QueueFamilyOutData, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -150,7 +150,7 @@ func (e *VulkanExtension) PhysicalDeviceQueueFamilyProperties(physicalDevice cor
 	return out, err
 }
 
-func (e *VulkanExtension) PhysicalDeviceSparseImageFormatProperties(physicalDevice core1_0.PhysicalDevice, options SparseImageFormatOptions, outDataFactory func() *SparseImageFormatPropertiesOutData) ([]*SparseImageFormatPropertiesOutData, error) {
+func (e *VulkanExtension) PhysicalDeviceSparseImageFormatProperties2(physicalDevice core1_0.PhysicalDevice, options SparseImageFormatOptions, outDataFactory func() *SparseImageFormatPropertiesOutData) ([]*SparseImageFormatPropertiesOutData, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 

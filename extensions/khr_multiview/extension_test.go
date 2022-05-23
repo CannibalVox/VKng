@@ -53,7 +53,7 @@ func TestMultiviewFeaturesOutData(t *testing.T) {
 		HaveNext: common.HaveNext{&outData},
 	}
 
-	err := extension.PhysicalDeviceFeatures(physicalDevice, &features)
+	err := extension.PhysicalDeviceFeatures2(physicalDevice, &features)
 	require.NoError(t, err)
 	require.Equal(t, khr_multiview.PhysicalDeviceMultiviewFeaturesOutData{
 		Multiview:                   true,
@@ -158,7 +158,7 @@ func TestMultiviewPropertiesOutData(t *testing.T) {
 		HaveNext: common.HaveNext{&outData},
 	}
 
-	err := extension.PhysicalDeviceProperties(physicalDevice, &properties)
+	err := extension.PhysicalDeviceProperties2(physicalDevice, &properties)
 	require.NoError(t, err)
 	require.Equal(t, khr_multiview.PhysicalDeviceMultiviewOutData{
 		MaxMultiviewInstanceIndex: 3,

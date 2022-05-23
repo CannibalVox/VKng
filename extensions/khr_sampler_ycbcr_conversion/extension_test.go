@@ -345,7 +345,7 @@ func TestSamplerYcbcrFeaturesOutData(t *testing.T) {
 
 	var outData khr_sampler_ycbcr_conversion.PhysicalDeviceSamplerYcbcrFeaturesOutData
 
-	err := extension.PhysicalDeviceFeatures(
+	err := extension.PhysicalDeviceFeatures2(
 		physicalDevice,
 		&khr_get_physical_device_properties2.DeviceFeaturesOutData{
 			HaveNext: common.HaveNext{
@@ -394,7 +394,7 @@ func TestSamplerYcbcrImageFormatOutData(t *testing.T) {
 		})
 
 	var outData khr_sampler_ycbcr_conversion.SamplerYcbcrImageFormatOutData
-	_, err := extension.PhysicalDeviceImageFormatProperties(
+	_, err := extension.PhysicalDeviceImageFormatProperties2(
 		physicalDevice,
 		khr_get_physical_device_properties2.ImageFormatOptions{},
 		&khr_get_physical_device_properties2.ImageFormatPropertiesOutData{

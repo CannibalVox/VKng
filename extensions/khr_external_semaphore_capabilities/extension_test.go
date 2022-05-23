@@ -73,7 +73,7 @@ func TestPhysicalDeviceIDOutData(t *testing.T) {
 	var outData khr_external_semaphore_capabilities.PhysicalDeviceIDOutData
 	properties.HaveNext = common.HaveNext{&outData}
 
-	err = extension.PhysicalDeviceProperties(
+	err = extension.PhysicalDeviceProperties2(
 		physicalDevice,
 		&properties,
 	)

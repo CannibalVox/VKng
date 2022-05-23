@@ -99,7 +99,7 @@ func TestMaintenance3OutData(t *testing.T) {
 	outData := &khr_get_physical_device_properties2.DevicePropertiesOutData{
 		HaveNext: common.HaveNext{Next: maintOutData},
 	}
-	err := extension.PhysicalDeviceProperties(physicalDevice, outData)
+	err := extension.PhysicalDeviceProperties2(physicalDevice, outData)
 	require.NoError(t, err)
 
 	require.Equal(t, uint32(3), outData.Properties.VendorID)

@@ -201,7 +201,7 @@ func TestPointClippingOutData(t *testing.T) {
 		HaveNext: common.HaveNext{Next: pointClipping},
 	}
 
-	err := extension.PhysicalDeviceProperties(physicalDevice, properties)
+	err := extension.PhysicalDeviceProperties2(physicalDevice, properties)
 	require.NoError(t, err)
 
 	require.Equal(t, uint32(3), properties.Properties.VendorID)

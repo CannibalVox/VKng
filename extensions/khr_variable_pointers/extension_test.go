@@ -107,7 +107,7 @@ func TestVariablePointersFeaturesOutData(t *testing.T) {
 			*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("variablePointersStorageBuffer").UnsafeAddr())) = driver.VkBool32(1)
 		})
 
-	err := extension.PhysicalDeviceFeatures(physicalDevice, &khr_get_physical_device_properties2.DeviceFeaturesOutData{
+	err := extension.PhysicalDeviceFeatures2(physicalDevice, &khr_get_physical_device_properties2.DeviceFeaturesOutData{
 		HaveNext: common.HaveNext{Next: &pointersOutData},
 	})
 	require.NoError(t, err)

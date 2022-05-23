@@ -296,7 +296,7 @@ func TestPhysicalDeviceBufferAddressFeaturesOutData(t *testing.T) {
 	})
 
 	var outData khr_buffer_device_address.PhysicalDeviceBufferAddressFeaturesOutData
-	err := extension.PhysicalDeviceFeatures(
+	err := extension.PhysicalDeviceFeatures2(
 		physicalDevice,
 		&khr_get_physical_device_properties2.DeviceFeaturesOutData{
 			HaveNext: common.HaveNext{&outData},
