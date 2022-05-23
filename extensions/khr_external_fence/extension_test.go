@@ -21,9 +21,7 @@ func TestExportFenceOptions(t *testing.T) {
 	defer ctrl.Finish()
 
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
-	loader, err := core.CreateLoaderFromDriver(coreDriver)
-	require.NoError(t, err)
-	device := mocks.EasyMockDevice(ctrl, coreDriver)
+	device := core.CreateDevice(coreDriver, mocks.NewFakeDeviceHandle(), common.Vulkan1_0)
 	mockFence := mocks.EasyMockFence(ctrl)
 
 	coreDriver.EXPECT().VkCreateFence(
@@ -48,8 +46,7 @@ func TestExportFenceOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	fence, _, err := loader.CreateFence(
-		device,
+	fence, _, err := device.CreateFence(
 		nil,
 		core1_0.FenceCreateOptions{
 			Flags: core1_0.FenceCreateSignaled,

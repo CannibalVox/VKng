@@ -26,10 +26,8 @@ func TestDevice16BitStorageOptions(t *testing.T) {
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
 	coreDriver.EXPECT().CreateDeviceDriver(gomock.Any()).Return(coreDriver, nil)
 
-	loader, err := core.CreateLoaderFromDriver(coreDriver)
-	require.NoError(t, err)
-
-	physicalDevice := mocks.EasyMockPhysicalDevice(ctrl, coreDriver)
+	instance := mocks.EasyMockInstance(ctrl, coreDriver)
+	physicalDevice := core.CreatePhysicalDevice(coreDriver, instance.Handle(), mocks.NewFakePhysicalDeviceHandle(), common.Vulkan1_0, common.Vulkan1_0)
 	expectedDevice := mocks.EasyMockDevice(ctrl, coreDriver)
 
 	coreDriver.EXPECT().VkCreateDevice(physicalDevice.Handle(), gomock.Not(gomock.Nil()), gomock.Nil(), gomock.Not(gomock.Nil())).
@@ -59,7 +57,7 @@ func TestDevice16BitStorageOptions(t *testing.T) {
 		StoragePushConstant16:              false,
 		StorageBuffer16BitAccess:           false,
 	}
-	device, _, err := loader.CreateDevice(physicalDevice, nil, core1_0.DeviceCreateOptions{
+	device, _, err := physicalDevice.CreateDevice(nil, core1_0.DeviceCreateOptions{
 		QueueFamilies: []core1_0.DeviceQueueCreateOptions{
 			{
 				CreatedQueuePriorities: []float32{0},

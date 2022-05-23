@@ -163,11 +163,8 @@ func TestVulkanDevice_CreateDeviceWithFeatures(t *testing.T) {
 
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
 	coreDriver.EXPECT().CreateDeviceDriver(gomock.Any()).Return(coreDriver, nil).AnyTimes()
-
-	loader, err := core.CreateLoaderFromDriver(coreDriver)
-	require.NoError(t, err)
-
-	physicalDevice := mocks.EasyMockPhysicalDevice(ctrl, coreDriver)
+	instance := mocks.EasyMockInstance(ctrl, coreDriver)
+	physicalDevice := core.CreatePhysicalDevice(coreDriver, instance.Handle(), mocks.NewFakePhysicalDeviceHandle(), common.Vulkan1_0, common.Vulkan1_0)
 	device := mocks.EasyMockDevice(ctrl, coreDriver)
 
 	coreDriver.EXPECT().VkCreateDevice(physicalDevice.Handle(), gomock.Not(nil), nil, gomock.Not(nil)).DoAndReturn(
@@ -285,7 +282,7 @@ func TestVulkanDevice_CreateDeviceWithFeatures(t *testing.T) {
 	}
 	options.Next = features
 
-	actualDevice, _, err := loader.CreateDevice(physicalDevice, nil, options)
+	actualDevice, _, err := physicalDevice.CreateDevice(nil, options)
 	require.NoError(t, err)
 	require.NotNil(t, actualDevice)
 	require.Equal(t, device.Handle(), actualDevice.Handle())

@@ -122,10 +122,9 @@ func TestPhysicalDevicePortabilitySubsetFeaturesOptions(t *testing.T) {
 
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
 	coreDriver.EXPECT().CreateDeviceDriver(gomock.Any()).Return(coreDriver, nil)
-	physicalDevice := mocks.EasyMockPhysicalDevice(ctrl, coreDriver)
+	instance := mocks.EasyMockInstance(ctrl, coreDriver)
+	physicalDevice := core.CreatePhysicalDevice(coreDriver, instance.Handle(), mocks.NewFakePhysicalDeviceHandle(), common.Vulkan1_0, common.Vulkan1_0)
 	mockDevice := mocks.EasyMockDevice(ctrl, coreDriver)
-	loader, err := core.CreateLoaderFromDriver(coreDriver)
-	require.NoError(t, err)
 
 	coreDriver.EXPECT().VkCreateDevice(
 		physicalDevice.Handle(),
@@ -166,8 +165,7 @@ func TestPhysicalDevicePortabilitySubsetFeaturesOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	device, _, err := loader.CreateDevice(
-		physicalDevice,
+	device, _, err := physicalDevice.CreateDevice(
 		nil,
 		core1_0.DeviceCreateOptions{
 			QueueFamilies: []core1_0.DeviceQueueCreateOptions{

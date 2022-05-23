@@ -312,10 +312,9 @@ func TestDeviceGroupOptions(t *testing.T) {
 
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
 	coreDriver.EXPECT().CreateDeviceDriver(gomock.Any()).Return(coreDriver, nil)
-	loader, err := core.CreateLoaderFromDriver(coreDriver)
-	require.NoError(t, err)
+	instance := mocks.EasyMockInstance(ctrl, coreDriver)
+	physicalDevice1 := core.CreatePhysicalDevice(coreDriver, instance.Handle(), mocks.NewFakePhysicalDeviceHandle(), common.Vulkan1_0, common.Vulkan1_0)
 
-	physicalDevice1 := mocks.EasyMockPhysicalDevice(ctrl, coreDriver)
 	physicalDevice2 := mocks.EasyMockPhysicalDevice(ctrl, coreDriver)
 	physicalDevice3 := mocks.EasyMockPhysicalDevice(ctrl, coreDriver)
 
@@ -349,7 +348,7 @@ func TestDeviceGroupOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	device, _, err := loader.CreateDevice(physicalDevice1, nil, core1_0.DeviceCreateOptions{
+	device, _, err := physicalDevice1.CreateDevice(nil, core1_0.DeviceCreateOptions{
 		QueueFamilies: []core1_0.DeviceQueueCreateOptions{
 			{
 				CreatedQueuePriorities: []float32{0},

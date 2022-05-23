@@ -23,10 +23,7 @@ func TestImageViewUsageOptions(t *testing.T) {
 	defer ctrl.Finish()
 
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
-	loader, err := core.CreateLoaderFromDriver(coreDriver)
-	require.NoError(t, err)
-
-	device := mocks.EasyMockDevice(ctrl, coreDriver)
+	device := core.CreateDevice(coreDriver, mocks.NewFakeDeviceHandle(), common.Vulkan1_0)
 	image := mocks.EasyMockImage(ctrl)
 	expectedImageView := mocks.EasyMockImageView(ctrl)
 
@@ -47,7 +44,7 @@ func TestImageViewUsageOptions(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	imageView, _, err := loader.CreateImageView(device, nil, core1_0.ImageViewCreateOptions{
+	imageView, _, err := device.CreateImageView(nil, core1_0.ImageViewCreateOptions{
 		Image: image,
 		HaveNext: common.HaveNext{Next: ImageViewUsageOptions{
 			Usage: core1_0.ImageUsageInputAttachment,
@@ -63,10 +60,7 @@ func TestTessellationDomainOriginOptions(t *testing.T) {
 	defer ctrl.Finish()
 
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
-	loader, err := core.CreateLoaderFromDriver(coreDriver)
-	require.NoError(t, err)
-
-	device := mocks.EasyMockDevice(ctrl, coreDriver)
+	device := core.CreateDevice(coreDriver, mocks.NewFakeDeviceHandle(), common.Vulkan1_0)
 	expectedPipeline := mocks.EasyMockPipeline(ctrl)
 
 	coreDriver.EXPECT().VkCreateGraphicsPipelines(device.Handle(), driver.VkPipelineCache(0), driver.Uint32(1), gomock.Not(gomock.Nil()), gomock.Nil(), gomock.Not(gomock.Nil())).
@@ -100,7 +94,7 @@ func TestTessellationDomainOriginOptions(t *testing.T) {
 	domainOriginState := PipelineTessellationDomainOriginStateOptions{
 		DomainOrigin: TessellationDomainOriginLowerLeft,
 	}
-	pipelines, _, err := loader.CreateGraphicsPipelines(device, nil, nil, []core1_0.GraphicsPipelineCreateOptions{
+	pipelines, _, err := device.CreateGraphicsPipelines(nil, nil, []core1_0.GraphicsPipelineCreateOptions{
 		{
 			Tessellation: &core1_0.TessellationStateOptions{
 				PatchControlPoints: 1,
@@ -118,10 +112,7 @@ func TestInputAttachmentAspectOptions(t *testing.T) {
 	defer ctrl.Finish()
 
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
-	loader, err := core.CreateLoaderFromDriver(coreDriver)
-	require.NoError(t, err)
-
-	device := mocks.EasyMockDevice(ctrl, coreDriver)
+	device := core.CreateDevice(coreDriver, mocks.NewFakeDeviceHandle(), common.Vulkan1_0)
 	expectedRenderPass := mocks.EasyMockRenderPass(ctrl)
 
 	coreDriver.EXPECT().VkCreateRenderPass(device.Handle(), gomock.Not(gomock.Nil()), gomock.Nil(), gomock.Not(gomock.Nil())).
@@ -167,7 +158,7 @@ func TestInputAttachmentAspectOptions(t *testing.T) {
 			},
 		},
 	}
-	renderPass, _, err := loader.CreateRenderPass(device, nil, core1_0.RenderPassCreateOptions{
+	renderPass, _, err := device.CreateRenderPass(nil, core1_0.RenderPassCreateOptions{
 		HaveNext: common.HaveNext{Next: aspectOptions},
 	})
 	require.NoError(t, err)

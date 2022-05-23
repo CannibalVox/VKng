@@ -21,9 +21,7 @@ func TestExternalMemoryAllocateOptions(t *testing.T) {
 	defer ctrl.Finish()
 
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
-	loader, err := core.CreateLoaderFromDriver(coreDriver)
-	require.NoError(t, err)
-	device := mocks.EasyMockDevice(ctrl, coreDriver)
+	device := core.CreateDevice(coreDriver, mocks.NewFakeDeviceHandle(), common.Vulkan1_0)
 	mockMemory := mocks.EasyMockDeviceMemory(ctrl)
 
 	coreDriver.EXPECT().VkAllocateMemory(
@@ -54,7 +52,7 @@ func TestExternalMemoryAllocateOptions(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	memory, _, err := loader.AllocateMemory(device, nil, core1_0.MemoryAllocateOptions{
+	memory, _, err := device.AllocateMemory(nil, core1_0.MemoryAllocateOptions{
 		AllocationSize:  1,
 		MemoryTypeIndex: 3,
 		HaveNext: common.HaveNext{
@@ -72,9 +70,7 @@ func TestExternalMemoryImageOptions(t *testing.T) {
 	defer ctrl.Finish()
 
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
-	loader, err := core.CreateLoaderFromDriver(coreDriver)
-	require.NoError(t, err)
-	device := mocks.EasyMockDevice(ctrl, coreDriver)
+	device := core.CreateDevice(coreDriver, mocks.NewFakeDeviceHandle(), common.Vulkan1_0)
 	mockImage := mocks.EasyMockImage(ctrl)
 
 	coreDriver.EXPECT().VkCreateImage(
@@ -105,8 +101,7 @@ func TestExternalMemoryImageOptions(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	image, _, err := loader.CreateImage(
-		device,
+	image, _, err := device.CreateImage(
 		nil,
 		core1_0.ImageCreateOptions{
 			MipLevels:   1,
@@ -127,9 +122,7 @@ func TestExternalMemoryBufferOptions(t *testing.T) {
 	defer ctrl.Finish()
 
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
-	loader, err := core.CreateLoaderFromDriver(coreDriver)
-	require.NoError(t, err)
-	device := mocks.EasyMockDevice(ctrl, coreDriver)
+	device := core.CreateDevice(coreDriver, mocks.NewFakeDeviceHandle(), common.Vulkan1_0)
 	mockBuffer := mocks.EasyMockBuffer(ctrl)
 
 	coreDriver.EXPECT().VkCreateBuffer(
@@ -160,8 +153,7 @@ func TestExternalMemoryBufferOptions(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	buffer, _, err := loader.CreateBuffer(
-		device,
+	buffer, _, err := device.CreateBuffer(
 		nil,
 		core1_0.BufferCreateOptions{
 			BufferSize: 1,

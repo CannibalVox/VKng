@@ -21,9 +21,7 @@ func TestExportSemaphoreOptions(t *testing.T) {
 	defer ctrl.Finish()
 
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
-	loader, err := core.CreateLoaderFromDriver(coreDriver)
-	require.NoError(t, err)
-	device := mocks.EasyMockDevice(ctrl, coreDriver)
+	device := core.CreateDevice(coreDriver, mocks.NewFakeDeviceHandle(), common.Vulkan1_0)
 	mockSemaphore := mocks.EasyMockSemaphore(ctrl)
 
 	coreDriver.EXPECT().VkCreateSemaphore(
@@ -51,7 +49,7 @@ func TestExportSemaphoreOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	semaphore, _, err := loader.CreateSemaphore(device, nil, core1_0.SemaphoreCreateOptions{
+	semaphore, _, err := device.CreateSemaphore(nil, core1_0.SemaphoreCreateOptions{
 		HaveNext: common.HaveNext{
 			khr_external_semaphore.ExportSemaphoreOptions{
 				HandleTypes: khr_external_semaphore_capabilities.ExternalSemaphoreHandleTypeOpaqueWin32KMT,

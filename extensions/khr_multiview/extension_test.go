@@ -68,9 +68,8 @@ func TestMultiviewFeaturesOptions(t *testing.T) {
 
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
 	coreDriver.EXPECT().CreateDeviceDriver(gomock.Any()).Return(coreDriver, nil)
-	loader, err := core.CreateLoaderFromDriver(coreDriver)
-	require.NoError(t, err)
-	physicalDevice := mocks.EasyMockPhysicalDevice(ctrl, coreDriver)
+	instance := mocks.EasyMockInstance(ctrl, coreDriver)
+	physicalDevice := core.CreatePhysicalDevice(coreDriver, instance.Handle(), mocks.NewFakePhysicalDeviceHandle(), common.Vulkan1_0, common.Vulkan1_0)
 	mockDevice := mocks.EasyMockDevice(ctrl, coreDriver)
 
 	coreDriver.EXPECT().VkCreateDevice(
@@ -108,7 +107,7 @@ func TestMultiviewFeaturesOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	device, _, err := loader.CreateDevice(physicalDevice, nil, core1_0.DeviceCreateOptions{
+	device, _, err := physicalDevice.CreateDevice(nil, core1_0.DeviceCreateOptions{
 		QueueFamilies: []core1_0.DeviceQueueCreateOptions{
 			{
 				CreatedQueuePriorities: []float32{3, 2, 1},
@@ -172,10 +171,8 @@ func TestRenderPassMultiviewOptions(t *testing.T) {
 	defer ctrl.Finish()
 
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
-	loader, err := core.CreateLoaderFromDriver(coreDriver)
-	require.NoError(t, err)
 	mockRenderPass := mocks.EasyMockRenderPass(ctrl)
-	device := mocks.EasyMockDevice(ctrl, coreDriver)
+	device := core.CreateDevice(coreDriver, mocks.NewFakeDeviceHandle(), common.Vulkan1_0)
 
 	coreDriver.EXPECT().VkCreateRenderPass(
 		device.Handle(),
@@ -216,7 +213,7 @@ func TestRenderPassMultiviewOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	renderPass, _, err := loader.CreateRenderPass(device, nil, core1_0.RenderPassCreateOptions{
+	renderPass, _, err := device.CreateRenderPass(nil, core1_0.RenderPassCreateOptions{
 		HaveNext: common.HaveNext{
 			khr_multiview.RenderPassMultiviewOptions{
 				SubpassViewMasks:      []uint32{1, 2, 7},

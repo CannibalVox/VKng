@@ -139,27 +139,7 @@ func TestMemoryDedicatedAllocateOptions(t *testing.T) {
 
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
 	coreDriver.EXPECT().CreateDeviceDriver(gomock.Any()).Return(coreDriver, nil).AnyTimes()
-	loader, err := core.CreateLoaderFromDriver(coreDriver)
-	require.NoError(t, err)
-
-	physicalDevice := mocks.EasyMockPhysicalDevice(ctrl, coreDriver)
-	deviceHandle := mocks.EasyMockDevice(ctrl, coreDriver)
-
-	coreDriver.EXPECT().VkCreateDevice(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).
-		DoAndReturn(func(physicalDevice driver.VkPhysicalDevice, pCreateInfo *driver.VkDeviceCreateInfo, pAllocator *driver.VkAllocationCallbacks, pDevice *driver.VkDevice) (common.VkResult, error) {
-			*pDevice = deviceHandle.Handle()
-
-			return core1_0.VKSuccess, nil
-		})
-
-	device, _, err := loader.CreateDevice(physicalDevice, nil, core1_0.DeviceCreateOptions{
-		QueueFamilies: []core1_0.DeviceQueueCreateOptions{
-			{
-				CreatedQueuePriorities: []float32{0},
-			},
-		},
-	})
-	require.NoError(t, err)
+	device := core.CreateDevice(coreDriver, mocks.NewFakeDeviceHandle(), common.Vulkan1_0)
 
 	buffer := mocks.EasyMockBuffer(ctrl)
 	expectedMemory := mocks.EasyMockDeviceMemory(ctrl)
@@ -184,7 +164,7 @@ func TestMemoryDedicatedAllocateOptions(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	memory, _, err := loader.AllocateMemory(device, nil, core1_0.MemoryAllocateOptions{
+	memory, _, err := device.AllocateMemory(nil, core1_0.MemoryAllocateOptions{
 		AllocationSize:  1,
 		MemoryTypeIndex: 3,
 		HaveNext: common.HaveNext{Next: khr_dedicated_allocation.MemoryDedicatedAllocationOptions{
