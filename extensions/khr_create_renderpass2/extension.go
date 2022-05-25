@@ -89,7 +89,7 @@ func (e *VulkanExtension) CmdNextSubpass2(commandBuffer core1_0.CommandBuffer, s
 	return nil
 }
 
-func (e *VulkanExtension) CreateRenderPass2(device core1_0.Device, options RenderPassCreateOptions, allocator *driver.AllocationCallbacks) (core1_0.RenderPass, common.VkResult, error) {
+func (e *VulkanExtension) CreateRenderPass2(device core1_0.Device, allocator *driver.AllocationCallbacks, options RenderPassCreateOptions) (core1_0.RenderPass, common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 

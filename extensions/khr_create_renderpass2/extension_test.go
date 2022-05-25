@@ -273,6 +273,7 @@ func TestVulkanExtension_CreateRenderPass2(t *testing.T) {
 
 	renderPass, _, err := extension.CreateRenderPass2(
 		device,
+		nil,
 		khr_create_renderpass2.RenderPassCreateOptions{
 			Flags: 0,
 			Attachments: []khr_create_renderpass2.AttachmentDescriptionOptions{
@@ -350,7 +351,7 @@ func TestVulkanExtension_CreateRenderPass2(t *testing.T) {
 				},
 			},
 			CorrelatedViewMasks: []uint32{29, 31, 37},
-		}, nil)
+		})
 	require.NoError(t, err)
 	require.Equal(t, mockRenderPass.Handle(), renderPass.Handle())
 }

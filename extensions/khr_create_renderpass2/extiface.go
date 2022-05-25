@@ -13,5 +13,5 @@ type Extension interface {
 	CmdEndRenderPass2(commandBuffer core1_0.CommandBuffer, subpassEnd SubpassEndOptions) error
 	CmdNextSubpass2(commandBuffer core1_0.CommandBuffer, subpassBegin SubpassBeginOptions, subpassEnd SubpassEndOptions) error
 
-	CreateRenderPass2(device core1_0.Device, options RenderPassCreateOptions, allocator *driver.AllocationCallbacks) (core1_0.RenderPass, common.VkResult, error)
+	CreateRenderPass2(device core1_0.Device, allocator *driver.AllocationCallbacks, options RenderPassCreateOptions) (core1_0.RenderPass, common.VkResult, error)
 }
