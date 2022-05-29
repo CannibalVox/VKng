@@ -199,7 +199,7 @@ func TestPhysicalDeviceImagelessFramebufferFeaturesOutData(t *testing.T) {
 
 		require.Equal(t, uint64(1000108000), val.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGELESS_FRAMEBUFFER_FEATURES_KHR
 		require.True(t, val.FieldByName("pNext").IsNil())
-		require.Equal(t, uint64(1), val.FieldByName("imagelessFramebuffer").Uint())
+		*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("imagelessFramebuffer").UnsafeAddr())) = driver.VkBool32(1)
 	})
 
 	var outData khr_imageless_framebuffer.PhysicalDeviceImagelessFramebufferFeaturesOutData
