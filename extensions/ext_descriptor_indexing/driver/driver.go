@@ -1,0 +1,15 @@
+package ext_descriptor_indexing_driver
+
+/*
+#include <stdlib.h>
+#include "../../vulkan/vulkan.h"
+*/
+import "C"
+
+type VkDescriptorSetVariableDescriptorCountAllocateInfoEXT C.VkDescriptorSetVariableDescriptorCountAllocateInfoEXT
+type VkDescriptorSetLayoutBindingFlagsCreateInfoEXT C.VkDescriptorSetLayoutBindingFlagsCreateInfoEXT
+type VkDescriptorSetVariableDescriptorCountLayoutSupportEXT C.VkDescriptorSetVariableDescriptorCountLayoutSupportEXT
+type VkPhysicalDeviceDescriptorIndexingFeaturesEXT C.VkPhysicalDeviceDescriptorIndexingFeaturesEXT
+type VkPhysicalDeviceDescriptorIndexingPropertiesEXT C.VkPhysicalDeviceDescriptorIndexingPropertiesEXT
+type VkDescriptorBindingFlagBitsEXT C.VkDescriptorBindingFlagBitsEXT
+type VkDescriptorBindingFlagsEXT C.VkDescriptorBindingFlagsEXT
