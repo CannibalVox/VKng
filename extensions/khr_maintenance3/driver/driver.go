@@ -1,12 +1,5 @@
 package khr_maintenance3_driver
 
-import "C"
-import (
-	"github.com/CannibalVox/VKng/core/driver"
-	"github.com/CannibalVox/cgoparam"
-	"unsafe"
-)
-
 //go:generate mockgen -source driver.go -destination ../dummies/driver.go -package mock_maintenance3
 
 /*
@@ -18,6 +11,11 @@ void cgoGetDescriptorSetLayoutSupportKHR(PFN_vkGetDescriptorSetLayoutSupportKHR 
 }
 */
 import "C"
+import (
+	"github.com/CannibalVox/VKng/core/driver"
+	"github.com/CannibalVox/cgoparam"
+	"unsafe"
+)
 
 type Driver interface {
 	VkGetDescriptorSetLayoutSupportKHR(device driver.VkDevice, pCreateInfo *driver.VkDescriptorSetLayoutCreateInfo, pSupport *VkDescriptorSetLayoutSupportKHR)
