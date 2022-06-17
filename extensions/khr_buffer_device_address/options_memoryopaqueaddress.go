@@ -23,7 +23,7 @@ func (o MemoryOpaqueCaptureAddressAllocateOptions) PopulateCPointer(allocator *c
 	}
 
 	info := (*C.VkMemoryOpaqueCaptureAddressAllocateInfoKHR)(preallocatedPointer)
-	info.sType = C.VK_STRUCTURE_TYPE_MEMORY_OPAQUE_CAPTURE_ADDRESS_ALLOCATE_INFO
+	info.sType = C.VK_STRUCTURE_TYPE_MEMORY_OPAQUE_CAPTURE_ADDRESS_ALLOCATE_INFO_KHR
 	info.pNext = next
 	info.opaqueCaptureAddress = C.uint64_t(o.OpaqueCaptureAddress)
 

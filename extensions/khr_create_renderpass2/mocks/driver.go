@@ -36,18 +36,6 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 	return m.recorder
 }
 
-// VKCmdEndRenderPass2KHR mocks base method.
-func (m *MockDriver) VKCmdEndRenderPass2KHR(commandBuffer driver.VkCommandBuffer, pSubpassEndInfo *khr_create_renderpass2_driver.VkSubpassEndInfoKHR) {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "VKCmdEndRenderPass2KHR", commandBuffer, pSubpassEndInfo)
-}
-
-// VKCmdEndRenderPass2KHR indicates an expected call of VKCmdEndRenderPass2KHR.
-func (mr *MockDriverMockRecorder) VKCmdEndRenderPass2KHR(commandBuffer, pSubpassEndInfo interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VKCmdEndRenderPass2KHR", reflect.TypeOf((*MockDriver)(nil).VKCmdEndRenderPass2KHR), commandBuffer, pSubpassEndInfo)
-}
-
 // VkCmdBeginRenderPass2KHR mocks base method.
 func (m *MockDriver) VkCmdBeginRenderPass2KHR(commandBuffer driver.VkCommandBuffer, pRenderPassBegin *driver.VkRenderPassBeginInfo, pSubpassBeginInfo *khr_create_renderpass2_driver.VkSubpassBeginInfoKHR) {
 	m.ctrl.T.Helper()
@@ -58,6 +46,18 @@ func (m *MockDriver) VkCmdBeginRenderPass2KHR(commandBuffer driver.VkCommandBuff
 func (mr *MockDriverMockRecorder) VkCmdBeginRenderPass2KHR(commandBuffer, pRenderPassBegin, pSubpassBeginInfo interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkCmdBeginRenderPass2KHR", reflect.TypeOf((*MockDriver)(nil).VkCmdBeginRenderPass2KHR), commandBuffer, pRenderPassBegin, pSubpassBeginInfo)
+}
+
+// VkCmdEndRenderPass2KHR mocks base method.
+func (m *MockDriver) VkCmdEndRenderPass2KHR(commandBuffer driver.VkCommandBuffer, pSubpassEndInfo *khr_create_renderpass2_driver.VkSubpassEndInfoKHR) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "VkCmdEndRenderPass2KHR", commandBuffer, pSubpassEndInfo)
+}
+
+// VkCmdEndRenderPass2KHR indicates an expected call of VkCmdEndRenderPass2KHR.
+func (mr *MockDriverMockRecorder) VkCmdEndRenderPass2KHR(commandBuffer, pSubpassEndInfo interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkCmdEndRenderPass2KHR", reflect.TypeOf((*MockDriver)(nil).VkCmdEndRenderPass2KHR), commandBuffer, pSubpassEndInfo)
 }
 
 // VkCmdNextSubpass2KHR mocks base method.

@@ -12,3 +12,7 @@ const (
 
 	FramebufferCreateImageless common.FramebufferCreateFlags = C.VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT_KHR
 )
+
+func init() {
+	FramebufferCreateImageless.Register("Imageless")
+}

@@ -25,7 +25,7 @@ func (o PhysicalDeviceBufferAddressFeaturesOptions) PopulateCPointer(allocator *
 	}
 
 	info := (*C.VkPhysicalDeviceBufferDeviceAddressFeaturesKHR)(preallocatedPointer)
-	info.sType = C.VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES
+	info.sType = C.VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES_KHR
 	info.pNext = next
 	info.bufferDeviceAddress = C.VkBool32(0)
 	info.bufferDeviceAddressCaptureReplay = C.VkBool32(0)

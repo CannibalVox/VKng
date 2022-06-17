@@ -29,11 +29,11 @@ func CreateExtensionFromDriver(driver khr_timeline_semaphore_driver.Driver) *Vul
 	}
 }
 
-func (e *VulkanExtension) SemaphoreCounterValue(device core1_0.Device, semaphore core1_0.Semaphore) (uint64, common.VkResult, error) {
+func (e *VulkanExtension) SemaphoreCounterValue(semaphore core1_0.Semaphore) (uint64, common.VkResult, error) {
 
 	var value driver.Uint64
 	res, err := e.driver.VkGetSemaphoreCounterValueKHR(
-		device.Handle(),
+		semaphore.DeviceHandle(),
 		semaphore.Handle(),
 		&value,
 	)

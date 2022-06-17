@@ -26,6 +26,6 @@ func CreateExtensionFromDriver(driver ext_host_query_reset_driver.Driver) *Vulka
 	}
 }
 
-func (e *VulkanExtension) ResetQueryPool(device core1_0.Device, queryPool core1_0.QueryPool, firstQuery, queryCount int) {
-	e.driver.VkResetQueryPool(device.Handle(), queryPool.Handle(), driver.Uint32(firstQuery), driver.Uint32(queryCount))
+func (e *VulkanExtension) ResetQueryPool(queryPool core1_0.QueryPool, firstQuery, queryCount int) {
+	e.driver.VkResetQueryPool(queryPool.DeviceHandle(), queryPool.Handle(), driver.Uint32(firstQuery), driver.Uint32(queryCount))
 }

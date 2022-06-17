@@ -24,7 +24,7 @@ func (o *PhysicalDeviceSamplerFilterMinmaxOutData) PopulateCPointer(allocator *c
 	}
 
 	info := (*C.VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT)(preallocatedPointer)
-	info.sType = C.VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES
+	info.sType = C.VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES_EXT
 	info.pNext = next
 
 	return preallocatedPointer, nil

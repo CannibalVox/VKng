@@ -12,3 +12,7 @@ const (
 
 	SamplerAddressModeMirrorClampToEdge common.SamplerAddressMode = C.VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE_KHR
 )
+
+func init() {
+	SamplerAddressModeMirrorClampToEdge.Register("Mirror Clamp To Edge")
+}

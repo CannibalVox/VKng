@@ -58,7 +58,7 @@ func (e *VulkanExtension) CmdEndRenderPass2(commandBuffer core1_0.CommandBuffer,
 		return err
 	}
 
-	e.driver.VKCmdEndRenderPass2KHR(
+	e.driver.VkCmdEndRenderPass2KHR(
 		commandBuffer.Handle(),
 		(*khr_create_renderpass2_driver.VkSubpassEndInfoKHR)(subpassEndPtr),
 	)

@@ -38,3 +38,18 @@ const (
 	DriverIDNvidiaProprietary       DriverID = C.VK_DRIVER_ID_NVIDIA_PROPRIETARY_KHR
 	DriverIDQualcommProprietary     DriverID = C.VK_DRIVER_ID_QUALCOMM_PROPRIETARY_KHR
 )
+
+func init() {
+	DriverIDAmdOpenSource.Register("AMD Open-Source")
+	DriverIDAmdProprietary.Register("AMD Proprietary")
+	DriverIDArmProprietary.Register("ARM Proprietary")
+	DriverIDBroadcomProprietary.Register("Broadcom Proprietary")
+	DriverIDGgpProprietary.Register("GGP Proprietary")
+	DriverIDGoogleSwiftshader.Register("Google Swiftshader")
+	DriverIDImaginationProprietary.Register("Imagination Proprietary")
+	DriverIDIntelOpenSourceMesa.Register("Intel Open-Source (Mesa)")
+	DriverIDIntelProprietaryWindows.Register("Intel Proprietary (Windows)")
+	DriverIDMesaRadV.Register("Mesa RADV")
+	DriverIDNvidiaProprietary.Register("Nvidia Proprietary")
+	DriverIDQualcommProprietary.Register("Qualcomm Proprietary")
+}

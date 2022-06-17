@@ -83,7 +83,7 @@ func TestVulkanExtension_CmdEndRenderPass2(t *testing.T) {
 
 	commandBuffer := mocks.EasyMockCommandBuffer(ctrl)
 
-	extDriver.EXPECT().VKCmdEndRenderPass2KHR(
+	extDriver.EXPECT().VkCmdEndRenderPass2KHR(
 		commandBuffer.Handle(),
 		gomock.Not(gomock.Nil()),
 	).DoAndReturn(func(commandBuffer driver.VkCommandBuffer,

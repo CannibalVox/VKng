@@ -69,16 +69,16 @@ func (mr *MockExtensionMockRecorder) SignalSemaphore(device, o interface{}) *gom
 }
 
 // WaitSemaphores mocks base method.
-func (m *MockExtension) WaitSemaphores(device core1_0.Device, o khr_timeline_semaphore.SemaphoreWaitOptions, timeout time.Duration) (common.VkResult, error) {
+func (m *MockExtension) WaitSemaphores(device core1_0.Device, timeout time.Duration, o khr_timeline_semaphore.SemaphoreWaitOptions) (common.VkResult, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "WaitSemaphores", device, o, timeout)
+	ret := m.ctrl.Call(m, "WaitSemaphores", device, timeout, o)
 	ret0, _ := ret[0].(common.VkResult)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // WaitSemaphores indicates an expected call of WaitSemaphores.
-func (mr *MockExtensionMockRecorder) WaitSemaphores(device, o, timeout interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) WaitSemaphores(device, timeout, o interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WaitSemaphores", reflect.TypeOf((*MockExtension)(nil).WaitSemaphores), device, o, timeout)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WaitSemaphores", reflect.TypeOf((*MockExtension)(nil).WaitSemaphores), device, timeout, o)
 }

@@ -32,7 +32,7 @@ import (
 
 type Driver interface {
 	VkCmdBeginRenderPass2KHR(commandBuffer driver.VkCommandBuffer, pRenderPassBegin *driver.VkRenderPassBeginInfo, pSubpassBeginInfo *VkSubpassBeginInfoKHR)
-	VKCmdEndRenderPass2KHR(commandBuffer driver.VkCommandBuffer, pSubpassEndInfo *VkSubpassEndInfoKHR)
+	VkCmdEndRenderPass2KHR(commandBuffer driver.VkCommandBuffer, pSubpassEndInfo *VkSubpassEndInfoKHR)
 	VkCmdNextSubpass2KHR(commandBuffer driver.VkCommandBuffer, pSubpassBeginInfo *VkSubpassBeginInfoKHR, pSubpassEndInfo *VkSubpassEndInfoKHR)
 	VkCreateRenderPass2KHR(device driver.VkDevice, pCreateInfo *VkRenderPassCreateInfo2KHR, pAllocator *driver.VkAllocationCallbacks, pRenderPass *driver.VkRenderPass) (common.VkResult, error)
 }
@@ -81,7 +81,7 @@ func (d *CDriver) VkCmdBeginRenderPass2KHR(commandBuffer driver.VkCommandBuffer,
 	)
 }
 
-func (d *CDriver) VKCmdEndRenderPass2KHR(commandBuffer driver.VkCommandBuffer, pSubpassEndInfo *VkSubpassEndInfoKHR) {
+func (d *CDriver) VkCmdEndRenderPass2KHR(commandBuffer driver.VkCommandBuffer, pSubpassEndInfo *VkSubpassEndInfoKHR) {
 	if d.endRenderPass == nil {
 		panic("attempt to call extension method vkCmdEndRenderPass2KHR when extension not present")
 	}

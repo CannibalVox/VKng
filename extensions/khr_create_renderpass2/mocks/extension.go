@@ -80,9 +80,9 @@ func (mr *MockExtensionMockRecorder) CmdNextSubpass2(commandBuffer, subpassBegin
 }
 
 // CreateRenderPass2 mocks base method.
-func (m *MockExtension) CreateRenderPass2(device core1_0.Device, options khr_create_renderpass2.RenderPassCreateOptions, allocator *driver.AllocationCallbacks) (core1_0.RenderPass, common.VkResult, error) {
+func (m *MockExtension) CreateRenderPass2(device core1_0.Device, allocator *driver.AllocationCallbacks, options khr_create_renderpass2.RenderPassCreateOptions) (core1_0.RenderPass, common.VkResult, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateRenderPass2", device, options, allocator)
+	ret := m.ctrl.Call(m, "CreateRenderPass2", device, allocator, options)
 	ret0, _ := ret[0].(core1_0.RenderPass)
 	ret1, _ := ret[1].(common.VkResult)
 	ret2, _ := ret[2].(error)
@@ -90,7 +90,7 @@ func (m *MockExtension) CreateRenderPass2(device core1_0.Device, options khr_cre
 }
 
 // CreateRenderPass2 indicates an expected call of CreateRenderPass2.
-func (mr *MockExtensionMockRecorder) CreateRenderPass2(device, options, allocator interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) CreateRenderPass2(device, allocator, options interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateRenderPass2", reflect.TypeOf((*MockExtension)(nil).CreateRenderPass2), device, options, allocator)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateRenderPass2", reflect.TypeOf((*MockExtension)(nil).CreateRenderPass2), device, allocator, options)
 }
