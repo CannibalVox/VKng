@@ -31,6 +31,7 @@ func TestVulkanExtension_SemaphoreCounterValue(t *testing.T) {
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
 	device := mocks.EasyMockDevice(ctrl, coreDriver)
 	semaphore := mocks.EasyMockSemaphore(ctrl)
+	semaphore.EXPECT().DeviceHandle().Return(device.Handle()).AnyTimes()
 
 	extDriver.EXPECT().VkGetSemaphoreCounterValueKHR(
 		device.Handle(),
@@ -45,7 +46,6 @@ func TestVulkanExtension_SemaphoreCounterValue(t *testing.T) {
 	})
 
 	value, _, err := extension.SemaphoreCounterValue(
-		device,
 		semaphore,
 	)
 	require.NoError(t, err)
@@ -333,4 +333,41 @@ func TestTimelineSemaphoreSubmitOptions(t *testing.T) {
 			},
 		})
 	require.NoError(t, err)
+}
+
+func TestPhysicalDeviceTimelineSemaphoreOutData(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	extDriver := mock_get_physical_device_properties2.NewMockDriver(ctrl)
+	extension := khr_get_physical_device_properties2.CreateExtensionFromDriver(extDriver)
+
+	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
+	physicalDevice := mocks.EasyMockPhysicalDevice(ctrl, coreDriver)
+
+	extDriver.EXPECT().VkGetPhysicalDeviceProperties2KHR(
+		physicalDevice.Handle(),
+		gomock.Not(gomock.Nil()),
+	).DoAndReturn(func(physicalDevice driver.VkPhysicalDevice, pProperties *khr_get_physical_device_properties2_driver.VkPhysicalDeviceProperties2KHR) {
+		val := reflect.ValueOf(pProperties).Elem()
+		require.Equal(t, uint64(1000059001), val.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2_KHR
+
+		next := (*khr_timeline_semaphore_driver.VkPhysicalDeviceTimelineSemaphorePropertiesKHR)(val.FieldByName("pNext").UnsafePointer())
+		val = reflect.ValueOf(next).Elem()
+
+		require.Equal(t, uint64(1000207001), val.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_PROPERTIES_KHR
+		require.True(t, val.FieldByName("pNext").IsNil())
+		*(*driver.Uint64)(unsafe.Pointer(val.FieldByName("maxTimelineSemaphoreValueDifference").UnsafeAddr())) = driver.Uint64(3)
+	})
+
+	var outData khr_timeline_semaphore.PhysicalDeviceTimelineSemaphoreOutData
+	err := extension.PhysicalDeviceProperties2(
+		physicalDevice,
+		&khr_get_physical_device_properties2.DevicePropertiesOutData{
+			HaveNext: common.HaveNext{&outData},
+		})
+	require.NoError(t, err)
+	require.Equal(t, khr_timeline_semaphore.PhysicalDeviceTimelineSemaphoreOutData{
+		MaxTimelineSemaphoreValueDifference: 3,
+	}, outData)
 }

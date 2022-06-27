@@ -34,14 +34,14 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 	return m.recorder
 }
 
-// VkResetQueryPool mocks base method.
-func (m *MockDriver) VkResetQueryPool(device driver.VkDevice, queryPool driver.VkQueryPool, firstQuery, queryCount driver.Uint32) {
+// VkResetQueryPoolEXT mocks base method.
+func (m *MockDriver) VkResetQueryPoolEXT(device driver.VkDevice, queryPool driver.VkQueryPool, firstQuery, queryCount driver.Uint32) {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "VkResetQueryPool", device, queryPool, firstQuery, queryCount)
+	m.ctrl.Call(m, "VkResetQueryPoolEXT", device, queryPool, firstQuery, queryCount)
 }
 
-// VkResetQueryPool indicates an expected call of VkResetQueryPool.
-func (mr *MockDriverMockRecorder) VkResetQueryPool(device, queryPool, firstQuery, queryCount interface{}) *gomock.Call {
+// VkResetQueryPoolEXT indicates an expected call of VkResetQueryPoolEXT.
+func (mr *MockDriverMockRecorder) VkResetQueryPoolEXT(device, queryPool, firstQuery, queryCount interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkResetQueryPool", reflect.TypeOf((*MockDriver)(nil).VkResetQueryPool), device, queryPool, firstQuery, queryCount)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VkResetQueryPoolEXT", reflect.TypeOf((*MockDriver)(nil).VkResetQueryPoolEXT), device, queryPool, firstQuery, queryCount)
 }

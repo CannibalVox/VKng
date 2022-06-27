@@ -26,9 +26,9 @@ import (
 //go:generate mockgen -source driver.go -destination ../mocks/driver.go -package mock_buffer_device_address
 
 type Driver interface {
-	VkGetBufferDeviceAddressKHR(device driver.VkDevice, pInfo *VkBufferDeviceAddressInfoKHR) uint64
-	VkGetBufferOpaqueCaptureAddressKHR(device driver.VkDevice, pInfo *VkBufferDeviceAddressInfoKHR) uint64
-	VkGetDeviceMemoryOpaqueCaptureAddressKHR(device driver.VkDevice, pInfo *VkDeviceMemoryOpaqueCaptureAddressInfoKHR) uint64
+	VkGetBufferDeviceAddressKHR(device driver.VkDevice, pInfo *VkBufferDeviceAddressInfoKHR) driver.VkDeviceAddress
+	VkGetBufferOpaqueCaptureAddressKHR(device driver.VkDevice, pInfo *VkBufferDeviceAddressInfoKHR) driver.Uint64
+	VkGetDeviceMemoryOpaqueCaptureAddressKHR(device driver.VkDevice, pInfo *VkDeviceMemoryOpaqueCaptureAddressInfoKHR) driver.Uint64
 }
 
 type VkBufferDeviceAddressInfoKHR C.VkBufferDeviceAddressInfoKHR
@@ -51,43 +51,43 @@ func CreateDriverFromCore(coreDriver driver.Driver) *CDriver {
 
 	return &CDriver{
 		coreDriver: coreDriver,
-		
+
 		getBufferDeviceAddress:              (C.PFN_vkGetBufferDeviceAddressKHR)(coreDriver.LoadProcAddr((*driver.Char)(arena.CString("vkGetBufferDeviceAddressKHR")))),
 		getBufferOpaqueCaptureAddress:       (C.PFN_vkGetBufferOpaqueCaptureAddressKHR)(coreDriver.LoadProcAddr((*driver.Char)(arena.CString("vkGetBufferOpaqueCaptureAddressKHR")))),
 		getDeviceMemoryOpaqueCaptureAddress: (C.PFN_vkGetDeviceMemoryOpaqueCaptureAddressKHR)(coreDriver.LoadProcAddr((*driver.Char)(arena.CString("vkGetDeviceMemoryOpaqueCaptureAddressKHR")))),
 	}
 }
 
-func (d *CDriver) VkGetBufferDeviceAddressKHR(device driver.VkDevice, pInfo *VkBufferDeviceAddressInfoKHR) uint64 {
+func (d *CDriver) VkGetBufferDeviceAddressKHR(device driver.VkDevice, pInfo *VkBufferDeviceAddressInfoKHR) driver.VkDeviceAddress {
 	if d.getBufferDeviceAddress == nil {
 		panic("attempt to call extension method vkGetBufferDeviceAddressKHR when extension not present")
 	}
 
-	return uint64(C.cgoGetBufferDeviceAddressKHR(
+	return driver.VkDeviceAddress(C.cgoGetBufferDeviceAddressKHR(
 		d.getBufferDeviceAddress,
 		C.VkDevice(unsafe.Pointer(device)),
 		(*C.VkBufferDeviceAddressInfoKHR)(pInfo),
 	))
 }
 
-func (d *CDriver) VkGetBufferOpaqueCaptureAddressKHR(device driver.VkDevice, pInfo *VkBufferDeviceAddressInfoKHR) uint64 {
+func (d *CDriver) VkGetBufferOpaqueCaptureAddressKHR(device driver.VkDevice, pInfo *VkBufferDeviceAddressInfoKHR) driver.Uint64 {
 	if d.getBufferOpaqueCaptureAddress == nil {
 		panic("attempt to call extension method vkGetBufferOpaqueCaptureAddressKHR when extension not present")
 	}
 
-	return uint64(C.cgoGetBufferOpaqueCaptureAddressKHR(
+	return driver.Uint64(C.cgoGetBufferOpaqueCaptureAddressKHR(
 		d.getBufferOpaqueCaptureAddress,
 		C.VkDevice(unsafe.Pointer(device)),
 		(*C.VkBufferDeviceAddressInfoKHR)(pInfo),
 	))
 }
 
-func (d *CDriver) VkGetDeviceMemoryOpaqueCaptureAddressKHR(device driver.VkDevice, pInfo *VkDeviceMemoryOpaqueCaptureAddressInfoKHR) uint64 {
+func (d *CDriver) VkGetDeviceMemoryOpaqueCaptureAddressKHR(device driver.VkDevice, pInfo *VkDeviceMemoryOpaqueCaptureAddressInfoKHR) driver.Uint64 {
 	if d.getDeviceMemoryOpaqueCaptureAddress == nil {
 		panic("attempt to call extension method vkGetDeviceMemoryOpaqueCaptureAddressKHR when extension not present")
 	}
 
-	return uint64(C.cgoGetDeviceMemoryOpaqueCaptureAddressKHR(
+	return driver.Uint64(C.cgoGetDeviceMemoryOpaqueCaptureAddressKHR(
 		d.getDeviceMemoryOpaqueCaptureAddress,
 		C.VkDevice(unsafe.Pointer(device)),
 		(*C.VkDeviceMemoryOpaqueCaptureAddressInfoKHR)(pInfo),

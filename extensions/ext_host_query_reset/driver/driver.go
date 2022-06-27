@@ -18,7 +18,7 @@ import (
 )
 
 type Driver interface {
-	VkResetQueryPool(device driver.VkDevice, queryPool driver.VkQueryPool, firstQuery driver.Uint32, queryCount driver.Uint32)
+	VkResetQueryPoolEXT(device driver.VkDevice, queryPool driver.VkQueryPool, firstQuery driver.Uint32, queryCount driver.Uint32)
 }
 
 type VkPhysicalDeviceHostQueryResetFeaturesEXT C.VkPhysicalDeviceHostQueryResetFeaturesEXT
@@ -39,7 +39,7 @@ func CreateDriverFromCore(coreDriver driver.Driver) *CDriver {
 	}
 }
 
-func (d *CDriver) VkResetQueryPool(device driver.VkDevice, queryPool driver.VkQueryPool, firstQuery driver.Uint32, queryCount driver.Uint32) {
+func (d *CDriver) VkResetQueryPoolEXT(device driver.VkDevice, queryPool driver.VkQueryPool, firstQuery driver.Uint32, queryCount driver.Uint32) {
 	C.cgoResetQueryPoolEXT(
 		d.resetQueryPool,
 		C.VkDevice(unsafe.Pointer(device)),

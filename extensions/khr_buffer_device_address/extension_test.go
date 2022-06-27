@@ -34,7 +34,7 @@ func TestVulkanExtension_GetBufferDeviceAddress(t *testing.T) {
 	extDriver.EXPECT().VkGetBufferDeviceAddressKHR(
 		device.Handle(),
 		gomock.Not(gomock.Nil()),
-	).DoAndReturn(func(device driver.VkDevice, pInfo *khr_buffer_device_address_driver.VkBufferDeviceAddressInfoKHR) uint64 {
+	).DoAndReturn(func(device driver.VkDevice, pInfo *khr_buffer_device_address_driver.VkBufferDeviceAddressInfoKHR) driver.VkDeviceAddress {
 		val := reflect.ValueOf(pInfo).Elem()
 
 		require.Equal(t, uint64(1000244001), val.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_BUFFER_DEVICE_ADDRESS_INFO_KHR
@@ -67,7 +67,7 @@ func TestVulkanExtension_GetBufferOpaqueCaptureAddress(t *testing.T) {
 	extDriver.EXPECT().VkGetBufferOpaqueCaptureAddressKHR(
 		device.Handle(),
 		gomock.Not(gomock.Nil()),
-	).DoAndReturn(func(device driver.VkDevice, pInfo *khr_buffer_device_address_driver.VkBufferDeviceAddressInfoKHR) uint64 {
+	).DoAndReturn(func(device driver.VkDevice, pInfo *khr_buffer_device_address_driver.VkBufferDeviceAddressInfoKHR) driver.Uint64 {
 		val := reflect.ValueOf(pInfo).Elem()
 
 		require.Equal(t, uint64(1000244001), val.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_BUFFER_DEVICE_ADDRESS_INFO_KHR
@@ -100,7 +100,7 @@ func TestVulkanExtension_GetDeviceMemoryOpaqueCaptureAddress(t *testing.T) {
 	extDriver.EXPECT().VkGetDeviceMemoryOpaqueCaptureAddressKHR(
 		device.Handle(),
 		gomock.Not(gomock.Nil()),
-	).DoAndReturn(func(device driver.VkDevice, pInfo *khr_buffer_device_address_driver.VkDeviceMemoryOpaqueCaptureAddressInfoKHR) uint64 {
+	).DoAndReturn(func(device driver.VkDevice, pInfo *khr_buffer_device_address_driver.VkDeviceMemoryOpaqueCaptureAddressInfoKHR) driver.Uint64 {
 		val := reflect.ValueOf(pInfo).Elem()
 
 		require.Equal(t, uint64(1000257004), val.FieldByName("sType").Uint()) // VK_STRUCTURE_TYPE_DEVICE_MEMORY_OPAQUE_CAPTURE_ADDRESS_INFO_KHR

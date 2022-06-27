@@ -36,10 +36,10 @@ func (m *MockDriver) EXPECT() *MockDriverMockRecorder {
 }
 
 // VkGetBufferDeviceAddressKHR mocks base method.
-func (m *MockDriver) VkGetBufferDeviceAddressKHR(device driver.VkDevice, pInfo *khr_buffer_device_address_driver.VkBufferDeviceAddressInfoKHR) uint64 {
+func (m *MockDriver) VkGetBufferDeviceAddressKHR(device driver.VkDevice, pInfo *khr_buffer_device_address_driver.VkBufferDeviceAddressInfoKHR) driver.VkDeviceAddress {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkGetBufferDeviceAddressKHR", device, pInfo)
-	ret0, _ := ret[0].(uint64)
+	ret0, _ := ret[0].(driver.VkDeviceAddress)
 	return ret0
 }
 
@@ -50,10 +50,10 @@ func (mr *MockDriverMockRecorder) VkGetBufferDeviceAddressKHR(device, pInfo inte
 }
 
 // VkGetBufferOpaqueCaptureAddressKHR mocks base method.
-func (m *MockDriver) VkGetBufferOpaqueCaptureAddressKHR(device driver.VkDevice, pInfo *khr_buffer_device_address_driver.VkBufferDeviceAddressInfoKHR) uint64 {
+func (m *MockDriver) VkGetBufferOpaqueCaptureAddressKHR(device driver.VkDevice, pInfo *khr_buffer_device_address_driver.VkBufferDeviceAddressInfoKHR) driver.Uint64 {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkGetBufferOpaqueCaptureAddressKHR", device, pInfo)
-	ret0, _ := ret[0].(uint64)
+	ret0, _ := ret[0].(driver.Uint64)
 	return ret0
 }
 
@@ -64,10 +64,10 @@ func (mr *MockDriverMockRecorder) VkGetBufferOpaqueCaptureAddressKHR(device, pIn
 }
 
 // VkGetDeviceMemoryOpaqueCaptureAddressKHR mocks base method.
-func (m *MockDriver) VkGetDeviceMemoryOpaqueCaptureAddressKHR(device driver.VkDevice, pInfo *khr_buffer_device_address_driver.VkDeviceMemoryOpaqueCaptureAddressInfoKHR) uint64 {
+func (m *MockDriver) VkGetDeviceMemoryOpaqueCaptureAddressKHR(device driver.VkDevice, pInfo *khr_buffer_device_address_driver.VkDeviceMemoryOpaqueCaptureAddressInfoKHR) driver.Uint64 {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VkGetDeviceMemoryOpaqueCaptureAddressKHR", device, pInfo)
-	ret0, _ := ret[0].(uint64)
+	ret0, _ := ret[0].(driver.Uint64)
 	return ret0
 }
 

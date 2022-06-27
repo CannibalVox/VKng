@@ -37,7 +37,7 @@ func (e *VulkanExtension) GetBufferDeviceAddress(device core1_0.Device, o Buffer
 		device.Handle(),
 		(*khr_buffer_device_address_driver.VkBufferDeviceAddressInfoKHR)(info),
 	)
-	return address, nil
+	return uint64(address), nil
 }
 
 func (e *VulkanExtension) GetBufferOpaqueCaptureAddress(device core1_0.Device, o BufferDeviceAddressOptions) (uint64, error) {
@@ -53,7 +53,7 @@ func (e *VulkanExtension) GetBufferOpaqueCaptureAddress(device core1_0.Device, o
 		device.Handle(),
 		(*khr_buffer_device_address_driver.VkBufferDeviceAddressInfoKHR)(info),
 	)
-	return address, nil
+	return uint64(address), nil
 }
 
 func (e *VulkanExtension) GetDeviceMemoryOpaqueCaptureAddress(device core1_0.Device, o DeviceMemoryOpaqueAddressOptions) (uint64, error) {
@@ -69,5 +69,5 @@ func (e *VulkanExtension) GetDeviceMemoryOpaqueCaptureAddress(device core1_0.Dev
 		device.Handle(),
 		(*khr_buffer_device_address_driver.VkDeviceMemoryOpaqueCaptureAddressInfoKHR)(info),
 	)
-	return address, nil
+	return uint64(address), nil
 }

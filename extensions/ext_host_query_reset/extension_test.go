@@ -30,8 +30,9 @@ func TestVulkanExtension_ResetQueryPool(t *testing.T) {
 	coreDriver := mock_driver.DriverForVersion(ctrl, common.Vulkan1_0)
 	device := mocks.EasyMockDevice(ctrl, coreDriver)
 	queryPool := mocks.EasyMockQueryPool(ctrl)
+	queryPool.EXPECT().DeviceHandle().Return(device.Handle()).AnyTimes()
 
-	extDriver.EXPECT().VkResetQueryPool(
+	extDriver.EXPECT().VkResetQueryPoolEXT(
 		device.Handle(),
 		queryPool.Handle(),
 		driver.Uint32(1),
@@ -39,7 +40,6 @@ func TestVulkanExtension_ResetQueryPool(t *testing.T) {
 	)
 
 	extension.ResetQueryPool(
-		device,
 		queryPool,
 		1, 3)
 }

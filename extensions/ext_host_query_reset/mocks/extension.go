@@ -35,13 +35,13 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 }
 
 // ResetQueryPool mocks base method.
-func (m *MockExtension) ResetQueryPool(device core1_0.Device, queryPool core1_0.QueryPool, firstQuery, queryCount int) {
+func (m *MockExtension) ResetQueryPool(queryPool core1_0.QueryPool, firstQuery, queryCount int) {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "ResetQueryPool", device, queryPool, firstQuery, queryCount)
+	m.ctrl.Call(m, "Reset", queryPool, firstQuery, queryCount)
 }
 
 // ResetQueryPool indicates an expected call of ResetQueryPool.
-func (mr *MockExtensionMockRecorder) ResetQueryPool(device, queryPool, firstQuery, queryCount interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) ResetQueryPool(queryPool, firstQuery, queryCount interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ResetQueryPool", reflect.TypeOf((*MockExtension)(nil).ResetQueryPool), device, queryPool, firstQuery, queryCount)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Reset", reflect.TypeOf((*MockExtension)(nil).ResetQueryPool), queryPool, firstQuery, queryCount)
 }
