@@ -7,12 +7,13 @@ package khr_sampler_ycbcr_conversion
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
 
 type ImagePlaneMemoryRequirementsOptions struct {
-	PlaneAspect common.ImageAspectFlags
+	PlaneAspect core1_0.ImageAspectFlags
 
 	common.HaveNext
 }

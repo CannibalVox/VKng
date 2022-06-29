@@ -19,7 +19,7 @@ type DescriptorUpdateTemplateCreateOptions struct {
 
 	DescriptorSetLayout core1_0.DescriptorSetLayout
 
-	PipelineBindPoint common.PipelineBindPoint
+	PipelineBindPoint core1_0.PipelineBindPoint
 	PipelineLayout    core1_0.PipelineLayout
 	Set               int
 

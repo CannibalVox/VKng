@@ -5,7 +5,9 @@ package khr_maintenance2
 #include "../vulkan/vulkan.h"
 */
 import "C"
-import "github.com/CannibalVox/VKng/core/common"
+import (
+	"github.com/CannibalVox/VKng/core/core1_0"
+)
 
 type PointClippingBehavior int32
 
@@ -38,11 +40,11 @@ func (e TessellationDomainOrigin) String() string {
 const (
 	ExtensionName string = C.VK_KHR_MAINTENANCE2_EXTENSION_NAME
 
-	ImageCreateBlockTexelViewCompatible common.ImageCreateFlags = C.VK_IMAGE_CREATE_BLOCK_TEXEL_VIEW_COMPATIBLE_BIT_KHR
-	ImageCreateExtendedUsage            common.ImageCreateFlags = C.VK_IMAGE_CREATE_EXTENDED_USAGE_BIT_KHR
+	ImageCreateBlockTexelViewCompatible core1_0.ImageCreateFlags = C.VK_IMAGE_CREATE_BLOCK_TEXEL_VIEW_COMPATIBLE_BIT_KHR
+	ImageCreateExtendedUsage            core1_0.ImageCreateFlags = C.VK_IMAGE_CREATE_EXTENDED_USAGE_BIT_KHR
 
-	ImageLayoutDepthAttachmentStencilReadOnlyOptimal common.ImageLayout = C.VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL_KHR
-	ImageLayoutDepthReadOnlyStencilAttachmentOptimal common.ImageLayout = C.VK_IMAGE_LAYOUT_DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL_KHR
+	ImageLayoutDepthAttachmentStencilReadOnlyOptimal core1_0.ImageLayout = C.VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL_KHR
+	ImageLayoutDepthReadOnlyStencilAttachmentOptimal core1_0.ImageLayout = C.VK_IMAGE_LAYOUT_DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL_KHR
 
 	PointClippingAllClipPlanes      PointClippingBehavior = C.VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES_KHR
 	PointClippingUserClipPlanesOnly PointClippingBehavior = C.VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY_KHR

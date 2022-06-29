@@ -135,7 +135,7 @@ func (v *VulkanExtensionWithKHRSurface) DeviceGroupSurfacePresentModes(device co
 	return DeviceGroupPresentModeFlags(*flagsPtr), res, nil
 }
 
-func (v *VulkanExtensionWithKHRSurface) attemptGetPhysicalDevicePresentRectangles(physicalDevice core1_0.PhysicalDevice, surface khr_surface.Surface) ([]common.Rect2D, common.VkResult, error) {
+func (v *VulkanExtensionWithKHRSurface) attemptGetPhysicalDevicePresentRectangles(physicalDevice core1_0.PhysicalDevice, surface khr_surface.Surface) ([]core1_0.Rect2D, common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -168,7 +168,7 @@ func (v *VulkanExtensionWithKHRSurface) attemptGetPhysicalDevicePresentRectangle
 	}
 
 	rectsSlice := ([]C.VkRect2D)(unsafe.Slice((*C.VkRect2D)(rectsPtr), count))
-	outRects := make([]common.Rect2D, count)
+	outRects := make([]core1_0.Rect2D, count)
 	for i := 0; i < count; i++ {
 		outRects[i].Offset.X = int(rectsSlice[i].offset.x)
 		outRects[i].Offset.Y = int(rectsSlice[i].offset.y)
@@ -179,8 +179,8 @@ func (v *VulkanExtensionWithKHRSurface) attemptGetPhysicalDevicePresentRectangle
 	return outRects, res, nil
 }
 
-func (v *VulkanExtensionWithKHRSurface) PhysicalDevicePresentRectangles(physicalDevice core1_0.PhysicalDevice, surface khr_surface.Surface) ([]common.Rect2D, common.VkResult, error) {
-	var outData []common.Rect2D
+func (v *VulkanExtensionWithKHRSurface) PhysicalDevicePresentRectangles(physicalDevice core1_0.PhysicalDevice, surface khr_surface.Surface) ([]core1_0.Rect2D, common.VkResult, error) {
+	var outData []core1_0.Rect2D
 	var result common.VkResult
 	var err error
 

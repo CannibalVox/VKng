@@ -422,13 +422,13 @@ func TestVulkanExtension_PhysicalDeviceMemoryProperties(t *testing.T) {
 	outData := khr_get_physical_device_properties2.MemoryPropertiesOutData{}
 	err := extension.PhysicalDeviceMemoryProperties2(physicalDevice, &outData)
 	require.NoError(t, err)
-	require.Equal(t, []common.MemoryType{
+	require.Equal(t, []core1_0.MemoryType{
 		{
 			Properties: core1_0.MemoryPropertyLazilyAllocated,
 			HeapIndex:  3,
 		},
 	}, outData.MemoryProperties.MemoryTypes)
-	require.Equal(t, []common.MemoryHeap{
+	require.Equal(t, []core1_0.MemoryHeap{
 		{
 			Flags: core1_0.MemoryHeapDeviceLocal,
 			Size:  99,
@@ -585,7 +585,7 @@ func TestVulkanExtension_PhysicalDeviceQueueFamilyProperties(t *testing.T) {
 				Flags:              core1_0.QueueSparseBinding,
 				QueueCount:         3,
 				TimestampValidBits: 5,
-				MinImageTransferGranularity: common.Extent3D{
+				MinImageTransferGranularity: core1_0.Extent3D{
 					Width:  7,
 					Height: 11,
 					Depth:  13,
@@ -597,7 +597,7 @@ func TestVulkanExtension_PhysicalDeviceQueueFamilyProperties(t *testing.T) {
 				Flags:              core1_0.QueueCompute,
 				QueueCount:         17,
 				TimestampValidBits: 19,
-				MinImageTransferGranularity: common.Extent3D{
+				MinImageTransferGranularity: core1_0.Extent3D{
 					Width:  23,
 					Height: 29,
 					Depth:  31,
@@ -687,7 +687,7 @@ func TestVulkanExtension_PhysicalDeviceSparseImageFormatProperties(t *testing.T)
 		{
 			SparseImageFormatProperties: core1_0.SparseImageFormatProperties{
 				AspectMask: core1_0.AspectColor,
-				ImageGranularity: common.Extent3D{
+				ImageGranularity: core1_0.Extent3D{
 					Width:  1,
 					Height: 3,
 					Depth:  5,

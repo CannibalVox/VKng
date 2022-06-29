@@ -5,7 +5,9 @@ package khr_sampler_ycbcr_conversion
 #include "vulkan/vulkan.h"
 */
 import "C"
-import "github.com/CannibalVox/VKng/core/common"
+import (
+	"github.com/CannibalVox/VKng/core/core1_0"
+)
 
 type ChromaLocation int32
 
@@ -55,56 +57,56 @@ const (
 	ChromaLocationCositedEven ChromaLocation = C.VK_CHROMA_LOCATION_COSITED_EVEN_KHR
 	ChromaLocationMidpoint    ChromaLocation = C.VK_CHROMA_LOCATION_MIDPOINT_KHR
 
-	ObjectTypeSamplerYcbcrConversion common.ObjectType = C.VK_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_KHR
+	ObjectTypeSamplerYcbcrConversion core1_0.ObjectType = C.VK_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_KHR
 
-	DataFormatB10X6G10X6R10X6G10X6HorizontalChromaComponentPacked     common.DataFormat = C.VK_FORMAT_B10X6G10X6R10X6G10X6_422_UNORM_4PACK16_KHR
-	DataFormatB12X4G12X4R12X4G12X4HorizontalChromaComponentPacked     common.DataFormat = C.VK_FORMAT_B12X4G12X4R12X4G12X4_422_UNORM_4PACK16_KHR
-	DataFormatB16G16R16G16HorizontalChroma                            common.DataFormat = C.VK_FORMAT_B16G16R16G16_422_UNORM_KHR
-	DataFormatB8G8R8G8HorizontalChroma                                common.DataFormat = C.VK_FORMAT_B8G8R8G8_422_UNORM_KHR
-	DataFormatG10X6B10X6G10X6R10X6HorizontalChromaComponentPacked     common.DataFormat = C.VK_FORMAT_G10X6B10X6G10X6R10X6_422_UNORM_4PACK16_KHR
-	DataFormatG10X6_B10X6R10X6_2PlaneDualChromaComponentPacked        common.DataFormat = C.VK_FORMAT_G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16_KHR
-	DataFormatG10X6_B10X6R10X6_2PlaneHorizontalChromaComponentPacked  common.DataFormat = C.VK_FORMAT_G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16_KHR
-	DataFormatG10X6_B10X6_R10X6_3PlaneDualChromaComponentPacked       common.DataFormat = C.VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16_KHR
-	DataFormatG10X6_B10X6_R10X6_3PlaneHorizontalChromaComponentPacked common.DataFormat = C.VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16_KHR
-	DataFormatG10X6_B10X6_R10X6_3PlaneNoChromaComponentPacked         common.DataFormat = C.VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_444_UNORM_3PACK16_KHR
-	DataFormatG12X4B12X4G12X4R12X4_HorizontalChromaComponentPacked    common.DataFormat = C.VK_FORMAT_G12X4B12X4G12X4R12X4_422_UNORM_4PACK16_KHR
-	DataFormatG12X4_B12X4R12X4_2PlaneDualChromaComponentPacked        common.DataFormat = C.VK_FORMAT_G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16_KHR
-	DataFormatG12X4_B12X4R12X4_2PlaneHorizontalChromaComponentPacked  common.DataFormat = C.VK_FORMAT_G12X4_B12X4R12X4_2PLANE_422_UNORM_3PACK16_KHR
-	DataFormatG12X4_B12X4_R12X4_3PlaneDualChromaComponentPacked       common.DataFormat = C.VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16_KHR
-	DataFormatG12X4_B12X4_R12X4_3PlaneHorizontalChromaComponentPacked common.DataFormat = C.VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16_KHR
-	DataFormatG12X4_B12X4_R12X4_3PlaneNoChromaComponentPacked         common.DataFormat = C.VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_444_UNORM_3PACK16_KHR
-	DataFormatG16B16G16R16_HorizontalChroma                           common.DataFormat = C.VK_FORMAT_G16B16G16R16_422_UNORM_KHR
-	DataFormatG16_B16R16_2PlaneDualChroma                             common.DataFormat = C.VK_FORMAT_G16_B16R16_2PLANE_420_UNORM_KHR
-	DataFormatG16_B16R16_2PlaneHorizontalChroma                       common.DataFormat = C.VK_FORMAT_G16_B16R16_2PLANE_422_UNORM_KHR
-	DataFormatG16_B16_R16_3PlaneDualChroma                            common.DataFormat = C.VK_FORMAT_G16_B16_R16_3PLANE_420_UNORM_KHR
-	DataFormatG16_B16_R16_3PlaneHorizontalChroma                      common.DataFormat = C.VK_FORMAT_G16_B16_R16_3PLANE_422_UNORM_KHR
-	DataFormatG16_B16_R16_3PlaneNoChroma                              common.DataFormat = C.VK_FORMAT_G16_B16_R16_3PLANE_444_UNORM_KHR
-	DataFormatG8B8G8R8_HorizontalChroma                               common.DataFormat = C.VK_FORMAT_G8B8G8R8_422_UNORM_KHR
-	DataFormatG8_B8R8_2PlaneDualChroma                                common.DataFormat = C.VK_FORMAT_G8_B8R8_2PLANE_420_UNORM_KHR
-	DataFormatG8_B8R8_2PlaneHorizontalChroma                          common.DataFormat = C.VK_FORMAT_G8_B8R8_2PLANE_422_UNORM_KHR
-	DataFormatG8_B8_R8_3PlaneDualChroma                               common.DataFormat = C.VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM_KHR
-	DataFormatG8_B8_R8_3PlaneHorizontalChroma                         common.DataFormat = C.VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM_KHR
-	DataFormatG8_B8_R8_3PlaneNoChroma                                 common.DataFormat = C.VK_FORMAT_G8_B8_R8_3PLANE_444_UNORM_KHR
-	DataFormatR10X6G10X6B10X6A10X6UnsignedNormalizedComponentPacked   common.DataFormat = C.VK_FORMAT_R10X6G10X6B10X6A10X6_UNORM_4PACK16_KHR
-	DataFormatR10X6G10X6UnsignedNormalizedComponentPacked             common.DataFormat = C.VK_FORMAT_R10X6G10X6_UNORM_2PACK16_KHR
-	DataFormatR10X6UnsignedNormalizedComponentPacked                  common.DataFormat = C.VK_FORMAT_R10X6_UNORM_PACK16_KHR
-	DataFormatR12X4G12X4B12X4A12X4UnsignedNormalizedComponentPacked   common.DataFormat = C.VK_FORMAT_R12X4G12X4B12X4A12X4_UNORM_4PACK16_KHR
-	DataFormatR12X4G12X4UnsignedNormalizedComponentPacked             common.DataFormat = C.VK_FORMAT_R12X4G12X4_UNORM_2PACK16_KHR
-	DataFormatR12X4UnsignedNormalizedComponentPacked                  common.DataFormat = C.VK_FORMAT_R12X4_UNORM_PACK16_KHR
+	DataFormatB10X6G10X6R10X6G10X6HorizontalChromaComponentPacked     core1_0.DataFormat = C.VK_FORMAT_B10X6G10X6R10X6G10X6_422_UNORM_4PACK16_KHR
+	DataFormatB12X4G12X4R12X4G12X4HorizontalChromaComponentPacked     core1_0.DataFormat = C.VK_FORMAT_B12X4G12X4R12X4G12X4_422_UNORM_4PACK16_KHR
+	DataFormatB16G16R16G16HorizontalChroma                            core1_0.DataFormat = C.VK_FORMAT_B16G16R16G16_422_UNORM_KHR
+	DataFormatB8G8R8G8HorizontalChroma                                core1_0.DataFormat = C.VK_FORMAT_B8G8R8G8_422_UNORM_KHR
+	DataFormatG10X6B10X6G10X6R10X6HorizontalChromaComponentPacked     core1_0.DataFormat = C.VK_FORMAT_G10X6B10X6G10X6R10X6_422_UNORM_4PACK16_KHR
+	DataFormatG10X6_B10X6R10X6_2PlaneDualChromaComponentPacked        core1_0.DataFormat = C.VK_FORMAT_G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16_KHR
+	DataFormatG10X6_B10X6R10X6_2PlaneHorizontalChromaComponentPacked  core1_0.DataFormat = C.VK_FORMAT_G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16_KHR
+	DataFormatG10X6_B10X6_R10X6_3PlaneDualChromaComponentPacked       core1_0.DataFormat = C.VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16_KHR
+	DataFormatG10X6_B10X6_R10X6_3PlaneHorizontalChromaComponentPacked core1_0.DataFormat = C.VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16_KHR
+	DataFormatG10X6_B10X6_R10X6_3PlaneNoChromaComponentPacked         core1_0.DataFormat = C.VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_444_UNORM_3PACK16_KHR
+	DataFormatG12X4B12X4G12X4R12X4_HorizontalChromaComponentPacked    core1_0.DataFormat = C.VK_FORMAT_G12X4B12X4G12X4R12X4_422_UNORM_4PACK16_KHR
+	DataFormatG12X4_B12X4R12X4_2PlaneDualChromaComponentPacked        core1_0.DataFormat = C.VK_FORMAT_G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16_KHR
+	DataFormatG12X4_B12X4R12X4_2PlaneHorizontalChromaComponentPacked  core1_0.DataFormat = C.VK_FORMAT_G12X4_B12X4R12X4_2PLANE_422_UNORM_3PACK16_KHR
+	DataFormatG12X4_B12X4_R12X4_3PlaneDualChromaComponentPacked       core1_0.DataFormat = C.VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16_KHR
+	DataFormatG12X4_B12X4_R12X4_3PlaneHorizontalChromaComponentPacked core1_0.DataFormat = C.VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16_KHR
+	DataFormatG12X4_B12X4_R12X4_3PlaneNoChromaComponentPacked         core1_0.DataFormat = C.VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_444_UNORM_3PACK16_KHR
+	DataFormatG16B16G16R16_HorizontalChroma                           core1_0.DataFormat = C.VK_FORMAT_G16B16G16R16_422_UNORM_KHR
+	DataFormatG16_B16R16_2PlaneDualChroma                             core1_0.DataFormat = C.VK_FORMAT_G16_B16R16_2PLANE_420_UNORM_KHR
+	DataFormatG16_B16R16_2PlaneHorizontalChroma                       core1_0.DataFormat = C.VK_FORMAT_G16_B16R16_2PLANE_422_UNORM_KHR
+	DataFormatG16_B16_R16_3PlaneDualChroma                            core1_0.DataFormat = C.VK_FORMAT_G16_B16_R16_3PLANE_420_UNORM_KHR
+	DataFormatG16_B16_R16_3PlaneHorizontalChroma                      core1_0.DataFormat = C.VK_FORMAT_G16_B16_R16_3PLANE_422_UNORM_KHR
+	DataFormatG16_B16_R16_3PlaneNoChroma                              core1_0.DataFormat = C.VK_FORMAT_G16_B16_R16_3PLANE_444_UNORM_KHR
+	DataFormatG8B8G8R8_HorizontalChroma                               core1_0.DataFormat = C.VK_FORMAT_G8B8G8R8_422_UNORM_KHR
+	DataFormatG8_B8R8_2PlaneDualChroma                                core1_0.DataFormat = C.VK_FORMAT_G8_B8R8_2PLANE_420_UNORM_KHR
+	DataFormatG8_B8R8_2PlaneHorizontalChroma                          core1_0.DataFormat = C.VK_FORMAT_G8_B8R8_2PLANE_422_UNORM_KHR
+	DataFormatG8_B8_R8_3PlaneDualChroma                               core1_0.DataFormat = C.VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM_KHR
+	DataFormatG8_B8_R8_3PlaneHorizontalChroma                         core1_0.DataFormat = C.VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM_KHR
+	DataFormatG8_B8_R8_3PlaneNoChroma                                 core1_0.DataFormat = C.VK_FORMAT_G8_B8_R8_3PLANE_444_UNORM_KHR
+	DataFormatR10X6G10X6B10X6A10X6UnsignedNormalizedComponentPacked   core1_0.DataFormat = C.VK_FORMAT_R10X6G10X6B10X6A10X6_UNORM_4PACK16_KHR
+	DataFormatR10X6G10X6UnsignedNormalizedComponentPacked             core1_0.DataFormat = C.VK_FORMAT_R10X6G10X6_UNORM_2PACK16_KHR
+	DataFormatR10X6UnsignedNormalizedComponentPacked                  core1_0.DataFormat = C.VK_FORMAT_R10X6_UNORM_PACK16_KHR
+	DataFormatR12X4G12X4B12X4A12X4UnsignedNormalizedComponentPacked   core1_0.DataFormat = C.VK_FORMAT_R12X4G12X4B12X4A12X4_UNORM_4PACK16_KHR
+	DataFormatR12X4G12X4UnsignedNormalizedComponentPacked             core1_0.DataFormat = C.VK_FORMAT_R12X4G12X4_UNORM_2PACK16_KHR
+	DataFormatR12X4UnsignedNormalizedComponentPacked                  core1_0.DataFormat = C.VK_FORMAT_R12X4_UNORM_PACK16_KHR
 
-	FormatFeatureCositedChromaSamples                                             common.FormatFeatures = C.VK_FORMAT_FEATURE_COSITED_CHROMA_SAMPLES_BIT_KHR
-	FormatFeatureDisjoint                                                         common.FormatFeatures = C.VK_FORMAT_FEATURE_DISJOINT_BIT_KHR
-	FormatFeatureMidpointChromaSamples                                            common.FormatFeatures = C.VK_FORMAT_FEATURE_MIDPOINT_CHROMA_SAMPLES_BIT_KHR
-	FormatFeatureSampledImageYcbcrConversionChromaReconstructionExplicit          common.FormatFeatures = C.VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_BIT_KHR
-	FormatFeatureSampledImageYcbcrConversionChromaReconstructionExplicitForceable common.FormatFeatures = C.VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE_BIT_KHR
-	FormatFeatureSampledImageYcbcrConversionLinearFilter                          common.FormatFeatures = C.VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER_BIT_KHR
-	FormatFeatureSampledImageYcbcrConversionSeparateReconstructionFilter          common.FormatFeatures = C.VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER_BIT_KHR
+	FormatFeatureCositedChromaSamples                                             core1_0.FormatFeatures = C.VK_FORMAT_FEATURE_COSITED_CHROMA_SAMPLES_BIT_KHR
+	FormatFeatureDisjoint                                                         core1_0.FormatFeatures = C.VK_FORMAT_FEATURE_DISJOINT_BIT_KHR
+	FormatFeatureMidpointChromaSamples                                            core1_0.FormatFeatures = C.VK_FORMAT_FEATURE_MIDPOINT_CHROMA_SAMPLES_BIT_KHR
+	FormatFeatureSampledImageYcbcrConversionChromaReconstructionExplicit          core1_0.FormatFeatures = C.VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_BIT_KHR
+	FormatFeatureSampledImageYcbcrConversionChromaReconstructionExplicitForceable core1_0.FormatFeatures = C.VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE_BIT_KHR
+	FormatFeatureSampledImageYcbcrConversionLinearFilter                          core1_0.FormatFeatures = C.VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER_BIT_KHR
+	FormatFeatureSampledImageYcbcrConversionSeparateReconstructionFilter          core1_0.FormatFeatures = C.VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER_BIT_KHR
 
-	ImageAspectPlane0 common.ImageAspectFlags = C.VK_IMAGE_ASPECT_PLANE_0_BIT_KHR
-	ImageAspectPlane1 common.ImageAspectFlags = C.VK_IMAGE_ASPECT_PLANE_1_BIT_KHR
-	ImageAspectPlane2 common.ImageAspectFlags = C.VK_IMAGE_ASPECT_PLANE_2_BIT_KHR
+	ImageAspectPlane0 core1_0.ImageAspectFlags = C.VK_IMAGE_ASPECT_PLANE_0_BIT_KHR
+	ImageAspectPlane1 core1_0.ImageAspectFlags = C.VK_IMAGE_ASPECT_PLANE_1_BIT_KHR
+	ImageAspectPlane2 core1_0.ImageAspectFlags = C.VK_IMAGE_ASPECT_PLANE_2_BIT_KHR
 
-	ImageCreateDisjoint common.ImageCreateFlags = C.VK_IMAGE_CREATE_DISJOINT_BIT_KHR
+	ImageCreateDisjoint core1_0.ImageCreateFlags = C.VK_IMAGE_CREATE_DISJOINT_BIT_KHR
 
 	SamplerYcbcrModelConversionRGBIdentity   SamplerYcbcrModelConversion = C.VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY_KHR
 	SamplerYcbcrModelConversionYcbcr2020     SamplerYcbcrModelConversion = C.VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020_KHR

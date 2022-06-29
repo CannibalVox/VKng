@@ -31,9 +31,9 @@ func (o *FormatPropertiesOutData) PopulateCPointer(allocator *cgoparam.Allocator
 
 func (o *FormatPropertiesOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	data := (*C.VkFormatProperties2KHR)(cDataPointer)
-	o.FormatProperties.LinearTilingFeatures = common.FormatFeatures(data.formatProperties.linearTilingFeatures)
-	o.FormatProperties.OptimalTilingFeatures = common.FormatFeatures(data.formatProperties.optimalTilingFeatures)
-	o.FormatProperties.BufferFeatures = common.FormatFeatures(data.formatProperties.bufferFeatures)
+	o.FormatProperties.LinearTilingFeatures = core1_0.FormatFeatures(data.formatProperties.linearTilingFeatures)
+	o.FormatProperties.OptimalTilingFeatures = core1_0.FormatFeatures(data.formatProperties.optimalTilingFeatures)
+	o.FormatProperties.BufferFeatures = core1_0.FormatFeatures(data.formatProperties.bufferFeatures)
 
 	return data.pNext, nil
 }

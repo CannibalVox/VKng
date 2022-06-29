@@ -249,18 +249,18 @@ func TestVulkanExtensionWithKHRSurface_GetPhysicalDevicePresentRectangles(t *tes
 
 	rects, _, err := extension.WithKHRSurface().PhysicalDevicePresentRectangles(physicalDevice, surface)
 	require.NoError(t, err)
-	require.Equal(t, []common.Rect2D{
+	require.Equal(t, []core1_0.Rect2D{
 		{
-			Offset: common.Offset2D{X: 1, Y: 3},
-			Extent: common.Extent2D{Width: 5, Height: 7},
+			Offset: core1_0.Offset2D{X: 1, Y: 3},
+			Extent: core1_0.Extent2D{Width: 5, Height: 7},
 		},
 		{
-			Offset: common.Offset2D{X: 11, Y: 13},
-			Extent: common.Extent2D{Width: 17, Height: 19},
+			Offset: core1_0.Offset2D{X: 11, Y: 13},
+			Extent: core1_0.Extent2D{Width: 17, Height: 19},
 		},
 		{
-			Offset: common.Offset2D{X: 23, Y: 29},
-			Extent: common.Extent2D{Width: 31, Height: 37},
+			Offset: core1_0.Offset2D{X: 23, Y: 29},
+			Extent: core1_0.Extent2D{Width: 31, Height: 37},
 		},
 	}, rects)
 }
@@ -374,18 +374,18 @@ func TestVulkanExtensionWithKHRSurface_GetPhysicalDevicePresentRectangles_Incomp
 
 	rects, _, err := extension.WithKHRSurface().PhysicalDevicePresentRectangles(physicalDevice, surface)
 	require.NoError(t, err)
-	require.Equal(t, []common.Rect2D{
+	require.Equal(t, []core1_0.Rect2D{
 		{
-			Offset: common.Offset2D{X: 1, Y: 3},
-			Extent: common.Extent2D{Width: 5, Height: 7},
+			Offset: core1_0.Offset2D{X: 1, Y: 3},
+			Extent: core1_0.Extent2D{Width: 5, Height: 7},
 		},
 		{
-			Offset: common.Offset2D{X: 11, Y: 13},
-			Extent: common.Extent2D{Width: 17, Height: 19},
+			Offset: core1_0.Offset2D{X: 11, Y: 13},
+			Extent: core1_0.Extent2D{Width: 17, Height: 19},
 		},
 		{
-			Offset: common.Offset2D{X: 23, Y: 29},
-			Extent: common.Extent2D{Width: 31, Height: 37},
+			Offset: core1_0.Offset2D{X: 23, Y: 29},
+			Extent: core1_0.Extent2D{Width: 31, Height: 37},
 		},
 	}, rects)
 }
@@ -659,14 +659,14 @@ func TestBindImageMemoryDeviceGroupOptions(t *testing.T) {
 			HaveNext: common.HaveNext{
 				khr_device_group.BindImageMemoryDeviceGroupOptions{
 					DeviceIndices: []int{1, 2, 7},
-					SplitInstanceBindRegions: []common.Rect2D{
+					SplitInstanceBindRegions: []core1_0.Rect2D{
 						{
-							Offset: common.Offset2D{X: 3, Y: 5},
-							Extent: common.Extent2D{Width: 7, Height: 11},
+							Offset: core1_0.Offset2D{X: 3, Y: 5},
+							Extent: core1_0.Extent2D{Width: 7, Height: 11},
 						},
 						{
-							Offset: common.Offset2D{X: 13, Y: 17},
-							Extent: common.Extent2D{Width: 19, Height: 23},
+							Offset: core1_0.Offset2D{X: 13, Y: 17},
+							Extent: core1_0.Extent2D{Width: 19, Height: 23},
 						},
 					},
 				},
@@ -953,14 +953,14 @@ func TestDeviceGroupRenderPassBeginOptions(t *testing.T) {
 			HaveNext: common.HaveNext{
 				khr_device_group.DeviceGroupRenderPassBeginOptions{
 					DeviceMask: 7,
-					DeviceRenderAreas: []common.Rect2D{
+					DeviceRenderAreas: []core1_0.Rect2D{
 						{
-							Offset: common.Offset2D{X: 1, Y: 3},
-							Extent: common.Extent2D{Width: 5, Height: 7},
+							Offset: core1_0.Offset2D{X: 1, Y: 3},
+							Extent: core1_0.Extent2D{Width: 5, Height: 7},
 						},
 						{
-							Offset: common.Offset2D{X: 11, Y: 13},
-							Extent: common.Extent2D{Width: 17, Height: 19},
+							Offset: core1_0.Offset2D{X: 11, Y: 13},
+							Extent: core1_0.Extent2D{Width: 17, Height: 19},
 						},
 					},
 				},
@@ -1032,7 +1032,7 @@ func TestDeviceGroupSubmitOptions(t *testing.T) {
 			CommandBuffers:   []core1_0.CommandBuffer{commandBuffer},
 			WaitSemaphores:   []core1_0.Semaphore{semaphore1},
 			SignalSemaphores: []core1_0.Semaphore{semaphore2, semaphore3},
-			WaitDstStages:    []common.PipelineStages{core1_0.PipelineStageBottomOfPipe},
+			WaitDstStages:    []core1_0.PipelineStages{core1_0.PipelineStageBottomOfPipe},
 
 			HaveNext: common.HaveNext{
 				khr_device_group.DeviceGroupSubmitOptions{

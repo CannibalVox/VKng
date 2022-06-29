@@ -7,14 +7,15 @@ package khr_create_renderpass2
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/cgoparam"
 	"github.com/cockroachdb/errors"
 	"unsafe"
 )
 
 type SubpassDescriptionOptions struct {
-	Flags                  common.SubPassDescriptionFlags
-	PipelineBindPoint      common.PipelineBindPoint
+	Flags                  core1_0.SubPassDescriptionFlags
+	PipelineBindPoint      core1_0.PipelineBindPoint
 	ViewMask               uint32
 	InputAttachments       []AttachmentReferenceOptions
 	ColorAttachments       []AttachmentReferenceOptions

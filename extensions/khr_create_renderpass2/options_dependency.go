@@ -7,6 +7,7 @@ package khr_create_renderpass2
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
@@ -14,11 +15,11 @@ import (
 type SubpassDependencyOptions struct {
 	SrcSubpassIndex int
 	DstSubpassIndex int
-	SrcStageMask    common.PipelineStages
-	DstStageMask    common.PipelineStages
-	SrcAccessMask   common.AccessFlags
-	DstAccessMask   common.AccessFlags
-	DependencyFlags common.DependencyFlags
+	SrcStageMask    core1_0.PipelineStages
+	DstStageMask    core1_0.PipelineStages
+	SrcAccessMask   core1_0.AccessFlags
+	DstAccessMask   core1_0.AccessFlags
+	DependencyFlags core1_0.DependencyFlags
 	ViewOffset      int
 
 	common.HaveNext

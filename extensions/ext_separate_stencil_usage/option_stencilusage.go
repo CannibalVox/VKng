@@ -7,12 +7,13 @@ package ext_separate_stencil_usage
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
 
 type ImageStencilUsageCreateOptions struct {
-	StencilUsage common.ImageUsages
+	StencilUsage core1_0.ImageUsages
 
 	common.HaveNext
 }

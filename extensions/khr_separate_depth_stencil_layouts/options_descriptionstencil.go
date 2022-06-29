@@ -7,13 +7,14 @@ package khr_separate_depth_stencil_layouts
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
 
 type AttachmentDescriptionStencilLayoutOptions struct {
-	StencilInitialLayout common.ImageLayout
-	StencilFinalLayout   common.ImageLayout
+	StencilInitialLayout core1_0.ImageLayout
+	StencilFinalLayout   core1_0.ImageLayout
 
 	common.HaveNext
 }

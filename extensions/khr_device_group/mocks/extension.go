@@ -158,10 +158,10 @@ func (mr *MockExtensionWithKHRSurfaceMockRecorder) DeviceGroupSurfacePresentMode
 }
 
 // PhysicalDevicePresentRectangles mocks base method.
-func (m *MockExtensionWithKHRSurface) PhysicalDevicePresentRectangles(physicalDevice core1_0.PhysicalDevice, surface khr_surface.Surface) ([]common.Rect2D, common.VkResult, error) {
+func (m *MockExtensionWithKHRSurface) PhysicalDevicePresentRectangles(physicalDevice core1_0.PhysicalDevice, surface khr_surface.Surface) ([]core1_0.Rect2D, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PhysicalDevicePresentRectangles", physicalDevice, surface)
-	ret0, _ := ret[0].([]common.Rect2D)
+	ret0, _ := ret[0].([]core1_0.Rect2D)
 	ret1, _ := ret[1].(common.VkResult)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2

@@ -6,7 +6,7 @@ package khr_maintenance2
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
@@ -14,7 +14,7 @@ import (
 type InputAttachmentAspectReference struct {
 	Subpass              int
 	InputAttachmentIndex int
-	AspectMask           common.ImageAspectFlags
+	AspectMask           core1_0.ImageAspectFlags
 }
 
 func (ref InputAttachmentAspectReference) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer) (unsafe.Pointer, error) {

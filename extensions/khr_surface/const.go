@@ -7,6 +7,7 @@ package khr_surface
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
 )
 
 type SurfaceTransforms int32
@@ -67,7 +68,7 @@ func (e ColorSpace) String() string {
 const (
 	ExtensionName string = C.VK_KHR_SURFACE_EXTENSION_NAME
 
-	ObjectTypeSurface common.ObjectType = C.VK_OBJECT_TYPE_SURFACE_KHR
+	ObjectTypeSurface core1_0.ObjectType = C.VK_OBJECT_TYPE_SURFACE_KHR
 
 	TransformIdentity                  SurfaceTransforms = C.VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR
 	TransformRotate90                  SurfaceTransforms = C.VK_SURFACE_TRANSFORM_ROTATE_90_BIT_KHR

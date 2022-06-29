@@ -7,16 +7,17 @@ package khr_get_physical_device_properties2
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
 
 type ImageFormatOptions struct {
-	Format common.DataFormat
-	Type   common.ImageType
-	Tiling common.ImageTiling
-	Usage  common.ImageUsages
-	Flags  common.ImageCreateFlags
+	Format core1_0.DataFormat
+	Type   core1_0.ImageType
+	Tiling core1_0.ImageTiling
+	Usage  core1_0.ImageUsages
+	Flags  core1_0.ImageCreateFlags
 
 	common.HaveNext
 }

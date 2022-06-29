@@ -7,6 +7,7 @@ package khr_swapchain
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
 	ext_surface "github.com/CannibalVox/VKng/extensions/khr_surface"
 	"github.com/CannibalVox/cgoparam"
 	"github.com/cockroachdb/errors"
@@ -20,13 +21,13 @@ type CreateOptions struct {
 
 	MinImageCount int
 
-	ImageFormat      common.DataFormat
+	ImageFormat      core1_0.DataFormat
 	ImageColorSpace  ext_surface.ColorSpace
-	ImageExtent      common.Extent2D
+	ImageExtent      core1_0.Extent2D
 	ImageArrayLayers int
-	ImageUsage       common.ImageUsages
+	ImageUsage       core1_0.ImageUsages
 
-	SharingMode        common.SharingMode
+	SharingMode        core1_0.SharingMode
 	QueueFamilyIndices []int
 
 	PreTransform   ext_surface.SurfaceTransforms

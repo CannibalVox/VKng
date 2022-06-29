@@ -7,16 +7,17 @@ package khr_get_physical_device_properties2
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
 
 type SparseImageFormatOptions struct {
-	Format  common.DataFormat
-	Type    common.ImageType
-	Samples common.SampleCounts
-	Usage   common.ImageUsages
-	Tiling  common.ImageTiling
+	Format  core1_0.DataFormat
+	Type    core1_0.ImageType
+	Samples core1_0.SampleCounts
+	Usage   core1_0.ImageUsages
+	Tiling  core1_0.ImageTiling
 
 	common.HaveNext
 }

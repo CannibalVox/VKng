@@ -7,12 +7,13 @@ package khr_maintenance2
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
 
 type ImageViewUsageOptions struct {
-	Usage common.ImageUsages
+	Usage core1_0.ImageUsages
 
 	common.HaveNext
 }

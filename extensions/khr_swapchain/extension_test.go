@@ -77,7 +77,7 @@ func TestVulkanExtension_CreateSwapchain(t *testing.T) {
 		MinImageCount:      1,
 		ImageFormat:        core1_0.DataFormatA2B10G10R10SignedScaledPacked,
 		ImageColorSpace:    khr_surface.ColorSpaceSRGBNonlinear,
-		ImageExtent:        common.Extent2D{Width: 3, Height: 5},
+		ImageExtent:        core1_0.Extent2D{Width: 3, Height: 5},
 		ImageArrayLayers:   7,
 		ImageUsage:         core1_0.ImageUsageColorAttachment,
 		SharingMode:        core1_0.SharingConcurrent,

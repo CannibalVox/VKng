@@ -5,7 +5,10 @@ package khr_swapchain
 #include "vulkan/vulkan.h"
 */
 import "C"
-import "github.com/CannibalVox/VKng/core/common"
+import (
+	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
+)
 
 type SwapchainCreateFlags int32
 
@@ -23,9 +26,9 @@ func (f SwapchainCreateFlags) String() string {
 const (
 	ExtensionName string = C.VK_KHR_SWAPCHAIN_EXTENSION_NAME
 
-	ObjectTypeSwapchain common.ObjectType = C.VK_OBJECT_TYPE_SWAPCHAIN_KHR
+	ObjectTypeSwapchain core1_0.ObjectType = C.VK_OBJECT_TYPE_SWAPCHAIN_KHR
 
-	ImageLayoutPresentSrc common.ImageLayout = C.VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
+	ImageLayoutPresentSrc core1_0.ImageLayout = C.VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
 
 	VKErrorOutOfDate common.VkResult = C.VK_ERROR_OUT_OF_DATE_KHR
 	VKSuboptimal     common.VkResult = C.VK_SUBOPTIMAL_KHR

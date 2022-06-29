@@ -48,7 +48,7 @@ func (e *VulkanExtension) PhysicalDeviceFeatures2(physicalDevice core1_0.Physica
 	return common.PopulateOutData(out, outData)
 }
 
-func (e *VulkanExtension) PhysicalDeviceFormatProperties2(physicalDevice core1_0.PhysicalDevice, format common.DataFormat, out *FormatPropertiesOutData) error {
+func (e *VulkanExtension) PhysicalDeviceFormatProperties2(physicalDevice core1_0.PhysicalDevice, format core1_0.DataFormat, out *FormatPropertiesOutData) error {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 

@@ -38,9 +38,9 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 }
 
 // SemaphoreCounterValue mocks base method.
-func (m *MockExtension) SemaphoreCounterValue(device core1_0.Device, semaphore core1_0.Semaphore) (uint64, common.VkResult, error) {
+func (m *MockExtension) SemaphoreCounterValue(semaphore core1_0.Semaphore) (uint64, common.VkResult, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CounterValue", device, semaphore)
+	ret := m.ctrl.Call(m, "SemaphoreCounterValue", semaphore)
 	ret0, _ := ret[0].(uint64)
 	ret1, _ := ret[1].(common.VkResult)
 	ret2, _ := ret[2].(error)
@@ -48,9 +48,9 @@ func (m *MockExtension) SemaphoreCounterValue(device core1_0.Device, semaphore c
 }
 
 // SemaphoreCounterValue indicates an expected call of SemaphoreCounterValue.
-func (mr *MockExtensionMockRecorder) SemaphoreCounterValue(device, semaphore interface{}) *gomock.Call {
+func (mr *MockExtensionMockRecorder) SemaphoreCounterValue(semaphore interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CounterValue", reflect.TypeOf((*MockExtension)(nil).SemaphoreCounterValue), device, semaphore)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SemaphoreCounterValue", reflect.TypeOf((*MockExtension)(nil).SemaphoreCounterValue), semaphore)
 }
 
 // SignalSemaphore mocks base method.

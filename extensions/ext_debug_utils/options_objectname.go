@@ -7,6 +7,7 @@ package ext_debug_utils
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
@@ -14,7 +15,7 @@ import (
 type ObjectNameOptions struct {
 	Name   string
 	Handle uintptr
-	Type   common.ObjectType
+	Type   core1_0.ObjectType
 
 	common.HaveNext
 }
@@ -41,7 +42,7 @@ func (i ObjectNameOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers 
 
 func (i *ObjectNameOptions) PopulateFromCPointer(cDataPointer unsafe.Pointer) {
 	objectNameInfo := (*C.VkDebugUtilsObjectNameInfoEXT)(cDataPointer)
-	i.Type = common.ObjectType(objectNameInfo.objectType)
+	i.Type = core1_0.ObjectType(objectNameInfo.objectType)
 	i.Handle = uintptr(objectNameInfo.objectHandle)
 	i.Name = ""
 

@@ -6,7 +6,7 @@ package khr_descriptor_update_template
 */
 import "C"
 import (
-	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
@@ -16,7 +16,7 @@ type DescriptorUpdateTemplateEntry struct {
 	DstArrayElement int
 	DescriptorCount int
 
-	DescriptorType common.DescriptorType
+	DescriptorType core1_0.DescriptorType
 
 	Offset int
 	Stride int

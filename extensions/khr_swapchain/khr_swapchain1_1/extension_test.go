@@ -155,18 +155,18 @@ func TestVulkanExtension_GetPhysicalDevicePresentRectangles(t *testing.T) {
 
 	rects, _, err := extension.PhysicalDevicePresentRectangles(physicalDevice, surface)
 	require.NoError(t, err)
-	require.Equal(t, []common.Rect2D{
+	require.Equal(t, []core1_0.Rect2D{
 		{
-			Offset: common.Offset2D{X: 1, Y: 3},
-			Extent: common.Extent2D{Width: 5, Height: 7},
+			Offset: core1_0.Offset2D{X: 1, Y: 3},
+			Extent: core1_0.Extent2D{Width: 5, Height: 7},
 		},
 		{
-			Offset: common.Offset2D{X: 11, Y: 13},
-			Extent: common.Extent2D{Width: 17, Height: 19},
+			Offset: core1_0.Offset2D{X: 11, Y: 13},
+			Extent: core1_0.Extent2D{Width: 17, Height: 19},
 		},
 		{
-			Offset: common.Offset2D{X: 23, Y: 29},
-			Extent: common.Extent2D{Width: 31, Height: 37},
+			Offset: core1_0.Offset2D{X: 23, Y: 29},
+			Extent: core1_0.Extent2D{Width: 31, Height: 37},
 		},
 	}, rects)
 }
@@ -280,18 +280,18 @@ func TestVulkanExtension_GetPhysicalDevicePresentRectangles_Incomplete(t *testin
 
 	rects, _, err := extension.PhysicalDevicePresentRectangles(physicalDevice, surface)
 	require.NoError(t, err)
-	require.Equal(t, []common.Rect2D{
+	require.Equal(t, []core1_0.Rect2D{
 		{
-			Offset: common.Offset2D{X: 1, Y: 3},
-			Extent: common.Extent2D{Width: 5, Height: 7},
+			Offset: core1_0.Offset2D{X: 1, Y: 3},
+			Extent: core1_0.Extent2D{Width: 5, Height: 7},
 		},
 		{
-			Offset: common.Offset2D{X: 11, Y: 13},
-			Extent: common.Extent2D{Width: 17, Height: 19},
+			Offset: core1_0.Offset2D{X: 11, Y: 13},
+			Extent: core1_0.Extent2D{Width: 17, Height: 19},
 		},
 		{
-			Offset: common.Offset2D{X: 23, Y: 29},
-			Extent: common.Extent2D{Width: 31, Height: 37},
+			Offset: core1_0.Offset2D{X: 23, Y: 29},
+			Extent: core1_0.Extent2D{Width: 31, Height: 37},
 		},
 	}, rects)
 }

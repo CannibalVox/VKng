@@ -7,14 +7,15 @@ package khr_create_renderpass2
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
 
 type AttachmentReferenceOptions struct {
 	Attachment int
-	Layout     common.ImageLayout
-	AspectMask common.ImageAspectFlags
+	Layout     core1_0.ImageLayout
+	AspectMask core1_0.ImageAspectFlags
 
 	common.HaveNext
 }

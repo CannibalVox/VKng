@@ -7,20 +7,21 @@ package khr_create_renderpass2
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
 
 type AttachmentDescriptionOptions struct {
-	Flags          common.AttachmentDescriptionFlags
-	Format         common.DataFormat
-	Samples        common.SampleCounts
-	LoadOp         common.AttachmentLoadOp
-	StoreOp        common.AttachmentStoreOp
-	StencilLoadOp  common.AttachmentLoadOp
-	StencilStoreOp common.AttachmentStoreOp
-	InitialLayout  common.ImageLayout
-	FinalLayout    common.ImageLayout
+	Flags          core1_0.AttachmentDescriptionFlags
+	Format         core1_0.DataFormat
+	Samples        core1_0.SampleCounts
+	LoadOp         core1_0.AttachmentLoadOp
+	StoreOp        core1_0.AttachmentStoreOp
+	StencilLoadOp  core1_0.AttachmentLoadOp
+	StencilStoreOp core1_0.AttachmentStoreOp
+	InitialLayout  core1_0.ImageLayout
+	FinalLayout    core1_0.ImageLayout
 
 	common.HaveNext
 }

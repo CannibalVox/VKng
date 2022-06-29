@@ -7,12 +7,13 @@ package khr_create_renderpass2
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
 
 type RenderPassCreateOptions struct {
-	Flags common.RenderPassCreateFlags
+	Flags core1_0.RenderPassCreateFlags
 
 	Attachments  []AttachmentDescriptionOptions
 	Subpasses    []SubpassDescriptionOptions

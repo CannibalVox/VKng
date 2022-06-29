@@ -209,7 +209,7 @@ func TestVulkanExtension_SparseImageMemoryRequirements(t *testing.T) {
 			MemoryRequirements: core1_0.SparseImageMemoryRequirements{
 				FormatProperties: core1_0.SparseImageFormatProperties{
 					AspectMask: core1_0.AspectMetadata,
-					ImageGranularity: common.Extent3D{
+					ImageGranularity: core1_0.Extent3D{
 						Width:  1,
 						Height: 3,
 						Depth:  5,
@@ -226,7 +226,7 @@ func TestVulkanExtension_SparseImageMemoryRequirements(t *testing.T) {
 			MemoryRequirements: core1_0.SparseImageMemoryRequirements{
 				FormatProperties: core1_0.SparseImageFormatProperties{
 					AspectMask: core1_0.AspectStencil,
-					ImageGranularity: common.Extent3D{
+					ImageGranularity: core1_0.Extent3D{
 						Width:  19,
 						Height: 23,
 						Depth:  29,

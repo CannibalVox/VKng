@@ -7,12 +7,13 @@ package ext_debug_utils
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/cgoparam"
 	"unsafe"
 )
 
 type ObjectTagOptions struct {
-	Type   common.ObjectType
+	Type   core1_0.ObjectType
 	Handle uintptr
 
 	TagName uint64
@@ -46,7 +47,7 @@ func (t ObjectTagOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers .
 func (t *ObjectTagOptions) PopulateFromCPointer(cPointer unsafe.Pointer) {
 	tagInfo := (*C.VkDebugUtilsObjectTagInfoEXT)(cPointer)
 
-	t.Type = common.ObjectType(tagInfo.objectType)
+	t.Type = core1_0.ObjectType(tagInfo.objectType)
 	t.Handle = uintptr(tagInfo.objectHandle)
 	t.TagName = uint64(tagInfo.tagName)
 	t.Tag = C.GoBytes(tagInfo.pTag, C.int(tagInfo.tagSize))

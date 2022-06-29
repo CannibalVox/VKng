@@ -32,9 +32,9 @@ func (o *SparseImageFormatPropertiesOutData) PopulateCPointer(allocator *cgopara
 func (o *SparseImageFormatPropertiesOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	data := (*C.VkSparseImageFormatProperties2KHR)(cDataPointer)
 
-	o.SparseImageFormatProperties.AspectMask = common.ImageAspectFlags(data.properties.aspectMask)
-	o.SparseImageFormatProperties.Flags = common.SparseImageFormatFlags(data.properties.flags)
-	o.SparseImageFormatProperties.ImageGranularity = common.Extent3D{
+	o.SparseImageFormatProperties.AspectMask = core1_0.ImageAspectFlags(data.properties.aspectMask)
+	o.SparseImageFormatProperties.Flags = core1_0.SparseImageFormatFlags(data.properties.flags)
+	o.SparseImageFormatProperties.ImageGranularity = core1_0.Extent3D{
 		Width:  int(data.properties.imageGranularity.width),
 		Height: int(data.properties.imageGranularity.height),
 		Depth:  int(data.properties.imageGranularity.depth),

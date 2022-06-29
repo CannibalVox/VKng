@@ -7,6 +7,7 @@ package ext_debug_utils
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
 )
 
 type MessageTypes int32
@@ -60,7 +61,7 @@ const (
 	SeverityWarning MessageSeverities = C.VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT
 	SeverityError   MessageSeverities = C.VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT
 
-	ObjectTypeDebugUtilsMessenger common.ObjectType = C.VK_OBJECT_TYPE_DEBUG_UTILS_MESSENGER_EXT
+	ObjectTypeDebugUtilsMessenger core1_0.ObjectType = C.VK_OBJECT_TYPE_DEBUG_UTILS_MESSENGER_EXT
 )
 
 func init() {

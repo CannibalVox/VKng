@@ -20,20 +20,20 @@ type Capabilities struct {
 	MinImageCount int
 	MaxImageCount int
 
-	CurrentExtent  common.Extent2D
-	MinImageExtent common.Extent2D
-	MaxImageExtent common.Extent2D
+	CurrentExtent  core1_0.Extent2D
+	MinImageExtent core1_0.Extent2D
+	MaxImageExtent core1_0.Extent2D
 
 	MaxImageArrayLayers int
 	SupportedTransforms SurfaceTransforms
 	CurrentTransform    SurfaceTransforms
 
 	SupportedCompositeAlpha CompositeAlphaModes
-	SupportedImageUsage     common.ImageUsages
+	SupportedImageUsage     core1_0.ImageUsages
 }
 
 type Format struct {
-	Format     common.DataFormat
+	Format     core1_0.DataFormat
 	ColorSpace ColorSpace
 }
 
@@ -104,15 +104,15 @@ func (s *vulkanSurface) Capabilities(device core1_0.PhysicalDevice) (*Capabiliti
 	return &Capabilities{
 		MinImageCount: int(cCapabilities.minImageCount),
 		MaxImageCount: int(cCapabilities.maxImageCount),
-		CurrentExtent: common.Extent2D{
+		CurrentExtent: core1_0.Extent2D{
 			Width:  int(cCapabilities.currentExtent.width),
 			Height: int(cCapabilities.currentExtent.height),
 		},
-		MinImageExtent: common.Extent2D{
+		MinImageExtent: core1_0.Extent2D{
 			Width:  int(cCapabilities.minImageExtent.width),
 			Height: int(cCapabilities.minImageExtent.height),
 		},
-		MaxImageExtent: common.Extent2D{
+		MaxImageExtent: core1_0.Extent2D{
 			Width:  int(cCapabilities.maxImageExtent.width),
 			Height: int(cCapabilities.maxImageExtent.height),
 		},
@@ -122,7 +122,7 @@ func (s *vulkanSurface) Capabilities(device core1_0.PhysicalDevice) (*Capabiliti
 		CurrentTransform:    SurfaceTransforms(cCapabilities.currentTransform),
 
 		SupportedCompositeAlpha: CompositeAlphaModes(cCapabilities.supportedCompositeAlpha),
-		SupportedImageUsage:     common.ImageUsages(cCapabilities.supportedUsageFlags),
+		SupportedImageUsage:     core1_0.ImageUsages(cCapabilities.supportedUsageFlags),
 	}, res, nil
 }
 
@@ -155,7 +155,7 @@ func (s *vulkanSurface) attemptFormats(device core1_0.PhysicalDevice) ([]Format,
 	var result []Format
 	for i := 0; i < count; i++ {
 		result = append(result, Format{
-			Format:     common.DataFormat(formatSlice[i].format),
+			Format:     core1_0.DataFormat(formatSlice[i].format),
 			ColorSpace: ColorSpace(formatSlice[i].colorSpace),
 		})
 	}

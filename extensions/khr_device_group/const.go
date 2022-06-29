@@ -7,6 +7,7 @@ package khr_device_group
 import "C"
 import (
 	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
 	"github.com/CannibalVox/VKng/extensions/khr_swapchain"
 )
 
@@ -54,7 +55,7 @@ func (f DeviceGroupPresentModeFlags) String() string {
 const (
 	ExtensionName string = C.VK_KHR_DEVICE_GROUP_EXTENSION_NAME
 
-	DependencyDeviceGroup common.DependencyFlags = C.VK_DEPENDENCY_DEVICE_GROUP_BIT_KHR
+	DependencyDeviceGroup core1_0.DependencyFlags = C.VK_DEPENDENCY_DEVICE_GROUP_BIT_KHR
 
 	MemoryAllocateDeviceMask MemoryAllocateFlags = C.VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT_KHR
 
@@ -68,10 +69,10 @@ const (
 	PeerMemoryFeatureGenericDst PeerMemoryFeatures = C.VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT_KHR
 	PeerMemoryFeatureGenericSrc PeerMemoryFeatures = C.VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT_KHR
 
-	PipelineCreateDispatchBase             common.PipelineCreateFlags = C.VK_PIPELINE_CREATE_DISPATCH_BASE_KHR
-	PipelineCreateViewIndexFromDeviceIndex common.PipelineCreateFlags = C.VK_PIPELINE_CREATE_VIEW_INDEX_FROM_DEVICE_INDEX_BIT_KHR
+	PipelineCreateDispatchBase             core1_0.PipelineCreateFlags = C.VK_PIPELINE_CREATE_DISPATCH_BASE_KHR
+	PipelineCreateViewIndexFromDeviceIndex core1_0.PipelineCreateFlags = C.VK_PIPELINE_CREATE_VIEW_INDEX_FROM_DEVICE_INDEX_BIT_KHR
 
-	ImageCreateSplitInstanceBindRegions common.ImageCreateFlags = C.VK_IMAGE_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR
+	ImageCreateSplitInstanceBindRegions core1_0.ImageCreateFlags = C.VK_IMAGE_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR
 
 	SwapchainCreateSplitInstanceBindRegions khr_swapchain.SwapchainCreateFlags = C.VK_SWAPCHAIN_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR
 )

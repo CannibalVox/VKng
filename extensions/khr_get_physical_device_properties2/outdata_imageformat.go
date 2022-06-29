@@ -32,14 +32,14 @@ func (o *ImageFormatPropertiesOutData) PopulateCPointer(allocator *cgoparam.Allo
 
 func (o *ImageFormatPropertiesOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	data := (*C.VkImageFormatProperties2KHR)(cDataPointer)
-	o.ImageFormatProperties.MaxExtent = common.Extent3D{
+	o.ImageFormatProperties.MaxExtent = core1_0.Extent3D{
 		Width:  int(data.imageFormatProperties.maxExtent.width),
 		Height: int(data.imageFormatProperties.maxExtent.height),
 		Depth:  int(data.imageFormatProperties.maxExtent.depth),
 	}
 	o.ImageFormatProperties.MaxMipLevels = int(data.imageFormatProperties.maxMipLevels)
 	o.ImageFormatProperties.MaxArrayLayers = int(data.imageFormatProperties.maxArrayLayers)
-	o.ImageFormatProperties.SampleCounts = common.SampleCounts(data.imageFormatProperties.sampleCounts)
+	o.ImageFormatProperties.SampleCounts = core1_0.SampleCounts(data.imageFormatProperties.sampleCounts)
 	o.ImageFormatProperties.MaxResourceSize = int(data.imageFormatProperties.maxResourceSize)
 
 	return data.pNext, nil

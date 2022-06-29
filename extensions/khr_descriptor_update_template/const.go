@@ -5,7 +5,10 @@ package khr_descriptor_update_template
 #include "vulkan/vulkan.h"
 */
 import "C"
-import "github.com/CannibalVox/VKng/core/common"
+import (
+	"github.com/CannibalVox/VKng/core/common"
+	"github.com/CannibalVox/VKng/core/core1_0"
+)
 
 type DescriptorTemplateType int32
 
@@ -39,7 +42,7 @@ const (
 
 	DescriptorTemplateTypeDescriptorSet DescriptorTemplateType = C.VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET_KHR
 
-	ObjectTypeDescriptorTemplate common.ObjectType = C.VK_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_KHR
+	ObjectTypeDescriptorTemplate core1_0.ObjectType = C.VK_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_KHR
 )
 
 func init() {

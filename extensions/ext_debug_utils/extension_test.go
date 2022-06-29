@@ -279,7 +279,7 @@ func TestVulkanExtension_SetObjectName(t *testing.T) {
 	objectName := ext_debug_utils.ObjectNameOptions{
 		Name:   "someCommandBuffer",
 		Handle: uintptr(unsafe.Pointer(commandBuffer.Handle())),
-		Type:   common.ObjectTypeCommandBuffer,
+		Type:   core1_0.ObjectTypeCommandBuffer,
 	}
 
 	debugDriver.EXPECT().VkSetDebugUtilsObjectNameEXT(
@@ -316,7 +316,7 @@ func TestVulkanExtension_SetObjectTag(t *testing.T) {
 	queryPool := mocks.EasyMockQueryPool(ctrl)
 
 	objectTag := ext_debug_utils.ObjectTagOptions{
-		Type:    common.ObjectTypeQueryPool,
+		Type:    core1_0.ObjectTypeQueryPool,
 		Handle:  uintptr(unsafe.Pointer(queryPool.Handle())),
 		TagName: 53,
 		Tag:     []byte("some tag data"),
@@ -373,7 +373,7 @@ func TestVulkanExtension_SubmitMessage(t *testing.T) {
 		Objects: []ext_debug_utils.ObjectNameOptions{
 			{
 				Name:   "a object",
-				Type:   common.ObjectTypePipeline,
+				Type:   core1_0.ObjectTypePipeline,
 				Handle: uintptr(unsafe.Pointer(pipeline.Handle())),
 			},
 		},

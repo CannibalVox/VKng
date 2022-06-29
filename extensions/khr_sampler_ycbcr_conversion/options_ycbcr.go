@@ -13,13 +13,13 @@ import (
 )
 
 type SamplerYcbcrConversionCreateOptions struct {
-	Format                      common.DataFormat
+	Format                      core1_0.DataFormat
 	YcbcrModel                  SamplerYcbcrModelConversion
 	YcbcrRange                  SamplerYcbcrRange
 	Components                  core1_0.ComponentMapping
 	ChromaOffsetX               ChromaLocation
 	ChromaOffsetY               ChromaLocation
-	ChromaFilter                common.Filter
+	ChromaFilter                core1_0.Filter
 	ForceExplicitReconstruction bool
 
 	common.HaveNext

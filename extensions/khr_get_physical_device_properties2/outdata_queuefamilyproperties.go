@@ -33,10 +33,10 @@ func (o *QueueFamilyOutData) PopulateCPointer(allocator *cgoparam.Allocator, pre
 func (o *QueueFamilyOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	data := (*C.VkQueueFamilyProperties2KHR)(cDataPointer)
 
-	o.QueueFamily.Flags = common.QueueFlags(data.queueFamilyProperties.queueFlags)
+	o.QueueFamily.Flags = core1_0.QueueFlags(data.queueFamilyProperties.queueFlags)
 	o.QueueFamily.QueueCount = int(data.queueFamilyProperties.queueCount)
 	o.QueueFamily.TimestampValidBits = uint32(data.queueFamilyProperties.timestampValidBits)
-	o.QueueFamily.MinImageTransferGranularity = common.Extent3D{
+	o.QueueFamily.MinImageTransferGranularity = core1_0.Extent3D{
 		Width:  int(data.queueFamilyProperties.minImageTransferGranularity.width),
 		Height: int(data.queueFamilyProperties.minImageTransferGranularity.height),
 		Depth:  int(data.queueFamilyProperties.minImageTransferGranularity.depth),
