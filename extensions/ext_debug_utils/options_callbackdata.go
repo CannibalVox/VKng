@@ -22,7 +22,7 @@ type CallbackDataOptions struct {
 	CommandBufferLabels []LabelOptions
 	Objects             []ObjectNameOptions
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (c CallbackDataOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -64,11 +64,6 @@ func (c CallbackDataOptions) PopulateCPointer(allocator *cgoparam.Allocator, pre
 	callbackData.pObjects = (*C.VkDebugUtilsObjectNameInfoEXT)(objectPtr)
 
 	return preallocatedPointer, nil
-}
-
-func (c CallbackDataOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (unsafe.Pointer, error) {
-	callbackData := (*C.VkDebugUtilsMessengerCallbackDataEXT)(cDataPointer)
-	return callbackData.pNext, nil
 }
 
 func (c *CallbackDataOptions) PopulateFromCPointer(cPointer unsafe.Pointer) error {

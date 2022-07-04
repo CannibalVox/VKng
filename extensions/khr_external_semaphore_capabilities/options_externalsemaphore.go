@@ -14,7 +14,7 @@ import (
 type ExternalSemaphoreOptions struct {
 	HandleType ExternalSemaphoreHandleTypes
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o ExternalSemaphoreOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -28,9 +28,4 @@ func (o ExternalSemaphoreOptions) PopulateCPointer(allocator *cgoparam.Allocator
 	info.handleType = C.VkExternalSemaphoreHandleTypeFlagBits(o.HandleType)
 
 	return preallocatedPointer, nil
-}
-
-func (o ExternalSemaphoreOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkPhysicalDeviceExternalSemaphoreInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

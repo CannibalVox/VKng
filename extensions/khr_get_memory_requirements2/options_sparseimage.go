@@ -15,7 +15,7 @@ import (
 type ImageSparseMemoryRequirementsOptions struct {
 	Image core1_0.Image
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o ImageSparseMemoryRequirementsOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -29,9 +29,4 @@ func (o ImageSparseMemoryRequirementsOptions) PopulateCPointer(allocator *cgopar
 	options.image = C.VkImage(unsafe.Pointer(o.Image.Handle()))
 
 	return preallocatedPointer, nil
-}
-
-func (o ImageSparseMemoryRequirementsOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	options := (*C.VkImageSparseMemoryRequirementsInfo2KHR)(cDataPointer)
-	return options.pNext, nil
 }

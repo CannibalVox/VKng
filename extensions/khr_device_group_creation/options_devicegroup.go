@@ -16,7 +16,7 @@ import (
 type DeviceGroupDeviceOptions struct {
 	PhysicalDevices []core1_0.PhysicalDevice
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o DeviceGroupDeviceOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -42,9 +42,4 @@ func (o DeviceGroupDeviceOptions) PopulateCPointer(allocator *cgoparam.Allocator
 	}
 	createInfo.pPhysicalDevices = physicalDevicesPtr
 	return preallocatedPointer, nil
-}
-
-func (o DeviceGroupDeviceOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	createInfo := (*C.VkDeviceGroupDeviceCreateInfoKHR)(cDataPointer)
-	return createInfo.pNext, nil
 }

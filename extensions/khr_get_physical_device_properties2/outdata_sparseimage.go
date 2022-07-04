@@ -14,10 +14,10 @@ import (
 
 type SparseImageFormatPropertiesOutData struct {
 	SparseImageFormatProperties core1_0.SparseImageFormatProperties
-	common.HaveNext
+	common.NextOutData
 }
 
-func (o *SparseImageFormatPropertiesOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *SparseImageFormatPropertiesOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkSparseImageFormatProperties2KHR{})))
 	}

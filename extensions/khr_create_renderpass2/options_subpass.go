@@ -23,7 +23,7 @@ type SubpassDescriptionOptions struct {
 	DepthStencilAttachment *AttachmentReferenceOptions
 	PreserveAttachments    []int
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o SubpassDescriptionOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -95,9 +95,4 @@ func (o SubpassDescriptionOptions) PopulateCPointer(allocator *cgoparam.Allocato
 	}
 
 	return preallocatedPointer, nil
-}
-
-func (o SubpassDescriptionOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkSubpassDescription2KHR)(cDataPointer)
-	return info.pNext, nil
 }

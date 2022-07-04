@@ -37,7 +37,7 @@ func (e *VulkanExtension) DescriptorSetLayoutSupport(device core1_0.Device, setL
 		return err
 	}
 
-	outDataPtr, err := common.AllocOptions(arena, support)
+	outDataPtr, err := common.AllocOutDataHeader(arena, support)
 	if err != nil {
 		return err
 	}

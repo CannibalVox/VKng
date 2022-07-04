@@ -59,14 +59,14 @@ func TestPhysicalDevicePortabilitySubsetFeaturesOutData(t *testing.T) {
 			*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("vertexAttributeAccessBeyondStride").UnsafeAddr())) = driver.VkBool32(1)
 		})
 
-	var subsetFeatures PhysicalDevicePortabilitySubsetFeaturesOutData
+	var subsetFeatures PhysicalDevicePortabilitySubsetFeatures
 	err := extension.PhysicalDeviceFeatures2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DeviceFeaturesOutData{
-			HaveNext: common.HaveNext{&subsetFeatures},
+		&khr_get_physical_device_properties2.DeviceFeatures{
+			NextOutData: common.NextOutData{&subsetFeatures},
 		})
 	require.NoError(t, err)
-	require.Equal(t, PhysicalDevicePortabilitySubsetFeaturesOutData{
+	require.Equal(t, PhysicalDevicePortabilitySubsetFeatures{
 		ConstantAlphaColorBlendFactors:          true,
 		ImageViewFormatReinterpretation:         true,
 		ImageView2DOn3DImage:                    true,
@@ -108,7 +108,7 @@ func TestPhysicalDevicePortabilitySubsetOutData(t *testing.T) {
 	err := extension.PhysicalDeviceProperties2(
 		physicalDevice,
 		&khr_get_physical_device_properties2.DevicePropertiesOutData{
-			HaveNext: common.HaveNext{&subsetProperties},
+			NextOutData: common.NextOutData{&subsetProperties},
 		})
 	require.NoError(t, err)
 	require.Equal(t, PhysicalDevicePortabilitySubsetOutData{
@@ -174,7 +174,7 @@ func TestPhysicalDevicePortabilitySubsetFeaturesOptions(t *testing.T) {
 				},
 			},
 
-			HaveNext: common.HaveNext{PhysicalDevicePortabilitySubsetFeaturesOptions{
+			NextOptions: common.NextOptions{PhysicalDevicePortabilitySubsetFeatures{
 				Events:                 true,
 				ImageViewFormatSwizzle: true,
 				MultisampleArrayImage:  true,

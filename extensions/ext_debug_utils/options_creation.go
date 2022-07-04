@@ -28,7 +28,7 @@ type CreateOptions struct {
 	CaptureTypes      MessageTypes
 	Callback          CallbackFunction
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o CreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -46,9 +46,4 @@ func (o CreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, prealloca
 	createInfo.pUserData = unsafe.Pointer(cgo.NewHandle(o.Callback))
 
 	return preallocatedPointer, nil
-}
-
-func (o CreateOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	createInfo := (*C.VkDebugUtilsMessengerCreateInfoEXT)(cDataPointer)
-	return createInfo.pNext, nil
 }

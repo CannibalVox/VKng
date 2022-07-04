@@ -15,7 +15,7 @@ import (
 type ImageSwapchainCreateOptions struct {
 	Swapchain khr_swapchain.Swapchain
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o ImageSwapchainCreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -33,9 +33,4 @@ func (o ImageSwapchainCreateOptions) PopulateCPointer(allocator *cgoparam.Alloca
 	}
 
 	return preallocatedPointer, nil
-}
-
-func (o ImageSwapchainCreateOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkImageSwapchainCreateInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

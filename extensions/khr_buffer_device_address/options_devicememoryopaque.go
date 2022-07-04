@@ -15,7 +15,7 @@ import (
 type DeviceMemoryOpaqueAddressOptions struct {
 	Memory core1_0.DeviceMemory
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o DeviceMemoryOpaqueAddressOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -29,9 +29,4 @@ func (o DeviceMemoryOpaqueAddressOptions) PopulateCPointer(allocator *cgoparam.A
 	info.memory = C.VkDeviceMemory(unsafe.Pointer(o.Memory.Handle()))
 
 	return preallocatedPointer, nil
-}
-
-func (o DeviceMemoryOpaqueAddressOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkDeviceMemoryOpaqueCaptureAddressInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

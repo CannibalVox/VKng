@@ -16,7 +16,7 @@ import (
 type BufferDeviceAddressOptions struct {
 	Buffer core1_0.Buffer
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o BufferDeviceAddressOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -34,9 +34,4 @@ func (o BufferDeviceAddressOptions) PopulateCPointer(allocator *cgoparam.Allocat
 	info.buffer = C.VkBuffer(unsafe.Pointer(o.Buffer.Handle()))
 
 	return preallocatedPointer, nil
-}
-
-func (o BufferDeviceAddressOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkBufferDeviceAddressInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

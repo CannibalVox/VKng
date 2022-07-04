@@ -34,11 +34,11 @@ func CreateExtensionFromDriver(driver ext_driver.Driver) *VulkanExtension {
 	}
 }
 
-func (e *VulkanExtension) PhysicalDeviceFeatures2(physicalDevice core1_0.PhysicalDevice, out *DeviceFeaturesOutData) error {
+func (e *VulkanExtension) PhysicalDeviceFeatures2(physicalDevice core1_0.PhysicalDevice, out *DeviceFeatures) error {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
-	outData, err := common.AllocOptions(arena, out)
+	outData, err := common.AllocOutDataHeader(arena, out)
 	if err != nil {
 		return err
 	}
@@ -52,7 +52,7 @@ func (e *VulkanExtension) PhysicalDeviceFormatProperties2(physicalDevice core1_0
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
-	outData, err := common.AllocOptions(arena, out)
+	outData, err := common.AllocOutDataHeader(arena, out)
 	if err != nil {
 		return err
 	}
@@ -71,7 +71,7 @@ func (e *VulkanExtension) PhysicalDeviceImageFormatProperties2(physicalDevice co
 		return core1_0.VKErrorUnknown, err
 	}
 
-	outData, err := common.AllocOptions(arena, out)
+	outData, err := common.AllocOutDataHeader(arena, out)
 	if err != nil {
 		return core1_0.VKErrorUnknown, err
 	}
@@ -93,7 +93,7 @@ func (e *VulkanExtension) PhysicalDeviceMemoryProperties2(physicalDevice core1_0
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
-	outData, err := common.AllocOptions(arena, out)
+	outData, err := common.AllocOutDataHeader(arena, out)
 	if err != nil {
 		return err
 	}
@@ -107,7 +107,7 @@ func (e *VulkanExtension) PhysicalDeviceProperties2(physicalDevice core1_0.Physi
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
-	outData, err := common.AllocOptions(arena, out)
+	outData, err := common.AllocOutDataHeader(arena, out)
 	if err != nil {
 		return err
 	}
@@ -139,7 +139,7 @@ func (e *VulkanExtension) PhysicalDeviceQueueFamilyProperties2(physicalDevice co
 		}
 	}
 
-	outData, err := common.AllocOptionSlice[C.VkQueueFamilyProperties2KHR, *QueueFamilyOutData](arena, out)
+	outData, err := common.AllocOutDataHeaderSlice[C.VkQueueFamilyProperties2KHR, *QueueFamilyOutData](arena, out)
 	if err != nil {
 		return nil, err
 	}
@@ -176,7 +176,7 @@ func (e *VulkanExtension) PhysicalDeviceSparseImageFormatProperties2(physicalDev
 		}
 	}
 
-	outData, err := common.AllocOptionSlice[C.VkSparseImageFormatProperties2KHR, *SparseImageFormatPropertiesOutData](arena, out)
+	outData, err := common.AllocOutDataHeaderSlice[C.VkSparseImageFormatProperties2KHR, *SparseImageFormatPropertiesOutData](arena, out)
 	if err != nil {
 		return nil, err
 	}

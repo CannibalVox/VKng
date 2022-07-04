@@ -17,7 +17,7 @@ type BindImageMemoryOptions struct {
 	Memory       core1_0.DeviceMemory
 	MemoryOffset uint64
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o BindImageMemoryOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -33,9 +33,4 @@ func (o BindImageMemoryOptions) PopulateCPointer(allocator *cgoparam.Allocator, 
 	createInfo.memoryOffset = C.VkDeviceSize(o.MemoryOffset)
 
 	return preallocatedPointer, nil
-}
-
-func (o BindImageMemoryOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	createInfo := (*C.VkBindImageMemoryInfoKHR)(cDataPointer)
-	return createInfo.pNext, nil
 }

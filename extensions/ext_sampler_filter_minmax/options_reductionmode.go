@@ -14,7 +14,7 @@ import (
 type SamplerReductionModeCreateOptions struct {
 	ReductionMode SamplerReductionMode
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o SamplerReductionModeCreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -28,9 +28,4 @@ func (o SamplerReductionModeCreateOptions) PopulateCPointer(allocator *cgoparam.
 	info.reductionMode = C.VkSamplerReductionModeEXT(o.ReductionMode)
 
 	return preallocatedPointer, nil
-}
-
-func (o SamplerReductionModeCreateOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkSamplerReductionModeCreateInfoEXT)(cDataPointer)
-	return info.pNext, nil
 }

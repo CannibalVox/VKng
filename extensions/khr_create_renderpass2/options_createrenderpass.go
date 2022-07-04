@@ -21,7 +21,7 @@ type RenderPassCreateOptions struct {
 
 	CorrelatedViewMasks []uint32
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o RenderPassCreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -80,9 +80,4 @@ func (o RenderPassCreateOptions) PopulateCPointer(allocator *cgoparam.Allocator,
 	}
 
 	return preallocatedPointer, nil
-}
-
-func (o RenderPassCreateOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkRenderPassCreateInfo2KHR)(cDataPointer)
-	return info.pNext, nil
 }

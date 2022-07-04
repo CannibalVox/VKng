@@ -16,7 +16,7 @@ type LabelOptions struct {
 	Name  string
 	Color color.Color
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (l LabelOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -36,12 +36,6 @@ func (l LabelOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocat
 	label.color[3] = C.float(float32(a) / 65535.0)
 
 	return preallocatedPointer, nil
-}
-
-func (l LabelOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (unsafe.Pointer, error) {
-	label := (*C.VkDebugUtilsLabelEXT)(cDataPointer)
-
-	return label.pNext, nil
 }
 
 func (l *LabelOptions) PopulateFromCPointer(cDataPointer unsafe.Pointer) {

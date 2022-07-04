@@ -15,7 +15,7 @@ import (
 type RenderPassInputAttachmentAspectOptions struct {
 	AspectReferences []InputAttachmentAspectReference
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o RenderPassInputAttachmentAspectOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -41,10 +41,3 @@ func (o RenderPassInputAttachmentAspectOptions) PopulateCPointer(allocator *cgop
 
 	return preallocatedPointer, nil
 }
-
-func (o RenderPassInputAttachmentAspectOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	createInfo := (*C.VkRenderPassInputAttachmentAspectCreateInfoKHR)(cDataPointer)
-	return createInfo.pNext, nil
-}
-
-var _ common.Options = RenderPassInputAttachmentAspectOptions{}

@@ -14,10 +14,10 @@ import (
 type ExternalImageFormatOutData struct {
 	ExternalMemoryProperties ExternalMemoryProperties
 
-	common.HaveNext
+	common.NextOutData
 }
 
-func (o *ExternalImageFormatOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *ExternalImageFormatOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkExternalImageFormatPropertiesKHR{})))
 	}

@@ -51,7 +51,7 @@ func TestExportFenceOptions(t *testing.T) {
 		core1_0.FenceCreateOptions{
 			Flags: core1_0.FenceCreateSignaled,
 
-			HaveNext: common.HaveNext{
+			NextOptions: common.NextOptions{
 				khr_external_fence.ExportFenceOptions{
 					HandleTypes: khr_external_fence_capabilities.ExternalFenceHandleTypeOpaqueWin32,
 				},

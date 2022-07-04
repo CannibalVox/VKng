@@ -15,10 +15,10 @@ type PhysicalDeviceMultiviewOutData struct {
 	MaxMultiviewViewCount     int
 	MaxMultiviewInstanceIndex int
 
-	common.HaveNext
+	common.NextOutData
 }
 
-func (o *PhysicalDeviceMultiviewOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDeviceMultiviewOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceMultiviewPropertiesKHR{})))
 	}

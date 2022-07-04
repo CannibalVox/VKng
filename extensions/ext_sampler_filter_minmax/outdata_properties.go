@@ -15,10 +15,10 @@ type PhysicalDeviceSamplerFilterMinmaxOutData struct {
 	FilterMinmaxSingleComponentFormats bool
 	FilterMinmaxImageComponentMapping  bool
 
-	common.HaveNext
+	common.NextOutData
 }
 
-func (o *PhysicalDeviceSamplerFilterMinmaxOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDeviceSamplerFilterMinmaxOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT{})))
 	}

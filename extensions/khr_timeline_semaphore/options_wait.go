@@ -18,7 +18,7 @@ type SemaphoreWaitOptions struct {
 	Semaphores []core1_0.Semaphore
 	Values     []uint64
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o SemaphoreWaitOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -58,9 +58,4 @@ func (o SemaphoreWaitOptions) PopulateCPointer(allocator *cgoparam.Allocator, pr
 	}
 
 	return preallocatedPointer, nil
-}
-
-func (o SemaphoreWaitOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkSemaphoreWaitInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

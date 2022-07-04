@@ -15,7 +15,7 @@ import (
 type ExportSemaphoreOptions struct {
 	HandleTypes khr_external_semaphore_capabilities.ExternalSemaphoreHandleTypes
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o ExportSemaphoreOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -29,9 +29,4 @@ func (o ExportSemaphoreOptions) PopulateCPointer(allocator *cgoparam.Allocator, 
 	info.handleTypes = C.VkExternalSemaphoreHandleTypeFlags(o.HandleTypes)
 
 	return preallocatedPointer, nil
-}
-
-func (o ExportSemaphoreOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkExportSemaphoreCreateInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

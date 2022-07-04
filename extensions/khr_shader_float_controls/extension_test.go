@@ -66,7 +66,7 @@ func TestPhysicalDeviceFloatControlsOutData(t *testing.T) {
 	err := extension.PhysicalDeviceProperties2(
 		physicalDevice,
 		&khr_get_physical_device_properties2.DevicePropertiesOutData{
-			HaveNext: common.HaveNext{&outData},
+			NextOutData: common.NextOutData{&outData},
 		})
 	require.NoError(t, err)
 	require.Equal(t, khr_shader_float_controls.PhysicalDeviceFloatControlsOutData{

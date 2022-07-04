@@ -21,7 +21,7 @@ type FramebufferAttachmentImageOptions struct {
 
 	ViewFormats []core1_0.DataFormat
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o FramebufferAttachmentImageOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -51,9 +51,4 @@ func (o FramebufferAttachmentImageOptions) PopulateCPointer(allocator *cgoparam.
 	}
 
 	return preallocatedPointer, nil
-}
-
-func (o FramebufferAttachmentImageOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkFramebufferAttachmentImageInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

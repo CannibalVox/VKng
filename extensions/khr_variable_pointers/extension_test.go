@@ -63,7 +63,7 @@ func TestVariablePointersFeaturesOptions(t *testing.T) {
 			},
 		},
 
-		HaveNext: common.HaveNext{Next: khr_variable_pointers.PhysicalDeviceVariablePointersFeaturesOptions{
+		NextOptions: common.NextOptions{Next: khr_variable_pointers.PhysicalDeviceVariablePointersFeatures{
 			VariablePointers:              true,
 			VariablePointersStorageBuffer: false,
 		}},
@@ -83,7 +83,7 @@ func TestVariablePointersFeaturesOutData(t *testing.T) {
 	extDriver := mock_get_physical_device_properties2.NewMockDriver(ctrl)
 	extension := khr_get_physical_device_properties2.CreateExtensionFromDriver(extDriver)
 
-	var pointersOutData khr_variable_pointers.PhysicalDeviceVariablePointersFeaturesOutData
+	var pointersOutData khr_variable_pointers.PhysicalDeviceVariablePointersFeatures
 
 	extDriver.EXPECT().VkGetPhysicalDeviceFeatures2KHR(
 		physicalDevice.Handle(),
@@ -107,8 +107,8 @@ func TestVariablePointersFeaturesOutData(t *testing.T) {
 			*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("variablePointersStorageBuffer").UnsafeAddr())) = driver.VkBool32(1)
 		})
 
-	err := extension.PhysicalDeviceFeatures2(physicalDevice, &khr_get_physical_device_properties2.DeviceFeaturesOutData{
-		HaveNext: common.HaveNext{Next: &pointersOutData},
+	err := extension.PhysicalDeviceFeatures2(physicalDevice, &khr_get_physical_device_properties2.DeviceFeatures{
+		NextOutData: common.NextOutData{Next: &pointersOutData},
 	})
 	require.NoError(t, err)
 	require.True(t, pointersOutData.VariablePointersStorageBuffer)

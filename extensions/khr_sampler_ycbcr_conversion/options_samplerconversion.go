@@ -14,7 +14,7 @@ import (
 type SamplerYcbcrConversionOptions struct {
 	Conversion SamplerYcbcrConversion
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o SamplerYcbcrConversionOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -28,9 +28,4 @@ func (o SamplerYcbcrConversionOptions) PopulateCPointer(allocator *cgoparam.Allo
 	info.conversion = C.VkSamplerYcbcrConversion(unsafe.Pointer(o.Conversion.Handle()))
 
 	return preallocatedPointer, nil
-}
-
-func (o SamplerYcbcrConversionOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkSamplerYcbcrConversionInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

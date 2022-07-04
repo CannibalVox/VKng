@@ -37,7 +37,7 @@ type CreateOptions struct {
 	Clipped      bool
 	OldSwapchain Swapchain
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o CreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -93,9 +93,4 @@ func (o CreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, prealloca
 	}
 
 	return preallocatedPointer, nil
-}
-
-func (o CreateOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	createInfo := (*C.VkSwapchainCreateInfoKHR)(cDataPointer)
-	return createInfo.pNext, nil
 }

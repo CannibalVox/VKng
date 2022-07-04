@@ -14,7 +14,7 @@ import (
 type DescriptorSetVariableDescriptorCountAllocateOptions struct {
 	DescriptorCounts []int
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o DescriptorSetVariableDescriptorCountAllocateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -39,9 +39,4 @@ func (o DescriptorSetVariableDescriptorCountAllocateOptions) PopulateCPointer(al
 	}
 
 	return preallocatedPointer, nil
-}
-
-func (o DescriptorSetVariableDescriptorCountAllocateOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkDescriptorSetVariableDescriptorCountAllocateInfoEXT)(cDataPointer)
-	return info.pNext, nil
 }

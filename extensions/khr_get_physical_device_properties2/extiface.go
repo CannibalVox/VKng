@@ -8,7 +8,7 @@ import (
 )
 
 type Extension interface {
-	PhysicalDeviceFeatures2(physicalDevice core1_0.PhysicalDevice, out *DeviceFeaturesOutData) error
+	PhysicalDeviceFeatures2(physicalDevice core1_0.PhysicalDevice, out *DeviceFeatures) error
 	PhysicalDeviceFormatProperties2(physicalDevice core1_0.PhysicalDevice, format core1_0.DataFormat, out *FormatPropertiesOutData) error
 	PhysicalDeviceImageFormatProperties2(physicalDevice core1_0.PhysicalDevice, options ImageFormatOptions, out *ImageFormatPropertiesOutData) (common.VkResult, error)
 	PhysicalDeviceMemoryProperties2(physicalDevice core1_0.PhysicalDevice, out *MemoryPropertiesOutData) error

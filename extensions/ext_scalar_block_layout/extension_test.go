@@ -61,8 +61,8 @@ func TestPhysicalDeviceScalarBlockLayoutFeaturesOptions(t *testing.T) {
 					CreatedQueuePriorities: []float32{0},
 				},
 			},
-			HaveNext: common.HaveNext{
-				ext_scalar_block_layout.PhysicalDeviceScalarBlockLayoutFeaturesOptions{
+			NextOptions: common.NextOptions{
+				ext_scalar_block_layout.PhysicalDeviceScalarBlockLayoutFeatures{
 					ScalarBlockLayout: true,
 				},
 			},
@@ -98,15 +98,15 @@ func TestPhysicalDeviceScalarBlockLayoutFeaturesOutData(t *testing.T) {
 		*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("scalarBlockLayout").UnsafeAddr())) = driver.VkBool32(1)
 	})
 
-	var outData ext_scalar_block_layout.PhysicalDeviceScalarBlockLayoutFeaturesOutData
+	var outData ext_scalar_block_layout.PhysicalDeviceScalarBlockLayoutFeatures
 	err := extension.PhysicalDeviceFeatures2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DeviceFeaturesOutData{
-			HaveNext: common.HaveNext{&outData},
+		&khr_get_physical_device_properties2.DeviceFeatures{
+			NextOutData: common.NextOutData{&outData},
 		},
 	)
 	require.NoError(t, err)
-	require.Equal(t, ext_scalar_block_layout.PhysicalDeviceScalarBlockLayoutFeaturesOutData{
+	require.Equal(t, ext_scalar_block_layout.PhysicalDeviceScalarBlockLayoutFeatures{
 		ScalarBlockLayout: true,
 	}, outData)
 }

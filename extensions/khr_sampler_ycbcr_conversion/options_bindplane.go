@@ -15,7 +15,7 @@ import (
 type BindImagePlaneMemoryOptions struct {
 	PlaneAspect core1_0.ImageAspectFlags
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o BindImagePlaneMemoryOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -29,9 +29,4 @@ func (o BindImagePlaneMemoryOptions) PopulateCPointer(allocator *cgoparam.Alloca
 	info.planeAspect = C.VkImageAspectFlagBits(o.PlaneAspect)
 
 	return preallocatedPointer, nil
-}
-
-func (o BindImagePlaneMemoryOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkBindImagePlaneMemoryInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

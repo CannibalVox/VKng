@@ -57,7 +57,7 @@ func TestDescriptorSetLayoutBindingFlagsCreateOptions(t *testing.T) {
 	descriptorSetLayout, _, err := device.CreateDescriptorSetLayout(
 		nil,
 		core1_0.DescriptorSetLayoutCreateOptions{
-			HaveNext: common.HaveNext{
+			NextOptions: common.NextOptions{
 				DescriptorSetLayoutBindingFlagsCreateOptions{
 					BindingFlags: []DescriptorBindingFlags{
 						DescriptorBindingVariableDescriptorCount,
@@ -127,7 +127,7 @@ func TestDescriptorSetVariableDescriptorCountAllocateOptions(t *testing.T) {
 			descriptorLayout3,
 			descriptorLayout4,
 		},
-		HaveNext: common.HaveNext{
+		NextOptions: common.NextOptions{
 			DescriptorSetVariableDescriptorCountAllocateOptions{
 				DescriptorCounts: []int{1, 3, 5, 7},
 			},
@@ -181,7 +181,7 @@ func TestDescriptorSetVariableDescriptorCountLayoutSupportOutData(t *testing.T) 
 		device,
 		core1_0.DescriptorSetLayoutCreateOptions{},
 		&khr_maintenance3.DescriptorSetLayoutSupportOutData{
-			HaveNext: common.HaveNext{&outData},
+			NextOutData: common.NextOutData{&outData},
 		})
 	require.NoError(t, err)
 	require.Equal(t, DescriptorSetVariableDescriptorCountLayoutSupportOutData{
@@ -253,7 +253,7 @@ func TestPhysicalDeviceDescriptorIndexingFeaturesOptions(t *testing.T) {
 					CreatedQueuePriorities: []float32{0},
 				},
 			},
-			HaveNext: common.HaveNext{PhysicalDeviceDescriptorIndexingFeaturesOptions{
+			NextOptions: common.NextOptions{PhysicalDeviceDescriptorIndexingFeatures{
 				ShaderInputAttachmentArrayDynamicIndexing:          true,
 				ShaderUniformTexelBufferArrayDynamicIndexing:       false,
 				ShaderStorageTexelBufferArrayDynamicIndexing:       true,
@@ -325,14 +325,14 @@ func TestPhysicalDeviceDescriptorIndexingFeaturesOutData(t *testing.T) {
 		*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("runtimeDescriptorArray").UnsafeAddr())) = driver.VkBool32(0)
 	})
 
-	var outData PhysicalDeviceDescriptorIndexingFeaturesOutData
+	var outData PhysicalDeviceDescriptorIndexingFeatures
 	err := extension.PhysicalDeviceFeatures2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DeviceFeaturesOutData{
-			HaveNext: common.HaveNext{&outData},
+		&khr_get_physical_device_properties2.DeviceFeatures{
+			NextOutData: common.NextOutData{&outData},
 		})
 	require.NoError(t, err)
-	require.Equal(t, PhysicalDeviceDescriptorIndexingFeaturesOutData{
+	require.Equal(t, PhysicalDeviceDescriptorIndexingFeatures{
 		ShaderInputAttachmentArrayDynamicIndexing:          true,
 		ShaderUniformTexelBufferArrayDynamicIndexing:       false,
 		ShaderStorageTexelBufferArrayDynamicIndexing:       true,
@@ -410,7 +410,7 @@ func TestPhysicalDeviceDescriptorIndexingOutData(t *testing.T) {
 	err := extension.PhysicalDeviceProperties2(
 		physicalDevice,
 		&khr_get_physical_device_properties2.DevicePropertiesOutData{
-			HaveNext: common.HaveNext{&outData},
+			NextOutData: common.NextOutData{&outData},
 		})
 	require.NoError(t, err)
 	require.Equal(t,

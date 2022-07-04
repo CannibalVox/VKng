@@ -12,7 +12,7 @@ import (
 )
 
 type SubpassEndOptions struct {
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o SubpassEndOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -25,9 +25,4 @@ func (o SubpassEndOptions) PopulateCPointer(allocator *cgoparam.Allocator, preal
 	info.pNext = next
 
 	return preallocatedPointer, nil
-}
-
-func (o SubpassEndOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkSubpassEndInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

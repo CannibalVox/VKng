@@ -62,8 +62,8 @@ func TestPhysicalDeviceShaderAtomicInt64FeaturesOptions(t *testing.T) {
 					CreatedQueuePriorities: []float32{0},
 				},
 			},
-			HaveNext: common.HaveNext{
-				khr_shader_atomic_int64.PhysicalDeviceShaderAtomicInt64FeaturesOptions{
+			NextOptions: common.NextOptions{
+				khr_shader_atomic_int64.PhysicalDeviceShaderAtomicInt64Features{
 					ShaderBufferInt64Atomics: true,
 					ShaderSharedInt64Atomics: true,
 				},
@@ -101,15 +101,15 @@ func TestPhysicalDeviceShaderAtomicInt64FeaturesOutData(t *testing.T) {
 		*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("shaderSharedInt64Atomics").UnsafeAddr())) = driver.VkBool32(1)
 	})
 
-	var outData khr_shader_atomic_int64.PhysicalDeviceShaderAtomicInt64FeaturesOutData
+	var outData khr_shader_atomic_int64.PhysicalDeviceShaderAtomicInt64Features
 	err := extension.PhysicalDeviceFeatures2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DeviceFeaturesOutData{
-			HaveNext: common.HaveNext{&outData},
+		&khr_get_physical_device_properties2.DeviceFeatures{
+			NextOutData: common.NextOutData{&outData},
 		},
 	)
 	require.NoError(t, err)
-	require.Equal(t, khr_shader_atomic_int64.PhysicalDeviceShaderAtomicInt64FeaturesOutData{
+	require.Equal(t, khr_shader_atomic_int64.PhysicalDeviceShaderAtomicInt64Features{
 		ShaderBufferInt64Atomics: true,
 		ShaderSharedInt64Atomics: true,
 	}, outData)

@@ -116,7 +116,7 @@ func TestPhysicalDeviceIDOutData(t *testing.T) {
 
 	var properties khr_get_physical_device_properties2.DevicePropertiesOutData
 	var outData khr_external_fence_capabilities.PhysicalDeviceIDOutData
-	properties.HaveNext = common.HaveNext{&outData}
+	properties.NextOutData = common.NextOutData{&outData}
 
 	err = extension.PhysicalDeviceProperties2(
 		physicalDevice,

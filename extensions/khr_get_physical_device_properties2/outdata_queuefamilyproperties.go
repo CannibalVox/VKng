@@ -15,10 +15,10 @@ import (
 type QueueFamilyOutData struct {
 	QueueFamily core1_0.QueueFamily
 
-	common.HaveNext
+	common.NextOutData
 }
 
-func (o *QueueFamilyOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *QueueFamilyOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkQueueFamilyProperties2KHR{})))
 	}

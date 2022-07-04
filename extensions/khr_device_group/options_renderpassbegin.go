@@ -16,7 +16,7 @@ type DeviceGroupRenderPassBeginOptions struct {
 	DeviceMask        uint32
 	DeviceRenderAreas []core1_0.Rect2D
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o DeviceGroupRenderPassBeginOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -48,9 +48,4 @@ func (o DeviceGroupRenderPassBeginOptions) PopulateCPointer(allocator *cgoparam.
 	}
 
 	return preallocatedPointer, nil
-}
-
-func (o DeviceGroupRenderPassBeginOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkDeviceGroupRenderPassBeginInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

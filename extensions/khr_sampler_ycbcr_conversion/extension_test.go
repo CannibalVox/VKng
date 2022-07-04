@@ -139,7 +139,7 @@ func TestBindImagePlaneMemoryOptions(t *testing.T) {
 				Image:  image,
 				Memory: memory,
 
-				HaveNext: common.HaveNext{
+				NextOptions: common.NextOptions{
 					khr_sampler_ycbcr_conversion.BindImagePlaneMemoryOptions{
 						PlaneAspect: khr_sampler_ycbcr_conversion.ImageAspectPlane2,
 					},
@@ -193,7 +193,7 @@ func TestImagePlaneMemoryRequirementsOptions(t *testing.T) {
 		device,
 		khr_get_memory_requirements2.ImageMemoryRequirementsOptions{
 			Image: image,
-			HaveNext: common.HaveNext{
+			NextOptions: common.NextOptions{
 				khr_sampler_ycbcr_conversion.ImagePlaneMemoryRequirementsOptions{
 					PlaneAspect: khr_sampler_ycbcr_conversion.ImageAspectPlane1,
 				},
@@ -252,7 +252,7 @@ func TestSamplerYcbcrConversionOptions(t *testing.T) {
 			Image:  image,
 			Format: khr_sampler_ycbcr_conversion.DataFormatB16G16R16G16HorizontalChroma,
 
-			HaveNext: common.HaveNext{
+			NextOptions: common.NextOptions{
 				khr_sampler_ycbcr_conversion.SamplerYcbcrConversionOptions{
 					Conversion: ycbcr,
 				},
@@ -306,8 +306,8 @@ func TestSamplerYcbcrFeaturesOptions(t *testing.T) {
 				},
 			},
 
-			HaveNext: common.HaveNext{
-				khr_sampler_ycbcr_conversion.PhysicalDeviceSamplerYcbcrFeaturesOptions{
+			NextOptions: common.NextOptions{
+				khr_sampler_ycbcr_conversion.PhysicalDeviceSamplerYcbcrFeatures{
 					SamplerYcbcrConversion: true,
 				},
 			},
@@ -343,17 +343,17 @@ func TestSamplerYcbcrFeaturesOutData(t *testing.T) {
 			*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("samplerYcbcrConversion").UnsafeAddr())) = driver.VkBool32(1)
 		})
 
-	var outData khr_sampler_ycbcr_conversion.PhysicalDeviceSamplerYcbcrFeaturesOutData
+	var outData khr_sampler_ycbcr_conversion.PhysicalDeviceSamplerYcbcrFeatures
 
 	err := extension.PhysicalDeviceFeatures2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DeviceFeaturesOutData{
-			HaveNext: common.HaveNext{
+		&khr_get_physical_device_properties2.DeviceFeatures{
+			NextOutData: common.NextOutData{
 				&outData,
 			},
 		})
 	require.NoError(t, err)
-	require.Equal(t, khr_sampler_ycbcr_conversion.PhysicalDeviceSamplerYcbcrFeaturesOutData{
+	require.Equal(t, khr_sampler_ycbcr_conversion.PhysicalDeviceSamplerYcbcrFeatures{
 		SamplerYcbcrConversion: true,
 	}, outData)
 }
@@ -398,7 +398,7 @@ func TestSamplerYcbcrImageFormatOutData(t *testing.T) {
 		physicalDevice,
 		khr_get_physical_device_properties2.ImageFormatOptions{},
 		&khr_get_physical_device_properties2.ImageFormatPropertiesOutData{
-			HaveNext: common.HaveNext{&outData},
+			NextOutData: common.NextOutData{&outData},
 		})
 	require.NoError(t, err)
 	require.Equal(t, khr_sampler_ycbcr_conversion.SamplerYcbcrImageFormatOutData{

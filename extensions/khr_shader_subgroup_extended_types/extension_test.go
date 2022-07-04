@@ -61,8 +61,8 @@ func TestPhysicalDeviceShaderSubgroupExtendedTypesFeaturesOptions(t *testing.T) 
 					CreatedQueuePriorities: []float32{0},
 				},
 			},
-			HaveNext: common.HaveNext{
-				khr_shader_subgroup_extended_types.PhysicalDeviceShaderSubgroupExtendedTypesFeaturesOptions{
+			NextOptions: common.NextOptions{
+				khr_shader_subgroup_extended_types.PhysicalDeviceShaderSubgroupExtendedTypesFeatures{
 					ShaderSubgroupExtendedTypes: true,
 				},
 			},
@@ -98,15 +98,15 @@ func TestPhysicalDeviceShaderSubgroupExtendedTypesFeaturesOutData(t *testing.T) 
 		*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("shaderSubgroupExtendedTypes").UnsafeAddr())) = driver.VkBool32(1)
 	})
 
-	var outData khr_shader_subgroup_extended_types.PhysicalDeviceShaderSubgroupExtendedTypesFeaturesOutData
+	var outData khr_shader_subgroup_extended_types.PhysicalDeviceShaderSubgroupExtendedTypesFeatures
 	err := extension.PhysicalDeviceFeatures2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DeviceFeaturesOutData{
-			HaveNext: common.HaveNext{&outData},
+		&khr_get_physical_device_properties2.DeviceFeatures{
+			NextOutData: common.NextOutData{&outData},
 		},
 	)
 	require.NoError(t, err)
-	require.Equal(t, khr_shader_subgroup_extended_types.PhysicalDeviceShaderSubgroupExtendedTypesFeaturesOutData{
+	require.Equal(t, khr_shader_subgroup_extended_types.PhysicalDeviceShaderSubgroupExtendedTypesFeatures{
 		ShaderSubgroupExtendedTypes: true,
 	}, outData)
 }

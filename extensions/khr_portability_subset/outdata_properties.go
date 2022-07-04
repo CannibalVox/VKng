@@ -16,10 +16,10 @@ import (
 type PhysicalDevicePortabilitySubsetOutData struct {
 	MinVertexInputBindingStrideAlignment int
 
-	common.HaveNext
+	common.NextOutData
 }
 
-func (o *PhysicalDevicePortabilitySubsetOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDevicePortabilitySubsetOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(C.sizeof_struct_VkPhysicalDevicePortabilitySubsetPropertiesKHR)
 	}

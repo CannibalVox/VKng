@@ -22,7 +22,7 @@ type PresentOptions struct {
 	Swapchains     []Swapchain
 	ImageIndices   []int
 
-	common.HaveNext
+	common.NextOptions
 
 	OutData *PresentOptionsOutData
 }
@@ -81,11 +81,11 @@ func (o PresentOptions) PopulateCPointer(allocator *cgoparam.Allocator, prealloc
 	return preallocatedPointer, nil
 }
 
-func (o PresentOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o PresentOptions) PopulateOutData(cDataPointer unsafe.Pointer) error {
 	createInfo := (*C.VkPresentInfoKHR)(cDataPointer)
 
 	if o.OutData == nil {
-		return createInfo.pNext, nil
+		return nil
 	}
 
 	resultCount := len(o.Swapchains)
@@ -96,5 +96,5 @@ func (o PresentOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...
 		o.OutData.Results[i] = common.VkResult(resultSlice[i])
 	}
 
-	return createInfo.pNext, nil
+	return nil
 }

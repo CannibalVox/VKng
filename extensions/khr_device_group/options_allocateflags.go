@@ -15,7 +15,7 @@ type MemoryAllocateFlagsOptions struct {
 	Flags      MemoryAllocateFlags
 	DeviceMask uint32
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o MemoryAllocateFlagsOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -30,9 +30,4 @@ func (o MemoryAllocateFlagsOptions) PopulateCPointer(allocator *cgoparam.Allocat
 	createInfo.deviceMask = C.uint32_t(o.DeviceMask)
 
 	return preallocatedPointer, nil
-}
-
-func (o MemoryAllocateFlagsOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	createInfo := (*C.VkMemoryAllocateFlagsInfoKHR)(cDataPointer)
-	return createInfo.pNext, nil
 }

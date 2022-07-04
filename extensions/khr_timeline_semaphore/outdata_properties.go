@@ -14,10 +14,10 @@ import (
 type PhysicalDeviceTimelineSemaphoreOutData struct {
 	MaxTimelineSemaphoreValueDifference uint64
 
-	common.HaveNext
+	common.NextOutData
 }
 
-func (o *PhysicalDeviceTimelineSemaphoreOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDeviceTimelineSemaphoreOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceTimelineSemaphorePropertiesKHR{})))
 	}

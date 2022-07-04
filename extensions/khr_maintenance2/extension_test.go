@@ -46,7 +46,7 @@ func TestImageViewUsageOptions(t *testing.T) {
 
 	imageView, _, err := device.CreateImageView(nil, core1_0.ImageViewCreateOptions{
 		Image: image,
-		HaveNext: common.HaveNext{Next: ImageViewUsageOptions{
+		NextOptions: common.NextOptions{Next: ImageViewUsageOptions{
 			Usage: core1_0.ImageUsageInputAttachment,
 		}},
 	})
@@ -98,7 +98,7 @@ func TestTessellationDomainOriginOptions(t *testing.T) {
 		{
 			Tessellation: &core1_0.TessellationStateOptions{
 				PatchControlPoints: 1,
-				HaveNext:           common.HaveNext{Next: domainOriginState},
+				NextOptions:        common.NextOptions{Next: domainOriginState},
 			},
 		},
 	})
@@ -159,7 +159,7 @@ func TestInputAttachmentAspectOptions(t *testing.T) {
 		},
 	}
 	renderPass, _, err := device.CreateRenderPass(nil, core1_0.RenderPassCreateOptions{
-		HaveNext: common.HaveNext{Next: aspectOptions},
+		NextOptions: common.NextOptions{Next: aspectOptions},
 	})
 	require.NoError(t, err)
 	require.Equal(t, expectedRenderPass.Handle(), renderPass.Handle())
@@ -198,7 +198,7 @@ func TestPointClippingOutData(t *testing.T) {
 
 	pointClipping := &PhysicalDevicePointClippingOutData{}
 	properties := &khr_get_physical_device_properties2.DevicePropertiesOutData{
-		HaveNext: common.HaveNext{Next: pointClipping},
+		NextOutData: common.NextOutData{Next: pointClipping},
 	}
 
 	err := extension.PhysicalDeviceProperties2(physicalDevice, properties)

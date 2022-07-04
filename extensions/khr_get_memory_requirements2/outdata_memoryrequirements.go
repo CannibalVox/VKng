@@ -14,10 +14,10 @@ import (
 
 type MemoryRequirementsOutData struct {
 	MemoryRequirements core1_0.MemoryRequirements
-	common.HaveNext
+	common.NextOutData
 }
 
-func (o *MemoryRequirementsOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *MemoryRequirementsOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkMemoryRequirements2KHR{})))
 	}

@@ -85,7 +85,7 @@ func TestAttachmentDescriptionStencilLayoutOptions(t *testing.T) {
 		khr_create_renderpass2.RenderPassCreateOptions{
 			Attachments: []khr_create_renderpass2.AttachmentDescriptionOptions{
 				{
-					HaveNext: common.HaveNext{khr_separate_depth_stencil_layouts.AttachmentDescriptionStencilLayoutOptions{
+					NextOptions: common.NextOptions{khr_separate_depth_stencil_layouts.AttachmentDescriptionStencilLayoutOptions{
 						StencilInitialLayout: khr_separate_depth_stencil_layouts.ImageLayoutDepthAttachmentOptimal,
 						StencilFinalLayout:   khr_separate_depth_stencil_layouts.ImageLayoutStencilReadOnlyOptimal,
 					}},
@@ -95,7 +95,7 @@ func TestAttachmentDescriptionStencilLayoutOptions(t *testing.T) {
 				{
 					InputAttachments: []khr_create_renderpass2.AttachmentReferenceOptions{
 						{
-							HaveNext: common.HaveNext{
+							NextOptions: common.NextOptions{
 								khr_separate_depth_stencil_layouts.AttachmentReferenceStencilLayoutOptions{
 									StencilLayout: khr_separate_depth_stencil_layouts.ImageLayoutDepthAttachmentOptimal,
 								},
@@ -151,8 +151,8 @@ func TestPhysicalDeviceSeparateDepthStencilLayoutsFeaturesOptions(t *testing.T) 
 					CreatedQueuePriorities: []float32{0},
 				},
 			},
-			HaveNext: common.HaveNext{
-				khr_separate_depth_stencil_layouts.PhysicalDeviceSeparateDepthStencilLayoutsFeaturesOptions{
+			NextOptions: common.NextOptions{
+				khr_separate_depth_stencil_layouts.PhysicalDeviceSeparateDepthStencilLayoutsFeatures{
 					SeparateDepthStencilLayouts: true,
 				},
 			},
@@ -188,15 +188,15 @@ func TestPhysicalDeviceSeparateDepthStencilLayoutsFeaturesOutData(t *testing.T) 
 		*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("separateDepthStencilLayouts").UnsafeAddr())) = driver.VkBool32(1)
 	})
 
-	var outData khr_separate_depth_stencil_layouts.PhysicalDeviceSeparateDepthStencilLayoutsFeaturesOutData
+	var outData khr_separate_depth_stencil_layouts.PhysicalDeviceSeparateDepthStencilLayoutsFeatures
 	err := extension.PhysicalDeviceFeatures2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DeviceFeaturesOutData{
-			HaveNext: common.HaveNext{&outData},
+		&khr_get_physical_device_properties2.DeviceFeatures{
+			NextOutData: common.NextOutData{&outData},
 		},
 	)
 	require.NoError(t, err)
-	require.Equal(t, khr_separate_depth_stencil_layouts.PhysicalDeviceSeparateDepthStencilLayoutsFeaturesOutData{
+	require.Equal(t, khr_separate_depth_stencil_layouts.PhysicalDeviceSeparateDepthStencilLayoutsFeatures{
 		SeparateDepthStencilLayouts: true,
 	}, outData)
 }

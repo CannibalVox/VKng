@@ -184,8 +184,8 @@ func TestPhysicalDeviceTimelineSemaphoreFeaturesOptions(t *testing.T) {
 					CreatedQueuePriorities: []float32{0},
 				},
 			},
-			HaveNext: common.HaveNext{
-				khr_timeline_semaphore.PhysicalDeviceTimelineSemaphoreFeaturesOptions{
+			NextOptions: common.NextOptions{
+				khr_timeline_semaphore.PhysicalDeviceTimelineSemaphoreFeatures{
 					TimelineSemaphore: true,
 				},
 			},
@@ -221,15 +221,15 @@ func TestPhysicalDeviceTimelineSemaphoreFeaturesOutData(t *testing.T) {
 		*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("timelineSemaphore").UnsafeAddr())) = driver.VkBool32(1)
 	})
 
-	var outData khr_timeline_semaphore.PhysicalDeviceTimelineSemaphoreFeaturesOutData
+	var outData khr_timeline_semaphore.PhysicalDeviceTimelineSemaphoreFeatures
 	err := extension.PhysicalDeviceFeatures2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DeviceFeaturesOutData{
-			HaveNext: common.HaveNext{&outData},
+		&khr_get_physical_device_properties2.DeviceFeatures{
+			NextOutData: common.NextOutData{&outData},
 		},
 	)
 	require.NoError(t, err)
-	require.Equal(t, khr_timeline_semaphore.PhysicalDeviceTimelineSemaphoreFeaturesOutData{
+	require.Equal(t, khr_timeline_semaphore.PhysicalDeviceTimelineSemaphoreFeatures{
 		TimelineSemaphore: true,
 	}, outData)
 }
@@ -271,7 +271,7 @@ func TestSemaphoreTypeCreateOptions(t *testing.T) {
 	semaphore, _, err := device.CreateSemaphore(
 		nil,
 		core1_0.SemaphoreCreateOptions{
-			HaveNext: common.HaveNext{khr_timeline_semaphore.SemaphoreTypeCreateOptions{
+			NextOptions: common.NextOptions{khr_timeline_semaphore.SemaphoreTypeCreateOptions{
 				SemaphoreType: khr_timeline_semaphore.SemaphoreTypeTimeline,
 				InitialValue:  uint64(13),
 			}},
@@ -324,7 +324,7 @@ func TestTimelineSemaphoreSubmitOptions(t *testing.T) {
 		fence,
 		[]core1_0.SubmitOptions{
 			{
-				HaveNext: common.HaveNext{
+				NextOptions: common.NextOptions{
 					khr_timeline_semaphore.TimelineSemaphoreSubmitOptions{
 						WaitSemaphoreValues:   []uint64{3, 5},
 						SignalSemaphoreValues: []uint64{7, 11, 13},
@@ -364,7 +364,7 @@ func TestPhysicalDeviceTimelineSemaphoreOutData(t *testing.T) {
 	err := extension.PhysicalDeviceProperties2(
 		physicalDevice,
 		&khr_get_physical_device_properties2.DevicePropertiesOutData{
-			HaveNext: common.HaveNext{&outData},
+			NextOutData: common.NextOutData{&outData},
 		})
 	require.NoError(t, err)
 	require.Equal(t, khr_timeline_semaphore.PhysicalDeviceTimelineSemaphoreOutData{

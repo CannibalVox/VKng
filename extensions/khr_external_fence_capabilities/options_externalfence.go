@@ -14,7 +14,7 @@ import (
 type ExternalFenceOptions struct {
 	HandleType ExternalFenceHandleTypes
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o ExternalFenceOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -27,9 +27,4 @@ func (o ExternalFenceOptions) PopulateCPointer(allocator *cgoparam.Allocator, pr
 	info.handleType = C.VkExternalFenceHandleTypeFlagBits(o.HandleType)
 
 	return preallocatedPointer, nil
-}
-
-func (o ExternalFenceOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkPhysicalDeviceExternalFenceInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

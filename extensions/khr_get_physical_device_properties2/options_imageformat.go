@@ -19,7 +19,7 @@ type ImageFormatOptions struct {
 	Usage  core1_0.ImageUsages
 	Flags  core1_0.ImageCreateFlags
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o ImageFormatOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -36,9 +36,4 @@ func (o ImageFormatOptions) PopulateCPointer(allocator *cgoparam.Allocator, prea
 	info.flags = C.VkImageCreateFlags(o.Flags)
 
 	return preallocatedPointer, nil
-}
-
-func (o ImageFormatOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkPhysicalDeviceImageFormatInfo2KHR)(cDataPointer)
-	return info.pNext, nil
 }

@@ -68,7 +68,7 @@ func (v *VulkanExtension) DeviceGroupPresentCapabilities(device core1_0.Device, 
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
-	optionPtr, err := common.AllocOptions(arena, outData)
+	optionPtr, err := common.AllocOutDataHeader(arena, outData)
 	if err != nil {
 		return core1_0.VKErrorUnknown, err
 	}

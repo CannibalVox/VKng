@@ -95,7 +95,7 @@ func (e *VulkanExtension) PresentToQueue(queue core1_0.Queue, o PresentOptions) 
 
 	createInfoPtr := (*khr_swapchain_driver.VkPresentInfoKHR)(createInfo)
 	res, err := e.driver.VkQueuePresentKHR(queue.Handle(), createInfoPtr)
-	popErr := common.PopulateOutData(o, createInfo)
+	popErr := o.PopulateOutData(createInfo)
 
 	if popErr != nil {
 		return core1_0.VKErrorUnknown, popErr

@@ -15,7 +15,7 @@ import (
 type RenderPassAttachmentBeginOptions struct {
 	Attachments []core1_0.ImageView
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o RenderPassAttachmentBeginOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -40,9 +40,4 @@ func (o RenderPassAttachmentBeginOptions) PopulateCPointer(allocator *cgoparam.A
 	}
 
 	return preallocatedPointer, nil
-}
-
-func (o RenderPassAttachmentBeginOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkRenderPassAttachmentBeginInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

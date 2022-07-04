@@ -14,10 +14,10 @@ import (
 
 type FormatPropertiesOutData struct {
 	FormatProperties core1_0.FormatProperties
-	common.HaveNext
+	common.NextOutData
 }
 
-func (o *FormatPropertiesOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *FormatPropertiesOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkFormatProperties2KHR{})))
 	}

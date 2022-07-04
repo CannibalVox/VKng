@@ -15,7 +15,7 @@ import (
 type ExternalMemoryBufferOptions struct {
 	HandleTypes khr_external_memory_capabilities.ExternalMemoryHandleTypes
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o ExternalMemoryBufferOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {

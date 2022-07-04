@@ -15,7 +15,7 @@ import (
 type ImageFormatListCreateOptions struct {
 	ViewFormats []core1_0.DataFormat
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o ImageFormatListCreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -41,9 +41,4 @@ func (o ImageFormatListCreateOptions) PopulateCPointer(allocator *cgoparam.Alloc
 	}
 
 	return preallocatedPointer, nil
-}
-
-func (o ImageFormatListCreateOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkImageFormatListCreateInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

@@ -16,10 +16,10 @@ type MemoryDedicatedAllocationOutData struct {
 	DedicatedPreferred bool
 	DedicatedRequired  bool
 
-	common.HaveNext
+	common.NextOutData
 }
 
-func (o *MemoryDedicatedAllocationOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *MemoryDedicatedAllocationOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkMemoryDedicatedRequirementsKHR{})))
 	}

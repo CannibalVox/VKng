@@ -14,10 +14,10 @@ import (
 type SamplerYcbcrImageFormatOutData struct {
 	CombinedImageSamplerDescriptorCount int
 
-	common.HaveNext
+	common.NextOutData
 }
 
-func (o *SamplerYcbcrImageFormatOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *SamplerYcbcrImageFormatOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkSamplerYcbcrConversionImageFormatPropertiesKHR{})))
 	}

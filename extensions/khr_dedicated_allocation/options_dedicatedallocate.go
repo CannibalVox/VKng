@@ -17,7 +17,7 @@ type MemoryDedicatedAllocationOptions struct {
 	Image  core1_0.Image
 	Buffer core1_0.Buffer
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o MemoryDedicatedAllocationOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -44,9 +44,4 @@ func (o MemoryDedicatedAllocationOptions) PopulateCPointer(allocator *cgoparam.A
 	}
 
 	return preallocatedPointer, nil
-}
-
-func (o MemoryDedicatedAllocationOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	createInfo := (*C.VkMemoryDedicatedAllocateInfoKHR)(cDataPointer)
-	return createInfo.pNext, nil
 }

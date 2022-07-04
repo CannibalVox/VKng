@@ -17,7 +17,7 @@ type SemaphoreSignalOptions struct {
 	Semaphore core1_0.Semaphore
 	Value     uint64
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o SemaphoreSignalOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -36,9 +36,4 @@ func (o SemaphoreSignalOptions) PopulateCPointer(allocator *cgoparam.Allocator, 
 	info.value = C.uint64_t(o.Value)
 
 	return preallocatedPointer, nil
-}
-
-func (o SemaphoreSignalOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkSemaphoreSignalInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

@@ -17,7 +17,7 @@ type SubpassDescriptionDepthStencilResolveOptions struct {
 	StencilResolveMode            ResolveModeFlags
 	DepthStencilResolveAttachment *khr_create_renderpass2.AttachmentReferenceOptions
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o SubpassDescriptionDepthStencilResolveOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -42,9 +42,4 @@ func (o SubpassDescriptionDepthStencilResolveOptions) PopulateCPointer(allocator
 	}
 
 	return preallocatedPointer, nil
-}
-
-func (o SubpassDescriptionDepthStencilResolveOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkSubpassDescriptionDepthStencilResolveKHR)(cDataPointer)
-	return info.pNext, nil
 }

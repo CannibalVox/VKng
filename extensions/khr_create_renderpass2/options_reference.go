@@ -17,7 +17,7 @@ type AttachmentReferenceOptions struct {
 	Layout     core1_0.ImageLayout
 	AspectMask core1_0.ImageAspectFlags
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o AttachmentReferenceOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -33,9 +33,4 @@ func (o AttachmentReferenceOptions) PopulateCPointer(allocator *cgoparam.Allocat
 	info.aspectMask = C.VkImageAspectFlags(o.AspectMask)
 
 	return preallocatedPointer, nil
-}
-
-func (o AttachmentReferenceOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkAttachmentReference2KHR)(cDataPointer)
-	return info.pNext, nil
 }

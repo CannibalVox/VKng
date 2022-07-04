@@ -38,10 +38,10 @@ type PhysicalDeviceDescriptorIndexingOutData struct {
 	MaxDescriptorSetUpdateAfterBindStorageImages         int
 	MaxDescriptorSetUpdateAfterBindInputAttachments      int
 
-	common.HaveNext
+	common.NextOutData
 }
 
-func (o *PhysicalDeviceDescriptorIndexingOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDeviceDescriptorIndexingOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceDescriptorIndexingPropertiesEXT{})))
 	}

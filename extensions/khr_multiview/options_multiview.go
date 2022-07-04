@@ -16,7 +16,7 @@ type RenderPassMultiviewOptions struct {
 	DependencyViewOffsets []int
 	CorrelationMasks      []uint32
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o RenderPassMultiviewOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -68,9 +68,4 @@ func (o RenderPassMultiviewOptions) PopulateCPointer(allocator *cgoparam.Allocat
 	}
 
 	return preallocatedPointer, nil
-}
-
-func (o RenderPassMultiviewOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkRenderPassMultiviewCreateInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

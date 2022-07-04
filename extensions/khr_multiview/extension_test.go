@@ -48,14 +48,14 @@ func TestMultiviewFeaturesOutData(t *testing.T) {
 		*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("multiviewTessellationShader").UnsafeAddr())) = driver.VkBool32(0)
 	})
 
-	var outData khr_multiview.PhysicalDeviceMultiviewFeaturesOutData
-	features := khr_get_physical_device_properties2.DeviceFeaturesOutData{
-		HaveNext: common.HaveNext{&outData},
+	var outData khr_multiview.PhysicalDeviceMultiviewFeatures
+	features := khr_get_physical_device_properties2.DeviceFeatures{
+		NextOutData: common.NextOutData{&outData},
 	}
 
 	err := extension.PhysicalDeviceFeatures2(physicalDevice, &features)
 	require.NoError(t, err)
-	require.Equal(t, khr_multiview.PhysicalDeviceMultiviewFeaturesOutData{
+	require.Equal(t, khr_multiview.PhysicalDeviceMultiviewFeatures{
 		Multiview:                   true,
 		MultiviewTessellationShader: false,
 		MultiviewGeometryShader:     true,
@@ -113,8 +113,8 @@ func TestMultiviewFeaturesOptions(t *testing.T) {
 				CreatedQueuePriorities: []float32{3, 2, 1},
 			},
 		},
-		HaveNext: common.HaveNext{
-			khr_multiview.PhysicalDeviceMultiviewFeaturesOptions{
+		NextOptions: common.NextOptions{
+			khr_multiview.PhysicalDeviceMultiviewFeatures{
 				Multiview:                   true,
 				MultiviewTessellationShader: true,
 				MultiviewGeometryShader:     false,
@@ -155,7 +155,7 @@ func TestMultiviewPropertiesOutData(t *testing.T) {
 
 	var outData khr_multiview.PhysicalDeviceMultiviewOutData
 	properties := khr_get_physical_device_properties2.DevicePropertiesOutData{
-		HaveNext: common.HaveNext{&outData},
+		NextOutData: common.NextOutData{&outData},
 	}
 
 	err := extension.PhysicalDeviceProperties2(physicalDevice, &properties)
@@ -214,7 +214,7 @@ func TestRenderPassMultiviewOptions(t *testing.T) {
 	})
 
 	renderPass, _, err := device.CreateRenderPass(nil, core1_0.RenderPassCreateOptions{
-		HaveNext: common.HaveNext{
+		NextOptions: common.NextOptions{
 			khr_multiview.RenderPassMultiviewOptions{
 				SubpassViewMasks:      []uint32{1, 2, 7},
 				DependencyViewOffsets: []int{11, 13},

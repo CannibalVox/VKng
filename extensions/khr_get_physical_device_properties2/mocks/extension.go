@@ -37,7 +37,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 }
 
 // PhysicalDeviceFeatures2 mocks base method.
-func (m *MockExtension) PhysicalDeviceFeatures2(physicalDevice core1_0.PhysicalDevice, out *khr_get_physical_device_properties2.DeviceFeaturesOutData) error {
+func (m *MockExtension) PhysicalDeviceFeatures2(physicalDevice core1_0.PhysicalDevice, out *khr_get_physical_device_properties2.DeviceFeatures) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PhysicalDeviceFeatures2", physicalDevice, out)
 	ret0, _ := ret[0].(error)

@@ -15,10 +15,10 @@ import (
 type DevicePropertiesOutData struct {
 	Properties core1_0.PhysicalDeviceProperties
 
-	common.HaveNext
+	common.NextOutData
 }
 
-func (o *DevicePropertiesOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *DevicePropertiesOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceProperties2KHR{})))
 	}

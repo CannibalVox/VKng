@@ -14,7 +14,7 @@ import (
 type FramebufferAttachmentsCreateOptions struct {
 	AttachmentImageInfos []FramebufferAttachmentImageOptions
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o FramebufferAttachmentsCreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -40,9 +40,4 @@ func (o FramebufferAttachmentsCreateOptions) PopulateCPointer(allocator *cgopara
 	}
 
 	return preallocatedPointer, nil
-}
-
-func (o FramebufferAttachmentsCreateOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkFramebufferAttachmentsCreateInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

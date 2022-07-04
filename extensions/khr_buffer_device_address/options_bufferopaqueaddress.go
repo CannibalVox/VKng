@@ -14,7 +14,7 @@ import (
 type BufferOpaqueCaptureAddressCreateOptions struct {
 	OpaqueCaptureAddress uint64
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o BufferOpaqueCaptureAddressCreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -28,9 +28,4 @@ func (o BufferOpaqueCaptureAddressCreateOptions) PopulateCPointer(allocator *cgo
 	info.opaqueCaptureAddress = C.uint64_t(o.OpaqueCaptureAddress)
 
 	return preallocatedPointer, nil
-}
-
-func (o BufferOpaqueCaptureAddressCreateOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkBufferOpaqueCaptureAddressCreateInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

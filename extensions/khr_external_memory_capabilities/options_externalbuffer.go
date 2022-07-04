@@ -17,7 +17,7 @@ type ExternalBufferOptions struct {
 	Usage      core1_0.BufferUsages
 	HandleType ExternalMemoryHandleTypes
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o ExternalBufferOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -33,9 +33,4 @@ func (o ExternalBufferOptions) PopulateCPointer(allocator *cgoparam.Allocator, p
 	info.handleType = (C.VkExternalMemoryHandleTypeFlagBits)(o.HandleType)
 
 	return preallocatedPointer, nil
-}
-
-func (o ExternalBufferOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkPhysicalDeviceExternalBufferInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

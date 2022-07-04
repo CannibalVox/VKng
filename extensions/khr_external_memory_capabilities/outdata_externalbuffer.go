@@ -14,10 +14,10 @@ import (
 type ExternalBufferOutData struct {
 	ExternalMemoryProperties ExternalMemoryProperties
 
-	common.HaveNext
+	common.NextOutData
 }
 
-func (o *ExternalBufferOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *ExternalBufferOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkExternalBufferPropertiesKHR{})))
 	}

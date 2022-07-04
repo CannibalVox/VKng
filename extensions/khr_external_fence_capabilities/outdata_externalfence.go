@@ -16,10 +16,10 @@ type ExternalFenceOutData struct {
 	CompatibleHandleTypes         ExternalFenceHandleTypes
 	ExternalFenceFeatures         ExternalFenceFeatures
 
-	common.HaveNext
+	common.NextOutData
 }
 
-func (o *ExternalFenceOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *ExternalFenceOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkExternalFencePropertiesKHR{})))
 	}

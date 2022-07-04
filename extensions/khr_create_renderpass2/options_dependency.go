@@ -22,7 +22,7 @@ type SubpassDependencyOptions struct {
 	DependencyFlags core1_0.DependencyFlags
 	ViewOffset      int
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o SubpassDependencyOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -43,9 +43,4 @@ func (o SubpassDependencyOptions) PopulateCPointer(allocator *cgoparam.Allocator
 	info.viewOffset = C.int32_t(o.ViewOffset)
 
 	return preallocatedPointer, nil
-}
-
-func (o SubpassDependencyOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkSubpassDependency2KHR)(cDataPointer)
-	return info.pNext, nil
 }

@@ -17,10 +17,10 @@ type PhysicalDeviceDriverOutData struct {
 	DriverInfo         string
 	ConformanceVersion ConformanceVersion
 
-	common.HaveNext
+	common.NextOutData
 }
 
-func (o *PhysicalDeviceDriverOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDeviceDriverOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceDriverPropertiesKHR{})))
 	}

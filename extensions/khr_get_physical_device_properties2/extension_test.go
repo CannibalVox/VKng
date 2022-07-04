@@ -94,7 +94,7 @@ func TestVulkanExtension_PhysicalDeviceFeatures(t *testing.T) {
 
 		})
 
-	outData := &khr_get_physical_device_properties2.DeviceFeaturesOutData{}
+	outData := &khr_get_physical_device_properties2.DeviceFeatures{}
 	err := extension.PhysicalDeviceFeatures2(physicalDevice, outData)
 	require.NoError(t, err)
 
@@ -274,7 +274,7 @@ func TestVulkanDevice_CreateDeviceWithFeatures(t *testing.T) {
 		ExtensionNames: []string{"a", "b"},
 		LayerNames:     []string{"c"},
 	}
-	features := khr_get_physical_device_properties2.DeviceFeaturesOptions{
+	features := khr_get_physical_device_properties2.DeviceFeatures{
 		Features: core1_0.PhysicalDeviceFeatures{
 			TextureCompressionEtc2: true,
 			DepthBounds:            true,

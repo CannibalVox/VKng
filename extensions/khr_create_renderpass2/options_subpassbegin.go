@@ -15,7 +15,7 @@ import (
 type SubpassBeginOptions struct {
 	Contents core1_0.SubpassContents
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o SubpassBeginOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -29,9 +29,4 @@ func (o SubpassBeginOptions) PopulateCPointer(allocator *cgoparam.Allocator, pre
 	info.contents = C.VkSubpassContents(o.Contents)
 
 	return preallocatedPointer, nil
-}
-
-func (o SubpassBeginOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkSubpassBeginInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

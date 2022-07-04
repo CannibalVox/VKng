@@ -61,7 +61,7 @@ func TestDedicatedMemoryRequirementsOutData_Buffer(t *testing.T) {
 
 	var memReqs khr_dedicated_allocation.MemoryDedicatedAllocationOutData
 	var outData = khr_get_memory_requirements2.MemoryRequirementsOutData{
-		HaveNext: common.HaveNext{Next: &memReqs},
+		NextOutData: common.NextOutData{Next: &memReqs},
 	}
 	err := extension.BufferMemoryRequirements(device,
 		khr_get_memory_requirements2.BufferMemoryRequirementsOptions{
@@ -118,7 +118,7 @@ func TestDedicatedMemoryRequirementsOutData_Image(t *testing.T) {
 
 	var memReqs khr_dedicated_allocation.MemoryDedicatedAllocationOutData
 	var outData = khr_get_memory_requirements2.MemoryRequirementsOutData{
-		HaveNext: common.HaveNext{Next: &memReqs},
+		NextOutData: common.NextOutData{Next: &memReqs},
 	}
 	err := extension.ImageMemoryRequirements(device,
 		khr_get_memory_requirements2.ImageMemoryRequirementsOptions{
@@ -167,7 +167,7 @@ func TestMemoryDedicatedAllocateOptions(t *testing.T) {
 	memory, _, err := device.AllocateMemory(nil, core1_0.MemoryAllocateOptions{
 		AllocationSize:  1,
 		MemoryTypeIndex: 3,
-		HaveNext: common.HaveNext{Next: khr_dedicated_allocation.MemoryDedicatedAllocationOptions{
+		NextOptions: common.NextOptions{Next: khr_dedicated_allocation.MemoryDedicatedAllocationOptions{
 			Buffer: buffer,
 		}},
 	})

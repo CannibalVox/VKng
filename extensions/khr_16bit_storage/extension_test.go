@@ -51,7 +51,7 @@ func TestDevice16BitStorageOptions(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	storage := khr_16bit_storage.PhysicalDevice16BitStorageFeaturesOptions{
+	storage := khr_16bit_storage.PhysicalDevice16BitStorageFeatures{
 		StorageInputOutput16:               true,
 		UniformAndStorageBuffer16BitAccess: true,
 		StoragePushConstant16:              false,
@@ -64,7 +64,7 @@ func TestDevice16BitStorageOptions(t *testing.T) {
 			},
 		},
 
-		HaveNext: common.HaveNext{Next: storage},
+		NextOptions: common.NextOptions{Next: storage},
 	})
 
 	require.NoError(t, err)
@@ -99,9 +99,9 @@ func TestDevice16BitStorageOutData(t *testing.T) {
 			*(*driver.VkBool32)(unsafe.Pointer(outDataVal.FieldByName("storageInputOutput16").UnsafeAddr())) = driver.VkBool32(1)
 		})
 
-	outData := &khr_16bit_storage.PhysicalDevice16BitStorageFeaturesOutData{}
-	features := &khr_get_physical_device_properties2.DeviceFeaturesOutData{
-		HaveNext: common.HaveNext{Next: outData},
+	outData := &khr_16bit_storage.PhysicalDevice16BitStorageFeatures{}
+	features := &khr_get_physical_device_properties2.DeviceFeatures{
+		NextOutData: common.NextOutData{Next: outData},
 	}
 
 	err := extension.PhysicalDeviceFeatures2(physicalDevice, features)

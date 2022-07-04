@@ -14,7 +14,7 @@ import (
 type DeviceGroupSwapchainCreateOptions struct {
 	Modes DeviceGroupPresentModeFlags
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o DeviceGroupSwapchainCreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -28,9 +28,4 @@ func (o DeviceGroupSwapchainCreateOptions) PopulateCPointer(allocator *cgoparam.
 	info.modes = C.VkDeviceGroupPresentModeFlagsKHR(o.Modes)
 
 	return preallocatedPointer, nil
-}
-
-func (o DeviceGroupSwapchainCreateOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkDeviceGroupSwapchainCreateInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

@@ -15,7 +15,7 @@ type SemaphoreTypeCreateOptions struct {
 	SemaphoreType SemaphoreType
 	InitialValue  uint64
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o SemaphoreTypeCreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -30,9 +30,4 @@ func (o SemaphoreTypeCreateOptions) PopulateCPointer(allocator *cgoparam.Allocat
 	info.initialValue = C.uint64_t(o.InitialValue)
 
 	return preallocatedPointer, nil
-}
-
-func (o SemaphoreTypeCreateOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkSemaphoreTypeCreateInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

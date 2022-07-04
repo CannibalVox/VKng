@@ -16,10 +16,10 @@ type ExternalSemaphoreOutData struct {
 	CompatibleHandleTypes         ExternalSemaphoreHandleTypes
 	ExternalSemaphoreFeatures     ExternalSemaphoreFeatures
 
-	common.HaveNext
+	common.NextOutData
 }
 
-func (o *ExternalSemaphoreOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *ExternalSemaphoreOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkExternalSemaphorePropertiesKHR{})))
 	}

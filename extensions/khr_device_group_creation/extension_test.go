@@ -354,7 +354,7 @@ func TestDeviceGroupOptions(t *testing.T) {
 				CreatedQueuePriorities: []float32{0},
 			},
 		},
-		HaveNext: common.HaveNext{Next: khr_device_group_creation.DeviceGroupDeviceOptions{
+		NextOptions: common.NextOptions{Next: khr_device_group_creation.DeviceGroupDeviceOptions{
 			PhysicalDevices: []core1_0.PhysicalDevice{physicalDevice1, physicalDevice2, physicalDevice3},
 		}},
 	})

@@ -61,8 +61,8 @@ func TestPhysicalDeviceUniformBufferStandardLayoutFeaturesOptions(t *testing.T) 
 					CreatedQueuePriorities: []float32{0},
 				},
 			},
-			HaveNext: common.HaveNext{
-				khr_uniform_buffer_standard_layout.PhysicalDeviceUniformBufferStandardLayoutFeaturesOptions{
+			NextOptions: common.NextOptions{
+				khr_uniform_buffer_standard_layout.PhysicalDeviceUniformBufferStandardLayoutFeatures{
 					UniformBufferStandardLayout: true,
 				},
 			},
@@ -98,15 +98,15 @@ func TestPhysicalDeviceUniformBufferStandardLayoutFeaturesOutData(t *testing.T) 
 		*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("uniformBufferStandardLayout").UnsafeAddr())) = driver.VkBool32(1)
 	})
 
-	var outData khr_uniform_buffer_standard_layout.PhysicalDeviceUniformBufferStandardLayoutFeaturesOutData
+	var outData khr_uniform_buffer_standard_layout.PhysicalDeviceUniformBufferStandardLayoutFeatures
 	err := extension.PhysicalDeviceFeatures2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DeviceFeaturesOutData{
-			HaveNext: common.HaveNext{&outData},
+		&khr_get_physical_device_properties2.DeviceFeatures{
+			NextOutData: common.NextOutData{&outData},
 		},
 	)
 	require.NoError(t, err)
-	require.Equal(t, khr_uniform_buffer_standard_layout.PhysicalDeviceUniformBufferStandardLayoutFeaturesOutData{
+	require.Equal(t, khr_uniform_buffer_standard_layout.PhysicalDeviceUniformBufferStandardLayoutFeatures{
 		UniformBufferStandardLayout: true,
 	}, outData)
 }

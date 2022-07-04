@@ -23,7 +23,7 @@ type AttachmentDescriptionOptions struct {
 	InitialLayout  core1_0.ImageLayout
 	FinalLayout    core1_0.ImageLayout
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o AttachmentDescriptionOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -45,9 +45,4 @@ func (o AttachmentDescriptionOptions) PopulateCPointer(allocator *cgoparam.Alloc
 	info.finalLayout = C.VkImageLayout(o.FinalLayout)
 
 	return preallocatedPointer, nil
-}
-
-func (o AttachmentDescriptionOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkAttachmentDescription2KHR)(cDataPointer)
-	return info.pNext, nil
 }

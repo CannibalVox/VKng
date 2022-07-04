@@ -49,7 +49,7 @@ func TestPhysicalDeviceSamplerFilterMinmaxOutData(t *testing.T) {
 	err := extension.PhysicalDeviceProperties2(
 		physicalDevice,
 		&khr_get_physical_device_properties2.DevicePropertiesOutData{
-			HaveNext: common.HaveNext{&outData},
+			NextOutData: common.NextOutData{&outData},
 		})
 	require.NoError(t, err)
 	require.Equal(t, PhysicalDeviceSamplerFilterMinmaxOutData{
@@ -93,7 +93,7 @@ func TestSamplerReductionModeCreateOptions(t *testing.T) {
 	sampler, _, err := device.CreateSampler(
 		nil,
 		core1_0.SamplerCreateOptions{
-			HaveNext: common.HaveNext{SamplerReductionModeCreateOptions{
+			NextOptions: common.NextOptions{SamplerReductionModeCreateOptions{
 				ReductionMode: SamplerReductionModeMax,
 			}},
 		})

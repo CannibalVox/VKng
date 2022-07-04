@@ -16,7 +16,7 @@ type BindImageMemorySwapchainOptions struct {
 	Swapchain  khr_swapchain.Swapchain
 	ImageIndex int
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o BindImageMemorySwapchainOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -35,9 +35,4 @@ func (o BindImageMemorySwapchainOptions) PopulateCPointer(allocator *cgoparam.Al
 	}
 
 	return preallocatedPointer, nil
-}
-
-func (o BindImageMemorySwapchainOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkBindImageMemorySwapchainInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

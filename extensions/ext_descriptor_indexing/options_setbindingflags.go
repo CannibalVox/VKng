@@ -14,7 +14,7 @@ import (
 type DescriptorSetLayoutBindingFlagsCreateOptions struct {
 	BindingFlags []DescriptorBindingFlags
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o DescriptorSetLayoutBindingFlagsCreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -40,9 +40,4 @@ func (o DescriptorSetLayoutBindingFlagsCreateOptions) PopulateCPointer(allocator
 	}
 
 	return preallocatedPointer, nil
-}
-
-func (o DescriptorSetLayoutBindingFlagsCreateOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkDescriptorSetLayoutBindingFlagsCreateInfoEXT)(cDataPointer)
-	return info.pNext, nil
 }

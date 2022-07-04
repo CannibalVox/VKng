@@ -15,10 +15,10 @@ type PhysicalDeviceMaintenance3OutData struct {
 	MaxPerSetDescriptors    int
 	MaxMemoryAllocationSize int
 
-	common.HaveNext
+	common.NextOutData
 }
 
-func (o *PhysicalDeviceMaintenance3OutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDeviceMaintenance3OutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceMaintenance3PropertiesKHR{})))
 	}

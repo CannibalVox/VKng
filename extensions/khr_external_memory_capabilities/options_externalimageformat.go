@@ -14,7 +14,7 @@ import (
 type PhysicalDeviceExternalImageFormatOptions struct {
 	HandleType ExternalMemoryHandleTypes
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o PhysicalDeviceExternalImageFormatOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -29,9 +29,4 @@ func (o PhysicalDeviceExternalImageFormatOptions) PopulateCPointer(allocator *cg
 	info.handleType = C.VkExternalMemoryHandleTypeFlagBits(o.HandleType)
 
 	return preallocatedPointer, nil
-}
-
-func (o PhysicalDeviceExternalImageFormatOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkPhysicalDeviceExternalImageFormatInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

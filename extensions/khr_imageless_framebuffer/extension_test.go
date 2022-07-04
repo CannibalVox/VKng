@@ -89,7 +89,7 @@ func TestFramebufferAttachmentsCreateOptions(t *testing.T) {
 	framebuffer, _, err := device.CreateFramebuffer(
 		nil,
 		core1_0.FramebufferCreateOptions{
-			HaveNext: common.HaveNext{
+			NextOptions: common.NextOptions{
 				khr_imageless_framebuffer.FramebufferAttachmentsCreateOptions{
 					AttachmentImageInfos: []khr_imageless_framebuffer.FramebufferAttachmentImageOptions{
 						{
@@ -165,8 +165,8 @@ func TestPhysicalDeviceImagelessFramebufferFeaturesOptions(t *testing.T) {
 					CreatedQueuePriorities: []float32{0},
 				},
 			},
-			HaveNext: common.HaveNext{
-				khr_imageless_framebuffer.PhysicalDeviceImagelessFramebufferFeaturesOptions{
+			NextOptions: common.NextOptions{
+				khr_imageless_framebuffer.PhysicalDeviceImagelessFramebufferFeatures{
 					ImagelessFramebuffer: true,
 				},
 			},
@@ -202,15 +202,15 @@ func TestPhysicalDeviceImagelessFramebufferFeaturesOutData(t *testing.T) {
 		*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("imagelessFramebuffer").UnsafeAddr())) = driver.VkBool32(1)
 	})
 
-	var outData khr_imageless_framebuffer.PhysicalDeviceImagelessFramebufferFeaturesOutData
+	var outData khr_imageless_framebuffer.PhysicalDeviceImagelessFramebufferFeatures
 	err := extension.PhysicalDeviceFeatures2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DeviceFeaturesOutData{
-			HaveNext: common.HaveNext{&outData},
+		&khr_get_physical_device_properties2.DeviceFeatures{
+			NextOutData: common.NextOutData{&outData},
 		},
 	)
 	require.NoError(t, err)
-	require.Equal(t, khr_imageless_framebuffer.PhysicalDeviceImagelessFramebufferFeaturesOutData{
+	require.Equal(t, khr_imageless_framebuffer.PhysicalDeviceImagelessFramebufferFeatures{
 		ImagelessFramebuffer: true,
 	}, outData)
 }
@@ -253,7 +253,7 @@ func TestRenderPassAttachmentBeginInfo(t *testing.T) {
 	})
 
 	err := commandBuffer.CmdBeginRenderPass(core1_0.SubpassContentsInline, core1_0.RenderPassBeginOptions{
-		HaveNext: common.HaveNext{khr_imageless_framebuffer.RenderPassAttachmentBeginOptions{
+		NextOptions: common.NextOptions{khr_imageless_framebuffer.RenderPassAttachmentBeginOptions{
 			Attachments: []core1_0.ImageView{imageView1, imageView2},
 		}},
 	})

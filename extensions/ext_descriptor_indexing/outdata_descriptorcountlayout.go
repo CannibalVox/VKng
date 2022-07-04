@@ -14,10 +14,10 @@ import (
 type DescriptorSetVariableDescriptorCountLayoutSupportOutData struct {
 	MaxVariableDescriptorCount int
 
-	common.HaveNext
+	common.NextOutData
 }
 
-func (o *DescriptorSetVariableDescriptorCountLayoutSupportOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *DescriptorSetVariableDescriptorCountLayoutSupportOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkDescriptorSetVariableDescriptorCountLayoutSupportEXT{})))
 	}

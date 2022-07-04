@@ -19,7 +19,7 @@ type SparseImageFormatOptions struct {
 	Usage   core1_0.ImageUsages
 	Tiling  core1_0.ImageTiling
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o SparseImageFormatOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -37,10 +37,4 @@ func (o SparseImageFormatOptions) PopulateCPointer(allocator *cgoparam.Allocator
 	createInfo.tiling = C.VkImageTiling(o.Tiling)
 
 	return preallocatedPointer, nil
-}
-
-func (o SparseImageFormatOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	createInfo := (*C.VkPhysicalDeviceSparseImageFormatInfo2KHR)(cDataPointer)
-
-	return unsafe.Pointer(createInfo.pNext), nil
 }

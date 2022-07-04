@@ -43,7 +43,7 @@ func (e *VulkanExtension) BufferMemoryRequirements(device core1_0.Device, o Buff
 		return err
 	}
 
-	outDataPtr, err := common.AllocOptions(arena, out)
+	outDataPtr, err := common.AllocOutDataHeader(arena, out)
 	if err != nil {
 		return err
 	}
@@ -65,7 +65,7 @@ func (e *VulkanExtension) ImageMemoryRequirements(device core1_0.Device, o Image
 		return err
 	}
 
-	outDataPtr, err := common.AllocOptions(arena, out)
+	outDataPtr, err := common.AllocOutDataHeader(arena, out)
 	if err != nil {
 		return err
 	}
@@ -109,7 +109,7 @@ func (e *VulkanExtension) SparseImageMemoryRequirements(device core1_0.Device, o
 		}
 	}
 
-	outDataPtr, err := common.AllocOptionSlice[C.VkSparseImageMemoryRequirements2KHR, *SparseImageMemoryRequirementsOutData](arena, outDataSlice)
+	outDataPtr, err := common.AllocOutDataHeaderSlice[C.VkSparseImageMemoryRequirements2KHR, *SparseImageMemoryRequirementsOutData](arena, outDataSlice)
 	if err != nil {
 		return nil, err
 	}

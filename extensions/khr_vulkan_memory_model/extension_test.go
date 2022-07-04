@@ -64,7 +64,7 @@ func TestPhysicalDeviceVulkanMemoryModelFeaturesOptions(t *testing.T) {
 			},
 		},
 
-		HaveNext: common.HaveNext{Next: khr_vulkan_memory_model.PhysicalDeviceVulkanMemoryModelFeaturesOptions{
+		NextOptions: common.NextOptions{Next: khr_vulkan_memory_model.PhysicalDeviceVulkanMemoryModelFeatures{
 			VulkanMemoryModel:                             true,
 			VulkanMemoryModelDeviceScope:                  false,
 			VulkanMemoryModelAvailabilityVisibilityChains: true,
@@ -108,12 +108,12 @@ func TestPhysicalDeviceVulkanMemoryModelFeaturesOutData(t *testing.T) {
 			*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("vulkanMemoryModelAvailabilityVisibilityChains").UnsafeAddr())) = driver.VkBool32(1)
 		})
 
-	var outData khr_vulkan_memory_model.PhysicalDeviceVulkanMemoryModelFeaturesOutData
-	err := extension.PhysicalDeviceFeatures2(physicalDevice, &khr_get_physical_device_properties2.DeviceFeaturesOutData{
-		HaveNext: common.HaveNext{Next: &outData},
+	var outData khr_vulkan_memory_model.PhysicalDeviceVulkanMemoryModelFeatures
+	err := extension.PhysicalDeviceFeatures2(physicalDevice, &khr_get_physical_device_properties2.DeviceFeatures{
+		NextOutData: common.NextOutData{Next: &outData},
 	})
 	require.NoError(t, err)
-	require.Equal(t, khr_vulkan_memory_model.PhysicalDeviceVulkanMemoryModelFeaturesOutData{
+	require.Equal(t, khr_vulkan_memory_model.PhysicalDeviceVulkanMemoryModelFeatures{
 		VulkanMemoryModel:                             true,
 		VulkanMemoryModelDeviceScope:                  false,
 		VulkanMemoryModelAvailabilityVisibilityChains: true,

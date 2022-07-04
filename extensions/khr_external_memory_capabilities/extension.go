@@ -34,7 +34,7 @@ func (e *VulkanExtension) ExternalBufferProperties(physicalDevice core1_0.Physic
 		return err
 	}
 
-	outDataPtr, err := common.AllocOptions(arena, outData)
+	outDataPtr, err := common.AllocOutDataHeader(arena, outData)
 	if err != nil {
 		return err
 	}

@@ -15,7 +15,7 @@ type DeviceGroupPresentOptions struct {
 	DeviceMasks []uint32
 	Mode        DeviceGroupPresentModeFlags
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o DeviceGroupPresentOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -43,9 +43,4 @@ func (o DeviceGroupPresentOptions) PopulateCPointer(allocator *cgoparam.Allocato
 	}
 
 	return preallocatedPointer, nil
-}
-
-func (o DeviceGroupPresentOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkDeviceGroupPresentInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

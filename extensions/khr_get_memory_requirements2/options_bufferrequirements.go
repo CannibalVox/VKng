@@ -15,7 +15,7 @@ import (
 type BufferMemoryRequirementsOptions struct {
 	Buffer core1_0.Buffer
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o BufferMemoryRequirementsOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -29,9 +29,4 @@ func (o BufferMemoryRequirementsOptions) PopulateCPointer(allocator *cgoparam.Al
 	options.buffer = C.VkBuffer(unsafe.Pointer(o.Buffer.Handle()))
 
 	return preallocatedPointer, nil
-}
-
-func (o BufferMemoryRequirementsOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	options := (*C.VkBufferMemoryRequirementsInfo2KHR)(cDataPointer)
-	return options.pNext, nil
 }

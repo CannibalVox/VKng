@@ -15,7 +15,7 @@ import (
 type ImageMemoryRequirementsOptions struct {
 	Image core1_0.Image
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o ImageMemoryRequirementsOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -29,9 +29,4 @@ func (o ImageMemoryRequirementsOptions) PopulateCPointer(allocator *cgoparam.All
 	options.image = C.VkImage(unsafe.Pointer(o.Image.Handle()))
 
 	return preallocatedPointer, nil
-}
-
-func (o ImageMemoryRequirementsOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	options := (*C.VkImageMemoryRequirementsInfo2KHR)(cDataPointer)
-	return options.pNext, nil
 }

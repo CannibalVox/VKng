@@ -19,7 +19,7 @@ type ObjectTagOptions struct {
 	TagName uint64
 	Tag     []byte
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (t ObjectTagOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -37,11 +37,6 @@ func (t ObjectTagOptions) PopulateCPointer(allocator *cgoparam.Allocator, preall
 	tagInfo.pTag = allocator.CBytes(t.Tag)
 
 	return preallocatedPointer, nil
-}
-
-func (t ObjectTagOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (unsafe.Pointer, error) {
-	tagInfo := (*C.VkDebugUtilsObjectTagInfoEXT)(cDataPointer)
-	return tagInfo.pNext, nil
 }
 
 func (t *ObjectTagOptions) PopulateFromCPointer(cPointer unsafe.Pointer) {

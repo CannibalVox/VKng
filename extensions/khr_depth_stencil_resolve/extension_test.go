@@ -56,7 +56,7 @@ func TestPhysicalDeviceDepthStencilResolveOutData(t *testing.T) {
 	err := extension.PhysicalDeviceProperties2(
 		physicalDevice,
 		&khr_get_physical_device_properties2.DevicePropertiesOutData{
-			HaveNext: common.HaveNext{&outData},
+			NextOutData: common.NextOutData{&outData},
 		})
 	require.NoError(t, err)
 	require.Equal(t, PhysicalDeviceDepthStencilResolveOutData{
@@ -121,7 +121,7 @@ func TestSubpassDescriptionDepthStencilResolveOptions(t *testing.T) {
 		khr_create_renderpass2.RenderPassCreateOptions{
 			Subpasses: []khr_create_renderpass2.SubpassDescriptionOptions{
 				{
-					HaveNext: common.HaveNext{
+					NextOptions: common.NextOptions{
 						SubpassDescriptionDepthStencilResolveOptions{
 							DepthResolveMode:   ResolveModeMin,
 							StencilResolveMode: ResolveModeSampleZero,

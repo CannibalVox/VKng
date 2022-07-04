@@ -17,10 +17,10 @@ type PhysicalDeviceDepthStencilResolveOutData struct {
 	IndependentResolveNone       bool
 	IndependentResolve           bool
 
-	common.HaveNext
+	common.NextOutData
 }
 
-func (o *PhysicalDeviceDepthStencilResolveOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDeviceDepthStencilResolveOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceDepthStencilResolvePropertiesKHR{})))
 	}

@@ -16,7 +16,7 @@ type BindImageMemoryDeviceGroupOptions struct {
 	DeviceIndices            []int
 	SplitInstanceBindRegions []core1_0.Rect2D
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o BindImageMemoryDeviceGroupOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -60,9 +60,4 @@ func (o BindImageMemoryDeviceGroupOptions) PopulateCPointer(allocator *cgoparam.
 	}
 
 	return preallocatedPointer, nil
-}
-
-func (o BindImageMemoryDeviceGroupOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkBindImageMemoryDeviceGroupInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

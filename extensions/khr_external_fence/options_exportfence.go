@@ -15,7 +15,7 @@ import (
 type ExportFenceOptions struct {
 	HandleTypes khr_external_fence_capabilities.ExternalFenceHandleTypes
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o ExportFenceOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -29,9 +29,4 @@ func (o ExportFenceOptions) PopulateCPointer(allocator *cgoparam.Allocator, prea
 	info.handleTypes = C.VkExternalFenceHandleTypeFlags(o.HandleTypes)
 
 	return preallocatedPointer, nil
-}
-
-func (o ExportFenceOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkExportFenceCreateInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

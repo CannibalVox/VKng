@@ -34,7 +34,7 @@ func (e *VulkanExtension) ExternalFenceProperties(physicalDevice core1_0.Physica
 		return err
 	}
 
-	outDataPtr, err := common.AllocOptions(arena, outData)
+	outDataPtr, err := common.AllocOutDataHeader(arena, outData)
 	if err != nil {
 		return err
 	}

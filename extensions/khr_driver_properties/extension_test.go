@@ -69,7 +69,7 @@ func TestPhysicalDeviceDriverOutData(t *testing.T) {
 	err := extension.PhysicalDeviceProperties2(
 		physicalDevice,
 		&khr_get_physical_device_properties2.DevicePropertiesOutData{
-			HaveNext: common.HaveNext{&driverOutData},
+			NextOutData: common.NextOutData{&driverOutData},
 		})
 	require.NoError(t, err)
 	require.Equal(t, PhysicalDeviceDriverOutData{

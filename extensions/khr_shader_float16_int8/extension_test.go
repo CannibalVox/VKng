@@ -62,8 +62,8 @@ func TestPhysicalDeviceShaderFloat16Int8FeaturesOptions(t *testing.T) {
 					CreatedQueuePriorities: []float32{0},
 				},
 			},
-			HaveNext: common.HaveNext{
-				khr_shader_float16_int8.PhysicalDeviceShaderFloat16Int8FeaturesOptions{
+			NextOptions: common.NextOptions{
+				khr_shader_float16_int8.PhysicalDeviceShaderFloat16Int8Features{
 					ShaderInt8:    true,
 					ShaderFloat16: true,
 				},
@@ -101,15 +101,15 @@ func TestPhysicalDeviceShaderFloat16Int8FeaturesOutData(t *testing.T) {
 		*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("shaderFloat16").UnsafeAddr())) = driver.VkBool32(1)
 	})
 
-	var outData khr_shader_float16_int8.PhysicalDeviceShaderFloat16Int8FeaturesOutData
+	var outData khr_shader_float16_int8.PhysicalDeviceShaderFloat16Int8Features
 	err := extension.PhysicalDeviceFeatures2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DeviceFeaturesOutData{
-			HaveNext: common.HaveNext{&outData},
+		&khr_get_physical_device_properties2.DeviceFeatures{
+			NextOutData: common.NextOutData{&outData},
 		},
 	)
 	require.NoError(t, err)
-	require.Equal(t, khr_shader_float16_int8.PhysicalDeviceShaderFloat16Int8FeaturesOutData{
+	require.Equal(t, khr_shader_float16_int8.PhysicalDeviceShaderFloat16Int8Features{
 		ShaderFloat16: true,
 		ShaderInt8:    true,
 	}, outData)

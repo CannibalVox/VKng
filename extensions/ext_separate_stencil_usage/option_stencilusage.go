@@ -15,7 +15,7 @@ import (
 type ImageStencilUsageCreateOptions struct {
 	StencilUsage core1_0.ImageUsages
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o ImageStencilUsageCreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -29,9 +29,4 @@ func (o ImageStencilUsageCreateOptions) PopulateCPointer(allocator *cgoparam.All
 	info.stencilUsage = C.VkImageUsageFlags(o.StencilUsage)
 
 	return preallocatedPointer, nil
-}
-
-func (o ImageStencilUsageCreateOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkImageStencilUsageCreateInfoEXT)(cDataPointer)
-	return info.pNext, nil
 }

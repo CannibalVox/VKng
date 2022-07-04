@@ -15,10 +15,10 @@ import (
 type SparseImageMemoryRequirementsOutData struct {
 	MemoryRequirements core1_0.SparseImageMemoryRequirements
 
-	common.HaveNext
+	common.NextOutData
 }
 
-func (o *SparseImageMemoryRequirementsOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *SparseImageMemoryRequirementsOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkSparseImageMemoryRequirements2KHR{})))
 	}

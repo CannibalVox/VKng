@@ -16,7 +16,7 @@ type DeviceGroupSubmitOptions struct {
 	CommandBufferDeviceMasks     []uint32
 	SignalSemaphoreDeviceIndices []int
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o DeviceGroupSubmitOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -71,9 +71,4 @@ func (o DeviceGroupSubmitOptions) PopulateCPointer(allocator *cgoparam.Allocator
 	}
 
 	return preallocatedPointer, nil
-}
-
-func (o DeviceGroupSubmitOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkDeviceGroupSubmitInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

@@ -22,7 +22,7 @@ type SamplerYcbcrConversionCreateOptions struct {
 	ChromaFilter                core1_0.Filter
 	ForceExplicitReconstruction bool
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o SamplerYcbcrConversionCreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -50,9 +50,4 @@ func (o SamplerYcbcrConversionCreateOptions) PopulateCPointer(allocator *cgopara
 	}
 
 	return preallocatedPointer, nil
-}
-
-func (o SamplerYcbcrConversionCreateOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkSamplerYcbcrConversionCreateInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

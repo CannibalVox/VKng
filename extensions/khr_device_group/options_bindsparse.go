@@ -15,7 +15,7 @@ type DeviceGroupBindSparseOptions struct {
 	ResourceDeviceIndex int
 	MemoryDeviceIndex   int
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o DeviceGroupBindSparseOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -30,9 +30,4 @@ func (o DeviceGroupBindSparseOptions) PopulateCPointer(allocator *cgoparam.Alloc
 	createInfo.memoryDeviceIndex = C.uint32_t(o.MemoryDeviceIndex)
 
 	return preallocatedPointer, nil
-}
-
-func (o DeviceGroupBindSparseOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	createInfo := (*C.VkDeviceGroupBindSparseInfoKHR)(cDataPointer)
-	return createInfo.pNext, nil
 }

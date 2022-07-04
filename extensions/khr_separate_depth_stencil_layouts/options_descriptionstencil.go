@@ -16,7 +16,7 @@ type AttachmentDescriptionStencilLayoutOptions struct {
 	StencilInitialLayout core1_0.ImageLayout
 	StencilFinalLayout   core1_0.ImageLayout
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o AttachmentDescriptionStencilLayoutOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -31,9 +31,4 @@ func (o AttachmentDescriptionStencilLayoutOptions) PopulateCPointer(allocator *c
 	info.stencilFinalLayout = C.VkImageLayout(o.StencilFinalLayout)
 
 	return preallocatedPointer, nil
-}
-
-func (o AttachmentDescriptionStencilLayoutOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkAttachmentDescriptionStencilLayoutKHR)(cDataPointer)
-	return info.pNext, nil
 }

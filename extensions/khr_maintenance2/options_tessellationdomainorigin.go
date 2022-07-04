@@ -13,7 +13,7 @@ import (
 
 type PipelineTessellationDomainOriginStateOptions struct {
 	DomainOrigin TessellationDomainOrigin
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o PipelineTessellationDomainOriginStateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -28,10 +28,3 @@ func (o PipelineTessellationDomainOriginStateOptions) PopulateCPointer(allocator
 
 	return preallocatedPointer, nil
 }
-
-func (o PipelineTessellationDomainOriginStateOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	createInfo := (*C.VkPipelineTessellationDomainOriginStateCreateInfoKHR)(cDataPointer)
-	return createInfo.pNext, nil
-}
-
-var _ common.Options = PipelineTessellationDomainOriginStateOptions{}

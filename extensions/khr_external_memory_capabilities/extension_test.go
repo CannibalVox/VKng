@@ -120,13 +120,13 @@ func TestExternalImageFormatOptions(t *testing.T) {
 
 	var outData khr_external_memory_capabilities.ExternalImageFormatOutData
 	format := khr_get_physical_device_properties2.ImageFormatPropertiesOutData{
-		HaveNext: common.HaveNext{&outData},
+		NextOutData: common.NextOutData{&outData},
 	}
 	_, err := extension.PhysicalDeviceImageFormatProperties2(
 		physicalDevice,
 		khr_get_physical_device_properties2.ImageFormatOptions{
 			Format: core1_0.DataFormatA2B10G10R10UnsignedIntPacked,
-			HaveNext: common.HaveNext{
+			NextOptions: common.NextOptions{
 				khr_external_memory_capabilities.PhysicalDeviceExternalImageFormatOptions{
 					HandleType: khr_external_memory_capabilities.ExternalMemoryHandleTypeOpaqueFD,
 				},
@@ -196,7 +196,7 @@ func TestPhysicalDeviceIDOutData(t *testing.T) {
 
 	var properties khr_get_physical_device_properties2.DevicePropertiesOutData
 	var outData khr_external_memory_capabilities.PhysicalDeviceIDOutData
-	properties.HaveNext = common.HaveNext{&outData}
+	properties.NextOutData = common.NextOutData{&outData}
 
 	err = extension.PhysicalDeviceProperties2(
 		physicalDevice,

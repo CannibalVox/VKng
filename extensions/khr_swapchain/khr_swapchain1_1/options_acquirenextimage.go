@@ -22,7 +22,7 @@ type AcquireNextImageOptions struct {
 	Fence      core1_0.Fence
 	DeviceMask uint32
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (o AcquireNextImageOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -51,9 +51,4 @@ func (o AcquireNextImageOptions) PopulateCPointer(allocator *cgoparam.Allocator,
 	}
 
 	return preallocatedPointer, nil
-}
-
-func (o AcquireNextImageOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	info := (*C.VkAcquireNextImageInfoKHR)(cDataPointer)
-	return info.pNext, nil
 }

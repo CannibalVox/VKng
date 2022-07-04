@@ -31,10 +31,10 @@ type PhysicalDeviceFloatControlsOutData struct {
 	ShaderRoundingModeRTZFloat32          bool
 	ShaderRoundingModeRTZFloat64          bool
 
-	common.HaveNext
+	common.NextOutData
 }
 
-func (o *PhysicalDeviceFloatControlsOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDeviceFloatControlsOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceFloatControlsPropertiesKHR{})))
 	}

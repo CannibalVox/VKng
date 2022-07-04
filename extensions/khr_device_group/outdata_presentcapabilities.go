@@ -16,10 +16,10 @@ type DeviceGroupPresentCapabilitiesOutData struct {
 	PresentMask [khr_device_group_creation.MaxGroupSize]uint32
 	Modes       DeviceGroupPresentModeFlags
 
-	common.HaveNext
+	common.NextOutData
 }
 
-func (o *DeviceGroupPresentCapabilitiesOutData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *DeviceGroupPresentCapabilitiesOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkDeviceGroupPresentCapabilitiesKHR{})))
 	}

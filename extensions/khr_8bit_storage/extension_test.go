@@ -65,7 +65,7 @@ func TestPhysicalDevice8BitStorageFeaturesOptions(t *testing.T) {
 					CreatedQueuePriorities: []float32{0},
 				},
 			},
-			HaveNext: common.HaveNext{PhysicalDevice8BitStorageFeaturesOptions{
+			NextOptions: common.NextOptions{PhysicalDevice8BitStorageFeatures{
 				StoragePushConstant8:              true,
 				UniformAndStorageBuffer8BitAccess: false,
 				StorageBuffer8BitAccess:           true,
@@ -103,14 +103,14 @@ func TestPhysicalDevice8BitStorageFeaturesOutData(t *testing.T) {
 		*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("storagePushConstant8").UnsafeAddr())) = driver.VkBool32(1)
 	})
 
-	var outData PhysicalDevice8BitStorageFeaturesOutData
+	var outData PhysicalDevice8BitStorageFeatures
 	err := extension.PhysicalDeviceFeatures2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DeviceFeaturesOutData{
-			HaveNext: common.HaveNext{&outData},
+		&khr_get_physical_device_properties2.DeviceFeatures{
+			NextOutData: common.NextOutData{&outData},
 		})
 	require.NoError(t, err)
-	require.Equal(t, PhysicalDevice8BitStorageFeaturesOutData{
+	require.Equal(t, PhysicalDevice8BitStorageFeatures{
 		StorageBuffer8BitAccess:           true,
 		UniformAndStorageBuffer8BitAccess: false,
 		StoragePushConstant8:              true,

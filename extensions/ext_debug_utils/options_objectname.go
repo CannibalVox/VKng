@@ -17,7 +17,7 @@ type ObjectNameOptions struct {
 	Handle uintptr
 	Type   core1_0.ObjectType
 
-	common.HaveNext
+	common.NextOptions
 }
 
 func (i ObjectNameOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
@@ -33,11 +33,6 @@ func (i ObjectNameOptions) PopulateCPointer(allocator *cgoparam.Allocator, preal
 	nameInfo.pObjectName = (*C.char)(allocator.CString(i.Name))
 
 	return preallocatedPointer, nil
-}
-
-func (i ObjectNameOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
-	objectNameInfo := (*C.VkDebugUtilsObjectNameInfoEXT)(cDataPointer)
-	return objectNameInfo.pNext, nil
 }
 
 func (i *ObjectNameOptions) PopulateFromCPointer(cDataPointer unsafe.Pointer) {

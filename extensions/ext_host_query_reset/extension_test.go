@@ -86,8 +86,8 @@ func TestPhysicalDeviceHostQueryResetFeaturesOptions(t *testing.T) {
 					CreatedQueuePriorities: []float32{0},
 				},
 			},
-			HaveNext: common.HaveNext{
-				ext_host_query_reset.PhysicalDeviceHostQueryResetFeaturesOptions{
+			NextOptions: common.NextOptions{
+				ext_host_query_reset.PhysicalDeviceHostQueryResetFeatures{
 					HostQueryReset: true,
 				},
 			},
@@ -123,15 +123,15 @@ func TestPhysicalDeviceHostQueryResetFeaturesOutData(t *testing.T) {
 		*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("hostQueryReset").UnsafeAddr())) = driver.VkBool32(1)
 	})
 
-	var outData ext_host_query_reset.PhysicalDeviceHostQueryResetFeaturesOutData
+	var outData ext_host_query_reset.PhysicalDeviceHostQueryResetFeatures
 	err := extension.PhysicalDeviceFeatures2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DeviceFeaturesOutData{
-			HaveNext: common.HaveNext{&outData},
+		&khr_get_physical_device_properties2.DeviceFeatures{
+			NextOutData: common.NextOutData{&outData},
 		},
 	)
 	require.NoError(t, err)
-	require.Equal(t, ext_host_query_reset.PhysicalDeviceHostQueryResetFeaturesOutData{
+	require.Equal(t, ext_host_query_reset.PhysicalDeviceHostQueryResetFeatures{
 		HostQueryReset: true,
 	}, outData)
 }

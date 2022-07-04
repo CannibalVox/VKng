@@ -50,7 +50,7 @@ func TestImageStencilUsageCreateOptions(t *testing.T) {
 	image, _, err := device.CreateImage(
 		nil,
 		core1_0.ImageCreateOptions{
-			HaveNext: common.HaveNext{ImageStencilUsageCreateOptions{
+			NextOptions: common.NextOptions{ImageStencilUsageCreateOptions{
 				StencilUsage: core1_0.ImageUsageColorAttachment,
 			}},
 		})
