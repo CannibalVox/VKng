@@ -145,13 +145,13 @@ func TestVulkanExtensionWithKHRSurface_GetDeviceGroupPresentCapabilities(t *test
 		return core1_0.VKSuccess, nil
 	})
 
-	var outData khr_device_group.DeviceGroupPresentCapabilitiesOutData
+	var outData khr_device_group.DeviceGroupPresentCapabilities
 	_, err := extension.WithKHRSurface().DeviceGroupPresentCapabilities(
 		device,
 		&outData,
 	)
 	require.NoError(t, err)
-	require.Equal(t, khr_device_group.DeviceGroupPresentCapabilitiesOutData{
+	require.Equal(t, khr_device_group.DeviceGroupPresentCapabilities{
 		PresentMask: [32]uint32{1, 2, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 	}, outData)
 }
@@ -424,9 +424,9 @@ func TestVulkanExtensionWithKHRSwapchain_AcquireNextImage(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	index, _, err := extension.WithKHRSwapchain().AcquireNextImage(
+	index, _, err := extension.WithKHRSwapchain().AcquireNextImage2(
 		device,
-		khr_device_group.AcquireNextImageOptions{
+		khr_device_group.AcquireNextImageInfo{
 			Swapchain:  swapchain,
 			Timeout:    time.Second,
 			Semaphore:  semaphore,
@@ -474,10 +474,10 @@ func TestMemoryAllocateFlagsOptions(t *testing.T) {
 		})
 
 	memory, _, err := device.AllocateMemory(nil,
-		core1_0.MemoryAllocateOptions{
+		core1_0.MemoryAllocateInfo{
 			AllocationSize:  1,
 			MemoryTypeIndex: 3,
-			NextOptions: common.NextOptions{Next: khr_device_group.MemoryAllocateFlagsOptions{
+			NextOptions: common.NextOptions{Next: khr_device_group.MemoryAllocateFlagsInfo{
 				Flags:      khr_device_group.MemoryAllocateDeviceMask,
 				DeviceMask: 5,
 			}},
@@ -517,9 +517,9 @@ func TestDeviceGroupCommandBufferBeginOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	_, err := commandBuffer.Begin(core1_0.BeginOptions{
-		Flags: core1_0.BeginInfoOneTimeSubmit,
-		NextOptions: common.NextOptions{Next: khr_device_group.DeviceGroupCommandBufferBeginOptions{
+	_, err := commandBuffer.Begin(core1_0.CommandBufferBeginInfo{
+		Flags: core1_0.CommandBufferUsageOneTimeSubmit,
+		NextOptions: common.NextOptions{Next: khr_device_group.DeviceGroupCommandBufferBeginInfo{
 			DeviceMask: 3,
 		}},
 	})
@@ -571,14 +571,14 @@ func TestBindBufferMemoryDeviceGroupOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	_, err := extension.BindBufferMemory(device, []khr_bind_memory2.BindBufferMemoryOptions{
+	_, err := extension.BindBufferMemory2(device, []khr_bind_memory2.BindBufferMemoryInfo{
 		{
 			Buffer:       buffer,
 			Memory:       memory,
 			MemoryOffset: 1,
 
 			NextOptions: common.NextOptions{
-				khr_device_group.BindBufferMemoryDeviceGroupOptions{
+				khr_device_group.BindBufferMemoryDeviceGroupInfo{
 					DeviceIndices: []int{1, 2, 7},
 				},
 			},
@@ -650,14 +650,14 @@ func TestBindImageMemoryDeviceGroupOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	_, err := extension.BindImageMemory(device, []khr_bind_memory2.BindImageMemoryOptions{
+	_, err := extension.BindImageMemory2(device, []khr_bind_memory2.BindImageMemoryInfo{
 		{
 			Image:        image,
 			Memory:       memory,
 			MemoryOffset: 1,
 
 			NextOptions: common.NextOptions{
-				khr_device_group.BindImageMemoryDeviceGroupOptions{
+				khr_device_group.BindImageMemoryDeviceGroupInfo{
 					DeviceIndices: []int{1, 2, 7},
 					SplitInstanceBindRegions: []core1_0.Rect2D{
 						{
@@ -715,14 +715,14 @@ func TestBindImageMemorySwapchainOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	_, err := extension.BindImageMemory(device, []khr_bind_memory2.BindImageMemoryOptions{
+	_, err := extension.BindImageMemory2(device, []khr_bind_memory2.BindImageMemoryInfo{
 		{
 			Image:        image,
 			Memory:       memory,
 			MemoryOffset: 1,
 
 			NextOptions: common.NextOptions{
-				khr_device_group.BindImageMemorySwapchainOptions{
+				khr_device_group.BindImageMemorySwapchainInfo{
 					Swapchain:  swapchain,
 					ImageIndex: 3,
 				},
@@ -786,7 +786,7 @@ func TestDeviceGroupBindSparseOptions(t *testing.T) {
 			WaitSemaphores:   []core1_0.Semaphore{semaphore1},
 			SignalSemaphores: []core1_0.Semaphore{semaphore2, semaphore3},
 			NextOptions: common.NextOptions{
-				khr_device_group.DeviceGroupBindSparseOptions{
+				khr_device_group.DeviceGroupBindSparseInfo{
 					ResourceDeviceIndex: 1,
 					MemoryDeviceIndex:   3,
 				},
@@ -836,7 +836,7 @@ func TestImageSwapchainCreateOptions(t *testing.T) {
 		MipLevels:   1,
 		ArrayLayers: 3,
 		NextOptions: common.NextOptions{
-			khr_device_group.ImageSwapchainCreateOptions{
+			khr_device_group.ImageSwapchainCreateInfo{
 				Swapchain: swapchain,
 			},
 		},
@@ -880,11 +880,11 @@ func TestDeviceGroupPresentOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	_, err := extension.PresentToQueue(queue, khr_swapchain.PresentOptions{
+	_, err := extension.QueuePresent(queue, khr_swapchain.PresentInfo{
 		Swapchains:   []khr_swapchain.Swapchain{swapchain},
 		ImageIndices: []int{3},
 		NextOptions: common.NextOptions{
-			khr_device_group.DeviceGroupPresentOptions{
+			khr_device_group.DeviceGroupPresentInfo{
 				DeviceMasks: []uint32{7},
 				Mode:        khr_device_group.DeviceGroupPresentModeSum,
 			},
@@ -947,11 +947,11 @@ func TestDeviceGroupRenderPassBeginOptions(t *testing.T) {
 
 	err := commandBuffer.CmdBeginRenderPass(
 		core1_0.SubpassContentsSecondaryCommandBuffers,
-		core1_0.RenderPassBeginOptions{
+		core1_0.RenderPassBeginInfo{
 			RenderPass:  renderPass,
 			Framebuffer: framebuffer,
 			NextOptions: common.NextOptions{
-				khr_device_group.DeviceGroupRenderPassBeginOptions{
+				khr_device_group.DeviceGroupRenderPassBeginInfo{
 					DeviceMask: 7,
 					DeviceRenderAreas: []core1_0.Rect2D{
 						{
@@ -1027,15 +1027,15 @@ func TestDeviceGroupSubmitOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	_, err := queue.SubmitToQueue(fence, []core1_0.SubmitOptions{
+	_, err := queue.Submit(fence, []core1_0.SubmitInfo{
 		{
 			CommandBuffers:   []core1_0.CommandBuffer{commandBuffer},
 			WaitSemaphores:   []core1_0.Semaphore{semaphore1},
 			SignalSemaphores: []core1_0.Semaphore{semaphore2, semaphore3},
-			WaitDstStages:    []core1_0.PipelineStages{core1_0.PipelineStageBottomOfPipe},
+			WaitDstStageMask: []core1_0.PipelineStageFlags{core1_0.PipelineStageBottomOfPipe},
 
 			NextOptions: common.NextOptions{
-				khr_device_group.DeviceGroupSubmitOptions{
+				khr_device_group.DeviceGroupSubmitInfo{
 					WaitSemaphoreDeviceIndices:   []int{1},
 					CommandBufferDeviceMasks:     []uint32{2},
 					SignalSemaphoreDeviceIndices: []int{3, 5},
@@ -1088,10 +1088,10 @@ func TestDeviceGroupSwapchainCreateOptions(t *testing.T) {
 	swapchain, _, err := extension.CreateSwapchain(
 		device,
 		nil,
-		khr_swapchain.CreateOptions{
+		khr_swapchain.SwapchainCreateInfo{
 			Surface: surface,
 			NextOptions: common.NextOptions{
-				khr_device_group.DeviceGroupSwapchainCreateOptions{
+				khr_device_group.DeviceGroupSwapchainCreateInfo{
 					Modes: khr_device_group.DeviceGroupPresentModeLocal,
 				},
 			},

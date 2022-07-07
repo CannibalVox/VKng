@@ -11,13 +11,13 @@ import (
 	"unsafe"
 )
 
-type MemoryOpaqueCaptureAddressAllocateOptions struct {
+type MemoryOpaqueCaptureAddressAllocateInfo struct {
 	OpaqueCaptureAddress uint64
 
 	common.NextOptions
 }
 
-func (o MemoryOpaqueCaptureAddressAllocateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o MemoryOpaqueCaptureAddressAllocateInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkMemoryOpaqueCaptureAddressAllocateInfoKHR{})))
 	}

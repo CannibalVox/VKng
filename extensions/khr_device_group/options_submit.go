@@ -11,7 +11,7 @@ import (
 	"unsafe"
 )
 
-type DeviceGroupSubmitOptions struct {
+type DeviceGroupSubmitInfo struct {
 	WaitSemaphoreDeviceIndices   []int
 	CommandBufferDeviceMasks     []uint32
 	SignalSemaphoreDeviceIndices []int
@@ -19,7 +19,7 @@ type DeviceGroupSubmitOptions struct {
 	common.NextOptions
 }
 
-func (o DeviceGroupSubmitOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o DeviceGroupSubmitInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkDeviceGroupSubmitInfoKHR{})))
 	}

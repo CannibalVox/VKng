@@ -11,15 +11,15 @@ import (
 	"unsafe"
 )
 
-type ExternalFenceOutData struct {
-	ExportFromImportedHandleTypes ExternalFenceHandleTypes
-	CompatibleHandleTypes         ExternalFenceHandleTypes
-	ExternalFenceFeatures         ExternalFenceFeatures
+type ExternalFenceProperties struct {
+	ExportFromImportedHandleTypes ExternalFenceHandleTypeFlags
+	CompatibleHandleTypes         ExternalFenceHandleTypeFlags
+	ExternalFenceFeatures         ExternalFenceFeatureFlags
 
 	common.NextOutData
 }
 
-func (o *ExternalFenceOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *ExternalFenceProperties) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkExternalFencePropertiesKHR{})))
 	}
@@ -31,12 +31,12 @@ func (o *ExternalFenceOutData) PopulateHeader(allocator *cgoparam.Allocator, pre
 	return preallocatedPointer, nil
 }
 
-func (o *ExternalFenceOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *ExternalFenceProperties) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	info := (*C.VkExternalFencePropertiesKHR)(cDataPointer)
 
-	o.ExportFromImportedHandleTypes = ExternalFenceHandleTypes(info.exportFromImportedHandleTypes)
-	o.CompatibleHandleTypes = ExternalFenceHandleTypes(info.compatibleHandleTypes)
-	o.ExternalFenceFeatures = ExternalFenceFeatures(info.externalFenceFeatures)
+	o.ExportFromImportedHandleTypes = ExternalFenceHandleTypeFlags(info.exportFromImportedHandleTypes)
+	o.CompatibleHandleTypes = ExternalFenceHandleTypeFlags(info.compatibleHandleTypes)
+	o.ExternalFenceFeatures = ExternalFenceFeatureFlags(info.externalFenceFeatures)
 
 	return info.pNext, nil
 }

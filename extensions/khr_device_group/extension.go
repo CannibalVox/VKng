@@ -92,7 +92,7 @@ type VulkanExtensionWithKHRSurface struct {
 	driver khr_device_group_driver.Driver
 }
 
-func (v *VulkanExtensionWithKHRSurface) DeviceGroupPresentCapabilities(device core1_0.Device, outData *DeviceGroupPresentCapabilitiesOutData) (common.VkResult, error) {
+func (v *VulkanExtensionWithKHRSurface) DeviceGroupPresentCapabilities(device core1_0.Device, outData *DeviceGroupPresentCapabilities) (common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -194,7 +194,7 @@ type VulkanExtensionWithKHRSwapchain struct {
 	driver khr_device_group_driver.Driver
 }
 
-func (v *VulkanExtensionWithKHRSwapchain) AcquireNextImage(device core1_0.Device, o AcquireNextImageOptions) (int, common.VkResult, error) {
+func (v *VulkanExtensionWithKHRSwapchain) AcquireNextImage2(device core1_0.Device, o AcquireNextImageInfo) (int, common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 

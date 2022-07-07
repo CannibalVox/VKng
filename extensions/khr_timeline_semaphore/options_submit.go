@@ -11,14 +11,14 @@ import (
 	"unsafe"
 )
 
-type TimelineSemaphoreSubmitOptions struct {
+type TimelineSemaphoreSubmitInfo struct {
 	WaitSemaphoreValues   []uint64
 	SignalSemaphoreValues []uint64
 
 	common.NextOptions
 }
 
-func (o TimelineSemaphoreSubmitOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o TimelineSemaphoreSubmitInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkTimelineSemaphoreSubmitInfoKHR{})))
 	}

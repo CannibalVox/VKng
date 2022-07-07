@@ -11,15 +11,15 @@ import (
 	"unsafe"
 )
 
-type ExternalSemaphoreOutData struct {
-	ExportFromImportedHandleTypes ExternalSemaphoreHandleTypes
-	CompatibleHandleTypes         ExternalSemaphoreHandleTypes
-	ExternalSemaphoreFeatures     ExternalSemaphoreFeatures
+type ExternalSemaphoreProperties struct {
+	ExportFromImportedHandleTypes ExternalSemaphoreHandleTypeFlags
+	CompatibleHandleTypes         ExternalSemaphoreHandleTypeFlags
+	ExternalSemaphoreFeatures     ExternalSemaphoreFeatureFlags
 
 	common.NextOutData
 }
 
-func (o *ExternalSemaphoreOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *ExternalSemaphoreProperties) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkExternalSemaphorePropertiesKHR{})))
 	}
@@ -31,12 +31,12 @@ func (o *ExternalSemaphoreOutData) PopulateHeader(allocator *cgoparam.Allocator,
 	return preallocatedPointer, nil
 }
 
-func (o *ExternalSemaphoreOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *ExternalSemaphoreProperties) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	info := (*C.VkExternalSemaphorePropertiesKHR)(cDataPointer)
 
-	o.ExportFromImportedHandleTypes = ExternalSemaphoreHandleTypes(info.exportFromImportedHandleTypes)
-	o.CompatibleHandleTypes = ExternalSemaphoreHandleTypes(info.compatibleHandleTypes)
-	o.ExternalSemaphoreFeatures = ExternalSemaphoreFeatures(info.externalSemaphoreFeatures)
+	o.ExportFromImportedHandleTypes = ExternalSemaphoreHandleTypeFlags(info.exportFromImportedHandleTypes)
+	o.CompatibleHandleTypes = ExternalSemaphoreHandleTypeFlags(info.compatibleHandleTypes)
+	o.ExternalSemaphoreFeatures = ExternalSemaphoreFeatureFlags(info.externalSemaphoreFeatures)
 
 	return info.pNext, nil
 }

@@ -14,24 +14,24 @@ import (
 	"unsafe"
 )
 
-type CreateOptions struct {
+type SwapchainCreateInfo struct {
 	Surface ext_surface.Surface
 
 	Flags SwapchainCreateFlags
 
 	MinImageCount int
 
-	ImageFormat      core1_0.DataFormat
+	ImageFormat      core1_0.Format
 	ImageColorSpace  ext_surface.ColorSpace
 	ImageExtent      core1_0.Extent2D
 	ImageArrayLayers int
-	ImageUsage       core1_0.ImageUsages
+	ImageUsage       core1_0.ImageUsageFlags
 
-	SharingMode        core1_0.SharingMode
+	ImageSharingMode   core1_0.SharingMode
 	QueueFamilyIndices []int
 
-	PreTransform   ext_surface.SurfaceTransforms
-	CompositeAlpha ext_surface.CompositeAlphaModes
+	PreTransform   ext_surface.SurfaceTransformFlags
+	CompositeAlpha ext_surface.CompositeAlphaFlags
 	PresentMode    ext_surface.PresentMode
 
 	Clipped      bool
@@ -40,9 +40,9 @@ type CreateOptions struct {
 	common.NextOptions
 }
 
-func (o CreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o SwapchainCreateInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if o.Surface == nil {
-		return nil, errors.New("khr_swapchain.CreateOptions.Surface cannot be nil")
+		return nil, errors.New("khr_swapchain.SwapchainCreateInfo.Surface cannot be nil")
 	}
 
 	if preallocatedPointer == unsafe.Pointer(nil) {
@@ -63,7 +63,7 @@ func (o CreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, prealloca
 	createInfo.imageArrayLayers = C.uint32_t(o.ImageArrayLayers)
 	createInfo.imageUsage = C.VkImageUsageFlags(o.ImageUsage)
 
-	createInfo.imageSharingMode = C.VkSharingMode(o.SharingMode)
+	createInfo.imageSharingMode = C.VkSharingMode(o.ImageSharingMode)
 	createInfo.queueFamilyIndexCount = C.uint32_t(len(o.QueueFamilyIndices))
 
 	if len(o.QueueFamilyIndices) == 0 {

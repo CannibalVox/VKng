@@ -12,19 +12,19 @@ import (
 	"unsafe"
 )
 
-type FramebufferAttachmentImageOptions struct {
+type FramebufferAttachmentImageInfo struct {
 	Flags      core1_0.ImageCreateFlags
-	Usage      core1_0.ImageUsages
+	Usage      core1_0.ImageUsageFlags
 	Width      int
 	Height     int
 	LayerCount int
 
-	ViewFormats []core1_0.DataFormat
+	ViewFormats []core1_0.Format
 
 	common.NextOptions
 }
 
-func (o FramebufferAttachmentImageOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o FramebufferAttachmentImageInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkFramebufferAttachmentImageInfoKHR{})))
 	}

@@ -56,9 +56,9 @@ func TestDescriptorSetLayoutBindingFlagsCreateOptions(t *testing.T) {
 
 	descriptorSetLayout, _, err := device.CreateDescriptorSetLayout(
 		nil,
-		core1_0.DescriptorSetLayoutCreateOptions{
+		core1_0.DescriptorSetLayoutCreateInfo{
 			NextOptions: common.NextOptions{
-				DescriptorSetLayoutBindingFlagsCreateOptions{
+				DescriptorSetLayoutBindingFlagsCreateInfo{
 					BindingFlags: []DescriptorBindingFlags{
 						DescriptorBindingVariableDescriptorCount,
 						DescriptorBindingUpdateAfterBind,
@@ -119,16 +119,16 @@ func TestDescriptorSetVariableDescriptorCountAllocateOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	sets, _, err := device.AllocateDescriptorSets(core1_0.DescriptorSetAllocateOptions{
+	sets, _, err := device.AllocateDescriptorSets(core1_0.DescriptorSetAllocateInfo{
 		DescriptorPool: descriptorPool,
-		AllocationLayouts: []core1_0.DescriptorSetLayout{
+		SetLayouts: []core1_0.DescriptorSetLayout{
 			descriptorLayout1,
 			descriptorLayout2,
 			descriptorLayout3,
 			descriptorLayout4,
 		},
 		NextOptions: common.NextOptions{
-			DescriptorSetVariableDescriptorCountAllocateOptions{
+			DescriptorSetVariableDescriptorCountAllocateInfo{
 				DescriptorCounts: []int{1, 3, 5, 7},
 			},
 		},
@@ -176,15 +176,15 @@ func TestDescriptorSetVariableDescriptorCountLayoutSupportOutData(t *testing.T) 
 		*(*driver.Uint32)(unsafe.Pointer(val.FieldByName("maxVariableDescriptorCount").UnsafeAddr())) = driver.Uint32(7)
 	})
 
-	var outData DescriptorSetVariableDescriptorCountLayoutSupportOutData
+	var outData DescriptorSetVariableDescriptorCountLayoutSupport
 	err := extension.DescriptorSetLayoutSupport(
 		device,
-		core1_0.DescriptorSetLayoutCreateOptions{},
-		&khr_maintenance3.DescriptorSetLayoutSupportOutData{
+		core1_0.DescriptorSetLayoutCreateInfo{},
+		&khr_maintenance3.DescriptorSetLayoutSupport{
 			NextOutData: common.NextOutData{&outData},
 		})
 	require.NoError(t, err)
-	require.Equal(t, DescriptorSetVariableDescriptorCountLayoutSupportOutData{
+	require.Equal(t, DescriptorSetVariableDescriptorCountLayoutSupport{
 		MaxVariableDescriptorCount: 7,
 	}, outData)
 }
@@ -247,10 +247,10 @@ func TestPhysicalDeviceDescriptorIndexingFeaturesOptions(t *testing.T) {
 
 	device, _, err := physicalDevice.CreateDevice(
 		nil,
-		core1_0.DeviceCreateOptions{
-			QueueFamilies: []core1_0.DeviceQueueCreateOptions{
+		core1_0.DeviceCreateInfo{
+			QueueCreateInfos: []core1_0.DeviceQueueCreateInfo{
 				{
-					CreatedQueuePriorities: []float32{0},
+					QueuePriorities: []float32{0},
 				},
 			},
 			NextOptions: common.NextOptions{PhysicalDeviceDescriptorIndexingFeatures{
@@ -328,7 +328,7 @@ func TestPhysicalDeviceDescriptorIndexingFeaturesOutData(t *testing.T) {
 	var outData PhysicalDeviceDescriptorIndexingFeatures
 	err := extension.PhysicalDeviceFeatures2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DeviceFeatures{
+		&khr_get_physical_device_properties2.PhysicalDeviceFeatures2{
 			NextOutData: common.NextOutData{&outData},
 		})
 	require.NoError(t, err)
@@ -406,15 +406,15 @@ func TestPhysicalDeviceDescriptorIndexingOutData(t *testing.T) {
 		*(*driver.Uint32)(unsafe.Pointer(val.FieldByName("maxDescriptorSetUpdateAfterBindInputAttachments").UnsafeAddr())) = driver.Uint32(51)
 	})
 
-	var outData PhysicalDeviceDescriptorIndexingOutData
+	var outData PhysicalDeviceDescriptorIndexingProperties
 	err := extension.PhysicalDeviceProperties2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DevicePropertiesOutData{
+		&khr_get_physical_device_properties2.PhysicalDeviceProperties2{
 			NextOutData: common.NextOutData{&outData},
 		})
 	require.NoError(t, err)
 	require.Equal(t,
-		PhysicalDeviceDescriptorIndexingOutData{
+		PhysicalDeviceDescriptorIndexingProperties{
 			MaxUpdateAfterBindDescriptorsInAllPools: 1,
 
 			ShaderUniformBufferArrayNonUniformIndexingNative:   true,

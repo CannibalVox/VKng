@@ -15,5 +15,5 @@ type SamplerYcbcrConversion interface {
 }
 
 type Extension interface {
-	CreateSamplerYcbcrConversion(device core1_0.Device, o SamplerYcbcrConversionCreateOptions, allocator *driver.AllocationCallbacks) (SamplerYcbcrConversion, common.VkResult, error)
+	CreateSamplerYcbcrConversion(device core1_0.Device, o SamplerYcbcrConversionCreateInfo, allocator *driver.AllocationCallbacks) (SamplerYcbcrConversion, common.VkResult, error)
 }

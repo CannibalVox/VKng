@@ -11,13 +11,13 @@ import (
 	"unsafe"
 )
 
-type ExternalFenceOptions struct {
-	HandleType ExternalFenceHandleTypes
+type PhysicalDeviceExternalFenceInfo struct {
+	HandleType ExternalFenceHandleTypeFlags
 
 	common.NextOptions
 }
 
-func (o ExternalFenceOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o PhysicalDeviceExternalFenceInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceExternalFenceInfoKHR{})))
 	}

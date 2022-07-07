@@ -12,13 +12,13 @@ import (
 	"unsafe"
 )
 
-type ExportSemaphoreOptions struct {
-	HandleTypes khr_external_semaphore_capabilities.ExternalSemaphoreHandleTypes
+type ExportSemaphoreCreateInfo struct {
+	HandleTypes khr_external_semaphore_capabilities.ExternalSemaphoreHandleTypeFlags
 
 	common.NextOptions
 }
 
-func (o ExportSemaphoreOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o ExportSemaphoreCreateInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkExportSemaphoreCreateInfoKHR{})))
 	}

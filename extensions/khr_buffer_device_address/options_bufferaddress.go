@@ -13,13 +13,13 @@ import (
 	"unsafe"
 )
 
-type BufferDeviceAddressOptions struct {
+type BufferDeviceAddressInfo struct {
 	Buffer core1_0.Buffer
 
 	common.NextOptions
 }
 
-func (o BufferDeviceAddressOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o BufferDeviceAddressInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkBufferDeviceAddressInfoKHR{})))
 	}

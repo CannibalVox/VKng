@@ -11,13 +11,13 @@ import (
 	"unsafe"
 )
 
-type SamplerYcbcrConversionOptions struct {
+type SamplerYcbcrConversionInfo struct {
 	Conversion SamplerYcbcrConversion
 
 	common.NextOptions
 }
 
-func (o SamplerYcbcrConversionOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o SamplerYcbcrConversionInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkSamplerYcbcrConversionInfoKHR{})))
 	}

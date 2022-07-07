@@ -44,9 +44,9 @@ func TestImageViewUsageOptions(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	imageView, _, err := device.CreateImageView(nil, core1_0.ImageViewCreateOptions{
+	imageView, _, err := device.CreateImageView(nil, core1_0.ImageViewCreateInfo{
 		Image: image,
-		NextOptions: common.NextOptions{Next: ImageViewUsageOptions{
+		NextOptions: common.NextOptions{Next: ImageViewUsageCreateInfo{
 			Usage: core1_0.ImageUsageInputAttachment,
 		}},
 	})
@@ -91,12 +91,12 @@ func TestTessellationDomainOriginOptions(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	domainOriginState := PipelineTessellationDomainOriginStateOptions{
+	domainOriginState := PipelineTessellationDomainOriginStateCreateInfo{
 		DomainOrigin: TessellationDomainOriginLowerLeft,
 	}
-	pipelines, _, err := device.CreateGraphicsPipelines(nil, nil, []core1_0.GraphicsPipelineCreateOptions{
+	pipelines, _, err := device.CreateGraphicsPipelines(nil, nil, []core1_0.GraphicsPipelineCreateInfo{
 		{
-			Tessellation: &core1_0.TessellationStateOptions{
+			TessellationState: &core1_0.PipelineTessellationStateCreateInfo{
 				PatchControlPoints: 1,
 				NextOptions:        common.NextOptions{Next: domainOriginState},
 			},
@@ -144,21 +144,21 @@ func TestInputAttachmentAspectOptions(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	aspectOptions := RenderPassInputAttachmentAspectOptions{
+	aspectOptions := RenderPassInputAttachmentAspectCreateInfo{
 		AspectReferences: []InputAttachmentAspectReference{
 			{
 				Subpass:              1,
 				InputAttachmentIndex: 3,
-				AspectMask:           core1_0.AspectColor,
+				AspectMask:           core1_0.ImageAspectColor,
 			},
 			{
 				Subpass:              5,
 				InputAttachmentIndex: 7,
-				AspectMask:           core1_0.AspectMetadata,
+				AspectMask:           core1_0.ImageAspectMetadata,
 			},
 		},
 	}
-	renderPass, _, err := device.CreateRenderPass(nil, core1_0.RenderPassCreateOptions{
+	renderPass, _, err := device.CreateRenderPass(nil, core1_0.RenderPassCreateInfo{
 		NextOptions: common.NextOptions{Next: aspectOptions},
 	})
 	require.NoError(t, err)
@@ -196,8 +196,8 @@ func TestPointClippingOutData(t *testing.T) {
 			*behavior = khr_maintenance2_driver.VkPointClippingBehaviorKHR(1) // VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY_KHR
 		})
 
-	pointClipping := &PhysicalDevicePointClippingOutData{}
-	properties := &khr_get_physical_device_properties2.DevicePropertiesOutData{
+	pointClipping := &PhysicalDevicePointClippingProperties{}
+	properties := &khr_get_physical_device_properties2.PhysicalDeviceProperties2{
 		NextOutData: common.NextOutData{Next: pointClipping},
 	}
 

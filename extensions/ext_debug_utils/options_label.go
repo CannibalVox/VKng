@@ -12,14 +12,14 @@ import (
 	"unsafe"
 )
 
-type LabelOptions struct {
-	Name  string
-	Color color.Color
+type DebugUtilsLabel struct {
+	LabelName string
+	Color     color.Color
 
 	common.NextOptions
 }
 
-func (l LabelOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (l DebugUtilsLabel) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(C.sizeof_struct_VkDebugUtilsLabelEXT)
 	}
@@ -27,7 +27,7 @@ func (l LabelOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocat
 	label := (*C.VkDebugUtilsLabelEXT)(preallocatedPointer)
 	label.sType = C.VK_STRUCTURE_TYPE_DEBUG_UTILS_LABEL_EXT
 	label.pNext = next
-	label.pLabelName = (*C.char)(allocator.CString(l.Name))
+	label.pLabelName = (*C.char)(allocator.CString(l.LabelName))
 
 	r, g, b, a := l.Color.RGBA()
 	label.color[0] = C.float(float32(r) / 65535.0)
@@ -38,12 +38,12 @@ func (l LabelOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocat
 	return preallocatedPointer, nil
 }
 
-func (l *LabelOptions) PopulateFromCPointer(cDataPointer unsafe.Pointer) {
+func (l *DebugUtilsLabel) PopulateFromCPointer(cDataPointer unsafe.Pointer) {
 	label := (*C.VkDebugUtilsLabelEXT)(cDataPointer)
-	l.Name = ""
+	l.LabelName = ""
 
 	if label.pLabelName != nil {
-		l.Name = C.GoString(label.pLabelName)
+		l.LabelName = C.GoString(label.pLabelName)
 	}
 
 	r := uint8(float32(label.color[0])*65535.0 + 0.001)

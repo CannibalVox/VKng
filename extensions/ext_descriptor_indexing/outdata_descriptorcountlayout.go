@@ -11,13 +11,13 @@ import (
 	"unsafe"
 )
 
-type DescriptorSetVariableDescriptorCountLayoutSupportOutData struct {
+type DescriptorSetVariableDescriptorCountLayoutSupport struct {
 	MaxVariableDescriptorCount int
 
 	common.NextOutData
 }
 
-func (o *DescriptorSetVariableDescriptorCountLayoutSupportOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *DescriptorSetVariableDescriptorCountLayoutSupport) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkDescriptorSetVariableDescriptorCountLayoutSupportEXT{})))
 	}
@@ -29,7 +29,7 @@ func (o *DescriptorSetVariableDescriptorCountLayoutSupportOutData) PopulateHeade
 	return preallocatedPointer, nil
 }
 
-func (o *DescriptorSetVariableDescriptorCountLayoutSupportOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *DescriptorSetVariableDescriptorCountLayoutSupport) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	info := (*C.VkDescriptorSetVariableDescriptorCountLayoutSupportEXT)(cDataPointer)
 
 	o.MaxVariableDescriptorCount = int(info.maxVariableDescriptorCount)

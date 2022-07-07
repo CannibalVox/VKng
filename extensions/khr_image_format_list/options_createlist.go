@@ -12,13 +12,13 @@ import (
 	"unsafe"
 )
 
-type ImageFormatListCreateOptions struct {
-	ViewFormats []core1_0.DataFormat
+type ImageFormatListCreateInfo struct {
+	ViewFormats []core1_0.Format
 
 	common.NextOptions
 }
 
-func (o ImageFormatListCreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o ImageFormatListCreateInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkImageFormatListCreateInfoKHR{})))
 	}

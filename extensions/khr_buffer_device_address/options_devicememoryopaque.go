@@ -12,13 +12,13 @@ import (
 	"unsafe"
 )
 
-type DeviceMemoryOpaqueAddressOptions struct {
+type DeviceMemoryOpaqueAddressInfo struct {
 	Memory core1_0.DeviceMemory
 
 	common.NextOptions
 }
 
-func (o DeviceMemoryOpaqueAddressOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o DeviceMemoryOpaqueAddressInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkDeviceMemoryOpaqueCaptureAddressInfoKHR{})))
 	}

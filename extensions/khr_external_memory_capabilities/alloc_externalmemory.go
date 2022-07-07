@@ -11,9 +11,9 @@ import (
 )
 
 type ExternalMemoryProperties struct {
-	ExternalMemoryFeatures        ExternalMemoryFeatures
-	ExportFromImportedHandleTypes ExternalMemoryHandleTypes
-	CompatibleHandleTypes         ExternalMemoryHandleTypes
+	ExternalMemoryFeatures        ExternalMemoryFeatureFlags
+	ExportFromImportedHandleTypes ExternalMemoryHandleTypeFlags
+	CompatibleHandleTypes         ExternalMemoryHandleTypeFlags
 }
 
 func (o ExternalMemoryProperties) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer) (unsafe.Pointer, error) {
@@ -31,9 +31,9 @@ func (o ExternalMemoryProperties) PopulateCPointer(allocator *cgoparam.Allocator
 
 func (o *ExternalMemoryProperties) PopulateOutData(cDataPointer unsafe.Pointer) error {
 	info := (*C.VkExternalMemoryPropertiesKHR)(cDataPointer)
-	o.ExternalMemoryFeatures = ExternalMemoryFeatures(info.externalMemoryFeatures)
-	o.ExportFromImportedHandleTypes = ExternalMemoryHandleTypes(info.exportFromImportedHandleTypes)
-	o.CompatibleHandleTypes = ExternalMemoryHandleTypes(info.compatibleHandleTypes)
+	o.ExternalMemoryFeatures = ExternalMemoryFeatureFlags(info.externalMemoryFeatures)
+	o.ExportFromImportedHandleTypes = ExternalMemoryHandleTypeFlags(info.exportFromImportedHandleTypes)
+	o.CompatibleHandleTypes = ExternalMemoryHandleTypeFlags(info.compatibleHandleTypes)
 
 	return nil
 }

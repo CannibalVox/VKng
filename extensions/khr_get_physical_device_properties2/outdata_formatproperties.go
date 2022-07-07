@@ -12,12 +12,12 @@ import (
 	"unsafe"
 )
 
-type FormatPropertiesOutData struct {
+type FormatProperties2 struct {
 	FormatProperties core1_0.FormatProperties
 	common.NextOutData
 }
 
-func (o *FormatPropertiesOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *FormatProperties2) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkFormatProperties2KHR{})))
 	}
@@ -29,11 +29,11 @@ func (o *FormatPropertiesOutData) PopulateHeader(allocator *cgoparam.Allocator, 
 	return preallocatedPointer, nil
 }
 
-func (o *FormatPropertiesOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *FormatProperties2) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	data := (*C.VkFormatProperties2KHR)(cDataPointer)
-	o.FormatProperties.LinearTilingFeatures = core1_0.FormatFeatures(data.formatProperties.linearTilingFeatures)
-	o.FormatProperties.OptimalTilingFeatures = core1_0.FormatFeatures(data.formatProperties.optimalTilingFeatures)
-	o.FormatProperties.BufferFeatures = core1_0.FormatFeatures(data.formatProperties.bufferFeatures)
+	o.FormatProperties.LinearTilingFeatures = core1_0.FormatFeatureFlags(data.formatProperties.linearTilingFeatures)
+	o.FormatProperties.OptimalTilingFeatures = core1_0.FormatFeatureFlags(data.formatProperties.optimalTilingFeatures)
+	o.FormatProperties.BufferFeatures = core1_0.FormatFeatureFlags(data.formatProperties.bufferFeatures)
 
 	return data.pNext, nil
 }

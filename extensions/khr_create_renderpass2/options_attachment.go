@@ -12,10 +12,10 @@ import (
 	"unsafe"
 )
 
-type AttachmentDescriptionOptions struct {
+type AttachmentDescription2 struct {
 	Flags          core1_0.AttachmentDescriptionFlags
-	Format         core1_0.DataFormat
-	Samples        core1_0.SampleCounts
+	Format         core1_0.Format
+	Samples        core1_0.SampleCountFlags
 	LoadOp         core1_0.AttachmentLoadOp
 	StoreOp        core1_0.AttachmentStoreOp
 	StencilLoadOp  core1_0.AttachmentLoadOp
@@ -26,7 +26,7 @@ type AttachmentDescriptionOptions struct {
 	common.NextOptions
 }
 
-func (o AttachmentDescriptionOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o AttachmentDescription2) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkAttachmentDescription2KHR{})))
 	}

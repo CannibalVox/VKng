@@ -11,14 +11,14 @@ import (
 	"unsafe"
 )
 
-type PhysicalDeviceSamplerFilterMinmaxOutData struct {
+type PhysicalDeviceSamplerFilterMinmaxProperties struct {
 	FilterMinmaxSingleComponentFormats bool
 	FilterMinmaxImageComponentMapping  bool
 
 	common.NextOutData
 }
 
-func (o *PhysicalDeviceSamplerFilterMinmaxOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDeviceSamplerFilterMinmaxProperties) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT{})))
 	}
@@ -30,7 +30,7 @@ func (o *PhysicalDeviceSamplerFilterMinmaxOutData) PopulateHeader(allocator *cgo
 	return preallocatedPointer, nil
 }
 
-func (o *PhysicalDeviceSamplerFilterMinmaxOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *PhysicalDeviceSamplerFilterMinmaxProperties) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	info := (*C.VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT)(cDataPointer)
 
 	o.FilterMinmaxSingleComponentFormats = info.filterMinmaxSingleComponentFormats != C.VkBool32(0)

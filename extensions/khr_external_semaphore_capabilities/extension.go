@@ -25,7 +25,7 @@ func CreateExtensionFromDriver(driver khr_external_semaphore_capabilities_driver
 	}
 }
 
-func (e *VulkanExtension) ExternalSemaphoreProperties(physicalDevice core1_0.PhysicalDevice, o ExternalSemaphoreOptions, outData *ExternalSemaphoreOutData) error {
+func (e *VulkanExtension) PhysicalDeviceExternalSemaphoreProperties(physicalDevice core1_0.PhysicalDevice, o PhysicalDeviceExternalSemaphoreInfo, outData *ExternalSemaphoreProperties) error {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 

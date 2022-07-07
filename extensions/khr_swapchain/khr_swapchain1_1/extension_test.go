@@ -51,13 +51,13 @@ func TestVulkanExtension_GetDeviceGroupPresentCapabilities(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	var outData khr_swapchain1_1.DeviceGroupPresentCapabilitiesOutData
+	var outData khr_swapchain1_1.DeviceGroupPresentCapabilities
 	_, err := extension.DeviceGroupPresentCapabilities(
 		device,
 		&outData,
 	)
 	require.NoError(t, err)
-	require.Equal(t, khr_swapchain1_1.DeviceGroupPresentCapabilitiesOutData{
+	require.Equal(t, khr_swapchain1_1.DeviceGroupPresentCapabilities{
 		PresentMask: [32]uint32{1, 2, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 	}, outData)
 }
@@ -330,9 +330,9 @@ func TestVulkanExtensionWithKHRSwapchain_AcquireNextImage(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	index, _, err := extension.AcquireNextImage(
+	index, _, err := extension.AcquireNextImage2(
 		device,
-		khr_swapchain1_1.AcquireNextImageOptions{
+		khr_swapchain1_1.AcquireNextImageInfo{
 			Swapchain:  swapchain,
 			Timeout:    time.Second,
 			Semaphore:  semaphore,

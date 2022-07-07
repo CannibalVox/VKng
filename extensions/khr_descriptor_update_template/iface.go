@@ -18,5 +18,5 @@ type DescriptorUpdateTemplate interface {
 }
 
 type Extension interface {
-	CreateDescriptorUpdateTemplate(device core1_0.Device, o DescriptorUpdateTemplateCreateOptions, allocator *driver.AllocationCallbacks) (DescriptorUpdateTemplate, driver.VkResult, error)
+	CreateDescriptorUpdateTemplate(device core1_0.Device, o DescriptorUpdateTemplateCreateInfo, allocator *driver.AllocationCallbacks) (DescriptorUpdateTemplate, driver.VkResult, error)
 }

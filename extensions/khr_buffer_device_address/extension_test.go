@@ -46,7 +46,7 @@ func TestVulkanExtension_GetBufferDeviceAddress(t *testing.T) {
 
 	address, err := extension.GetBufferDeviceAddress(
 		device,
-		khr_buffer_device_address.BufferDeviceAddressOptions{
+		khr_buffer_device_address.BufferDeviceAddressInfo{
 			Buffer: buffer,
 		})
 	require.NoError(t, err)
@@ -79,7 +79,7 @@ func TestVulkanExtension_GetBufferOpaqueCaptureAddress(t *testing.T) {
 
 	address, err := extension.GetBufferOpaqueCaptureAddress(
 		device,
-		khr_buffer_device_address.BufferDeviceAddressOptions{
+		khr_buffer_device_address.BufferDeviceAddressInfo{
 			Buffer: buffer,
 		})
 	require.NoError(t, err)
@@ -112,7 +112,7 @@ func TestVulkanExtension_GetDeviceMemoryOpaqueCaptureAddress(t *testing.T) {
 
 	address, err := extension.GetDeviceMemoryOpaqueCaptureAddress(
 		device,
-		khr_buffer_device_address.DeviceMemoryOpaqueAddressOptions{
+		khr_buffer_device_address.DeviceMemoryOpaqueAddressInfo{
 			Memory: deviceMemory,
 		})
 	require.NoError(t, err)
@@ -154,9 +154,9 @@ func TestBufferOpaqueCaptureAddressCreateOptions(t *testing.T) {
 
 	buffer, _, err := device.CreateBuffer(
 		nil,
-		core1_0.BufferCreateOptions{
+		core1_0.BufferCreateInfo{
 			NextOptions: common.NextOptions{
-				khr_buffer_device_address.BufferOpaqueCaptureAddressCreateOptions{
+				khr_buffer_device_address.BufferOpaqueCaptureAddressCreateInfo{
 					OpaqueCaptureAddress: 13,
 				},
 			},
@@ -200,9 +200,9 @@ func TestMemoryOpaqueCaptureAddressAllocateOptions(t *testing.T) {
 
 	memory, _, err := device.AllocateMemory(
 		nil,
-		core1_0.MemoryAllocateOptions{
+		core1_0.MemoryAllocateInfo{
 			NextOptions: common.NextOptions{
-				khr_buffer_device_address.MemoryOpaqueCaptureAddressAllocateOptions{
+				khr_buffer_device_address.MemoryOpaqueCaptureAddressAllocateInfo{
 					OpaqueCaptureAddress: 17,
 				},
 			},
@@ -250,14 +250,14 @@ func TestPhysicalDeviceBufferAddressFeaturesOptions(t *testing.T) {
 
 	device, _, err := physicalDevice.CreateDevice(
 		nil,
-		core1_0.DeviceCreateOptions{
-			QueueFamilies: []core1_0.DeviceQueueCreateOptions{
+		core1_0.DeviceCreateInfo{
+			QueueCreateInfos: []core1_0.DeviceQueueCreateInfo{
 				{
-					CreatedQueuePriorities: []float32{0},
+					QueuePriorities: []float32{0},
 				},
 			},
 
-			NextOptions: common.NextOptions{khr_buffer_device_address.PhysicalDeviceBufferAddressFeatures{
+			NextOptions: common.NextOptions{khr_buffer_device_address.PhysicalDeviceBufferDeviceAddressFeatures{
 				BufferDeviceAddress:            true,
 				BufferDeviceAddressMultiDevice: true,
 			}},
@@ -295,14 +295,14 @@ func TestPhysicalDeviceBufferAddressFeaturesOutData(t *testing.T) {
 		*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("bufferDeviceAddressMultiDevice").UnsafeAddr())) = driver.VkBool32(0)
 	})
 
-	var outData khr_buffer_device_address.PhysicalDeviceBufferAddressFeatures
+	var outData khr_buffer_device_address.PhysicalDeviceBufferDeviceAddressFeatures
 	err := extension.PhysicalDeviceFeatures2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DeviceFeatures{
+		&khr_get_physical_device_properties2.PhysicalDeviceFeatures2{
 			NextOutData: common.NextOutData{&outData},
 		})
 	require.NoError(t, err)
-	require.Equal(t, khr_buffer_device_address.PhysicalDeviceBufferAddressFeatures{
+	require.Equal(t, khr_buffer_device_address.PhysicalDeviceBufferDeviceAddressFeatures{
 		BufferDeviceAddressCaptureReplay: true,
 	}, outData)
 }

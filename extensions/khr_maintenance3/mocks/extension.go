@@ -36,7 +36,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 }
 
 // DescriptorSetLayoutSupport mocks base method.
-func (m *MockExtension) DescriptorSetLayoutSupport(device core1_0.Device, setLayoutOptions core1_0.DescriptorSetLayoutCreateOptions, support *khr_maintenance3.DescriptorSetLayoutSupportOutData) error {
+func (m *MockExtension) DescriptorSetLayoutSupport(device core1_0.Device, setLayoutOptions core1_0.DescriptorSetLayoutCreateInfo, support *khr_maintenance3.DescriptorSetLayoutSupport) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DescriptorSetLayoutSupport", device, setLayoutOptions, support)
 	ret0, _ := ret[0].(error)

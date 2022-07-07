@@ -37,18 +37,18 @@ func (m *vulkanMessenger) Handle() ext_driver.VkDebugUtilsMessengerEXT {
 	return m.handle
 }
 
-type CallbackFunction func(msgType MessageTypes, severity MessageSeverities, data *CallbackDataOptions) bool
+type CallbackFunction func(msgType MessageTypes, severity MessageSeverities, data *DebugUtilsMessengerCallbackData) bool
 
 //export goDebugCallback
 func goDebugCallback(messageSeverity C.VkDebugUtilsMessageSeverityFlagBitsEXT, messageType C.VkDebugUtilsMessageTypeFlagsEXT, data *C.VkDebugUtilsMessengerCallbackDataEXT, userData unsafe.Pointer) C.VkBool32 {
 	severity := MessageSeverities(messageSeverity)
 	msgType := MessageTypes(messageType)
 
-	callbackData := &CallbackDataOptions{}
+	callbackData := &DebugUtilsMessengerCallbackData{}
 
 	err := callbackData.PopulateFromCPointer(unsafe.Pointer(data))
 	if err != nil {
-		callbackData = &CallbackDataOptions{
+		callbackData = &DebugUtilsMessengerCallbackData{
 			MessageIDName: "vkng-internal",
 			Message:       fmt.Sprintf("error loading debug callback data from C: %v+", err),
 		}

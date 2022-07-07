@@ -11,13 +11,13 @@ import (
 	"unsafe"
 )
 
-type DescriptorSetVariableDescriptorCountAllocateOptions struct {
+type DescriptorSetVariableDescriptorCountAllocateInfo struct {
 	DescriptorCounts []int
 
 	common.NextOptions
 }
 
-func (o DescriptorSetVariableDescriptorCountAllocateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o DescriptorSetVariableDescriptorCountAllocateInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkDescriptorSetVariableDescriptorCountAllocateInfoEXT{})))
 	}

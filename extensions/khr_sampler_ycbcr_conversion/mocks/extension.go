@@ -88,7 +88,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 }
 
 // CreateSamplerYcbcrConversion mocks base method.
-func (m *MockExtension) CreateSamplerYcbcrConversion(device core1_0.Device, o khr_sampler_ycbcr_conversion.SamplerYcbcrConversionCreateOptions, allocator *driver.AllocationCallbacks) (khr_sampler_ycbcr_conversion.SamplerYcbcrConversion, common.VkResult, error) {
+func (m *MockExtension) CreateSamplerYcbcrConversion(device core1_0.Device, o khr_sampler_ycbcr_conversion.SamplerYcbcrConversionCreateInfo, allocator *driver.AllocationCallbacks) (khr_sampler_ycbcr_conversion.SamplerYcbcrConversion, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateSamplerYcbcrConversion", device, o, allocator)
 	ret0, _ := ret[0].(khr_sampler_ycbcr_conversion.SamplerYcbcrConversion)

@@ -13,20 +13,20 @@ import (
 	"unsafe"
 )
 
-type SemaphoreSignalOptions struct {
+type SemaphoreSignalInfo struct {
 	Semaphore core1_0.Semaphore
 	Value     uint64
 
 	common.NextOptions
 }
 
-func (o SemaphoreSignalOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o SemaphoreSignalInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkSemaphoreSignalInfoKHR{})))
 	}
 
 	if o.Semaphore == nil {
-		return nil, errors.New("the 'Semaphore' field of SemaphoreSignalOptions must be non-nil")
+		return nil, errors.New("the 'Semaphore' field of SemaphoreSignalInfo must be non-nil")
 	}
 
 	info := (*C.VkSemaphoreSignalInfoKHR)(preallocatedPointer)

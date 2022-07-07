@@ -11,14 +11,14 @@ import (
 	"unsafe"
 )
 
-type MemoryAllocateFlagsOptions struct {
+type MemoryAllocateFlagsInfo struct {
 	Flags      MemoryAllocateFlags
 	DeviceMask uint32
 
 	common.NextOptions
 }
 
-func (o MemoryAllocateFlagsOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o MemoryAllocateFlagsInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkMemoryAllocateFlagsInfoKHR{})))
 	}

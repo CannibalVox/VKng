@@ -26,8 +26,8 @@ func (f CommandPoolTrimFlags) String() string {
 const (
 	ExtensionName string = C.VK_KHR_MAINTENANCE1_EXTENSION_NAME
 
-	FormatFeatureTransferDst core1_0.FormatFeatures = C.VK_FORMAT_FEATURE_TRANSFER_DST_BIT_KHR
-	FormatFeatureTransferSrc core1_0.FormatFeatures = C.VK_FORMAT_FEATURE_TRANSFER_SRC_BIT_KHR
+	FormatFeatureTransferDst core1_0.FormatFeatureFlags = C.VK_FORMAT_FEATURE_TRANSFER_DST_BIT_KHR
+	FormatFeatureTransferSrc core1_0.FormatFeatureFlags = C.VK_FORMAT_FEATURE_TRANSFER_SRC_BIT_KHR
 
 	ImageCreate2DArrayCompatible core1_0.ImageCreateFlags = C.VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT_KHR
 

@@ -11,13 +11,13 @@ import (
 	"unsafe"
 )
 
-type ExternalSemaphoreOptions struct {
-	HandleType ExternalSemaphoreHandleTypes
+type PhysicalDeviceExternalSemaphoreInfo struct {
+	HandleType ExternalSemaphoreHandleTypeFlags
 
 	common.NextOptions
 }
 
-func (o ExternalSemaphoreOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o PhysicalDeviceExternalSemaphoreInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceExternalSemaphoreInfoKHR{})))
 	}

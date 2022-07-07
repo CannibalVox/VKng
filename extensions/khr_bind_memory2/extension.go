@@ -31,11 +31,11 @@ func CreateExtensionFromDriver(driver khr_bind_memory2_driver.Driver) *VulkanExt
 	}
 }
 
-func (e *VulkanExtension) BindBufferMemory(device core1_0.Device, options []BindBufferMemoryOptions) (common.VkResult, error) {
+func (e *VulkanExtension) BindBufferMemory2(device core1_0.Device, options []BindBufferMemoryInfo) (common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
-	optionPtr, err := common.AllocOptionSlice[C.VkBindBufferMemoryInfoKHR, BindBufferMemoryOptions](arena, options)
+	optionPtr, err := common.AllocOptionSlice[C.VkBindBufferMemoryInfoKHR, BindBufferMemoryInfo](arena, options)
 	if err != nil {
 		return core1_0.VKErrorUnknown, err
 	}
@@ -43,11 +43,11 @@ func (e *VulkanExtension) BindBufferMemory(device core1_0.Device, options []Bind
 	return e.driver.VkBindBufferMemory2KHR(device.Handle(), driver.Uint32(len(options)), (*khr_bind_memory2_driver.VkBindBufferMemoryInfoKHR)(unsafe.Pointer(optionPtr)))
 }
 
-func (e *VulkanExtension) BindImageMemory(device core1_0.Device, options []BindImageMemoryOptions) (common.VkResult, error) {
+func (e *VulkanExtension) BindImageMemory2(device core1_0.Device, options []BindImageMemoryInfo) (common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
-	optionPtr, err := common.AllocOptionSlice[C.VkBindImageMemoryInfoKHR, BindImageMemoryOptions](arena, options)
+	optionPtr, err := common.AllocOptionSlice[C.VkBindImageMemoryInfoKHR, BindImageMemoryInfo](arena, options)
 	if err != nil {
 		return core1_0.VKErrorUnknown, err
 	}

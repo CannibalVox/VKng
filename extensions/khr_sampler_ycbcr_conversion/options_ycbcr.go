@@ -12,20 +12,20 @@ import (
 	"unsafe"
 )
 
-type SamplerYcbcrConversionCreateOptions struct {
-	Format                      core1_0.DataFormat
+type SamplerYcbcrConversionCreateInfo struct {
+	Format                      core1_0.Format
 	YcbcrModel                  SamplerYcbcrModelConversion
 	YcbcrRange                  SamplerYcbcrRange
 	Components                  core1_0.ComponentMapping
-	ChromaOffsetX               ChromaLocation
-	ChromaOffsetY               ChromaLocation
+	XChromaOffset               ChromaLocation
+	YChromaOffset               ChromaLocation
 	ChromaFilter                core1_0.Filter
 	ForceExplicitReconstruction bool
 
 	common.NextOptions
 }
 
-func (o SamplerYcbcrConversionCreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o SamplerYcbcrConversionCreateInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkSamplerYcbcrConversionCreateInfoKHR{})))
 	}
@@ -40,8 +40,8 @@ func (o SamplerYcbcrConversionCreateOptions) PopulateCPointer(allocator *cgopara
 	info.components.g = C.VkComponentSwizzle(o.Components.G)
 	info.components.b = C.VkComponentSwizzle(o.Components.B)
 	info.components.a = C.VkComponentSwizzle(o.Components.A)
-	info.xChromaOffset = C.VkChromaLocation(o.ChromaOffsetX)
-	info.yChromaOffset = C.VkChromaLocation(o.ChromaOffsetY)
+	info.xChromaOffset = C.VkChromaLocation(o.XChromaOffset)
+	info.yChromaOffset = C.VkChromaLocation(o.YChromaOffset)
 	info.chromaFilter = C.VkFilter(o.ChromaFilter)
 	info.forceExplicitReconstruction = C.VkBool32(0)
 

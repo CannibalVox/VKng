@@ -81,9 +81,9 @@ func (mr *MockSwapchainMockRecorder) Handle() *gomock.Call {
 }
 
 // Images mocks base method.
-func (m *MockSwapchain) Images() ([]core1_0.Image, common.VkResult, error) {
+func (m *MockSwapchain) SwapchainImages() ([]core1_0.Image, common.VkResult, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Images")
+	ret := m.ctrl.Call(m, "SwapchainImages")
 	ret0, _ := ret[0].([]core1_0.Image)
 	ret1, _ := ret[1].(common.VkResult)
 	ret2, _ := ret[2].(error)
@@ -93,5 +93,5 @@ func (m *MockSwapchain) Images() ([]core1_0.Image, common.VkResult, error) {
 // Images indicates an expected call of Images.
 func (mr *MockSwapchainMockRecorder) Images() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Images", reflect.TypeOf((*MockSwapchain)(nil).Images))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SwapchainImages", reflect.TypeOf((*MockSwapchain)(nil).SwapchainImages))
 }

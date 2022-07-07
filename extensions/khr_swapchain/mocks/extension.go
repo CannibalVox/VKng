@@ -53,7 +53,7 @@ func (mr *MockExtensionMockRecorder) APIVersion() *gomock.Call {
 }
 
 // CreateSwapchain mocks base method.
-func (m *MockExtension) CreateSwapchain(device core1_0.Device, allocation *driver.AllocationCallbacks, options khr_swapchain.CreateOptions) (khr_swapchain.Swapchain, common.VkResult, error) {
+func (m *MockExtension) CreateSwapchain(device core1_0.Device, allocation *driver.AllocationCallbacks, options khr_swapchain.SwapchainCreateInfo) (khr_swapchain.Swapchain, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateSwapchain", device, allocation, options)
 	ret0, _ := ret[0].(khr_swapchain.Swapchain)
@@ -83,9 +83,9 @@ func (mr *MockExtensionMockRecorder) Driver() *gomock.Call {
 }
 
 // PresentToQueue mocks base method.
-func (m *MockExtension) PresentToQueue(queue core1_0.Queue, o khr_swapchain.PresentOptions) (common.VkResult, error) {
+func (m *MockExtension) QueuePresent(queue core1_0.Queue, o khr_swapchain.PresentInfo) (common.VkResult, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PresentToQueue", queue, o)
+	ret := m.ctrl.Call(m, "QueuePresent", queue, o)
 	ret0, _ := ret[0].(common.VkResult)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
@@ -94,5 +94,5 @@ func (m *MockExtension) PresentToQueue(queue core1_0.Queue, o khr_swapchain.Pres
 // PresentToQueue indicates an expected call of PresentToQueue.
 func (mr *MockExtensionMockRecorder) PresentToQueue(queue, o interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PresentToQueue", reflect.TypeOf((*MockExtension)(nil).PresentToQueue), queue, o)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueuePresent", reflect.TypeOf((*MockExtension)(nil).QueuePresent), queue, o)
 }

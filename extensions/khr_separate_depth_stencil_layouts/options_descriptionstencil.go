@@ -12,14 +12,14 @@ import (
 	"unsafe"
 )
 
-type AttachmentDescriptionStencilLayoutOptions struct {
+type AttachmentDescriptionStencilLayout struct {
 	StencilInitialLayout core1_0.ImageLayout
 	StencilFinalLayout   core1_0.ImageLayout
 
 	common.NextOptions
 }
 
-func (o AttachmentDescriptionStencilLayoutOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o AttachmentDescriptionStencilLayout) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkAttachmentDescriptionStencilLayoutKHR{})))
 	}

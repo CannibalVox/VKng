@@ -50,16 +50,16 @@ func TestVulkanExtension_BufferMemoryRequirements(t *testing.T) {
 		*(*driver.Uint32)(unsafe.Pointer(val.FieldByName("memoryTypeBits").UnsafeAddr())) = driver.Uint32(5)
 	})
 
-	var outData khr_get_memory_requirements2.MemoryRequirementsOutData
-	err := extension.BufferMemoryRequirements(device,
-		khr_get_memory_requirements2.BufferMemoryRequirementsOptions{
+	var outData khr_get_memory_requirements2.MemoryRequirements2
+	err := extension.BufferMemoryRequirements2(device,
+		khr_get_memory_requirements2.BufferMemoryRequirementsInfo2{
 			Buffer: buffer,
 		}, &outData)
 	require.NoError(t, err)
 
 	require.Equal(t, 1, outData.MemoryRequirements.Size)
 	require.Equal(t, 3, outData.MemoryRequirements.Alignment)
-	require.Equal(t, uint32(5), outData.MemoryRequirements.MemoryType)
+	require.Equal(t, uint32(5), outData.MemoryRequirements.MemoryTypeBits)
 }
 
 func TestVulkanExtension_ImageMemoryRequirements(t *testing.T) {
@@ -96,16 +96,16 @@ func TestVulkanExtension_ImageMemoryRequirements(t *testing.T) {
 		*(*driver.Uint32)(unsafe.Pointer(val.FieldByName("memoryTypeBits").UnsafeAddr())) = driver.Uint32(5)
 	})
 
-	var outData khr_get_memory_requirements2.MemoryRequirementsOutData
-	err := extension.ImageMemoryRequirements(device,
-		khr_get_memory_requirements2.ImageMemoryRequirementsOptions{
+	var outData khr_get_memory_requirements2.MemoryRequirements2
+	err := extension.ImageMemoryRequirements2(device,
+		khr_get_memory_requirements2.ImageMemoryRequirementsInfo2{
 			Image: image,
 		}, &outData)
 	require.NoError(t, err)
 
 	require.Equal(t, 1, outData.MemoryRequirements.Size)
 	require.Equal(t, 3, outData.MemoryRequirements.Alignment)
-	require.Equal(t, uint32(5), outData.MemoryRequirements.MemoryType)
+	require.Equal(t, uint32(5), outData.MemoryRequirements.MemoryTypeBits)
 }
 
 func TestVulkanExtension_SparseImageMemoryRequirements(t *testing.T) {
@@ -199,16 +199,16 @@ func TestVulkanExtension_SparseImageMemoryRequirements(t *testing.T) {
 			*(*driver.VkDeviceSize)(unsafe.Pointer(memReqs.FieldByName("imageMipTailStride").UnsafeAddr())) = driver.VkDeviceSize(37)
 		})
 
-	outData, err := extension.SparseImageMemoryRequirements(device,
-		khr_get_memory_requirements2.ImageSparseMemoryRequirementsOptions{
+	outData, err := extension.ImageSparseMemoryRequirements2(device,
+		khr_get_memory_requirements2.ImageSparseMemoryRequirementsInfo2{
 			Image: image,
 		}, nil)
 	require.NoError(t, err)
-	require.Equal(t, []*khr_get_memory_requirements2.SparseImageMemoryRequirementsOutData{
+	require.Equal(t, []*khr_get_memory_requirements2.SparseImageMemoryRequirements2{
 		{
 			MemoryRequirements: core1_0.SparseImageMemoryRequirements{
 				FormatProperties: core1_0.SparseImageFormatProperties{
-					AspectMask: core1_0.AspectMetadata,
+					AspectMask: core1_0.ImageAspectMetadata,
 					ImageGranularity: core1_0.Extent3D{
 						Width:  1,
 						Height: 3,
@@ -225,7 +225,7 @@ func TestVulkanExtension_SparseImageMemoryRequirements(t *testing.T) {
 		{
 			MemoryRequirements: core1_0.SparseImageMemoryRequirements{
 				FormatProperties: core1_0.SparseImageFormatProperties{
-					AspectMask: core1_0.AspectStencil,
+					AspectMask: core1_0.ImageAspectStencil,
 					ImageGranularity: core1_0.Extent3D{
 						Width:  19,
 						Height: 23,

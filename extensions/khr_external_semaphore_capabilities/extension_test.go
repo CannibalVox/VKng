@@ -69,8 +69,8 @@ func TestPhysicalDeviceIDOutData(t *testing.T) {
 			*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("deviceLUIDValid").UnsafeAddr())) = driver.VkBool32(1)
 		})
 
-	var properties khr_get_physical_device_properties2.DevicePropertiesOutData
-	var outData khr_external_semaphore_capabilities.PhysicalDeviceIDOutData
+	var properties khr_get_physical_device_properties2.PhysicalDeviceProperties2
+	var outData khr_external_semaphore_capabilities.PhysicalDeviceIDProperties
 	properties.NextOutData = common.NextOutData{&outData}
 
 	err = extension.PhysicalDeviceProperties2(
@@ -78,7 +78,7 @@ func TestPhysicalDeviceIDOutData(t *testing.T) {
 		&properties,
 	)
 	require.NoError(t, err)
-	require.Equal(t, khr_external_semaphore_capabilities.PhysicalDeviceIDOutData{
+	require.Equal(t, khr_external_semaphore_capabilities.PhysicalDeviceIDProperties{
 		DeviceUUID:      deviceUUID,
 		DriverUUID:      driverUUID,
 		DeviceLUID:      0xdeadbeefdeadbeef,
@@ -121,15 +121,15 @@ func TestVulkanExtension_ExternalSemaphoreProperties(t *testing.T) {
 			*(*uint32)(unsafe.Pointer(val.FieldByName("externalSemaphoreFeatures").UnsafeAddr())) = uint32(2)     // VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT_KHR
 		})
 
-	var outData khr_external_semaphore_capabilities.ExternalSemaphoreOutData
-	err := extension.ExternalSemaphoreProperties(
+	var outData khr_external_semaphore_capabilities.ExternalSemaphoreProperties
+	err := extension.PhysicalDeviceExternalSemaphoreProperties(
 		physicalDevice,
-		khr_external_semaphore_capabilities.ExternalSemaphoreOptions{
+		khr_external_semaphore_capabilities.PhysicalDeviceExternalSemaphoreInfo{
 			HandleType: khr_external_semaphore_capabilities.ExternalSemaphoreHandleTypeSyncFD,
 		},
 		&outData)
 	require.NoError(t, err)
-	require.Equal(t, khr_external_semaphore_capabilities.ExternalSemaphoreOutData{
+	require.Equal(t, khr_external_semaphore_capabilities.ExternalSemaphoreProperties{
 		ExportFromImportedHandleTypes: khr_external_semaphore_capabilities.ExternalSemaphoreHandleTypeOpaqueFD,
 		CompatibleHandleTypes:         khr_external_semaphore_capabilities.ExternalSemaphoreHandleTypeOpaqueWin32KMT,
 		ExternalSemaphoreFeatures:     khr_external_semaphore_capabilities.ExternalSemaphoreFeatureImportable,

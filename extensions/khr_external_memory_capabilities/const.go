@@ -7,29 +7,29 @@ package khr_external_memory_capabilities
 import "C"
 import "github.com/CannibalVox/VKng/core/common"
 
-type ExternalMemoryFeatures int32
+type ExternalMemoryFeatureFlags int32
 
-var externalMemoryFeaturesMapping = common.NewFlagStringMapping[ExternalMemoryFeatures]()
+var externalMemoryFeaturesMapping = common.NewFlagStringMapping[ExternalMemoryFeatureFlags]()
 
-func (f ExternalMemoryFeatures) Register(str string) {
+func (f ExternalMemoryFeatureFlags) Register(str string) {
 	externalMemoryFeaturesMapping.Register(f, str)
 }
 
-func (f ExternalMemoryFeatures) String() string {
+func (f ExternalMemoryFeatureFlags) String() string {
 	return externalMemoryFeaturesMapping.FlagsToString(f)
 }
 
 ////
 
-type ExternalMemoryHandleTypes int32
+type ExternalMemoryHandleTypeFlags int32
 
-var externalMemoryHandleTypesMapping = common.NewFlagStringMapping[ExternalMemoryHandleTypes]()
+var externalMemoryHandleTypesMapping = common.NewFlagStringMapping[ExternalMemoryHandleTypeFlags]()
 
-func (f ExternalMemoryHandleTypes) Register(str string) {
+func (f ExternalMemoryHandleTypeFlags) Register(str string) {
 	externalMemoryHandleTypesMapping.Register(f, str)
 }
 
-func (f ExternalMemoryHandleTypes) String() string {
+func (f ExternalMemoryHandleTypeFlags) String() string {
 	return externalMemoryHandleTypesMapping.FlagsToString(f)
 }
 
@@ -40,17 +40,17 @@ const (
 
 	LUIDSize int = C.VK_LUID_SIZE_KHR
 
-	ExternalMemoryFeatureDedicatedOnly ExternalMemoryFeatures = C.VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_KHR
-	ExternalMemoryFeatureExportable    ExternalMemoryFeatures = C.VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_KHR
-	ExternalMemoryFeatureImportable    ExternalMemoryFeatures = C.VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_KHR
+	ExternalMemoryFeatureDedicatedOnly ExternalMemoryFeatureFlags = C.VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_KHR
+	ExternalMemoryFeatureExportable    ExternalMemoryFeatureFlags = C.VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_KHR
+	ExternalMemoryFeatureImportable    ExternalMemoryFeatureFlags = C.VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_KHR
 
-	ExternalMemoryHandleTypeD3D11Texture    ExternalMemoryHandleTypes = C.VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT_KHR
-	ExternalMemoryHandleTypeD3D11TextureKMT ExternalMemoryHandleTypes = C.VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT_KHR
-	ExternalMemoryHandleTypeD3D12Heap       ExternalMemoryHandleTypes = C.VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT_KHR
-	ExternalMemoryHandleTypeD3D12Resource   ExternalMemoryHandleTypes = C.VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT_KHR
-	ExternalMemoryHandleTypeOpaqueFD        ExternalMemoryHandleTypes = C.VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT_KHR
-	ExternalMemoryHandleTypeOpaqueWin32     ExternalMemoryHandleTypes = C.VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR
-	ExternalMemoryHandleTypeOpaqueWin32KMT  ExternalMemoryHandleTypes = C.VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR
+	ExternalMemoryHandleTypeD3D11Texture    ExternalMemoryHandleTypeFlags = C.VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT_KHR
+	ExternalMemoryHandleTypeD3D11TextureKMT ExternalMemoryHandleTypeFlags = C.VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT_KHR
+	ExternalMemoryHandleTypeD3D12Heap       ExternalMemoryHandleTypeFlags = C.VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT_KHR
+	ExternalMemoryHandleTypeD3D12Resource   ExternalMemoryHandleTypeFlags = C.VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT_KHR
+	ExternalMemoryHandleTypeOpaqueFD        ExternalMemoryHandleTypeFlags = C.VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT_KHR
+	ExternalMemoryHandleTypeOpaqueWin32     ExternalMemoryHandleTypeFlags = C.VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR
+	ExternalMemoryHandleTypeOpaqueWin32KMT  ExternalMemoryHandleTypeFlags = C.VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR
 )
 
 func init() {

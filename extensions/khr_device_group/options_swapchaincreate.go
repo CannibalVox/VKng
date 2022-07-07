@@ -11,13 +11,13 @@ import (
 	"unsafe"
 )
 
-type DeviceGroupSwapchainCreateOptions struct {
+type DeviceGroupSwapchainCreateInfo struct {
 	Modes DeviceGroupPresentModeFlags
 
 	common.NextOptions
 }
 
-func (o DeviceGroupSwapchainCreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o DeviceGroupSwapchainCreateInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(C.sizeof_struct_VkDeviceGroupSwapchainCreateInfoKHR)
 	}

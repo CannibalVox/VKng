@@ -11,14 +11,14 @@ import (
 	"unsafe"
 )
 
-type PhysicalDeviceSamplerYcbcrFeatures struct {
+type PhysicalDeviceSamplerYcbcrConversionFeatures struct {
 	SamplerYcbcrConversion bool
 
 	common.NextOptions
 	common.NextOutData
 }
 
-func (o *PhysicalDeviceSamplerYcbcrFeatures) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDeviceSamplerYcbcrConversionFeatures) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR{})))
 	}
@@ -30,14 +30,14 @@ func (o *PhysicalDeviceSamplerYcbcrFeatures) PopulateHeader(allocator *cgoparam.
 	return preallocatedPointer, nil
 }
 
-func (o *PhysicalDeviceSamplerYcbcrFeatures) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *PhysicalDeviceSamplerYcbcrConversionFeatures) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	info := (*C.VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR)(cDataPointer)
 	o.SamplerYcbcrConversion = info.samplerYcbcrConversion != C.VkBool32(0)
 
 	return info.pNext, nil
 }
 
-func (o PhysicalDeviceSamplerYcbcrFeatures) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o PhysicalDeviceSamplerYcbcrConversionFeatures) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR{})))
 	}

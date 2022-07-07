@@ -12,13 +12,13 @@ import (
 	"unsafe"
 )
 
-type SparseImageMemoryRequirementsOutData struct {
+type SparseImageMemoryRequirements2 struct {
 	MemoryRequirements core1_0.SparseImageMemoryRequirements
 
 	common.NextOutData
 }
 
-func (o *SparseImageMemoryRequirementsOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *SparseImageMemoryRequirements2) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkSparseImageMemoryRequirements2KHR{})))
 	}
@@ -30,7 +30,7 @@ func (o *SparseImageMemoryRequirementsOutData) PopulateHeader(allocator *cgopara
 	return preallocatedPointer, nil
 }
 
-func (o *SparseImageMemoryRequirementsOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *SparseImageMemoryRequirements2) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	outData := (*C.VkSparseImageMemoryRequirements2KHR)(cDataPointer)
 	o.MemoryRequirements.FormatProperties.Flags = core1_0.SparseImageFormatFlags(outData.memoryRequirements.formatProperties.flags)
 	o.MemoryRequirements.FormatProperties.ImageGranularity = core1_0.Extent3D{

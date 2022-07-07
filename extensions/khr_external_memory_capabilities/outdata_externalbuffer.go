@@ -11,13 +11,13 @@ import (
 	"unsafe"
 )
 
-type ExternalBufferOutData struct {
+type ExternalBufferProperties struct {
 	ExternalMemoryProperties ExternalMemoryProperties
 
 	common.NextOutData
 }
 
-func (o *ExternalBufferOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *ExternalBufferProperties) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkExternalBufferPropertiesKHR{})))
 	}
@@ -28,7 +28,7 @@ func (o *ExternalBufferOutData) PopulateHeader(allocator *cgoparam.Allocator, pr
 	return preallocatedPointer, nil
 }
 
-func (o *ExternalBufferOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *ExternalBufferProperties) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	info := (*C.VkExternalBufferPropertiesKHR)(cDataPointer)
 
 	err = (&o.ExternalMemoryProperties).PopulateOutData(unsafe.Pointer(&info.externalMemoryProperties))

@@ -12,17 +12,17 @@ import (
 	"unsafe"
 )
 
-type ImageFormatOptions struct {
-	Format core1_0.DataFormat
+type PhysicalDeviceImageFormatInfo2 struct {
+	Format core1_0.Format
 	Type   core1_0.ImageType
 	Tiling core1_0.ImageTiling
-	Usage  core1_0.ImageUsages
+	Usage  core1_0.ImageUsageFlags
 	Flags  core1_0.ImageCreateFlags
 
 	common.NextOptions
 }
 
-func (o ImageFormatOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o PhysicalDeviceImageFormatInfo2) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceImageFormatInfo2KHR{})))
 	}

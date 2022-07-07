@@ -12,13 +12,13 @@ import (
 	"unsafe"
 )
 
-type BindImagePlaneMemoryOptions struct {
+type BindImagePlaneMemoryInfo struct {
 	PlaneAspect core1_0.ImageAspectFlags
 
 	common.NextOptions
 }
 
-func (o BindImagePlaneMemoryOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o BindImagePlaneMemoryInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkBindImagePlaneMemoryInfoKHR{})))
 	}

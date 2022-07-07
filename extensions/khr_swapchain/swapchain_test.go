@@ -34,7 +34,7 @@ func TestVulkanSwapchain_AcquireNextImage(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	swapchain, _, err := extension.CreateSwapchain(device, nil, khr_swapchain.CreateOptions{
+	swapchain, _, err := extension.CreateSwapchain(device, nil, khr_swapchain.SwapchainCreateInfo{
 		Surface: surface,
 	})
 	require.NoError(t, err)
@@ -75,7 +75,7 @@ func TestVulkanSwapchain_AcquireNextImage_NoTimeout(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	swapchain, _, err := extension.CreateSwapchain(device, nil, khr_swapchain.CreateOptions{
+	swapchain, _, err := extension.CreateSwapchain(device, nil, khr_swapchain.SwapchainCreateInfo{
 		Surface: surface,
 	})
 	require.NoError(t, err)
@@ -116,7 +116,7 @@ func TestVulkanSwapchain_AcquireNextImage_FenceAndSemaphore(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	swapchain, _, err := extension.CreateSwapchain(device, nil, khr_swapchain.CreateOptions{
+	swapchain, _, err := extension.CreateSwapchain(device, nil, khr_swapchain.SwapchainCreateInfo{
 		Surface: surface,
 	})
 	require.NoError(t, err)
@@ -160,7 +160,7 @@ func TestVulkanSwapchain_Images(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	swapchain, _, err := extension.CreateSwapchain(device, nil, khr_swapchain.CreateOptions{
+	swapchain, _, err := extension.CreateSwapchain(device, nil, khr_swapchain.SwapchainCreateInfo{
 		Surface: surface,
 	})
 	require.NoError(t, err)
@@ -196,7 +196,7 @@ func TestVulkanSwapchain_Images(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	images, _, err := swapchain.Images()
+	images, _, err := swapchain.SwapchainImages()
 	require.NoError(t, err)
 	require.Len(t, images, 2)
 	require.Equal(t, image1.Handle(), images[0].Handle())
@@ -220,7 +220,7 @@ func TestVulkanSwapchain_Images_Incomplete(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	swapchain, _, err := extension.CreateSwapchain(device, nil, khr_swapchain.CreateOptions{
+	swapchain, _, err := extension.CreateSwapchain(device, nil, khr_swapchain.SwapchainCreateInfo{
 		Surface: surface,
 	})
 	require.NoError(t, err)
@@ -283,7 +283,7 @@ func TestVulkanSwapchain_Images_Incomplete(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	images, _, err := swapchain.Images()
+	images, _, err := swapchain.SwapchainImages()
 	require.NoError(t, err)
 	require.Len(t, images, 2)
 	require.Equal(t, image1.Handle(), images[0].Handle())

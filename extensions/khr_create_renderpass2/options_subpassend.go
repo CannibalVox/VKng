@@ -11,11 +11,11 @@ import (
 	"unsafe"
 )
 
-type SubpassEndOptions struct {
+type SubpassEndInfo struct {
 	common.NextOptions
 }
 
-func (o SubpassEndOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o SubpassEndInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkSubpassEndInfoKHR{})))
 	}

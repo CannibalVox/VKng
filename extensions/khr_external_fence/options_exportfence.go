@@ -12,13 +12,13 @@ import (
 	"unsafe"
 )
 
-type ExportFenceOptions struct {
-	HandleTypes khr_external_fence_capabilities.ExternalFenceHandleTypes
+type ExportFenceCreateInfo struct {
+	HandleTypes khr_external_fence_capabilities.ExternalFenceHandleTypeFlags
 
 	common.NextOptions
 }
 
-func (o ExportFenceOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o ExportFenceCreateInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkExportFenceCreateInfoKHR{})))
 	}

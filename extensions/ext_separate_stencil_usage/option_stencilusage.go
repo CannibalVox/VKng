@@ -12,13 +12,13 @@ import (
 	"unsafe"
 )
 
-type ImageStencilUsageCreateOptions struct {
-	StencilUsage core1_0.ImageUsages
+type ImageStencilUsageCreateInfo struct {
+	StencilUsage core1_0.ImageUsageFlags
 
 	common.NextOptions
 }
 
-func (o ImageStencilUsageCreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o ImageStencilUsageCreateInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkImageStencilUsageCreateInfoEXT{})))
 	}

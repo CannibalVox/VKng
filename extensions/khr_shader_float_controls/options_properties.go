@@ -11,7 +11,7 @@ import (
 	"unsafe"
 )
 
-type PhysicalDeviceFloatControlsOutData struct {
+type PhysicalDeviceFloatControlsProperties struct {
 	DenormBehaviorIndependence ShaderFloatControlsIndependence
 	RoundingMoundIndependence  ShaderFloatControlsIndependence
 
@@ -34,7 +34,7 @@ type PhysicalDeviceFloatControlsOutData struct {
 	common.NextOutData
 }
 
-func (o *PhysicalDeviceFloatControlsOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDeviceFloatControlsProperties) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceFloatControlsPropertiesKHR{})))
 	}
@@ -46,7 +46,7 @@ func (o *PhysicalDeviceFloatControlsOutData) PopulateHeader(allocator *cgoparam.
 	return preallocatedPointer, nil
 }
 
-func (o *PhysicalDeviceFloatControlsOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *PhysicalDeviceFloatControlsProperties) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	info := (*C.VkPhysicalDeviceFloatControlsPropertiesKHR)(cDataPointer)
 
 	o.DenormBehaviorIndependence = ShaderFloatControlsIndependence(info.denormBehaviorIndependence)

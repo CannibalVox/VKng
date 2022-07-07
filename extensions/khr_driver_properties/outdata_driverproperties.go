@@ -11,7 +11,7 @@ import (
 	"unsafe"
 )
 
-type PhysicalDeviceDriverOutData struct {
+type PhysicalDeviceDriverProperties struct {
 	DriverID           DriverID
 	DriverName         string
 	DriverInfo         string
@@ -20,7 +20,7 @@ type PhysicalDeviceDriverOutData struct {
 	common.NextOutData
 }
 
-func (o *PhysicalDeviceDriverOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDeviceDriverProperties) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceDriverPropertiesKHR{})))
 	}
@@ -32,7 +32,7 @@ func (o *PhysicalDeviceDriverOutData) PopulateHeader(allocator *cgoparam.Allocat
 	return preallocatedPointer, nil
 }
 
-func (o *PhysicalDeviceDriverOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *PhysicalDeviceDriverProperties) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	outData := (*C.VkPhysicalDeviceDriverPropertiesKHR)(cDataPointer)
 	o.DriverID = DriverID(outData.driverID)
 	o.ConformanceVersion.Major = uint8(outData.conformanceVersion.major)

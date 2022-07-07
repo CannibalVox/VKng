@@ -12,13 +12,13 @@ import (
 	"unsafe"
 )
 
-type DevicePropertiesOutData struct {
+type PhysicalDeviceProperties2 struct {
 	Properties core1_0.PhysicalDeviceProperties
 
 	common.NextOutData
 }
 
-func (o *DevicePropertiesOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDeviceProperties2) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceProperties2KHR{})))
 	}
@@ -30,7 +30,7 @@ func (o *DevicePropertiesOutData) PopulateHeader(allocator *cgoparam.Allocator, 
 	return preallocatedPointer, nil
 }
 
-func (o *DevicePropertiesOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *PhysicalDeviceProperties2) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	data := (*C.VkPhysicalDeviceProperties2KHR)(cDataPointer)
 
 	err = (&o.Properties).PopulateFromCPointer(unsafe.Pointer(&data.properties))

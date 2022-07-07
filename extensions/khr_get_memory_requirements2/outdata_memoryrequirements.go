@@ -12,12 +12,12 @@ import (
 	"unsafe"
 )
 
-type MemoryRequirementsOutData struct {
+type MemoryRequirements2 struct {
 	MemoryRequirements core1_0.MemoryRequirements
 	common.NextOutData
 }
 
-func (o *MemoryRequirementsOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *MemoryRequirements2) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkMemoryRequirements2KHR{})))
 	}
@@ -29,11 +29,11 @@ func (o *MemoryRequirementsOutData) PopulateHeader(allocator *cgoparam.Allocator
 	return preallocatedPointer, nil
 }
 
-func (o *MemoryRequirementsOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *MemoryRequirements2) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	outData := (*C.VkMemoryRequirements2KHR)(cDataPointer)
 	o.MemoryRequirements.Size = int(outData.memoryRequirements.size)
 	o.MemoryRequirements.Alignment = int(outData.memoryRequirements.alignment)
-	o.MemoryRequirements.MemoryType = uint32(outData.memoryRequirements.memoryTypeBits)
+	o.MemoryRequirements.MemoryTypeBits = uint32(outData.memoryRequirements.memoryTypeBits)
 
 	return outData.pNext, nil
 }

@@ -11,13 +11,13 @@ import (
 	"unsafe"
 )
 
-type DescriptorSetLayoutBindingFlagsCreateOptions struct {
+type DescriptorSetLayoutBindingFlagsCreateInfo struct {
 	BindingFlags []DescriptorBindingFlags
 
 	common.NextOptions
 }
 
-func (o DescriptorSetLayoutBindingFlagsCreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o DescriptorSetLayoutBindingFlagsCreateInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkDescriptorSetLayoutBindingFlagsCreateInfoEXT{})))
 	}

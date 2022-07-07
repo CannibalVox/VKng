@@ -41,7 +41,7 @@ func CreateExtensionFromDriver(driver khr_swapchain_driver.Driver) *VulkanExtens
 	}
 }
 
-func (v *VulkanExtension) AcquireNextImage(device core1_0.Device, o AcquireNextImageOptions) (int, common.VkResult, error) {
+func (v *VulkanExtension) AcquireNextImage2(device core1_0.Device, o AcquireNextImageInfo) (int, common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -64,7 +64,7 @@ func (v *VulkanExtension) AcquireNextImage(device core1_0.Device, o AcquireNextI
 	return int(*indexPtr), res, nil
 }
 
-func (v *VulkanExtension) DeviceGroupPresentCapabilities(device core1_0.Device, outData *DeviceGroupPresentCapabilitiesOutData) (common.VkResult, error) {
+func (v *VulkanExtension) DeviceGroupPresentCapabilities(device core1_0.Device, outData *DeviceGroupPresentCapabilities) (common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 

@@ -11,15 +11,15 @@ import (
 	"unsafe"
 )
 
-type RenderPassMultiviewOptions struct {
-	SubpassViewMasks      []uint32
-	DependencyViewOffsets []int
-	CorrelationMasks      []uint32
+type RenderPassMultiviewCreateInfo struct {
+	ViewMasks        []uint32
+	ViewOffsets      []int
+	CorrelationMasks []uint32
 
 	common.NextOptions
 }
 
-func (o RenderPassMultiviewOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o RenderPassMultiviewCreateInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkRenderPassMultiviewCreateInfoKHR{})))
 	}
@@ -28,7 +28,7 @@ func (o RenderPassMultiviewOptions) PopulateCPointer(allocator *cgoparam.Allocat
 	info.sType = C.VK_STRUCTURE_TYPE_RENDER_PASS_MULTIVIEW_CREATE_INFO_KHR
 	info.pNext = next
 
-	count := len(o.SubpassViewMasks)
+	count := len(o.ViewMasks)
 	info.subpassCount = C.uint32_t(count)
 	info.pViewMasks = nil
 	if count > 0 {
@@ -36,12 +36,12 @@ func (o RenderPassMultiviewOptions) PopulateCPointer(allocator *cgoparam.Allocat
 		viewMaskSlice := ([]C.uint32_t)(unsafe.Slice(viewMasks, count))
 
 		for i := 0; i < count; i++ {
-			viewMaskSlice[i] = C.uint32_t(o.SubpassViewMasks[i])
+			viewMaskSlice[i] = C.uint32_t(o.ViewMasks[i])
 		}
 		info.pViewMasks = viewMasks
 	}
 
-	count = len(o.DependencyViewOffsets)
+	count = len(o.ViewOffsets)
 	info.dependencyCount = C.uint32_t(count)
 	info.pViewOffsets = nil
 	if count > 0 {
@@ -49,7 +49,7 @@ func (o RenderPassMultiviewOptions) PopulateCPointer(allocator *cgoparam.Allocat
 		viewOffsetSlice := ([]C.int32_t)(unsafe.Slice(viewOffsets, count))
 
 		for i := 0; i < count; i++ {
-			viewOffsetSlice[i] = C.int32_t(o.DependencyViewOffsets[i])
+			viewOffsetSlice[i] = C.int32_t(o.ViewOffsets[i])
 		}
 		info.pViewOffsets = viewOffsets
 	}

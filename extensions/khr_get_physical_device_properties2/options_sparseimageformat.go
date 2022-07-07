@@ -12,17 +12,17 @@ import (
 	"unsafe"
 )
 
-type SparseImageFormatOptions struct {
-	Format  core1_0.DataFormat
+type PhysicalDeviceSparseImageFormatInfo2 struct {
+	Format  core1_0.Format
 	Type    core1_0.ImageType
-	Samples core1_0.SampleCounts
-	Usage   core1_0.ImageUsages
+	Samples core1_0.SampleCountFlags
+	Usage   core1_0.ImageUsageFlags
 	Tiling  core1_0.ImageTiling
 
 	common.NextOptions
 }
 
-func (o SparseImageFormatOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o PhysicalDeviceSparseImageFormatInfo2) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceSparseImageFormatInfo2KHR{})))
 	}

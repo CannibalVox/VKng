@@ -10,7 +10,7 @@ import "github.com/CannibalVox/VKng/core/core1_0"
 const (
 	ExtensionName string = C.VK_KHR_DEVICE_GROUP_CREATION_EXTENSION_NAME
 
-	MaxGroupSize int = C.VK_MAX_DEVICE_GROUP_SIZE_KHR
+	MaxDeviceGroupSize int = C.VK_MAX_DEVICE_GROUP_SIZE_KHR
 
 	MemoryHeapMultiInstance core1_0.MemoryHeapFlags = C.VK_MEMORY_HEAP_MULTI_INSTANCE_BIT_KHR
 )

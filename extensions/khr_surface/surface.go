@@ -25,15 +25,15 @@ type Capabilities struct {
 	MaxImageExtent core1_0.Extent2D
 
 	MaxImageArrayLayers int
-	SupportedTransforms SurfaceTransforms
-	CurrentTransform    SurfaceTransforms
+	SupportedTransforms SurfaceTransformFlags
+	CurrentTransform    SurfaceTransformFlags
 
-	SupportedCompositeAlpha CompositeAlphaModes
-	SupportedImageUsage     core1_0.ImageUsages
+	SupportedCompositeAlpha CompositeAlphaFlags
+	SupportedImageUsage     core1_0.ImageUsageFlags
 }
 
 type Format struct {
-	Format     core1_0.DataFormat
+	Format     core1_0.Format
 	ColorSpace ColorSpace
 }
 
@@ -50,10 +50,10 @@ type Surface interface {
 	Handle() ext_driver.VkSurfaceKHR
 
 	Destroy(callbacks *driver.AllocationCallbacks)
-	SupportsDevice(physicalDevice core1_0.PhysicalDevice, queueFamilyIndex int) (bool, common.VkResult, error)
-	Capabilities(device core1_0.PhysicalDevice) (*Capabilities, common.VkResult, error)
-	Formats(device core1_0.PhysicalDevice) ([]Format, common.VkResult, error)
-	PresentModes(device core1_0.PhysicalDevice) ([]PresentMode, common.VkResult, error)
+	PhysicalDeviceSurfaceSupport(physicalDevice core1_0.PhysicalDevice, queueFamilyIndex int) (bool, common.VkResult, error)
+	PhysicalDeviceSurfaceCapabilities(device core1_0.PhysicalDevice) (*Capabilities, common.VkResult, error)
+	PhysicalDeviceSurfaceFormats(device core1_0.PhysicalDevice) ([]Format, common.VkResult, error)
+	PhysicalDeviceSurfacePresentModes(device core1_0.PhysicalDevice) ([]PresentMode, common.VkResult, error)
 }
 
 func CreateSurface(surfacePtr unsafe.Pointer, instance core1_0.Instance, surfaceDriver ext_driver.Driver) (Surface, common.VkResult, error) {
@@ -81,7 +81,7 @@ func (s *vulkanSurface) Destroy(callbacks *driver.AllocationCallbacks) {
 	s.coreDriver.ObjectStore().Delete(driver.VulkanHandle(s.handle))
 }
 
-func (s *vulkanSurface) SupportsDevice(physicalDevice core1_0.PhysicalDevice, queueFamilyIndex int) (bool, common.VkResult, error) {
+func (s *vulkanSurface) PhysicalDeviceSurfaceSupport(physicalDevice core1_0.PhysicalDevice, queueFamilyIndex int) (bool, common.VkResult, error) {
 	var canPresent driver.VkBool32
 
 	res, err := s.driver.VkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice.Handle(), driver.Uint32(queueFamilyIndex), s.handle, &canPresent)
@@ -89,7 +89,7 @@ func (s *vulkanSurface) SupportsDevice(physicalDevice core1_0.PhysicalDevice, qu
 	return canPresent != C.VK_FALSE, res, err
 }
 
-func (s *vulkanSurface) Capabilities(device core1_0.PhysicalDevice) (*Capabilities, common.VkResult, error) {
+func (s *vulkanSurface) PhysicalDeviceSurfaceCapabilities(device core1_0.PhysicalDevice) (*Capabilities, common.VkResult, error) {
 	allocator := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(allocator)
 
@@ -118,11 +118,11 @@ func (s *vulkanSurface) Capabilities(device core1_0.PhysicalDevice) (*Capabiliti
 		},
 		MaxImageArrayLayers: int(cCapabilities.maxImageArrayLayers),
 
-		SupportedTransforms: SurfaceTransforms(cCapabilities.supportedTransforms),
-		CurrentTransform:    SurfaceTransforms(cCapabilities.currentTransform),
+		SupportedTransforms: SurfaceTransformFlags(cCapabilities.supportedTransforms),
+		CurrentTransform:    SurfaceTransformFlags(cCapabilities.currentTransform),
 
-		SupportedCompositeAlpha: CompositeAlphaModes(cCapabilities.supportedCompositeAlpha),
-		SupportedImageUsage:     core1_0.ImageUsages(cCapabilities.supportedUsageFlags),
+		SupportedCompositeAlpha: CompositeAlphaFlags(cCapabilities.supportedCompositeAlpha),
+		SupportedImageUsage:     core1_0.ImageUsageFlags(cCapabilities.supportedUsageFlags),
 	}, res, nil
 }
 
@@ -155,7 +155,7 @@ func (s *vulkanSurface) attemptFormats(device core1_0.PhysicalDevice) ([]Format,
 	var result []Format
 	for i := 0; i < count; i++ {
 		result = append(result, Format{
-			Format:     core1_0.DataFormat(formatSlice[i].format),
+			Format:     core1_0.Format(formatSlice[i].format),
 			ColorSpace: ColorSpace(formatSlice[i].colorSpace),
 		})
 	}
@@ -163,7 +163,7 @@ func (s *vulkanSurface) attemptFormats(device core1_0.PhysicalDevice) ([]Format,
 	return result, res, nil
 }
 
-func (s *vulkanSurface) Formats(device core1_0.PhysicalDevice) ([]Format, common.VkResult, error) {
+func (s *vulkanSurface) PhysicalDeviceSurfaceFormats(device core1_0.PhysicalDevice) ([]Format, common.VkResult, error) {
 	var formats []Format
 	var result common.VkResult
 	var err error
@@ -208,7 +208,7 @@ func (s *vulkanSurface) attemptPresentModes(device core1_0.PhysicalDevice) ([]Pr
 	return result, res, nil
 }
 
-func (s *vulkanSurface) PresentModes(device core1_0.PhysicalDevice) ([]PresentMode, common.VkResult, error) {
+func (s *vulkanSurface) PhysicalDeviceSurfacePresentModes(device core1_0.PhysicalDevice) ([]PresentMode, common.VkResult, error) {
 	var presentModes []PresentMode
 	var result common.VkResult
 	var err error

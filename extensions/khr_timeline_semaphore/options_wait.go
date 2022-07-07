@@ -13,7 +13,7 @@ import (
 	"unsafe"
 )
 
-type SemaphoreWaitOptions struct {
+type SemaphoreWaitInfo struct {
 	Flags      SemaphoreWaitFlags
 	Semaphores []core1_0.Semaphore
 	Values     []uint64
@@ -21,13 +21,13 @@ type SemaphoreWaitOptions struct {
 	common.NextOptions
 }
 
-func (o SemaphoreWaitOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o SemaphoreWaitInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkSemaphoreWaitInfoKHR{})))
 	}
 
 	if len(o.Semaphores) != len(o.Values) {
-		return nil, errors.Newf("the SemaphoreWaitOptions 'Semaphores' list has %d elements, but the 'Values' list has %d elements- these lists must be the same size", len(o.Semaphores), len(o.Values))
+		return nil, errors.Newf("the SemaphoreWaitInfo 'Semaphores' list has %d elements, but the 'Values' list has %d elements- these lists must be the same size", len(o.Semaphores), len(o.Values))
 	}
 
 	info := (*C.VkSemaphoreWaitInfoKHR)(preallocatedPointer)
@@ -49,7 +49,7 @@ func (o SemaphoreWaitOptions) PopulateCPointer(allocator *cgoparam.Allocator, pr
 
 		for i := 0; i < count; i++ {
 			if o.Semaphores[i] == nil {
-				return nil, errors.Newf("the SemaphoreWaitOptions 'Semaphores' list has a nil semaphore at element %d- all elements must be non-nil", i)
+				return nil, errors.Newf("the SemaphoreWaitInfo 'Semaphores' list has a nil semaphore at element %d- all elements must be non-nil", i)
 			}
 
 			semaphoreSlice[i] = C.VkSemaphore(unsafe.Pointer(o.Semaphores[i].Handle()))

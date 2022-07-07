@@ -11,13 +11,13 @@ import (
 	"unsafe"
 )
 
-type SamplerYcbcrImageFormatOutData struct {
+type SamplerYcbcrConversionImageFormatProperties struct {
 	CombinedImageSamplerDescriptorCount int
 
 	common.NextOutData
 }
 
-func (o *SamplerYcbcrImageFormatOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *SamplerYcbcrConversionImageFormatProperties) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkSamplerYcbcrConversionImageFormatPropertiesKHR{})))
 	}
@@ -29,7 +29,7 @@ func (o *SamplerYcbcrImageFormatOutData) PopulateHeader(allocator *cgoparam.Allo
 	return preallocatedPointer, nil
 }
 
-func (o *SamplerYcbcrImageFormatOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *SamplerYcbcrConversionImageFormatProperties) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	info := (*C.VkSamplerYcbcrConversionImageFormatPropertiesKHR)(cDataPointer)
 
 	o.CombinedImageSamplerDescriptorCount = int(info.combinedImageSamplerDescriptorCount)

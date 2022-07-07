@@ -12,15 +12,15 @@ import (
 	"unsafe"
 )
 
-type ExternalBufferOptions struct {
+type PhysicalDeviceExternalBufferInfo struct {
 	Flags      core1_0.BufferCreateFlags
-	Usage      core1_0.BufferUsages
-	HandleType ExternalMemoryHandleTypes
+	Usage      core1_0.BufferUsageFlags
+	HandleType ExternalMemoryHandleTypeFlags
 
 	common.NextOptions
 }
 
-func (o ExternalBufferOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o PhysicalDeviceExternalBufferInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceExternalBufferInfoKHR{})))
 	}

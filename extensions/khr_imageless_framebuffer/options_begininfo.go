@@ -12,13 +12,13 @@ import (
 	"unsafe"
 )
 
-type RenderPassAttachmentBeginOptions struct {
+type RenderPassAttachmentBeginInfo struct {
 	Attachments []core1_0.ImageView
 
 	common.NextOptions
 }
 
-func (o RenderPassAttachmentBeginOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o RenderPassAttachmentBeginInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkRenderPassAttachmentBeginInfoKHR{})))
 	}

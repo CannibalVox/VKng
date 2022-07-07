@@ -12,11 +12,11 @@ import (
 	"unsafe"
 )
 
-type SubpassDependencyOptions struct {
-	SrcSubpassIndex int
-	DstSubpassIndex int
-	SrcStageMask    core1_0.PipelineStages
-	DstStageMask    core1_0.PipelineStages
+type SubpassDependency2 struct {
+	SrcSubpass      int
+	DstSubpass      int
+	SrcStageMask    core1_0.PipelineStageFlags
+	DstStageMask    core1_0.PipelineStageFlags
 	SrcAccessMask   core1_0.AccessFlags
 	DstAccessMask   core1_0.AccessFlags
 	DependencyFlags core1_0.DependencyFlags
@@ -25,7 +25,7 @@ type SubpassDependencyOptions struct {
 	common.NextOptions
 }
 
-func (o SubpassDependencyOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o SubpassDependency2) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkSubpassDependency2KHR{})))
 	}
@@ -33,8 +33,8 @@ func (o SubpassDependencyOptions) PopulateCPointer(allocator *cgoparam.Allocator
 	info := (*C.VkSubpassDependency2KHR)(preallocatedPointer)
 	info.sType = C.VK_STRUCTURE_TYPE_SUBPASS_DEPENDENCY_2_KHR
 	info.pNext = next
-	info.srcSubpass = C.uint32_t(o.SrcSubpassIndex)
-	info.dstSubpass = C.uint32_t(o.DstSubpassIndex)
+	info.srcSubpass = C.uint32_t(o.SrcSubpass)
+	info.dstSubpass = C.uint32_t(o.DstSubpass)
 	info.srcStageMask = C.VkPipelineStageFlags(o.SrcStageMask)
 	info.dstStageMask = C.VkPipelineStageFlags(o.DstStageMask)
 	info.srcAccessMask = C.VkAccessFlags(o.SrcAccessMask)

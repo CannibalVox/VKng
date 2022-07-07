@@ -56,11 +56,11 @@ func TestImageFormatListCreateOptions(t *testing.T) {
 		nil,
 		core1_0.ImageCreateOptions{
 			NextOptions: common.NextOptions{
-				ImageFormatListCreateOptions{
-					ViewFormats: []core1_0.DataFormat{
-						core1_0.DataFormatA2B10G10R10UnsignedNormalizedPacked,
-						core1_0.DataFormatA8B8G8R8SRGBPacked,
-						core1_0.DataFormatA8B8G8R8SignedNormalizedPacked,
+				ImageFormatListCreateInfo{
+					ViewFormats: []core1_0.Format{
+						core1_0.FormatA2B10G10R10UnsignedNormalizedPacked,
+						core1_0.FormatA8B8G8R8SRGBPacked,
+						core1_0.FormatA8B8G8R8SignedNormalizedPacked,
 					},
 				},
 			},

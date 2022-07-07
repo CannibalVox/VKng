@@ -51,10 +51,10 @@ func TestVulkanExtension_ExternalBufferProperties(t *testing.T) {
 		*(*uint32)(unsafe.Pointer(val.FieldByName("externalMemoryProperties").FieldByName("compatibleHandleTypes").UnsafeAddr())) = uint32(2)
 	})
 
-	var outData khr_external_memory_capabilities.ExternalBufferOutData
-	err := extension.ExternalBufferProperties(
+	var outData khr_external_memory_capabilities.ExternalBufferProperties
+	err := extension.PhysicalDeviceExternalBufferProperties(
 		physicalDevice,
-		khr_external_memory_capabilities.ExternalBufferOptions{
+		khr_external_memory_capabilities.PhysicalDeviceExternalBufferInfo{
 			Flags:      core1_0.BufferCreateSparseResidency,
 			Usage:      core1_0.BufferUsageStorageTexelBuffer,
 			HandleType: khr_external_memory_capabilities.ExternalMemoryHandleTypeD3D11TextureKMT,
@@ -62,7 +62,7 @@ func TestVulkanExtension_ExternalBufferProperties(t *testing.T) {
 		&outData,
 	)
 	require.NoError(t, err)
-	require.Equal(t, khr_external_memory_capabilities.ExternalBufferOutData{
+	require.Equal(t, khr_external_memory_capabilities.ExternalBufferProperties{
 		ExternalMemoryProperties: khr_external_memory_capabilities.ExternalMemoryProperties{
 			ExternalMemoryFeatures:        khr_external_memory_capabilities.ExternalMemoryFeatureExportable,
 			ExportFromImportedHandleTypes: khr_external_memory_capabilities.ExternalMemoryHandleTypeD3D12Resource,
@@ -118,16 +118,16 @@ func TestExternalImageFormatOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	var outData khr_external_memory_capabilities.ExternalImageFormatOutData
-	format := khr_get_physical_device_properties2.ImageFormatPropertiesOutData{
+	var outData khr_external_memory_capabilities.ExternalImageFormatProperties
+	format := khr_get_physical_device_properties2.ImageFormatProperties2{
 		NextOutData: common.NextOutData{&outData},
 	}
 	_, err := extension.PhysicalDeviceImageFormatProperties2(
 		physicalDevice,
-		khr_get_physical_device_properties2.ImageFormatOptions{
-			Format: core1_0.DataFormatA2B10G10R10UnsignedIntPacked,
+		khr_get_physical_device_properties2.PhysicalDeviceImageFormatInfo2{
+			Format: core1_0.FormatA2B10G10R10UnsignedIntPacked,
 			NextOptions: common.NextOptions{
-				khr_external_memory_capabilities.PhysicalDeviceExternalImageFormatOptions{
+				khr_external_memory_capabilities.PhysicalDeviceExternalImageFormatInfo{
 					HandleType: khr_external_memory_capabilities.ExternalMemoryHandleTypeOpaqueFD,
 				},
 			},
@@ -135,7 +135,7 @@ func TestExternalImageFormatOptions(t *testing.T) {
 		&format,
 	)
 	require.NoError(t, err)
-	require.Equal(t, khr_external_memory_capabilities.ExternalImageFormatOutData{
+	require.Equal(t, khr_external_memory_capabilities.ExternalImageFormatProperties{
 		ExternalMemoryProperties: khr_external_memory_capabilities.ExternalMemoryProperties{
 			ExternalMemoryFeatures:        khr_external_memory_capabilities.ExternalMemoryFeatureImportable,
 			ExportFromImportedHandleTypes: khr_external_memory_capabilities.ExternalMemoryHandleTypeD3D11Texture,
@@ -194,8 +194,8 @@ func TestPhysicalDeviceIDOutData(t *testing.T) {
 			*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("deviceLUIDValid").UnsafeAddr())) = driver.VkBool32(1)
 		})
 
-	var properties khr_get_physical_device_properties2.DevicePropertiesOutData
-	var outData khr_external_memory_capabilities.PhysicalDeviceIDOutData
+	var properties khr_get_physical_device_properties2.PhysicalDeviceProperties2
+	var outData khr_external_memory_capabilities.PhysicalDeviceIDProperties
 	properties.NextOutData = common.NextOutData{&outData}
 
 	err = extension.PhysicalDeviceProperties2(
@@ -203,7 +203,7 @@ func TestPhysicalDeviceIDOutData(t *testing.T) {
 		&properties,
 	)
 	require.NoError(t, err)
-	require.Equal(t, khr_external_memory_capabilities.PhysicalDeviceIDOutData{
+	require.Equal(t, khr_external_memory_capabilities.PhysicalDeviceIDProperties{
 		DeviceUUID:      deviceUUID,
 		DriverUUID:      driverUUID,
 		DeviceLUID:      0xdeadbeefdeadbeef,

@@ -37,10 +37,10 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 }
 
 // PhysicalDeviceGroups mocks base method.
-func (m *MockExtension) PhysicalDeviceGroups(instance core1_0.Instance, outDataFactory func() *khr_device_group_creation.DeviceGroupOutData) ([]*khr_device_group_creation.DeviceGroupOutData, common.VkResult, error) {
+func (m *MockExtension) PhysicalDeviceGroups(instance core1_0.Instance, outDataFactory func() *khr_device_group_creation.PhysicalDeviceGroupProperties) ([]*khr_device_group_creation.PhysicalDeviceGroupProperties, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PhysicalDeviceGroups", instance, outDataFactory)
-	ret0, _ := ret[0].([]*khr_device_group_creation.DeviceGroupOutData)
+	ret0, _ := ret[0].([]*khr_device_group_creation.PhysicalDeviceGroupProperties)
 	ret1, _ := ret[1].(common.VkResult)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2

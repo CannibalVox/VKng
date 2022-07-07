@@ -13,21 +13,21 @@ import (
 	"unsafe"
 )
 
-type PresentOptionsOutData struct {
+type PresentOutData struct {
 	Results []common.VkResult
 }
 
-type PresentOptions struct {
+type PresentInfo struct {
 	WaitSemaphores []core1_0.Semaphore
 	Swapchains     []Swapchain
 	ImageIndices   []int
 
 	common.NextOptions
 
-	OutData *PresentOptionsOutData
+	OutData *PresentOutData
 }
 
-func (o PresentOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o PresentInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == unsafe.Pointer(nil) {
 		preallocatedPointer = allocator.Malloc(C.sizeof_struct_VkPresentInfoKHR)
 	}
@@ -81,7 +81,7 @@ func (o PresentOptions) PopulateCPointer(allocator *cgoparam.Allocator, prealloc
 	return preallocatedPointer, nil
 }
 
-func (o PresentOptions) PopulateOutData(cDataPointer unsafe.Pointer) error {
+func (o PresentInfo) PopulateOutData(cDataPointer unsafe.Pointer) error {
 	createInfo := (*C.VkPresentInfoKHR)(cDataPointer)
 
 	if o.OutData == nil {

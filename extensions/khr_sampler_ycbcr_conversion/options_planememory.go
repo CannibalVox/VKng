@@ -12,13 +12,13 @@ import (
 	"unsafe"
 )
 
-type ImagePlaneMemoryRequirementsOptions struct {
+type ImagePlaneMemoryRequirementsInfo struct {
 	PlaneAspect core1_0.ImageAspectFlags
 
 	common.NextOptions
 }
 
-func (o ImagePlaneMemoryRequirementsOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o ImagePlaneMemoryRequirementsInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkImagePlaneMemoryRequirementsInfoKHR{})))
 	}

@@ -12,14 +12,14 @@ import (
 	"unsafe"
 )
 
-type BindImageMemorySwapchainOptions struct {
+type BindImageMemorySwapchainInfo struct {
 	Swapchain  khr_swapchain.Swapchain
 	ImageIndex int
 
 	common.NextOptions
 }
 
-func (o BindImageMemorySwapchainOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o BindImageMemorySwapchainInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkBindImageMemorySwapchainInfoKHR{})))
 	}

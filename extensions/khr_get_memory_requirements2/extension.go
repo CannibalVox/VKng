@@ -34,7 +34,7 @@ func CreateExtensionFromDriver(driver khr_get_memory_requirements2_driver.Driver
 	}
 }
 
-func (e *VulkanExtension) BufferMemoryRequirements(device core1_0.Device, o BufferMemoryRequirementsOptions, out *MemoryRequirementsOutData) error {
+func (e *VulkanExtension) BufferMemoryRequirements2(device core1_0.Device, o BufferMemoryRequirementsInfo2, out *MemoryRequirements2) error {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -56,7 +56,7 @@ func (e *VulkanExtension) BufferMemoryRequirements(device core1_0.Device, o Buff
 	return common.PopulateOutData(out, outDataPtr)
 }
 
-func (e *VulkanExtension) ImageMemoryRequirements(device core1_0.Device, o ImageMemoryRequirementsOptions, out *MemoryRequirementsOutData) error {
+func (e *VulkanExtension) ImageMemoryRequirements2(device core1_0.Device, o ImageMemoryRequirementsInfo2, out *MemoryRequirements2) error {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -78,7 +78,7 @@ func (e *VulkanExtension) ImageMemoryRequirements(device core1_0.Device, o Image
 	return common.PopulateOutData(out, outDataPtr)
 }
 
-func (e *VulkanExtension) SparseImageMemoryRequirements(device core1_0.Device, o ImageSparseMemoryRequirementsOptions, outDataFactory func() *SparseImageMemoryRequirementsOutData) ([]*SparseImageMemoryRequirementsOutData, error) {
+func (e *VulkanExtension) ImageSparseMemoryRequirements2(device core1_0.Device, o ImageSparseMemoryRequirementsInfo2, outDataFactory func() *SparseImageMemoryRequirements2) ([]*SparseImageMemoryRequirements2, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -100,16 +100,16 @@ func (e *VulkanExtension) SparseImageMemoryRequirements(device core1_0.Device, o
 		return nil, nil
 	}
 
-	outDataSlice := make([]*SparseImageMemoryRequirementsOutData, count)
+	outDataSlice := make([]*SparseImageMemoryRequirements2, count)
 	for i := 0; i < count; i++ {
 		if outDataFactory != nil {
 			outDataSlice[i] = outDataFactory()
 		} else {
-			outDataSlice[i] = &SparseImageMemoryRequirementsOutData{}
+			outDataSlice[i] = &SparseImageMemoryRequirements2{}
 		}
 	}
 
-	outDataPtr, err := common.AllocOutDataHeaderSlice[C.VkSparseImageMemoryRequirements2KHR, *SparseImageMemoryRequirementsOutData](arena, outDataSlice)
+	outDataPtr, err := common.AllocOutDataHeaderSlice[C.VkSparseImageMemoryRequirements2KHR, *SparseImageMemoryRequirements2](arena, outDataSlice)
 	if err != nil {
 		return nil, err
 	}
@@ -122,7 +122,7 @@ func (e *VulkanExtension) SparseImageMemoryRequirements(device core1_0.Device, o
 		(*khr_get_memory_requirements2_driver.VkSparseImageMemoryRequirements2KHR)(unsafe.Pointer(castOutDataPtr)),
 	)
 
-	err = common.PopulateOutDataSlice[C.VkSparseImageMemoryRequirements2KHR, *SparseImageMemoryRequirementsOutData](outDataSlice, unsafe.Pointer(outDataPtr))
+	err = common.PopulateOutDataSlice[C.VkSparseImageMemoryRequirements2KHR, *SparseImageMemoryRequirements2](outDataSlice, unsafe.Pointer(outDataPtr))
 	if err != nil {
 		return nil, err
 	}

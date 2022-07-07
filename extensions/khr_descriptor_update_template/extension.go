@@ -25,7 +25,7 @@ func CreateExtensionFromDriver(driver khr_descriptor_update_template_driver.Driv
 	}
 }
 
-func (e *VulkanExtension) CreateDescriptorUpdateTemplate(device core1_0.Device, o DescriptorUpdateTemplateCreateOptions, allocator *driver.AllocationCallbacks) (DescriptorUpdateTemplate, common.VkResult, error) {
+func (e *VulkanExtension) CreateDescriptorUpdateTemplate(device core1_0.Device, o DescriptorUpdateTemplateCreateInfo, allocator *driver.AllocationCallbacks) (DescriptorUpdateTemplate, common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 

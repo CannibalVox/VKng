@@ -12,13 +12,13 @@ import (
 	"unsafe"
 )
 
-type ImageSparseMemoryRequirementsOptions struct {
+type ImageSparseMemoryRequirementsInfo2 struct {
 	Image core1_0.Image
 
 	common.NextOptions
 }
 
-func (o ImageSparseMemoryRequirementsOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o ImageSparseMemoryRequirementsInfo2) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkImageSparseMemoryRequirementsInfo2KHR{})))
 	}

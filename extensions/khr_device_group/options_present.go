@@ -11,14 +11,14 @@ import (
 	"unsafe"
 )
 
-type DeviceGroupPresentOptions struct {
+type DeviceGroupPresentInfo struct {
 	DeviceMasks []uint32
 	Mode        DeviceGroupPresentModeFlags
 
 	common.NextOptions
 }
 
-func (o DeviceGroupPresentOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o DeviceGroupPresentInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(C.sizeof_struct_VkDeviceGroupPresentInfoKHR)
 	}

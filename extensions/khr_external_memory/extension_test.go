@@ -52,11 +52,11 @@ func TestExternalMemoryAllocateOptions(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	memory, _, err := device.AllocateMemory(nil, core1_0.MemoryAllocateOptions{
+	memory, _, err := device.AllocateMemory(nil, core1_0.MemoryAllocateInfo{
 		AllocationSize:  1,
 		MemoryTypeIndex: 3,
 		NextOptions: common.NextOptions{
-			khr_external_memory.ExportMemoryAllocateOptions{
+			khr_external_memory.ExportMemoryAllocateInfo{
 				HandleTypes: khr_external_memory_capabilities.ExternalMemoryHandleTypeD3D11TextureKMT,
 			},
 		},
@@ -108,7 +108,7 @@ func TestExternalMemoryImageOptions(t *testing.T) {
 			ArrayLayers: 3,
 
 			NextOptions: common.NextOptions{
-				khr_external_memory.ExternalMemoryImageOptions{
+				khr_external_memory.ExternalMemoryImageCreateInfo{
 					HandleTypes: khr_external_memory_capabilities.ExternalMemoryHandleTypeD3D12Heap,
 				},
 			},
@@ -155,12 +155,12 @@ func TestExternalMemoryBufferOptions(t *testing.T) {
 
 	buffer, _, err := device.CreateBuffer(
 		nil,
-		core1_0.BufferCreateOptions{
-			BufferSize: 1,
-			Usage:      core1_0.BufferUsageStorageTexelBuffer,
+		core1_0.BufferCreateInfo{
+			Size:  1,
+			Usage: core1_0.BufferUsageStorageTexelBuffer,
 
 			NextOptions: common.NextOptions{
-				khr_external_memory.ExternalMemoryBufferOptions{
+				khr_external_memory.ExternalMemoryBufferCreateInfo{
 					HandleTypes: khr_external_memory_capabilities.ExternalMemoryHandleTypeD3D11Texture,
 				},
 			},

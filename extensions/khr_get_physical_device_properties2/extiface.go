@@ -8,11 +8,11 @@ import (
 )
 
 type Extension interface {
-	PhysicalDeviceFeatures2(physicalDevice core1_0.PhysicalDevice, out *DeviceFeatures) error
-	PhysicalDeviceFormatProperties2(physicalDevice core1_0.PhysicalDevice, format core1_0.DataFormat, out *FormatPropertiesOutData) error
-	PhysicalDeviceImageFormatProperties2(physicalDevice core1_0.PhysicalDevice, options ImageFormatOptions, out *ImageFormatPropertiesOutData) (common.VkResult, error)
-	PhysicalDeviceMemoryProperties2(physicalDevice core1_0.PhysicalDevice, out *MemoryPropertiesOutData) error
-	PhysicalDeviceProperties2(physicalDevice core1_0.PhysicalDevice, out *DevicePropertiesOutData) error
-	PhysicalDeviceQueueFamilyProperties2(physicalDevice core1_0.PhysicalDevice, outDataFactory func() *QueueFamilyOutData) ([]*QueueFamilyOutData, error)
-	PhysicalDeviceSparseImageFormatProperties2(physicalDevice core1_0.PhysicalDevice, options SparseImageFormatOptions, outDataFactory func() *SparseImageFormatPropertiesOutData) ([]*SparseImageFormatPropertiesOutData, error)
+	PhysicalDeviceFeatures2(physicalDevice core1_0.PhysicalDevice, out *PhysicalDeviceFeatures2) error
+	PhysicalDeviceFormatProperties2(physicalDevice core1_0.PhysicalDevice, format core1_0.Format, out *FormatProperties2) error
+	PhysicalDeviceImageFormatProperties2(physicalDevice core1_0.PhysicalDevice, options PhysicalDeviceImageFormatInfo2, out *ImageFormatProperties2) (common.VkResult, error)
+	PhysicalDeviceMemoryProperties2(physicalDevice core1_0.PhysicalDevice, out *PhysicalDeviceMemoryProperties2) error
+	PhysicalDeviceProperties2(physicalDevice core1_0.PhysicalDevice, out *PhysicalDeviceProperties2) error
+	PhysicalDeviceQueueFamilyProperties2(physicalDevice core1_0.PhysicalDevice, outDataFactory func() *QueueFamilyProperties2) ([]*QueueFamilyProperties2, error)
+	PhysicalDeviceSparseImageFormatProperties2(physicalDevice core1_0.PhysicalDevice, options PhysicalDeviceSparseImageFormatInfo2, outDataFactory func() *SparseImageFormatProperties2) ([]*SparseImageFormatProperties2, error)
 }

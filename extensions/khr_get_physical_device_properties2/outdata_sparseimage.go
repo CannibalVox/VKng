@@ -12,12 +12,12 @@ import (
 	"unsafe"
 )
 
-type SparseImageFormatPropertiesOutData struct {
-	SparseImageFormatProperties core1_0.SparseImageFormatProperties
+type SparseImageFormatProperties2 struct {
+	Properties core1_0.SparseImageFormatProperties
 	common.NextOutData
 }
 
-func (o *SparseImageFormatPropertiesOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *SparseImageFormatProperties2) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkSparseImageFormatProperties2KHR{})))
 	}
@@ -29,12 +29,12 @@ func (o *SparseImageFormatPropertiesOutData) PopulateHeader(allocator *cgoparam.
 	return preallocatedPointer, nil
 }
 
-func (o *SparseImageFormatPropertiesOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *SparseImageFormatProperties2) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	data := (*C.VkSparseImageFormatProperties2KHR)(cDataPointer)
 
-	o.SparseImageFormatProperties.AspectMask = core1_0.ImageAspectFlags(data.properties.aspectMask)
-	o.SparseImageFormatProperties.Flags = core1_0.SparseImageFormatFlags(data.properties.flags)
-	o.SparseImageFormatProperties.ImageGranularity = core1_0.Extent3D{
+	o.Properties.AspectMask = core1_0.ImageAspectFlags(data.properties.aspectMask)
+	o.Properties.Flags = core1_0.SparseImageFormatFlags(data.properties.flags)
+	o.Properties.ImageGranularity = core1_0.Extent3D{
 		Width:  int(data.properties.imageGranularity.width),
 		Height: int(data.properties.imageGranularity.height),
 		Depth:  int(data.properties.imageGranularity.depth),

@@ -11,13 +11,13 @@ import (
 	"unsafe"
 )
 
-type FramebufferAttachmentsCreateOptions struct {
-	AttachmentImageInfos []FramebufferAttachmentImageOptions
+type FramebufferAttachmentsCreateInfo struct {
+	AttachmentImageInfos []FramebufferAttachmentImageInfo
 
 	common.NextOptions
 }
 
-func (o FramebufferAttachmentsCreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o FramebufferAttachmentsCreateInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkFramebufferAttachmentsCreateInfoKHR{})))
 	}
@@ -31,7 +31,7 @@ func (o FramebufferAttachmentsCreateOptions) PopulateCPointer(allocator *cgopara
 	info.pAttachmentImageInfos = nil
 
 	if count > 0 {
-		infosPtr, err := common.AllocOptionSlice[C.VkFramebufferAttachmentImageInfoKHR, FramebufferAttachmentImageOptions](allocator, o.AttachmentImageInfos)
+		infosPtr, err := common.AllocOptionSlice[C.VkFramebufferAttachmentImageInfoKHR, FramebufferAttachmentImageInfo](allocator, o.AttachmentImageInfos)
 		if err != nil {
 			return nil, err
 		}

@@ -11,21 +11,21 @@ import (
 	"unsafe"
 )
 
-type CallbackDataOptions struct {
+type DebugUtilsMessengerCallbackData struct {
 	Flags CallbackDataFlags
 
 	MessageIDName   string
 	MessageIDNumber int
 	Message         string
 
-	QueueLabels         []LabelOptions
-	CommandBufferLabels []LabelOptions
-	Objects             []ObjectNameOptions
+	QueueLabels  []DebugUtilsLabel
+	CmdBufLabels []DebugUtilsLabel
+	Objects      []DebugUtilsObjectNameInfo
 
 	common.NextOptions
 }
 
-func (c CallbackDataOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (c DebugUtilsMessengerCallbackData) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(C.sizeof_struct_VkDebugUtilsMessengerCallbackDataEXT)
 	}
@@ -39,19 +39,19 @@ func (c CallbackDataOptions) PopulateCPointer(allocator *cgoparam.Allocator, pre
 	callbackData.pMessage = (*C.char)(allocator.CString(c.Message))
 
 	queueLabelCount := len(c.QueueLabels)
-	queueLabelsPtr, err := common.AllocOptionSlice[C.VkDebugUtilsLabelEXT, LabelOptions](allocator, c.QueueLabels)
+	queueLabelsPtr, err := common.AllocOptionSlice[C.VkDebugUtilsLabelEXT, DebugUtilsLabel](allocator, c.QueueLabels)
 	if err != nil {
 		return nil, err
 	}
 
-	commandBufferLabelCount := len(c.CommandBufferLabels)
-	commandBufferLabelPtr, err := common.AllocOptionSlice[C.VkDebugUtilsLabelEXT, LabelOptions](allocator, c.CommandBufferLabels)
+	commandBufferLabelCount := len(c.CmdBufLabels)
+	commandBufferLabelPtr, err := common.AllocOptionSlice[C.VkDebugUtilsLabelEXT, DebugUtilsLabel](allocator, c.CmdBufLabels)
 	if err != nil {
 		return nil, err
 	}
 
 	objectCount := len(c.Objects)
-	objectPtr, err := common.AllocOptionSlice[C.VkDebugUtilsObjectNameInfoEXT, ObjectNameOptions](allocator, c.Objects)
+	objectPtr, err := common.AllocOptionSlice[C.VkDebugUtilsObjectNameInfoEXT, DebugUtilsObjectNameInfo](allocator, c.Objects)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func (c CallbackDataOptions) PopulateCPointer(allocator *cgoparam.Allocator, pre
 	return preallocatedPointer, nil
 }
 
-func (c *CallbackDataOptions) PopulateFromCPointer(cPointer unsafe.Pointer) error {
+func (c *DebugUtilsMessengerCallbackData) PopulateFromCPointer(cPointer unsafe.Pointer) error {
 	callbackData := (*C.VkDebugUtilsMessengerCallbackDataEXT)(cPointer)
 
 	c.MessageIDName = ""
@@ -82,7 +82,7 @@ func (c *CallbackDataOptions) PopulateFromCPointer(cPointer unsafe.Pointer) erro
 	c.MessageIDNumber = int(callbackData.messageIdNumber)
 
 	queueLabelCount := int(callbackData.queueLabelCount)
-	c.QueueLabels = make([]LabelOptions, queueLabelCount)
+	c.QueueLabels = make([]DebugUtilsLabel, queueLabelCount)
 	queueCPointer := unsafe.Pointer(callbackData.pQueueLabels)
 	labelSize := uintptr(C.sizeof_struct_VkDebugUtilsLabelEXT)
 	for i := 0; i < queueLabelCount; i++ {
@@ -92,16 +92,16 @@ func (c *CallbackDataOptions) PopulateFromCPointer(cPointer unsafe.Pointer) erro
 	}
 
 	commandBufferLabelCount := int(callbackData.cmdBufLabelCount)
-	c.CommandBufferLabels = make([]LabelOptions, commandBufferLabelCount)
+	c.CmdBufLabels = make([]DebugUtilsLabel, commandBufferLabelCount)
 	cmdBufCPointer := unsafe.Pointer(callbackData.pCmdBufLabels)
 	for i := 0; i < commandBufferLabelCount; i++ {
-		c.CommandBufferLabels[i].PopulateFromCPointer(cmdBufCPointer)
+		c.CmdBufLabels[i].PopulateFromCPointer(cmdBufCPointer)
 
 		cmdBufCPointer = unsafe.Add(cmdBufCPointer, labelSize)
 	}
 
 	objectCount := int(callbackData.objectCount)
-	c.Objects = make([]ObjectNameOptions, objectCount)
+	c.Objects = make([]DebugUtilsObjectNameInfo, objectCount)
 	objectsPointer := unsafe.Pointer(callbackData.pObjects)
 	objectNameSize := uintptr(C.sizeof_struct_VkDebugUtilsObjectNameInfoEXT)
 	for i := 0; i < objectCount; i++ {

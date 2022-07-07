@@ -37,9 +37,9 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 }
 
 // BindBufferMemory mocks base method.
-func (m *MockExtension) BindBufferMemory(device core1_0.Device, options []khr_bind_memory2.BindBufferMemoryOptions) (common.VkResult, error) {
+func (m *MockExtension) BindBufferMemory2(device core1_0.Device, options []khr_bind_memory2.BindBufferMemoryInfo) (common.VkResult, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "BindBufferMemory", device, options)
+	ret := m.ctrl.Call(m, "BindBufferMemory2", device, options)
 	ret0, _ := ret[0].(common.VkResult)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
@@ -48,13 +48,13 @@ func (m *MockExtension) BindBufferMemory(device core1_0.Device, options []khr_bi
 // BindBufferMemory indicates an expected call of BindBufferMemory.
 func (mr *MockExtensionMockRecorder) BindBufferMemory(device, options interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BindBufferMemory", reflect.TypeOf((*MockExtension)(nil).BindBufferMemory), device, options)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BindBufferMemory2", reflect.TypeOf((*MockExtension)(nil).BindBufferMemory2), device, options)
 }
 
 // BindImageMemory mocks base method.
-func (m *MockExtension) BindImageMemory(device core1_0.Device, options []khr_bind_memory2.BindImageMemoryOptions) (common.VkResult, error) {
+func (m *MockExtension) BindImageMemory2(device core1_0.Device, options []khr_bind_memory2.BindImageMemoryInfo) (common.VkResult, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "BindImageMemory", device, options)
+	ret := m.ctrl.Call(m, "BindImageMemory2", device, options)
 	ret0, _ := ret[0].(common.VkResult)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
@@ -63,5 +63,5 @@ func (m *MockExtension) BindImageMemory(device core1_0.Device, options []khr_bin
 // BindImageMemory indicates an expected call of BindImageMemory.
 func (mr *MockExtensionMockRecorder) BindImageMemory(device, options interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BindImageMemory", reflect.TypeOf((*MockExtension)(nil).BindImageMemory), device, options)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BindImageMemory2", reflect.TypeOf((*MockExtension)(nil).BindImageMemory2), device, options)
 }

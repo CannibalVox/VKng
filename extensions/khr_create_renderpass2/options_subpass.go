@@ -13,20 +13,20 @@ import (
 	"unsafe"
 )
 
-type SubpassDescriptionOptions struct {
-	Flags                  core1_0.SubPassDescriptionFlags
+type SubpassDescription2 struct {
+	Flags                  core1_0.SubpassDescriptionFlags
 	PipelineBindPoint      core1_0.PipelineBindPoint
 	ViewMask               uint32
-	InputAttachments       []AttachmentReferenceOptions
-	ColorAttachments       []AttachmentReferenceOptions
-	ResolveAttachments     []AttachmentReferenceOptions
-	DepthStencilAttachment *AttachmentReferenceOptions
+	InputAttachments       []AttachmentReference2
+	ColorAttachments       []AttachmentReference2
+	ResolveAttachments     []AttachmentReference2
+	DepthStencilAttachment *AttachmentReference2
 	PreserveAttachments    []int
 
 	common.NextOptions
 }
 
-func (o SubpassDescriptionOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o SubpassDescription2) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkSubpassDescription2KHR{})))
 	}
@@ -58,19 +58,19 @@ func (o SubpassDescriptionOptions) PopulateCPointer(allocator *cgoparam.Allocato
 
 	var err error
 	if inputAttachmentCount > 0 {
-		info.pInputAttachments, err = common.AllocOptionSlice[C.VkAttachmentReference2KHR, AttachmentReferenceOptions](allocator, o.InputAttachments)
+		info.pInputAttachments, err = common.AllocOptionSlice[C.VkAttachmentReference2KHR, AttachmentReference2](allocator, o.InputAttachments)
 		if err != nil {
 			return nil, err
 		}
 	}
 
 	if colorAttachmentCount > 0 {
-		info.pColorAttachments, err = common.AllocOptionSlice[C.VkAttachmentReference2KHR, AttachmentReferenceOptions](allocator, o.ColorAttachments)
+		info.pColorAttachments, err = common.AllocOptionSlice[C.VkAttachmentReference2KHR, AttachmentReference2](allocator, o.ColorAttachments)
 		if err != nil {
 			return nil, err
 		}
 
-		info.pResolveAttachments, err = common.AllocOptionSlice[C.VkAttachmentReference2KHR, AttachmentReferenceOptions](allocator, o.ResolveAttachments)
+		info.pResolveAttachments, err = common.AllocOptionSlice[C.VkAttachmentReference2KHR, AttachmentReference2](allocator, o.ResolveAttachments)
 		if err != nil {
 			return nil, err
 		}

@@ -12,13 +12,13 @@ import (
 	"unsafe"
 )
 
-type ExportMemoryAllocateOptions struct {
-	HandleTypes khr_external_memory_capabilities.ExternalMemoryHandleTypes
+type ExportMemoryAllocateInfo struct {
+	HandleTypes khr_external_memory_capabilities.ExternalMemoryHandleTypeFlags
 
 	common.NextOptions
 }
 
-func (o ExportMemoryAllocateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o ExportMemoryAllocateInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkExportMemoryAllocateInfoKHR{})))
 	}
@@ -31,7 +31,7 @@ func (o ExportMemoryAllocateOptions) PopulateCPointer(allocator *cgoparam.Alloca
 	return preallocatedPointer, nil
 }
 
-func (o ExportMemoryAllocateOptions) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o ExportMemoryAllocateInfo) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	info := (*C.VkExportMemoryAllocateInfoKHR)(cDataPointer)
 	return info.pNext, nil
 }

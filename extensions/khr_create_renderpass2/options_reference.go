@@ -12,7 +12,7 @@ import (
 	"unsafe"
 )
 
-type AttachmentReferenceOptions struct {
+type AttachmentReference2 struct {
 	Attachment int
 	Layout     core1_0.ImageLayout
 	AspectMask core1_0.ImageAspectFlags
@@ -20,7 +20,7 @@ type AttachmentReferenceOptions struct {
 	common.NextOptions
 }
 
-func (o AttachmentReferenceOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o AttachmentReference2) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkAttachmentReference2KHR{})))
 	}

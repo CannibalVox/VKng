@@ -11,13 +11,13 @@ import (
 	"unsafe"
 )
 
-type BindBufferMemoryDeviceGroupOptions struct {
+type BindBufferMemoryDeviceGroupInfo struct {
 	DeviceIndices []int
 
 	common.NextOptions
 }
 
-func (o BindBufferMemoryDeviceGroupOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o BindBufferMemoryDeviceGroupInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkBindBufferMemoryDeviceGroupInfoKHR{})))
 	}

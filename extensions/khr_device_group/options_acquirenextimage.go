@@ -15,7 +15,7 @@ import (
 	"unsafe"
 )
 
-type AcquireNextImageOptions struct {
+type AcquireNextImageInfo struct {
 	Swapchain  khr_swapchain.Swapchain
 	Timeout    time.Duration
 	Semaphore  core1_0.Semaphore
@@ -25,9 +25,9 @@ type AcquireNextImageOptions struct {
 	common.NextOptions
 }
 
-func (o AcquireNextImageOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o AcquireNextImageInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if o.Swapchain == nil {
-		return nil, errors.New("field Swapchain of AcquireNextImageOptions must contain a valid swapchain")
+		return nil, errors.New("field Swapchain of AcquireNextImageInfo must contain a valid swapchain")
 	}
 
 	if preallocatedPointer == nil {

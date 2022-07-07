@@ -62,13 +62,13 @@ func TestVulkanExtension_CmdBeginRenderPass2(t *testing.T) {
 
 	err := extension.CmdBeginRenderPass2(
 		commandBuffer,
-		core1_0.RenderPassBeginOptions{
+		core1_0.RenderPassBeginInfo{
 			RenderPass:  renderPass,
 			Framebuffer: framebuffer,
 			RenderArea:  core1_0.Rect2D{Offset: core1_0.Offset2D{1, 3}, Extent: core1_0.Extent2D{5, 7}},
 			ClearValues: []core1_0.ClearValue{core1_0.ClearValueFloat{1, 3, 5, 7}},
 		},
-		khr_create_renderpass2.SubpassBeginOptions{
+		khr_create_renderpass2.SubpassBeginInfo{
 			Contents: core1_0.SubpassContentsSecondaryCommandBuffers,
 		})
 	require.NoError(t, err)
@@ -97,7 +97,7 @@ func TestVulkanExtension_CmdEndRenderPass2(t *testing.T) {
 
 	err := extension.CmdEndRenderPass2(
 		commandBuffer,
-		khr_create_renderpass2.SubpassEndOptions{})
+		khr_create_renderpass2.SubpassEndInfo{})
 	require.NoError(t, err)
 }
 
@@ -130,10 +130,10 @@ func TestVulkanExtension_CmdNextSubpass2(t *testing.T) {
 
 	err := extension.CmdNextSubpass2(
 		commandBuffer,
-		khr_create_renderpass2.SubpassBeginOptions{
+		khr_create_renderpass2.SubpassBeginInfo{
 			Contents: core1_0.SubpassContentsSecondaryCommandBuffers,
 		},
-		khr_create_renderpass2.SubpassEndOptions{})
+		khr_create_renderpass2.SubpassEndInfo{})
 	require.NoError(t, err)
 }
 
@@ -274,64 +274,64 @@ func TestVulkanExtension_CreateRenderPass2(t *testing.T) {
 	renderPass, _, err := extension.CreateRenderPass2(
 		device,
 		nil,
-		khr_create_renderpass2.RenderPassCreateOptions{
+		khr_create_renderpass2.RenderPassCreateInfo2{
 			Flags: 0,
-			Attachments: []khr_create_renderpass2.AttachmentDescriptionOptions{
+			Attachments: []khr_create_renderpass2.AttachmentDescription2{
 				{
 					Flags:          core1_0.AttachmentDescriptionMayAlias,
-					Format:         core1_0.DataFormatA2B10G10R10UnsignedIntPacked,
+					Format:         core1_0.FormatA2B10G10R10UnsignedIntPacked,
 					Samples:        core1_0.Samples8,
-					LoadOp:         core1_0.LoadOpClear,
-					StoreOp:        core1_0.StoreOpDontCare,
-					StencilLoadOp:  core1_0.LoadOpDontCare,
-					StencilStoreOp: core1_0.StoreOpStore,
+					LoadOp:         core1_0.AttachmentLoadOpClear,
+					StoreOp:        core1_0.AttachmentStoreOpDontCare,
+					StencilLoadOp:  core1_0.AttachmentLoadOpDontCare,
+					StencilStoreOp: core1_0.AttachmentStoreOpStore,
 					InitialLayout:  core1_0.ImageLayoutDepthStencilReadOnlyOptimal,
 					FinalLayout:    core1_0.ImageLayoutPreInitialized,
 				},
 			},
-			Subpasses: []khr_create_renderpass2.SubpassDescriptionOptions{
+			Subpasses: []khr_create_renderpass2.SubpassDescription2{
 				{
 					Flags:             0,
-					PipelineBindPoint: core1_0.BindCompute,
+					PipelineBindPoint: core1_0.PipelineBindPointCompute,
 					ViewMask:          1,
-					InputAttachments: []khr_create_renderpass2.AttachmentReferenceOptions{
+					InputAttachments: []khr_create_renderpass2.AttachmentReference2{
 						{
 							Attachment: 3,
 							Layout:     core1_0.ImageLayoutTransferSrcOptimal,
-							AspectMask: core1_0.AspectStencil,
+							AspectMask: core1_0.ImageAspectStencil,
 						},
 						{
 							Attachment: 5,
 							Layout:     core1_0.ImageLayoutTransferSrcOptimal,
-							AspectMask: core1_0.AspectMetadata,
+							AspectMask: core1_0.ImageAspectMetadata,
 						},
 					},
-					ColorAttachments: []khr_create_renderpass2.AttachmentReferenceOptions{
+					ColorAttachments: []khr_create_renderpass2.AttachmentReference2{
 						{
 							Attachment: 41,
 							Layout:     core1_0.ImageLayoutPreInitialized,
-							AspectMask: core1_0.AspectColor,
+							AspectMask: core1_0.ImageAspectColor,
 						},
 					},
-					ResolveAttachments: []khr_create_renderpass2.AttachmentReferenceOptions{
+					ResolveAttachments: []khr_create_renderpass2.AttachmentReference2{
 						{
 							Attachment: 43,
 							Layout:     core1_0.ImageLayoutGeneral,
-							AspectMask: core1_0.AspectDepth,
+							AspectMask: core1_0.ImageAspectDepth,
 						},
 					},
-					DepthStencilAttachment: &khr_create_renderpass2.AttachmentReferenceOptions{
+					DepthStencilAttachment: &khr_create_renderpass2.AttachmentReference2{
 						Attachment: 47,
 						Layout:     core1_0.ImageLayoutTransferDstOptimal,
-						AspectMask: core1_0.AspectColor,
+						AspectMask: core1_0.ImageAspectColor,
 					},
 					PreserveAttachments: []int{59, 61},
 				},
 			},
-			Dependencies: []khr_create_renderpass2.SubpassDependencyOptions{
+			Dependencies: []khr_create_renderpass2.SubpassDependency2{
 				{
-					SrcSubpassIndex: 7,
-					DstSubpassIndex: 11,
+					SrcSubpass:      7,
+					DstSubpass:      11,
 					SrcStageMask:    core1_0.PipelineStageComputeShader,
 					DstStageMask:    core1_0.PipelineStageDrawIndirect,
 					SrcAccessMask:   core1_0.AccessIndexRead,
@@ -340,8 +340,8 @@ func TestVulkanExtension_CreateRenderPass2(t *testing.T) {
 					ViewOffset:      13,
 				},
 				{
-					SrcSubpassIndex: 17,
-					DstSubpassIndex: 19,
+					SrcSubpass:      17,
+					DstSubpass:      19,
 					SrcStageMask:    core1_0.PipelineStageGeometryShader,
 					DstStageMask:    core1_0.PipelineStageHost,
 					SrcAccessMask:   core1_0.AccessColorAttachmentRead,

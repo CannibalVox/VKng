@@ -31,7 +31,7 @@ type Swapchain interface {
 	Handle() khr_swapchain_driver.VkSwapchainKHR
 
 	Destroy(callbacks *driver.AllocationCallbacks)
-	Images() ([]core1_0.Image, common.VkResult, error)
+	SwapchainImages() ([]core1_0.Image, common.VkResult, error)
 	AcquireNextImage(timeout time.Duration, semaphore core1_0.Semaphore, fence core1_0.Fence) (int, common.VkResult, error)
 }
 
@@ -79,7 +79,7 @@ func (s *vulkanSwapchain) attemptImages() ([]core1_0.Image, common.VkResult, err
 	return result, res, nil
 }
 
-func (s *vulkanSwapchain) Images() ([]core1_0.Image, common.VkResult, error) {
+func (s *vulkanSwapchain) SwapchainImages() ([]core1_0.Image, common.VkResult, error) {
 	var result []core1_0.Image
 	var res common.VkResult
 	var err error

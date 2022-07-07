@@ -57,10 +57,10 @@ func TestDevice16BitStorageOptions(t *testing.T) {
 		StoragePushConstant16:              false,
 		StorageBuffer16BitAccess:           false,
 	}
-	device, _, err := physicalDevice.CreateDevice(nil, core1_0.DeviceCreateOptions{
-		QueueFamilies: []core1_0.DeviceQueueCreateOptions{
+	device, _, err := physicalDevice.CreateDevice(nil, core1_0.DeviceCreateInfo{
+		QueueCreateInfos: []core1_0.DeviceQueueCreateInfo{
 			{
-				CreatedQueuePriorities: []float32{0},
+				QueuePriorities: []float32{0},
 			},
 		},
 
@@ -100,7 +100,7 @@ func TestDevice16BitStorageOutData(t *testing.T) {
 		})
 
 	outData := &khr_16bit_storage.PhysicalDevice16BitStorageFeatures{}
-	features := &khr_get_physical_device_properties2.DeviceFeatures{
+	features := &khr_get_physical_device_properties2.PhysicalDeviceFeatures2{
 		NextOutData: common.NextOutData{Next: outData},
 	}
 

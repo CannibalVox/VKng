@@ -26,7 +26,7 @@ func CreateExtensionFromDriver(driver khr_create_renderpass2_driver.Driver) *Vul
 	}
 }
 
-func (e *VulkanExtension) CmdBeginRenderPass2(commandBuffer core1_0.CommandBuffer, renderPassBegin core1_0.RenderPassBeginOptions, subpassBegin SubpassBeginOptions) error {
+func (e *VulkanExtension) CmdBeginRenderPass2(commandBuffer core1_0.CommandBuffer, renderPassBegin core1_0.RenderPassBeginInfo, subpassBegin SubpassBeginInfo) error {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -49,7 +49,7 @@ func (e *VulkanExtension) CmdBeginRenderPass2(commandBuffer core1_0.CommandBuffe
 	return nil
 }
 
-func (e *VulkanExtension) CmdEndRenderPass2(commandBuffer core1_0.CommandBuffer, subpassEnd SubpassEndOptions) error {
+func (e *VulkanExtension) CmdEndRenderPass2(commandBuffer core1_0.CommandBuffer, subpassEnd SubpassEndInfo) error {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -66,7 +66,7 @@ func (e *VulkanExtension) CmdEndRenderPass2(commandBuffer core1_0.CommandBuffer,
 	return nil
 }
 
-func (e *VulkanExtension) CmdNextSubpass2(commandBuffer core1_0.CommandBuffer, subpassBegin SubpassBeginOptions, subpassEnd SubpassEndOptions) error {
+func (e *VulkanExtension) CmdNextSubpass2(commandBuffer core1_0.CommandBuffer, subpassBegin SubpassBeginInfo, subpassEnd SubpassEndInfo) error {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -89,7 +89,7 @@ func (e *VulkanExtension) CmdNextSubpass2(commandBuffer core1_0.CommandBuffer, s
 	return nil
 }
 
-func (e *VulkanExtension) CreateRenderPass2(device core1_0.Device, allocator *driver.AllocationCallbacks, options RenderPassCreateOptions) (core1_0.RenderPass, common.VkResult, error) {
+func (e *VulkanExtension) CreateRenderPass2(device core1_0.Device, allocator *driver.AllocationCallbacks, options RenderPassCreateInfo2) (core1_0.RenderPass, common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 

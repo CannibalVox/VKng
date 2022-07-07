@@ -44,7 +44,7 @@ func (e *VulkanExtension) SemaphoreCounterValue(semaphore core1_0.Semaphore) (ui
 	return uint64(value), res, nil
 }
 
-func (e *VulkanExtension) SignalSemaphore(device core1_0.Device, o SemaphoreSignalOptions) (common.VkResult, error) {
+func (e *VulkanExtension) SignalSemaphore(device core1_0.Device, o SemaphoreSignalInfo) (common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -59,7 +59,7 @@ func (e *VulkanExtension) SignalSemaphore(device core1_0.Device, o SemaphoreSign
 	)
 }
 
-func (e *VulkanExtension) WaitSemaphores(device core1_0.Device, timeout time.Duration, o SemaphoreWaitOptions) (common.VkResult, error) {
+func (e *VulkanExtension) WaitSemaphores(device core1_0.Device, timeout time.Duration, o SemaphoreWaitInfo) (common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 

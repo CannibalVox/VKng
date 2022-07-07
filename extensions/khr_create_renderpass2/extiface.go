@@ -9,9 +9,9 @@ import (
 //go:generate mockgen -source extiface.go -destination ./mocks/extension.go -package mock_create_renderpass2
 
 type Extension interface {
-	CmdBeginRenderPass2(commandBuffer core1_0.CommandBuffer, renderPassBegin core1_0.RenderPassBeginOptions, subpassBegin SubpassBeginOptions) error
-	CmdEndRenderPass2(commandBuffer core1_0.CommandBuffer, subpassEnd SubpassEndOptions) error
-	CmdNextSubpass2(commandBuffer core1_0.CommandBuffer, subpassBegin SubpassBeginOptions, subpassEnd SubpassEndOptions) error
+	CmdBeginRenderPass2(commandBuffer core1_0.CommandBuffer, renderPassBegin core1_0.RenderPassBeginInfo, subpassBegin SubpassBeginInfo) error
+	CmdEndRenderPass2(commandBuffer core1_0.CommandBuffer, subpassEnd SubpassEndInfo) error
+	CmdNextSubpass2(commandBuffer core1_0.CommandBuffer, subpassBegin SubpassBeginInfo, subpassEnd SubpassEndInfo) error
 
-	CreateRenderPass2(device core1_0.Device, allocator *driver.AllocationCallbacks, options RenderPassCreateOptions) (core1_0.RenderPass, common.VkResult, error)
+	CreateRenderPass2(device core1_0.Device, allocator *driver.AllocationCallbacks, options RenderPassCreateInfo2) (core1_0.RenderPass, common.VkResult, error)
 }

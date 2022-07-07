@@ -11,7 +11,7 @@ import (
 	"unsafe"
 )
 
-type PhysicalDeviceDescriptorIndexingOutData struct {
+type PhysicalDeviceDescriptorIndexingProperties struct {
 	MaxUpdateAfterBindDescriptorsInAllPools            int
 	ShaderUniformBufferArrayNonUniformIndexingNative   bool
 	ShaderSampledImageArrayNonUniformIndexingNative    bool
@@ -41,7 +41,7 @@ type PhysicalDeviceDescriptorIndexingOutData struct {
 	common.NextOutData
 }
 
-func (o *PhysicalDeviceDescriptorIndexingOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDeviceDescriptorIndexingProperties) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceDescriptorIndexingPropertiesEXT{})))
 	}
@@ -53,7 +53,7 @@ func (o *PhysicalDeviceDescriptorIndexingOutData) PopulateHeader(allocator *cgop
 	return preallocatedPointer, nil
 }
 
-func (o *PhysicalDeviceDescriptorIndexingOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *PhysicalDeviceDescriptorIndexingProperties) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	info := (*C.VkPhysicalDeviceDescriptorIndexingPropertiesEXT)(cDataPointer)
 
 	o.MaxUpdateAfterBindDescriptorsInAllPools = int(info.maxUpdateAfterBindDescriptorsInAllPools)

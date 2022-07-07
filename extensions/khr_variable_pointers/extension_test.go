@@ -56,10 +56,10 @@ func TestVariablePointersFeaturesOptions(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	device, _, err := physicalDevice.CreateDevice(nil, core1_0.DeviceCreateOptions{
-		QueueFamilies: []core1_0.DeviceQueueCreateOptions{
+	device, _, err := physicalDevice.CreateDevice(nil, core1_0.DeviceCreateInfo{
+		QueueCreateInfos: []core1_0.DeviceQueueCreateInfo{
 			{
-				CreatedQueuePriorities: []float32{0},
+				QueuePriorities: []float32{0},
 			},
 		},
 
@@ -107,7 +107,7 @@ func TestVariablePointersFeaturesOutData(t *testing.T) {
 			*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("variablePointersStorageBuffer").UnsafeAddr())) = driver.VkBool32(1)
 		})
 
-	err := extension.PhysicalDeviceFeatures2(physicalDevice, &khr_get_physical_device_properties2.DeviceFeatures{
+	err := extension.PhysicalDeviceFeatures2(physicalDevice, &khr_get_physical_device_properties2.PhysicalDeviceFeatures2{
 		NextOutData: common.NextOutData{Next: &pointersOutData},
 	})
 	require.NoError(t, err)

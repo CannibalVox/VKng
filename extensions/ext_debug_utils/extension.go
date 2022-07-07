@@ -16,20 +16,20 @@ type VulkanExtension struct {
 }
 
 type Extension interface {
-	CreateMessenger(instance core1_0.Instance, allocation *driver.AllocationCallbacks, o CreateOptions) (Messenger, common.VkResult, error)
+	CreateDebugUtilsMessenger(instance core1_0.Instance, allocation *driver.AllocationCallbacks, o DebugUtilsMessengerCreateInfo) (Messenger, common.VkResult, error)
 
-	CmdBeginLabel(commandBuffer core1_0.CommandBuffer, label LabelOptions) error
-	CmdEndLabel(commandBuffer core1_0.CommandBuffer)
-	CmdInsertLabel(commandBuffer core1_0.CommandBuffer, label LabelOptions) error
+	CmdBeginDebugUtilsLabel(commandBuffer core1_0.CommandBuffer, label DebugUtilsLabel) error
+	CmdEndDebugUtilsLabel(commandBuffer core1_0.CommandBuffer)
+	CmdInsertDebugUtilsLabel(commandBuffer core1_0.CommandBuffer, label DebugUtilsLabel) error
 
-	QueueBeginLabel(queue core1_0.Queue, label LabelOptions) error
-	QueueEndLabel(queue core1_0.Queue)
-	QueueInsertLabel(queue core1_0.Queue, label LabelOptions) error
+	QueueBeginDebugUtilsLabel(queue core1_0.Queue, label DebugUtilsLabel) error
+	QueueEndDebugUtilsLabel(queue core1_0.Queue)
+	QueueInsertDebugUtilsLabel(queue core1_0.Queue, label DebugUtilsLabel) error
 
-	SetObjectName(instance core1_0.Device, name ObjectNameOptions) (common.VkResult, error)
-	SetObjectTag(instance core1_0.Device, tag ObjectTagOptions) (common.VkResult, error)
+	SetDebugUtilsObjectName(instance core1_0.Device, name DebugUtilsObjectNameInfo) (common.VkResult, error)
+	SetDebugUtilsObjectTag(instance core1_0.Device, tag DebugUtilsObjectTagInfo) (common.VkResult, error)
 
-	SubmitMessage(instance core1_0.Instance, severity MessageSeverities, types MessageTypes, data CallbackDataOptions) error
+	SubmitDebugUtilsMessage(instance core1_0.Instance, severity MessageSeverities, types MessageTypes, data DebugUtilsMessengerCallbackData) error
 }
 
 func CreateExtensionFromInstance(instance core1_0.Instance) *VulkanExtension {
@@ -48,7 +48,7 @@ func CreateExtensionFromDriver(driver ext_driver.Driver) *VulkanExtension {
 	}
 }
 
-func (l *VulkanExtension) CreateMessenger(instance core1_0.Instance, allocation *driver.AllocationCallbacks, o CreateOptions) (Messenger, common.VkResult, error) {
+func (l *VulkanExtension) CreateDebugUtilsMessenger(instance core1_0.Instance, allocation *driver.AllocationCallbacks, o DebugUtilsMessengerCreateInfo) (Messenger, common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -77,7 +77,7 @@ func (l *VulkanExtension) CreateMessenger(instance core1_0.Instance, allocation 
 	return newMessenger, res, nil
 }
 
-func (l *VulkanExtension) CmdBeginLabel(commandBuffer core1_0.CommandBuffer, label LabelOptions) error {
+func (l *VulkanExtension) CmdBeginDebugUtilsLabel(commandBuffer core1_0.CommandBuffer, label DebugUtilsLabel) error {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -91,11 +91,11 @@ func (l *VulkanExtension) CmdBeginLabel(commandBuffer core1_0.CommandBuffer, lab
 	return nil
 }
 
-func (l *VulkanExtension) CmdEndLabel(buffer core1_0.CommandBuffer) {
+func (l *VulkanExtension) CmdEndDebugUtilsLabel(buffer core1_0.CommandBuffer) {
 	l.driver.VkCmdEndDebugUtilsLabelEXT(buffer.Handle())
 }
 
-func (l *VulkanExtension) CmdInsertLabel(buffer core1_0.CommandBuffer, label LabelOptions) error {
+func (l *VulkanExtension) CmdInsertDebugUtilsLabel(buffer core1_0.CommandBuffer, label DebugUtilsLabel) error {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -109,7 +109,7 @@ func (l *VulkanExtension) CmdInsertLabel(buffer core1_0.CommandBuffer, label Lab
 	return nil
 }
 
-func (l *VulkanExtension) QueueBeginLabel(queue core1_0.Queue, label LabelOptions) error {
+func (l *VulkanExtension) QueueBeginDebugUtilsLabel(queue core1_0.Queue, label DebugUtilsLabel) error {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -123,11 +123,11 @@ func (l *VulkanExtension) QueueBeginLabel(queue core1_0.Queue, label LabelOption
 	return nil
 }
 
-func (l *VulkanExtension) QueueEndLabel(queue core1_0.Queue) {
+func (l *VulkanExtension) QueueEndDebugUtilsLabel(queue core1_0.Queue) {
 	l.driver.VkQueueEndDebugUtilsLabelEXT(queue.Handle())
 }
 
-func (l *VulkanExtension) QueueInsertLabel(queue core1_0.Queue, label LabelOptions) error {
+func (l *VulkanExtension) QueueInsertDebugUtilsLabel(queue core1_0.Queue, label DebugUtilsLabel) error {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -141,7 +141,7 @@ func (l *VulkanExtension) QueueInsertLabel(queue core1_0.Queue, label LabelOptio
 	return nil
 }
 
-func (l *VulkanExtension) SetObjectName(device core1_0.Device, name ObjectNameOptions) (common.VkResult, error) {
+func (l *VulkanExtension) SetDebugUtilsObjectName(device core1_0.Device, name DebugUtilsObjectNameInfo) (common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -153,7 +153,7 @@ func (l *VulkanExtension) SetObjectName(device core1_0.Device, name ObjectNameOp
 	return l.driver.VkSetDebugUtilsObjectNameEXT(device.Handle(), (*ext_driver.VkDebugUtilsObjectNameInfoEXT)(namePtr))
 }
 
-func (l *VulkanExtension) SetObjectTag(device core1_0.Device, tag ObjectTagOptions) (common.VkResult, error) {
+func (l *VulkanExtension) SetDebugUtilsObjectTag(device core1_0.Device, tag DebugUtilsObjectTagInfo) (common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -165,7 +165,7 @@ func (l *VulkanExtension) SetObjectTag(device core1_0.Device, tag ObjectTagOptio
 	return l.driver.VkSetDebugUtilsObjectTagEXT(device.Handle(), (*ext_driver.VkDebugUtilsObjectTagInfoEXT)(tagPtr))
 }
 
-func (l *VulkanExtension) SubmitMessage(instance core1_0.Instance, severity MessageSeverities, types MessageTypes, data CallbackDataOptions) error {
+func (l *VulkanExtension) SubmitDebugUtilsMessage(instance core1_0.Instance, severity MessageSeverities, types MessageTypes, data DebugUtilsMessengerCallbackData) error {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 

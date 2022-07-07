@@ -12,19 +12,19 @@ import (
 	"unsafe"
 )
 
-type RenderPassCreateOptions struct {
+type RenderPassCreateInfo2 struct {
 	Flags core1_0.RenderPassCreateFlags
 
-	Attachments  []AttachmentDescriptionOptions
-	Subpasses    []SubpassDescriptionOptions
-	Dependencies []SubpassDependencyOptions
+	Attachments  []AttachmentDescription2
+	Subpasses    []SubpassDescription2
+	Dependencies []SubpassDependency2
 
 	CorrelatedViewMasks []uint32
 
 	common.NextOptions
 }
 
-func (o RenderPassCreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o RenderPassCreateInfo2) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkRenderPassCreateInfo2KHR{})))
 	}
@@ -50,21 +50,21 @@ func (o RenderPassCreateOptions) PopulateCPointer(allocator *cgoparam.Allocator,
 
 	var err error
 	if attachmentCount > 0 {
-		info.pAttachments, err = common.AllocOptionSlice[C.VkAttachmentDescription2KHR, AttachmentDescriptionOptions](allocator, o.Attachments)
+		info.pAttachments, err = common.AllocOptionSlice[C.VkAttachmentDescription2KHR, AttachmentDescription2](allocator, o.Attachments)
 		if err != nil {
 			return nil, err
 		}
 	}
 
 	if subpassCount > 0 {
-		info.pSubpasses, err = common.AllocOptionSlice[C.VkSubpassDescription2KHR, SubpassDescriptionOptions](allocator, o.Subpasses)
+		info.pSubpasses, err = common.AllocOptionSlice[C.VkSubpassDescription2KHR, SubpassDescription2](allocator, o.Subpasses)
 		if err != nil {
 			return nil, err
 		}
 	}
 
 	if dependencyCount > 0 {
-		info.pDependencies, err = common.AllocOptionSlice[C.VkSubpassDependency2KHR, SubpassDependencyOptions](allocator, o.Dependencies)
+		info.pDependencies, err = common.AllocOptionSlice[C.VkSubpassDependency2KHR, SubpassDependency2](allocator, o.Dependencies)
 		if err != nil {
 			return nil, err
 		}

@@ -11,14 +11,14 @@ import (
 	"unsafe"
 )
 
-type PhysicalDeviceMultiviewOutData struct {
+type PhysicalDeviceMultiviewProperties struct {
 	MaxMultiviewViewCount     int
 	MaxMultiviewInstanceIndex int
 
 	common.NextOutData
 }
 
-func (o *PhysicalDeviceMultiviewOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDeviceMultiviewProperties) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceMultiviewPropertiesKHR{})))
 	}
@@ -30,7 +30,7 @@ func (o *PhysicalDeviceMultiviewOutData) PopulateHeader(allocator *cgoparam.Allo
 	return preallocatedPointer, nil
 }
 
-func (o *PhysicalDeviceMultiviewOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *PhysicalDeviceMultiviewProperties) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	info := (*C.VkPhysicalDeviceMultiviewPropertiesKHR)(cDataPointer)
 	o.MaxMultiviewViewCount = int(info.maxMultiviewViewCount)
 	o.MaxMultiviewInstanceIndex = int(info.maxMultiviewInstanceIndex)

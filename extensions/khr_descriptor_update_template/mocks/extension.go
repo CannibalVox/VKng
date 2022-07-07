@@ -123,7 +123,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 }
 
 // CreateDescriptorUpdateTemplate mocks base method.
-func (m *MockExtension) CreateDescriptorUpdateTemplate(device core1_0.Device, o khr_descriptor_update_template.DescriptorUpdateTemplateCreateOptions, allocator *driver.AllocationCallbacks) (khr_descriptor_update_template.DescriptorUpdateTemplate, driver.VkResult, error) {
+func (m *MockExtension) CreateDescriptorUpdateTemplate(device core1_0.Device, o khr_descriptor_update_template.DescriptorUpdateTemplateCreateInfo, allocator *driver.AllocationCallbacks) (khr_descriptor_update_template.DescriptorUpdateTemplate, driver.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateDescriptorUpdateTemplate", device, o, allocator)
 	ret0, _ := ret[0].(khr_descriptor_update_template.DescriptorUpdateTemplate)

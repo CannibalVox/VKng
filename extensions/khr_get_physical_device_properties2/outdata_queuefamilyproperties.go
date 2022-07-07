@@ -12,13 +12,13 @@ import (
 	"unsafe"
 )
 
-type QueueFamilyOutData struct {
-	QueueFamily core1_0.QueueFamily
+type QueueFamilyProperties2 struct {
+	QueueFamilyProperties core1_0.QueueFamily
 
 	common.NextOutData
 }
 
-func (o *QueueFamilyOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *QueueFamilyProperties2) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkQueueFamilyProperties2KHR{})))
 	}
@@ -30,13 +30,13 @@ func (o *QueueFamilyOutData) PopulateHeader(allocator *cgoparam.Allocator, preal
 	return preallocatedPointer, nil
 }
 
-func (o *QueueFamilyOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *QueueFamilyProperties2) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	data := (*C.VkQueueFamilyProperties2KHR)(cDataPointer)
 
-	o.QueueFamily.Flags = core1_0.QueueFlags(data.queueFamilyProperties.queueFlags)
-	o.QueueFamily.QueueCount = int(data.queueFamilyProperties.queueCount)
-	o.QueueFamily.TimestampValidBits = uint32(data.queueFamilyProperties.timestampValidBits)
-	o.QueueFamily.MinImageTransferGranularity = core1_0.Extent3D{
+	o.QueueFamilyProperties.QueueFlags = core1_0.QueueFlags(data.queueFamilyProperties.queueFlags)
+	o.QueueFamilyProperties.QueueCount = int(data.queueFamilyProperties.queueCount)
+	o.QueueFamilyProperties.TimestampValidBits = uint32(data.queueFamilyProperties.timestampValidBits)
+	o.QueueFamilyProperties.MinImageTransferGranularity = core1_0.Extent3D{
 		Width:  int(data.queueFamilyProperties.minImageTransferGranularity.width),
 		Height: int(data.queueFamilyProperties.minImageTransferGranularity.height),
 		Depth:  int(data.queueFamilyProperties.minImageTransferGranularity.depth),

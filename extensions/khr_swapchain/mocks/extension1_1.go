@@ -38,9 +38,9 @@ func (m *MockExtension1_1) EXPECT() *MockExtension1_1MockRecorder {
 }
 
 // AcquireNextImage mocks base method.
-func (m *MockExtension1_1) AcquireNextImage(device core1_0.Device, o khr_swapchain1_1.AcquireNextImageOptions) (int, common.VkResult, error) {
+func (m *MockExtension1_1) AcquireNextImage2(device core1_0.Device, o khr_swapchain1_1.AcquireNextImageInfo) (int, common.VkResult, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AcquireNextImage", device, o)
+	ret := m.ctrl.Call(m, "AcquireNextImage2", device, o)
 	ret0, _ := ret[0].(int)
 	ret1, _ := ret[1].(common.VkResult)
 	ret2, _ := ret[2].(error)
@@ -50,11 +50,11 @@ func (m *MockExtension1_1) AcquireNextImage(device core1_0.Device, o khr_swapcha
 // AcquireNextImage indicates an expected call of AcquireNextImage.
 func (mr *MockExtension1_1MockRecorder) AcquireNextImage(device, o interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AcquireNextImage", reflect.TypeOf((*MockExtension1_1)(nil).AcquireNextImage), device, o)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AcquireNextImage2", reflect.TypeOf((*MockExtension1_1)(nil).AcquireNextImage2), device, o)
 }
 
 // DeviceGroupPresentCapabilities mocks base method.
-func (m *MockExtension1_1) DeviceGroupPresentCapabilities(device core1_0.Device, outData *khr_swapchain1_1.DeviceGroupPresentCapabilitiesOutData) (common.VkResult, error) {
+func (m *MockExtension1_1) DeviceGroupPresentCapabilities(device core1_0.Device, outData *khr_swapchain1_1.DeviceGroupPresentCapabilities) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DeviceGroupPresentCapabilities", device, outData)
 	ret0, _ := ret[0].(common.VkResult)

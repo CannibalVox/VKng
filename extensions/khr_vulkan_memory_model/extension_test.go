@@ -57,10 +57,10 @@ func TestPhysicalDeviceVulkanMemoryModelFeaturesOptions(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	device, _, err := physicalDevice.CreateDevice(nil, core1_0.DeviceCreateOptions{
-		QueueFamilies: []core1_0.DeviceQueueCreateOptions{
+	device, _, err := physicalDevice.CreateDevice(nil, core1_0.DeviceCreateInfo{
+		QueueCreateInfos: []core1_0.DeviceQueueCreateInfo{
 			{
-				CreatedQueuePriorities: []float32{0},
+				QueuePriorities: []float32{0},
 			},
 		},
 
@@ -109,7 +109,7 @@ func TestPhysicalDeviceVulkanMemoryModelFeaturesOutData(t *testing.T) {
 		})
 
 	var outData khr_vulkan_memory_model.PhysicalDeviceVulkanMemoryModelFeatures
-	err := extension.PhysicalDeviceFeatures2(physicalDevice, &khr_get_physical_device_properties2.DeviceFeatures{
+	err := extension.PhysicalDeviceFeatures2(physicalDevice, &khr_get_physical_device_properties2.PhysicalDeviceFeatures2{
 		NextOutData: common.NextOutData{Next: &outData},
 	})
 	require.NoError(t, err)

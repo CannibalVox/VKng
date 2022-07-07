@@ -12,14 +12,14 @@ import (
 	"unsafe"
 )
 
-type DeviceGroupRenderPassBeginOptions struct {
+type DeviceGroupRenderPassBeginInfo struct {
 	DeviceMask        uint32
 	DeviceRenderAreas []core1_0.Rect2D
 
 	common.NextOptions
 }
 
-func (o DeviceGroupRenderPassBeginOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o DeviceGroupRenderPassBeginInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkDeviceGroupRenderPassBeginInfoKHR{})))
 	}

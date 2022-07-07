@@ -28,7 +28,7 @@ func CreateExtensionFromDriver(driver khr_maintenance3_driver.Driver) *VulkanExt
 	}
 }
 
-func (e *VulkanExtension) DescriptorSetLayoutSupport(device core1_0.Device, setLayoutOptions core1_0.DescriptorSetLayoutCreateOptions, support *DescriptorSetLayoutSupportOutData) error {
+func (e *VulkanExtension) DescriptorSetLayoutSupport(device core1_0.Device, setLayoutOptions core1_0.DescriptorSetLayoutCreateInfo, support *DescriptorSetLayoutSupport) error {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 

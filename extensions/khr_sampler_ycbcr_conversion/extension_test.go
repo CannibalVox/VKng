@@ -68,18 +68,18 @@ func TestVulkanExtension_CreateSamplerYcbcrConversion(t *testing.T) {
 		})
 
 	ycbcr, _, err := extension.CreateSamplerYcbcrConversion(device,
-		khr_sampler_ycbcr_conversion.SamplerYcbcrConversionCreateOptions{
-			Format:     khr_sampler_ycbcr_conversion.DataFormatB12X4G12X4R12X4G12X4HorizontalChromaComponentPacked,
+		khr_sampler_ycbcr_conversion.SamplerYcbcrConversionCreateInfo{
+			Format:     khr_sampler_ycbcr_conversion.FormatB12X4G12X4R12X4G12X4HorizontalChromaComponentPacked,
 			YcbcrModel: khr_sampler_ycbcr_conversion.SamplerYcbcrModelConversionYcbcr709,
 			YcbcrRange: khr_sampler_ycbcr_conversion.SamplerYcbcrRangeITUNarrow,
 			Components: core1_0.ComponentMapping{
-				R: core1_0.SwizzleGreen,
-				G: core1_0.SwizzleAlpha,
-				B: core1_0.SwizzleIdentity,
-				A: core1_0.SwizzleOne,
+				R: core1_0.ComponentSwizzleGreen,
+				G: core1_0.ComponentSwizzleAlpha,
+				B: core1_0.ComponentSwizzleIdentity,
+				A: core1_0.ComponentSwizzleOne,
 			},
-			ChromaOffsetY:               khr_sampler_ycbcr_conversion.ChromaLocationCositedEven,
-			ChromaOffsetX:               khr_sampler_ycbcr_conversion.ChromaLocationMidpoint,
+			YChromaOffset:               khr_sampler_ycbcr_conversion.ChromaLocationCositedEven,
+			XChromaOffset:               khr_sampler_ycbcr_conversion.ChromaLocationMidpoint,
 			ChromaFilter:                core1_0.FilterLinear,
 			ForceExplicitReconstruction: true,
 		},
@@ -133,14 +133,14 @@ func TestBindImagePlaneMemoryOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	_, err := extension.BindImageMemory(device,
-		[]khr_bind_memory2.BindImageMemoryOptions{
+	_, err := extension.BindImageMemory2(device,
+		[]khr_bind_memory2.BindImageMemoryInfo{
 			{
 				Image:  image,
 				Memory: memory,
 
 				NextOptions: common.NextOptions{
-					khr_sampler_ycbcr_conversion.BindImagePlaneMemoryOptions{
+					khr_sampler_ycbcr_conversion.BindImagePlaneMemoryInfo{
 						PlaneAspect: khr_sampler_ycbcr_conversion.ImageAspectPlane2,
 					},
 				},
@@ -188,24 +188,24 @@ func TestImagePlaneMemoryRequirementsOptions(t *testing.T) {
 		*(*uint32)(unsafe.Pointer(val.FieldByName("memoryRequirements").FieldByName("memoryTypeBits").UnsafeAddr())) = uint32(7)
 	})
 
-	var outData khr_get_memory_requirements2.MemoryRequirementsOutData
-	err := extension.ImageMemoryRequirements(
+	var outData khr_get_memory_requirements2.MemoryRequirements2
+	err := extension.ImageMemoryRequirements2(
 		device,
-		khr_get_memory_requirements2.ImageMemoryRequirementsOptions{
+		khr_get_memory_requirements2.ImageMemoryRequirementsInfo2{
 			Image: image,
 			NextOptions: common.NextOptions{
-				khr_sampler_ycbcr_conversion.ImagePlaneMemoryRequirementsOptions{
+				khr_sampler_ycbcr_conversion.ImagePlaneMemoryRequirementsInfo{
 					PlaneAspect: khr_sampler_ycbcr_conversion.ImageAspectPlane1,
 				},
 			},
 		},
 		&outData)
 	require.NoError(t, err)
-	require.Equal(t, khr_get_memory_requirements2.MemoryRequirementsOutData{
+	require.Equal(t, khr_get_memory_requirements2.MemoryRequirements2{
 		MemoryRequirements: core1_0.MemoryRequirements{
-			Size:       17,
-			Alignment:  19,
-			MemoryType: 7,
+			Size:           17,
+			Alignment:      19,
+			MemoryTypeBits: 7,
 		},
 	}, outData)
 }
@@ -248,12 +248,12 @@ func TestSamplerYcbcrConversionOptions(t *testing.T) {
 
 	imageView, _, err := device.CreateImageView(
 		nil,
-		core1_0.ImageViewCreateOptions{
+		core1_0.ImageViewCreateInfo{
 			Image:  image,
-			Format: khr_sampler_ycbcr_conversion.DataFormatB16G16R16G16HorizontalChroma,
+			Format: khr_sampler_ycbcr_conversion.FormatB16G16R16G16HorizontalChroma,
 
 			NextOptions: common.NextOptions{
-				khr_sampler_ycbcr_conversion.SamplerYcbcrConversionOptions{
+				khr_sampler_ycbcr_conversion.SamplerYcbcrConversionInfo{
 					Conversion: ycbcr,
 				},
 			},
@@ -299,15 +299,15 @@ func TestSamplerYcbcrFeaturesOptions(t *testing.T) {
 
 	device, _, err := physicalDevice.CreateDevice(
 		nil,
-		core1_0.DeviceCreateOptions{
-			QueueFamilies: []core1_0.DeviceQueueCreateOptions{
+		core1_0.DeviceCreateInfo{
+			QueueCreateInfos: []core1_0.DeviceQueueCreateInfo{
 				{
-					CreatedQueuePriorities: []float32{0},
+					QueuePriorities: []float32{0},
 				},
 			},
 
 			NextOptions: common.NextOptions{
-				khr_sampler_ycbcr_conversion.PhysicalDeviceSamplerYcbcrFeatures{
+				khr_sampler_ycbcr_conversion.PhysicalDeviceSamplerYcbcrConversionFeatures{
 					SamplerYcbcrConversion: true,
 				},
 			},
@@ -343,17 +343,17 @@ func TestSamplerYcbcrFeaturesOutData(t *testing.T) {
 			*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("samplerYcbcrConversion").UnsafeAddr())) = driver.VkBool32(1)
 		})
 
-	var outData khr_sampler_ycbcr_conversion.PhysicalDeviceSamplerYcbcrFeatures
+	var outData khr_sampler_ycbcr_conversion.PhysicalDeviceSamplerYcbcrConversionFeatures
 
 	err := extension.PhysicalDeviceFeatures2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DeviceFeatures{
+		&khr_get_physical_device_properties2.PhysicalDeviceFeatures2{
 			NextOutData: common.NextOutData{
 				&outData,
 			},
 		})
 	require.NoError(t, err)
-	require.Equal(t, khr_sampler_ycbcr_conversion.PhysicalDeviceSamplerYcbcrFeatures{
+	require.Equal(t, khr_sampler_ycbcr_conversion.PhysicalDeviceSamplerYcbcrConversionFeatures{
 		SamplerYcbcrConversion: true,
 	}, outData)
 }
@@ -393,15 +393,15 @@ func TestSamplerYcbcrImageFormatOutData(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	var outData khr_sampler_ycbcr_conversion.SamplerYcbcrImageFormatOutData
+	var outData khr_sampler_ycbcr_conversion.SamplerYcbcrConversionImageFormatProperties
 	_, err := extension.PhysicalDeviceImageFormatProperties2(
 		physicalDevice,
-		khr_get_physical_device_properties2.ImageFormatOptions{},
-		&khr_get_physical_device_properties2.ImageFormatPropertiesOutData{
+		khr_get_physical_device_properties2.PhysicalDeviceImageFormatInfo2{},
+		&khr_get_physical_device_properties2.ImageFormatProperties2{
 			NextOutData: common.NextOutData{&outData},
 		})
 	require.NoError(t, err)
-	require.Equal(t, khr_sampler_ycbcr_conversion.SamplerYcbcrImageFormatOutData{
+	require.Equal(t, khr_sampler_ycbcr_conversion.SamplerYcbcrConversionImageFormatProperties{
 		CombinedImageSamplerDescriptorCount: 7,
 	}, outData)
 }

@@ -11,13 +11,13 @@ import (
 	"unsafe"
 )
 
-type SamplerReductionModeCreateOptions struct {
+type SamplerReductionModeCreateInfo struct {
 	ReductionMode SamplerReductionMode
 
 	common.NextOptions
 }
 
-func (o SamplerReductionModeCreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o SamplerReductionModeCreateInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkSamplerReductionModeCreateInfoEXT{})))
 	}

@@ -11,13 +11,13 @@ import (
 	"unsafe"
 )
 
-type PhysicalDeviceExternalImageFormatOptions struct {
-	HandleType ExternalMemoryHandleTypes
+type PhysicalDeviceExternalImageFormatInfo struct {
+	HandleType ExternalMemoryHandleTypeFlags
 
 	common.NextOptions
 }
 
-func (o PhysicalDeviceExternalImageFormatOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o PhysicalDeviceExternalImageFormatInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceExternalImageFormatInfoKHR{})))
 	}

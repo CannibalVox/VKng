@@ -11,13 +11,13 @@ import (
 	"unsafe"
 )
 
-type PhysicalDeviceTimelineSemaphoreOutData struct {
+type PhysicalDeviceTimelineSemaphoreProperties struct {
 	MaxTimelineSemaphoreValueDifference uint64
 
 	common.NextOutData
 }
 
-func (o *PhysicalDeviceTimelineSemaphoreOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDeviceTimelineSemaphoreProperties) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceTimelineSemaphorePropertiesKHR{})))
 	}
@@ -29,7 +29,7 @@ func (o *PhysicalDeviceTimelineSemaphoreOutData) PopulateHeader(allocator *cgopa
 	return preallocatedPointer, nil
 }
 
-func (o *PhysicalDeviceTimelineSemaphoreOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *PhysicalDeviceTimelineSemaphoreProperties) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	info := (*C.VkPhysicalDeviceTimelineSemaphorePropertiesKHR)(cDataPointer)
 
 	o.MaxTimelineSemaphoreValueDifference = uint64(info.maxTimelineSemaphoreValueDifference)

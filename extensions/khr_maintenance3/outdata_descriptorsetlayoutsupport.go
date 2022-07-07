@@ -11,13 +11,13 @@ import (
 	"unsafe"
 )
 
-type DescriptorSetLayoutSupportOutData struct {
+type DescriptorSetLayoutSupport struct {
 	Supported bool
 
 	common.NextOutData
 }
 
-func (o *DescriptorSetLayoutSupportOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *DescriptorSetLayoutSupport) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkDescriptorSetLayoutSupportKHR{})))
 	}
@@ -29,7 +29,7 @@ func (o *DescriptorSetLayoutSupportOutData) PopulateHeader(allocator *cgoparam.A
 	return preallocatedPointer, nil
 }
 
-func (o *DescriptorSetLayoutSupportOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *DescriptorSetLayoutSupport) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	outData := (*C.VkDescriptorSetLayoutSupportKHR)(cDataPointer)
 	o.Supported = outData.supported != C.VkBool32(0)
 

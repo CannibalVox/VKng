@@ -62,7 +62,7 @@ func TestPhysicalDevicePortabilitySubsetFeaturesOutData(t *testing.T) {
 	var subsetFeatures PhysicalDevicePortabilitySubsetFeatures
 	err := extension.PhysicalDeviceFeatures2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DeviceFeatures{
+		&khr_get_physical_device_properties2.PhysicalDeviceFeatures2{
 			NextOutData: common.NextOutData{&subsetFeatures},
 		})
 	require.NoError(t, err)
@@ -104,14 +104,14 @@ func TestPhysicalDevicePortabilitySubsetOutData(t *testing.T) {
 			*(*driver.Uint32)(unsafe.Pointer(val.FieldByName("minVertexInputBindingStrideAlignment").UnsafeAddr())) = driver.Uint32(3)
 		})
 
-	var subsetProperties PhysicalDevicePortabilitySubsetOutData
+	var subsetProperties PhysicalDevicePortabilitySubsetProperties
 	err := extension.PhysicalDeviceProperties2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DevicePropertiesOutData{
+		&khr_get_physical_device_properties2.PhysicalDeviceProperties2{
 			NextOutData: common.NextOutData{&subsetProperties},
 		})
 	require.NoError(t, err)
-	require.Equal(t, PhysicalDevicePortabilitySubsetOutData{
+	require.Equal(t, PhysicalDevicePortabilitySubsetProperties{
 		MinVertexInputBindingStrideAlignment: 3,
 	}, subsetProperties)
 }
@@ -167,10 +167,10 @@ func TestPhysicalDevicePortabilitySubsetFeaturesOptions(t *testing.T) {
 
 	device, _, err := physicalDevice.CreateDevice(
 		nil,
-		core1_0.DeviceCreateOptions{
-			QueueFamilies: []core1_0.DeviceQueueCreateOptions{
+		core1_0.DeviceCreateInfo{
+			QueueCreateInfos: []core1_0.DeviceQueueCreateInfo{
 				{
-					CreatedQueuePriorities: []float32{0},
+					QueuePriorities: []float32{0},
 				},
 			},
 

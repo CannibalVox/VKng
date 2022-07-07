@@ -348,13 +348,13 @@ func TestDeviceGroupOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	device, _, err := physicalDevice1.CreateDevice(nil, core1_0.DeviceCreateOptions{
-		QueueFamilies: []core1_0.DeviceQueueCreateOptions{
+	device, _, err := physicalDevice1.CreateDevice(nil, core1_0.DeviceCreateInfo{
+		QueueCreateInfos: []core1_0.DeviceQueueCreateInfo{
 			{
-				CreatedQueuePriorities: []float32{0},
+				QueuePriorities: []float32{0},
 			},
 		},
-		NextOptions: common.NextOptions{Next: khr_device_group_creation.DeviceGroupDeviceOptions{
+		NextOptions: common.NextOptions{Next: khr_device_group_creation.DeviceGroupDeviceCreateInfo{
 			PhysicalDevices: []core1_0.PhysicalDevice{physicalDevice1, physicalDevice2, physicalDevice3},
 		}},
 	})

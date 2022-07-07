@@ -94,7 +94,7 @@ func TestVulkanExtension_PhysicalDeviceFeatures(t *testing.T) {
 
 		})
 
-	outData := &khr_get_physical_device_properties2.DeviceFeatures{}
+	outData := &khr_get_physical_device_properties2.PhysicalDeviceFeatures2{}
 	err := extension.PhysicalDeviceFeatures2(physicalDevice, outData)
 	require.NoError(t, err)
 
@@ -260,21 +260,21 @@ func TestVulkanDevice_CreateDeviceWithFeatures(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	options := core1_0.DeviceCreateOptions{
-		QueueFamilies: []core1_0.DeviceQueueCreateOptions{
+	options := core1_0.DeviceCreateInfo{
+		QueueCreateInfos: []core1_0.DeviceQueueCreateInfo{
 			{
-				QueueFamilyIndex:       1,
-				CreatedQueuePriorities: []float32{3, 5, 7},
+				QueueFamilyIndex: 1,
+				QueuePriorities:  []float32{3, 5, 7},
 			},
 			{
-				QueueFamilyIndex:       11,
-				CreatedQueuePriorities: []float32{13},
+				QueueFamilyIndex: 11,
+				QueuePriorities:  []float32{13},
 			},
 		},
-		ExtensionNames: []string{"a", "b"},
-		LayerNames:     []string{"c"},
+		EnabledExtensionNames: []string{"a", "b"},
+		EnabledLayerNames:     []string{"c"},
 	}
-	features := khr_get_physical_device_properties2.DeviceFeatures{
+	features := khr_get_physical_device_properties2.PhysicalDeviceFeatures2{
 		Features: core1_0.PhysicalDeviceFeatures{
 			TextureCompressionEtc2: true,
 			DepthBounds:            true,
@@ -316,9 +316,9 @@ func TestVulkanExtension_PhysicalDeviceFormatProperties(t *testing.T) {
 		*(*uint32)(unsafe.Pointer(properties.FieldByName("bufferFeatures").UnsafeAddr())) = uint32(0x00000010)        // VK_FORMAT_FEATURE_STORAGE_TEXEL_BUFFER_BIT
 	})
 
-	outData := khr_get_physical_device_properties2.FormatPropertiesOutData{}
+	outData := khr_get_physical_device_properties2.FormatProperties2{}
 	err := extension.PhysicalDeviceFormatProperties2(physicalDevice,
-		core1_0.DataFormatA2B10G10R10UnsignedNormalizedPacked,
+		core1_0.FormatA2B10G10R10UnsignedNormalizedPacked,
 		&outData)
 	require.NoError(t, err)
 
@@ -370,9 +370,9 @@ func TestVulkanExtension_PhysicalDeviceImageFormatProperties(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	outData := khr_get_physical_device_properties2.ImageFormatPropertiesOutData{}
-	_, err := extension.PhysicalDeviceImageFormatProperties2(physicalDevice, khr_get_physical_device_properties2.ImageFormatOptions{
-		Format: core1_0.DataFormatA2B10G10R10UnsignedIntPacked,
+	outData := khr_get_physical_device_properties2.ImageFormatProperties2{}
+	_, err := extension.PhysicalDeviceImageFormatProperties2(physicalDevice, khr_get_physical_device_properties2.PhysicalDeviceImageFormatInfo2{
+		Format: core1_0.FormatA2B10G10R10UnsignedIntPacked,
 		Type:   core1_0.ImageType2D,
 		Tiling: core1_0.ImageTilingOptimal,
 		Usage:  core1_0.ImageUsageStorage,
@@ -419,13 +419,13 @@ func TestVulkanExtension_PhysicalDeviceMemoryProperties(t *testing.T) {
 			*(*int32)(unsafe.Pointer(memoryHeap.FieldByName("flags").UnsafeAddr())) = int32(1) // VK_MEMORY_HEAP_DEVICE_LOCAL_BIT
 		})
 
-	outData := khr_get_physical_device_properties2.MemoryPropertiesOutData{}
+	outData := khr_get_physical_device_properties2.PhysicalDeviceMemoryProperties2{}
 	err := extension.PhysicalDeviceMemoryProperties2(physicalDevice, &outData)
 	require.NoError(t, err)
 	require.Equal(t, []core1_0.MemoryType{
 		{
-			Properties: core1_0.MemoryPropertyLazilyAllocated,
-			HeapIndex:  3,
+			PropertyFlags: core1_0.MemoryPropertyLazilyAllocated,
+			HeapIndex:     3,
 		},
 	}, outData.MemoryProperties.MemoryTypes)
 	require.Equal(t, []core1_0.MemoryHeap{
@@ -499,7 +499,7 @@ func TestVulkanExtension_PhysicalDeviceProperties(t *testing.T) {
 			*(*driver.VkBool32)(unsafe.Pointer(sparseProperties.FieldByName("residencyNonResidentStrict").UnsafeAddr())) = driver.VkBool32(1)
 		})
 
-	outData := khr_get_physical_device_properties2.DevicePropertiesOutData{}
+	outData := khr_get_physical_device_properties2.PhysicalDeviceProperties2{}
 	err = extension.PhysicalDeviceProperties2(physicalDevice, &outData)
 	require.NoError(t, err)
 
@@ -507,8 +507,8 @@ func TestVulkanExtension_PhysicalDeviceProperties(t *testing.T) {
 	require.Equal(t, common.CreateVersion(3, 2, 1), outData.Properties.DriverVersion)
 	require.Equal(t, uint32(3), outData.Properties.VendorID)
 	require.Equal(t, uint32(5), outData.Properties.DeviceID)
-	require.Equal(t, core1_0.DeviceDiscreteGPU, outData.Properties.Type)
-	require.Equal(t, "Some Device", outData.Properties.Name)
+	require.Equal(t, core1_0.PhysicalDeviceTypeDiscreteGPU, outData.Properties.DriverType)
+	require.Equal(t, "Some Device", outData.Properties.DriverName)
 	require.Equal(t, deviceUUID, outData.Properties.PipelineCacheUUID)
 
 	require.Equal(t, 7, outData.Properties.Limits.MaxUniformBufferRange)
@@ -579,10 +579,10 @@ func TestVulkanExtension_PhysicalDeviceQueueFamilyProperties(t *testing.T) {
 	outData, err := extension.PhysicalDeviceQueueFamilyProperties2(physicalDevice, nil)
 	require.NoError(t, err)
 
-	require.Equal(t, []*khr_get_physical_device_properties2.QueueFamilyOutData{
+	require.Equal(t, []*khr_get_physical_device_properties2.QueueFamilyProperties2{
 		{
-			QueueFamily: core1_0.QueueFamily{
-				Flags:              core1_0.QueueSparseBinding,
+			QueueFamilyProperties: core1_0.QueueFamily{
+				QueueFlags:         core1_0.QueueSparseBinding,
 				QueueCount:         3,
 				TimestampValidBits: 5,
 				MinImageTransferGranularity: core1_0.Extent3D{
@@ -593,8 +593,8 @@ func TestVulkanExtension_PhysicalDeviceQueueFamilyProperties(t *testing.T) {
 			},
 		},
 		{
-			QueueFamily: core1_0.QueueFamily{
-				Flags:              core1_0.QueueCompute,
+			QueueFamilyProperties: core1_0.QueueFamily{
+				QueueFlags:         core1_0.QueueCompute,
 				QueueCount:         17,
 				TimestampValidBits: 19,
 				MinImageTransferGranularity: core1_0.Extent3D{
@@ -675,18 +675,18 @@ func TestVulkanExtension_PhysicalDeviceSparseImageFormatProperties(t *testing.T)
 	})
 
 	outData, err := extension.PhysicalDeviceSparseImageFormatProperties2(physicalDevice,
-		khr_get_physical_device_properties2.SparseImageFormatOptions{
-			Format:  core1_0.DataFormatA2B10G10R10UnsignedScaledPacked,
+		khr_get_physical_device_properties2.PhysicalDeviceSparseImageFormatInfo2{
+			Format:  core1_0.FormatA2B10G10R10UnsignedScaledPacked,
 			Type:    core1_0.ImageType3D,
 			Samples: core1_0.Samples32,
 			Usage:   core1_0.ImageUsageStorage,
 			Tiling:  core1_0.ImageTilingLinear,
 		}, nil)
 	require.NoError(t, err)
-	require.Equal(t, []*khr_get_physical_device_properties2.SparseImageFormatPropertiesOutData{
+	require.Equal(t, []*khr_get_physical_device_properties2.SparseImageFormatProperties2{
 		{
-			SparseImageFormatProperties: core1_0.SparseImageFormatProperties{
-				AspectMask: core1_0.AspectColor,
+			Properties: core1_0.SparseImageFormatProperties{
+				AspectMask: core1_0.ImageAspectColor,
 				ImageGranularity: core1_0.Extent3D{
 					Width:  1,
 					Height: 3,

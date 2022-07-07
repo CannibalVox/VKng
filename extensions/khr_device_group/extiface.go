@@ -18,11 +18,11 @@ type Extension interface {
 }
 
 type ExtensionWithKHRSurface interface {
-	DeviceGroupPresentCapabilities(device core1_0.Device, outData *DeviceGroupPresentCapabilitiesOutData) (common.VkResult, error)
+	DeviceGroupPresentCapabilities(device core1_0.Device, outData *DeviceGroupPresentCapabilities) (common.VkResult, error)
 	DeviceGroupSurfacePresentModes(device core1_0.Device, surface khr_surface.Surface) (DeviceGroupPresentModeFlags, common.VkResult, error)
 	PhysicalDevicePresentRectangles(physicalDevice core1_0.PhysicalDevice, surface khr_surface.Surface) ([]core1_0.Rect2D, common.VkResult, error)
 }
 
 type ExtensionWithKHRSwapchain interface {
-	AcquireNextImage(device core1_0.Device, o AcquireNextImageOptions) (int, common.VkResult, error)
+	AcquireNextImage2(device core1_0.Device, o AcquireNextImageInfo) (int, common.VkResult, error)
 }

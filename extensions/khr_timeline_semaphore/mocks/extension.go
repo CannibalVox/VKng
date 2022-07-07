@@ -54,7 +54,7 @@ func (mr *MockExtensionMockRecorder) SemaphoreCounterValue(semaphore interface{}
 }
 
 // SignalSemaphore mocks base method.
-func (m *MockExtension) SignalSemaphore(device core1_0.Device, o khr_timeline_semaphore.SemaphoreSignalOptions) (common.VkResult, error) {
+func (m *MockExtension) SignalSemaphore(device core1_0.Device, o khr_timeline_semaphore.SemaphoreSignalInfo) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SignalSemaphore", device, o)
 	ret0, _ := ret[0].(common.VkResult)
@@ -69,7 +69,7 @@ func (mr *MockExtensionMockRecorder) SignalSemaphore(device, o interface{}) *gom
 }
 
 // WaitSemaphores mocks base method.
-func (m *MockExtension) WaitSemaphores(device core1_0.Device, timeout time.Duration, o khr_timeline_semaphore.SemaphoreWaitOptions) (common.VkResult, error) {
+func (m *MockExtension) WaitSemaphores(device core1_0.Device, timeout time.Duration, o khr_timeline_semaphore.SemaphoreWaitInfo) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "WaitSemaphores", device, timeout, o)
 	ret0, _ := ret[0].(common.VkResult)

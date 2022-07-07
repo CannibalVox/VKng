@@ -13,7 +13,7 @@ import (
 	"unsafe"
 )
 
-type PhysicalDeviceIDOutData struct {
+type PhysicalDeviceIDProperties struct {
 	DeviceUUID      uuid.UUID
 	DriverUUID      uuid.UUID
 	DeviceLUID      uint64
@@ -23,7 +23,7 @@ type PhysicalDeviceIDOutData struct {
 	common.NextOutData
 }
 
-func (o *PhysicalDeviceIDOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDeviceIDProperties) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceIDPropertiesKHR{})))
 	}
@@ -34,7 +34,7 @@ func (o *PhysicalDeviceIDOutData) PopulateHeader(allocator *cgoparam.Allocator, 
 	return preallocatedPointer, nil
 }
 
-func (o *PhysicalDeviceIDOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *PhysicalDeviceIDProperties) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	info := (*C.VkPhysicalDeviceIDPropertiesKHR)(cDataPointer)
 
 	deviceUUIDBytes := C.GoBytes(unsafe.Pointer(&info.deviceUUID[0]), C.VK_UUID_SIZE)

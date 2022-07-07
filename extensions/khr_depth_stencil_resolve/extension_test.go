@@ -52,14 +52,14 @@ func TestPhysicalDeviceDepthStencilResolveOutData(t *testing.T) {
 		*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("independentResolve").UnsafeAddr())) = driver.VkBool32(1)
 	})
 
-	var outData PhysicalDeviceDepthStencilResolveOutData
+	var outData PhysicalDeviceDepthStencilResolveProperties
 	err := extension.PhysicalDeviceProperties2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DevicePropertiesOutData{
+		&khr_get_physical_device_properties2.PhysicalDeviceProperties2{
 			NextOutData: common.NextOutData{&outData},
 		})
 	require.NoError(t, err)
-	require.Equal(t, PhysicalDeviceDepthStencilResolveOutData{
+	require.Equal(t, PhysicalDeviceDepthStencilResolveProperties{
 		SupportedDepthResolveModes:   ResolveModeAverage,
 		SupportedStencilResolveModes: ResolveModeMax,
 		IndependentResolve:           true,
@@ -118,17 +118,17 @@ func TestSubpassDescriptionDepthStencilResolveOptions(t *testing.T) {
 	})
 
 	renderPass, _, err := extension.CreateRenderPass2(device, nil,
-		khr_create_renderpass2.RenderPassCreateOptions{
-			Subpasses: []khr_create_renderpass2.SubpassDescriptionOptions{
+		khr_create_renderpass2.RenderPassCreateInfo2{
+			Subpasses: []khr_create_renderpass2.SubpassDescription2{
 				{
 					NextOptions: common.NextOptions{
-						SubpassDescriptionDepthStencilResolveOptions{
+						SubpassDescriptionDepthStencilResolve{
 							DepthResolveMode:   ResolveModeMin,
 							StencilResolveMode: ResolveModeSampleZero,
-							DepthStencilResolveAttachment: &khr_create_renderpass2.AttachmentReferenceOptions{
+							DepthStencilResolveAttachment: &khr_create_renderpass2.AttachmentReference2{
 								Attachment: 3,
 								Layout:     core1_0.ImageLayoutTransferDstOptimal,
-								AspectMask: core1_0.AspectStencil,
+								AspectMask: core1_0.ImageAspectStencil,
 							},
 						},
 					},

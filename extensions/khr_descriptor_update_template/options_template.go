@@ -12,10 +12,10 @@ import (
 	"unsafe"
 )
 
-type DescriptorUpdateTemplateCreateOptions struct {
-	Flags        DescriptorTemplateFlags
-	Entries      []DescriptorUpdateTemplateEntry
-	TemplateType DescriptorTemplateType
+type DescriptorUpdateTemplateCreateInfo struct {
+	Flags                   DescriptorUpdateTemplateFlags
+	DescriptorUpdateEntries []DescriptorUpdateTemplateEntry
+	TemplateType            DescriptorUpdateTemplateType
 
 	DescriptorSetLayout core1_0.DescriptorSetLayout
 
@@ -26,7 +26,7 @@ type DescriptorUpdateTemplateCreateOptions struct {
 	common.NextOptions
 }
 
-func (o DescriptorUpdateTemplateCreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o DescriptorUpdateTemplateCreateInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkDescriptorUpdateTemplateCreateInfoKHR{})))
 	}
@@ -36,11 +36,11 @@ func (o DescriptorUpdateTemplateCreateOptions) PopulateCPointer(allocator *cgopa
 	createInfo.pNext = next
 	createInfo.flags = C.VkDescriptorUpdateTemplateCreateFlags(o.Flags)
 
-	entryCount := len(o.Entries)
+	entryCount := len(o.DescriptorUpdateEntries)
 	createInfo.descriptorUpdateEntryCount = C.uint32_t(entryCount)
 
 	var err error
-	createInfo.pDescriptorUpdateEntries, err = common.AllocSlice[C.VkDescriptorUpdateTemplateEntryKHR, DescriptorUpdateTemplateEntry](allocator, o.Entries)
+	createInfo.pDescriptorUpdateEntries, err = common.AllocSlice[C.VkDescriptorUpdateTemplateEntryKHR, DescriptorUpdateTemplateEntry](allocator, o.DescriptorUpdateEntries)
 	if err != nil {
 		return nil, err
 	}

@@ -24,7 +24,7 @@ func (e SamplerReductionMode) String() string {
 const (
 	ExtensionName string = C.VK_EXT_SAMPLER_FILTER_MINMAX_EXTENSION_NAME
 
-	FormatFeatureSampledImageFilterMinmax core1_0.FormatFeatures = C.VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_MINMAX_BIT_EXT
+	FormatFeatureSampledImageFilterMinmax core1_0.FormatFeatureFlags = C.VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_MINMAX_BIT_EXT
 
 	SamplerReductionModeMax             SamplerReductionMode = C.VK_SAMPLER_REDUCTION_MODE_MAX_EXT
 	SamplerReductionModeMin             SamplerReductionMode = C.VK_SAMPLER_REDUCTION_MODE_MIN_EXT

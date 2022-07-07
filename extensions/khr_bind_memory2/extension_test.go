@@ -54,7 +54,7 @@ func TestVulkanExtension_BindBufferMemory(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	_, err := extension.BindBufferMemory(device, []khr_bind_memory2.BindBufferMemoryOptions{
+	_, err := extension.BindBufferMemory2(device, []khr_bind_memory2.BindBufferMemoryInfo{
 		{
 			Buffer:       buffer1,
 			Memory:       memory1,
@@ -107,7 +107,7 @@ func TestVulkanExtension_BindImageMemory(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	_, err := extension.BindImageMemory(device, []khr_bind_memory2.BindImageMemoryOptions{
+	_, err := extension.BindImageMemory2(device, []khr_bind_memory2.BindImageMemoryInfo{
 		{
 			Image:        image1,
 			Memory:       memory1,

@@ -72,19 +72,19 @@ func TestVulkanExtension_CreateSwapchain(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	swapchain, _, err := extension.CreateSwapchain(device, nil, khr_swapchain.CreateOptions{
+	swapchain, _, err := extension.CreateSwapchain(device, nil, khr_swapchain.SwapchainCreateInfo{
 		Surface:            surface,
 		MinImageCount:      1,
-		ImageFormat:        core1_0.DataFormatA2B10G10R10SignedScaledPacked,
+		ImageFormat:        core1_0.FormatA2B10G10R10SignedScaledPacked,
 		ImageColorSpace:    khr_surface.ColorSpaceSRGBNonlinear,
 		ImageExtent:        core1_0.Extent2D{Width: 3, Height: 5},
 		ImageArrayLayers:   7,
 		ImageUsage:         core1_0.ImageUsageColorAttachment,
-		SharingMode:        core1_0.SharingConcurrent,
+		ImageSharingMode:   core1_0.SharingModeConcurrent,
 		QueueFamilyIndices: []int{11, 13, 17},
 		PreTransform:       khr_surface.TransformHorizontalMirrorRotate90,
-		CompositeAlpha:     khr_surface.CompositeAlphaModeOpaque,
-		PresentMode:        khr_surface.PresentMailbox,
+		CompositeAlpha:     khr_surface.CompositeAlphaOpaque,
+		PresentMode:        khr_surface.PresentModeMailbox,
 		Clipped:            true,
 		OldSwapchain:       oldSwapchain,
 	})
@@ -138,12 +138,12 @@ func TestVulkanExtension_PresentToQueue_NullOutData(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	options := khr_swapchain.PresentOptions{
+	options := khr_swapchain.PresentInfo{
 		WaitSemaphores: []core1_0.Semaphore{semaphore1, semaphore2},
 		Swapchains:     []khr_swapchain.Swapchain{swapchain},
 		ImageIndices:   []int{2},
 	}
-	_, err := extension.PresentToQueue(queue, options)
+	_, err := extension.QueuePresent(queue, options)
 	require.NoError(t, err)
 	require.Nil(t, options.OutData)
 }
@@ -193,8 +193,8 @@ func TestVulkanExtension_PresentToQueue_RealOutData(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	outData := khr_swapchain.PresentOptionsOutData{}
-	_, err := extension.PresentToQueue(queue, khr_swapchain.PresentOptions{
+	outData := khr_swapchain.PresentOutData{}
+	_, err := extension.QueuePresent(queue, khr_swapchain.PresentInfo{
 		WaitSemaphores: []core1_0.Semaphore{semaphore1, semaphore2},
 		Swapchains:     []khr_swapchain.Swapchain{swapchain},
 		ImageIndices:   []int{2},

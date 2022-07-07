@@ -55,10 +55,10 @@ func TestPhysicalDeviceScalarBlockLayoutFeaturesOptions(t *testing.T) {
 
 	device, _, err := physicalDevice.CreateDevice(
 		nil,
-		core1_0.DeviceCreateOptions{
-			QueueFamilies: []core1_0.DeviceQueueCreateOptions{
+		core1_0.DeviceCreateInfo{
+			QueueCreateInfos: []core1_0.DeviceQueueCreateInfo{
 				{
-					CreatedQueuePriorities: []float32{0},
+					QueuePriorities: []float32{0},
 				},
 			},
 			NextOptions: common.NextOptions{
@@ -101,7 +101,7 @@ func TestPhysicalDeviceScalarBlockLayoutFeaturesOutData(t *testing.T) {
 	var outData ext_scalar_block_layout.PhysicalDeviceScalarBlockLayoutFeatures
 	err := extension.PhysicalDeviceFeatures2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DeviceFeatures{
+		&khr_get_physical_device_properties2.PhysicalDeviceFeatures2{
 			NextOutData: common.NextOutData{&outData},
 		},
 	)

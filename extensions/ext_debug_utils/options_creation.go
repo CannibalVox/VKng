@@ -22,16 +22,16 @@ import (
 	"unsafe"
 )
 
-type CreateOptions struct {
-	Flags             CallbackDataFlags
-	CaptureSeverities MessageSeverities
-	CaptureTypes      MessageTypes
-	Callback          CallbackFunction
+type DebugUtilsMessengerCreateInfo struct {
+	Flags           CallbackDataFlags
+	MessageSeverity MessageSeverities
+	MessageType     MessageTypes
+	UserCallback    CallbackFunction
 
 	common.NextOptions
 }
 
-func (o CreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o DebugUtilsMessengerCreateInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == unsafe.Pointer(nil) {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof([1]C.VkDebugUtilsMessengerCreateInfoEXT{})))
 	}
@@ -40,10 +40,10 @@ func (o CreateOptions) PopulateCPointer(allocator *cgoparam.Allocator, prealloca
 	createInfo.flags = C.VkDebugUtilsMessengerCreateFlagsEXT(o.Flags)
 	createInfo.pNext = next
 
-	createInfo.messageSeverity = C.VkDebugUtilsMessageSeverityFlagsEXT(o.CaptureSeverities)
-	createInfo.messageType = C.VkDebugUtilsMessageTypeFlagsEXT(o.CaptureTypes)
+	createInfo.messageSeverity = C.VkDebugUtilsMessageSeverityFlagsEXT(o.MessageSeverity)
+	createInfo.messageType = C.VkDebugUtilsMessageTypeFlagsEXT(o.MessageType)
 	createInfo.pfnUserCallback = (C.PFN_vkDebugUtilsMessengerCallbackEXT)(C.debugCallback)
-	createInfo.pUserData = unsafe.Pointer(cgo.NewHandle(o.Callback))
+	createInfo.pUserData = unsafe.Pointer(cgo.NewHandle(o.UserCallback))
 
 	return preallocatedPointer, nil
 }

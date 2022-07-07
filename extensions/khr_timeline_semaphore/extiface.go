@@ -10,6 +10,6 @@ import (
 
 type Extension interface {
 	SemaphoreCounterValue(semaphore core1_0.Semaphore) (uint64, common.VkResult, error)
-	SignalSemaphore(device core1_0.Device, o SemaphoreSignalOptions) (common.VkResult, error)
-	WaitSemaphores(device core1_0.Device, timeout time.Duration, o SemaphoreWaitOptions) (common.VkResult, error)
+	SignalSemaphore(device core1_0.Device, o SemaphoreSignalInfo) (common.VkResult, error)
+	WaitSemaphores(device core1_0.Device, timeout time.Duration, o SemaphoreWaitInfo) (common.VkResult, error)
 }

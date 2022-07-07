@@ -36,7 +36,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 }
 
 // GetBufferDeviceAddress mocks base method.
-func (m *MockExtension) GetBufferDeviceAddress(device core1_0.Device, o khr_buffer_device_address.BufferDeviceAddressOptions) (uint64, error) {
+func (m *MockExtension) GetBufferDeviceAddress(device core1_0.Device, o khr_buffer_device_address.BufferDeviceAddressInfo) (uint64, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetBufferDeviceAddress", device, o)
 	ret0, _ := ret[0].(uint64)
@@ -51,7 +51,7 @@ func (mr *MockExtensionMockRecorder) GetBufferDeviceAddress(device, o interface{
 }
 
 // GetBufferOpaqueCaptureAddress mocks base method.
-func (m *MockExtension) GetBufferOpaqueCaptureAddress(device core1_0.Device, o khr_buffer_device_address.BufferDeviceAddressOptions) (uint64, error) {
+func (m *MockExtension) GetBufferOpaqueCaptureAddress(device core1_0.Device, o khr_buffer_device_address.BufferDeviceAddressInfo) (uint64, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetBufferOpaqueCaptureAddress", device, o)
 	ret0, _ := ret[0].(uint64)
@@ -66,7 +66,7 @@ func (mr *MockExtensionMockRecorder) GetBufferOpaqueCaptureAddress(device, o int
 }
 
 // GetDeviceMemoryOpaqueCaptureAddress mocks base method.
-func (m *MockExtension) GetDeviceMemoryOpaqueCaptureAddress(device core1_0.Device, o khr_buffer_device_address.DeviceMemoryOpaqueAddressOptions) (uint64, error) {
+func (m *MockExtension) GetDeviceMemoryOpaqueCaptureAddress(device core1_0.Device, o khr_buffer_device_address.DeviceMemoryOpaqueAddressInfo) (uint64, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetDeviceMemoryOpaqueCaptureAddress", device, o)
 	ret0, _ := ret[0].(uint64)

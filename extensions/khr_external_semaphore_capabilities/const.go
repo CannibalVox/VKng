@@ -7,29 +7,29 @@ package khr_external_semaphore_capabilities
 import "C"
 import "github.com/CannibalVox/VKng/core/common"
 
-type ExternalSemaphoreFeatures int32
+type ExternalSemaphoreFeatureFlags int32
 
-var externalSemaphoreFeaturesMapping = common.NewFlagStringMapping[ExternalSemaphoreFeatures]()
+var externalSemaphoreFeaturesMapping = common.NewFlagStringMapping[ExternalSemaphoreFeatureFlags]()
 
-func (f ExternalSemaphoreFeatures) Register(str string) {
+func (f ExternalSemaphoreFeatureFlags) Register(str string) {
 	externalSemaphoreFeaturesMapping.Register(f, str)
 }
 
-func (f ExternalSemaphoreFeatures) String() string {
+func (f ExternalSemaphoreFeatureFlags) String() string {
 	return externalSemaphoreFeaturesMapping.FlagsToString(f)
 }
 
 ////
 
-type ExternalSemaphoreHandleTypes int32
+type ExternalSemaphoreHandleTypeFlags int32
 
-var externalSemaphoreHandleTypesMapping = common.NewFlagStringMapping[ExternalSemaphoreHandleTypes]()
+var externalSemaphoreHandleTypesMapping = common.NewFlagStringMapping[ExternalSemaphoreHandleTypeFlags]()
 
-func (f ExternalSemaphoreHandleTypes) Register(str string) {
+func (f ExternalSemaphoreHandleTypeFlags) Register(str string) {
 	externalSemaphoreHandleTypesMapping.Register(f, str)
 }
 
-func (f ExternalSemaphoreHandleTypes) String() string {
+func (f ExternalSemaphoreHandleTypeFlags) String() string {
 	return externalSemaphoreHandleTypesMapping.FlagsToString(f)
 }
 
@@ -40,14 +40,14 @@ const (
 
 	LUIDSize int = C.VK_LUID_SIZE_KHR
 
-	ExternalSemaphoreFeatureExportable ExternalSemaphoreFeatures = C.VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT_KHR
-	ExternalSemaphoreFeatureImportable ExternalSemaphoreFeatures = C.VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT_KHR
+	ExternalSemaphoreFeatureExportable ExternalSemaphoreFeatureFlags = C.VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT_KHR
+	ExternalSemaphoreFeatureImportable ExternalSemaphoreFeatureFlags = C.VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT_KHR
 
-	ExternalSemaphoreHandleTypeOpaqueFD       ExternalSemaphoreHandleTypes = C.VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR
-	ExternalSemaphoreHandleTypeOpaqueWin32    ExternalSemaphoreHandleTypes = C.VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR
-	ExternalSemaphoreHandleTypeOpaqueWin32KMT ExternalSemaphoreHandleTypes = C.VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR
-	ExternalSemaphoreHandleTypeD3D12Fence     ExternalSemaphoreHandleTypes = C.VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT_KHR
-	ExternalSemaphoreHandleTypeSyncFD         ExternalSemaphoreHandleTypes = C.VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT_KHR
+	ExternalSemaphoreHandleTypeOpaqueFD       ExternalSemaphoreHandleTypeFlags = C.VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR
+	ExternalSemaphoreHandleTypeOpaqueWin32    ExternalSemaphoreHandleTypeFlags = C.VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR
+	ExternalSemaphoreHandleTypeOpaqueWin32KMT ExternalSemaphoreHandleTypeFlags = C.VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR
+	ExternalSemaphoreHandleTypeD3D12Fence     ExternalSemaphoreHandleTypeFlags = C.VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT_KHR
+	ExternalSemaphoreHandleTypeSyncFD         ExternalSemaphoreHandleTypeFlags = C.VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT_KHR
 )
 
 func init() {

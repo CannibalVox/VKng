@@ -13,18 +13,18 @@ import (
 	"unsafe"
 )
 
-type MemoryDedicatedAllocationOptions struct {
+type MemoryDedicatedAllocateInfo struct {
 	Image  core1_0.Image
 	Buffer core1_0.Buffer
 
 	common.NextOptions
 }
 
-func (o MemoryDedicatedAllocationOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o MemoryDedicatedAllocateInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if o.Image != nil && o.Buffer != nil {
-		return nil, errors.New("both Image and Buffer fields are set in MemoryDedicatedAllocationOptions- only one must be set")
+		return nil, errors.New("both Image and Buffer fields are set in MemoryDedicatedAllocateInfo- only one must be set")
 	} else if o.Image == nil && o.Buffer == nil {
-		return nil, errors.New("neither Image nor Buffer fields are set in MemoryDedicatedAllocationOptions- one must be set")
+		return nil, errors.New("neither Image nor Buffer fields are set in MemoryDedicatedAllocateInfo- one must be set")
 	}
 
 	if preallocatedPointer == nil {

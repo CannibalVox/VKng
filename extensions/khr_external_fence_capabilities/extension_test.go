@@ -48,16 +48,16 @@ func TestVulkanExtension_PhysicalDeviceExternalFenceProperties(t *testing.T) {
 		*(*uint32)(unsafe.Pointer(val.FieldByName("externalFenceFeatures").UnsafeAddr())) = uint32(1)         // VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT_KHR
 	})
 
-	var outData khr_external_fence_capabilities.ExternalFenceOutData
-	err := extension.ExternalFenceProperties(
+	var outData khr_external_fence_capabilities.ExternalFenceProperties
+	err := extension.PhysicalDeviceExternalFenceProperties(
 		physicalDevice,
-		khr_external_fence_capabilities.ExternalFenceOptions{
+		khr_external_fence_capabilities.PhysicalDeviceExternalFenceInfo{
 			HandleType: khr_external_fence_capabilities.ExternalFenceHandleTypeOpaqueWin32KMT,
 		},
 		&outData,
 	)
 	require.NoError(t, err)
-	require.Equal(t, khr_external_fence_capabilities.ExternalFenceOutData{
+	require.Equal(t, khr_external_fence_capabilities.ExternalFenceProperties{
 		ExportFromImportedHandleTypes: khr_external_fence_capabilities.ExternalFenceHandleTypeSyncFD,
 		CompatibleHandleTypes:         khr_external_fence_capabilities.ExternalFenceHandleTypeOpaqueWin32KMT,
 		ExternalFenceFeatures:         khr_external_fence_capabilities.ExternalFenceFeatureExportable,
@@ -114,8 +114,8 @@ func TestPhysicalDeviceIDOutData(t *testing.T) {
 			*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("deviceLUIDValid").UnsafeAddr())) = driver.VkBool32(1)
 		})
 
-	var properties khr_get_physical_device_properties2.DevicePropertiesOutData
-	var outData khr_external_fence_capabilities.PhysicalDeviceIDOutData
+	var properties khr_get_physical_device_properties2.PhysicalDeviceProperties2
+	var outData khr_external_fence_capabilities.PhysicalDeviceIDProperties
 	properties.NextOutData = common.NextOutData{&outData}
 
 	err = extension.PhysicalDeviceProperties2(
@@ -123,7 +123,7 @@ func TestPhysicalDeviceIDOutData(t *testing.T) {
 		&properties,
 	)
 	require.NoError(t, err)
-	require.Equal(t, khr_external_fence_capabilities.PhysicalDeviceIDOutData{
+	require.Equal(t, khr_external_fence_capabilities.PhysicalDeviceIDProperties{
 		DeviceUUID:      deviceUUID,
 		DriverUUID:      driverUUID,
 		DeviceLUID:      0xdeadbeefdeadbeef,

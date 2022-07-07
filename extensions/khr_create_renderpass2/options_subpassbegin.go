@@ -12,13 +12,13 @@ import (
 	"unsafe"
 )
 
-type SubpassBeginOptions struct {
+type SubpassBeginInfo struct {
 	Contents core1_0.SubpassContents
 
 	common.NextOptions
 }
 
-func (o SubpassBeginOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o SubpassBeginInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkSubpassBeginInfoKHR{})))
 	}

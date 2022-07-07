@@ -12,13 +12,13 @@ import (
 	"unsafe"
 )
 
-type MemoryPropertiesOutData struct {
+type PhysicalDeviceMemoryProperties2 struct {
 	MemoryProperties core1_0.PhysicalDeviceMemoryProperties
 
 	common.NextOutData
 }
 
-func (o *MemoryPropertiesOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDeviceMemoryProperties2) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceMemoryProperties2KHR{})))
 	}
@@ -29,14 +29,14 @@ func (o *MemoryPropertiesOutData) PopulateHeader(allocator *cgoparam.Allocator, 
 	return preallocatedPointer, nil
 }
 
-func (o *MemoryPropertiesOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *PhysicalDeviceMemoryProperties2) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	data := (*C.VkPhysicalDeviceMemoryProperties2KHR)(cDataPointer)
 
 	memoryTypeCount := int(data.memoryProperties.memoryTypeCount)
 	o.MemoryProperties.MemoryTypes = make([]core1_0.MemoryType, memoryTypeCount)
 
 	for i := 0; i < memoryTypeCount; i++ {
-		o.MemoryProperties.MemoryTypes[i].Properties = core1_0.MemoryProperties(data.memoryProperties.memoryTypes[i].propertyFlags)
+		o.MemoryProperties.MemoryTypes[i].PropertyFlags = core1_0.MemoryPropertyFlags(data.memoryProperties.memoryTypes[i].propertyFlags)
 		o.MemoryProperties.MemoryTypes[i].HeapIndex = int(data.memoryProperties.memoryTypes[i].heapIndex)
 	}
 

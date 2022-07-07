@@ -65,14 +65,14 @@ func TestPhysicalDeviceDriverOutData(t *testing.T) {
 			driverInfoSlice[len(driverInfo)] = 0
 		})
 
-	var driverOutData PhysicalDeviceDriverOutData
+	var driverOutData PhysicalDeviceDriverProperties
 	err := extension.PhysicalDeviceProperties2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DevicePropertiesOutData{
+		&khr_get_physical_device_properties2.PhysicalDeviceProperties2{
 			NextOutData: common.NextOutData{&driverOutData},
 		})
 	require.NoError(t, err)
-	require.Equal(t, PhysicalDeviceDriverOutData{
+	require.Equal(t, PhysicalDeviceDriverProperties{
 		DriverID:           DriverIDGoogleSwiftshader,
 		DriverName:         "Some Driver",
 		DriverInfo:         "Whooo Info",

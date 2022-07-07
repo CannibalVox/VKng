@@ -11,13 +11,13 @@ import (
 	"unsafe"
 )
 
-type PhysicalDevicePointClippingOutData struct {
+type PhysicalDevicePointClippingProperties struct {
 	PointClippingBehavior PointClippingBehavior
 
 	common.NextOutData
 }
 
-func (o *PhysicalDevicePointClippingOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDevicePointClippingProperties) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDevicePointClippingPropertiesKHR{})))
 	}
@@ -29,7 +29,7 @@ func (o *PhysicalDevicePointClippingOutData) PopulateHeader(allocator *cgoparam.
 	return preallocatedPointer, nil
 }
 
-func (o *PhysicalDevicePointClippingOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *PhysicalDevicePointClippingProperties) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	properties := (*C.VkPhysicalDevicePointClippingPropertiesKHR)(cDataPointer)
 	o.PointClippingBehavior = PointClippingBehavior(properties.pointClippingBehavior)
 

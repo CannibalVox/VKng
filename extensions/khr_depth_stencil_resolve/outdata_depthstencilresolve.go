@@ -11,7 +11,7 @@ import (
 	"unsafe"
 )
 
-type PhysicalDeviceDepthStencilResolveOutData struct {
+type PhysicalDeviceDepthStencilResolveProperties struct {
 	SupportedDepthResolveModes   ResolveModeFlags
 	SupportedStencilResolveModes ResolveModeFlags
 	IndependentResolveNone       bool
@@ -20,7 +20,7 @@ type PhysicalDeviceDepthStencilResolveOutData struct {
 	common.NextOutData
 }
 
-func (o *PhysicalDeviceDepthStencilResolveOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDeviceDepthStencilResolveProperties) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceDepthStencilResolvePropertiesKHR{})))
 	}
@@ -32,7 +32,7 @@ func (o *PhysicalDeviceDepthStencilResolveOutData) PopulateHeader(allocator *cgo
 	return preallocatedPointer, nil
 }
 
-func (o *PhysicalDeviceDepthStencilResolveOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *PhysicalDeviceDepthStencilResolveProperties) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	info := (*C.VkPhysicalDeviceDepthStencilResolvePropertiesKHR)(cDataPointer)
 	o.SupportedStencilResolveModes = ResolveModeFlags(info.supportedStencilResolveModes)
 	o.SupportedDepthResolveModes = ResolveModeFlags(info.supportedDepthResolveModes)

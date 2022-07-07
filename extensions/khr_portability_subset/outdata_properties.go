@@ -13,13 +13,13 @@ import (
 	"unsafe"
 )
 
-type PhysicalDevicePortabilitySubsetOutData struct {
+type PhysicalDevicePortabilitySubsetProperties struct {
 	MinVertexInputBindingStrideAlignment int
 
 	common.NextOutData
 }
 
-func (o *PhysicalDevicePortabilitySubsetOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDevicePortabilitySubsetProperties) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(C.sizeof_struct_VkPhysicalDevicePortabilitySubsetPropertiesKHR)
 	}
@@ -31,7 +31,7 @@ func (o *PhysicalDevicePortabilitySubsetOutData) PopulateHeader(allocator *cgopa
 	return preallocatedPointer, nil
 }
 
-func (o *PhysicalDevicePortabilitySubsetOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *PhysicalDevicePortabilitySubsetProperties) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	outData := (*C.VkPhysicalDevicePortabilitySubsetPropertiesKHR)(cDataPointer)
 	o.MinVertexInputBindingStrideAlignment = int(outData.minVertexInputBindingStrideAlignment)
 

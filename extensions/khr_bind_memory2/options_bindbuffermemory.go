@@ -12,7 +12,7 @@ import (
 	"unsafe"
 )
 
-type BindBufferMemoryOptions struct {
+type BindBufferMemoryInfo struct {
 	Buffer       core1_0.Buffer
 	Memory       core1_0.DeviceMemory
 	MemoryOffset int
@@ -20,7 +20,7 @@ type BindBufferMemoryOptions struct {
 	common.NextOptions
 }
 
-func (o BindBufferMemoryOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o BindBufferMemoryInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkBindBufferMemoryInfoKHR{})))
 	}

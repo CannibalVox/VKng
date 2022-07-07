@@ -25,7 +25,7 @@ func CreateExtensionFromDriver(driver khr_external_memory_capabilities_driver.Dr
 	}
 }
 
-func (e *VulkanExtension) ExternalBufferProperties(physicalDevice core1_0.PhysicalDevice, o ExternalBufferOptions, outData *ExternalBufferOutData) error {
+func (e *VulkanExtension) PhysicalDeviceExternalBufferProperties(physicalDevice core1_0.PhysicalDevice, o PhysicalDeviceExternalBufferInfo, outData *ExternalBufferProperties) error {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 

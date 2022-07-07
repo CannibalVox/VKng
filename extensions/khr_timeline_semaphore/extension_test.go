@@ -80,7 +80,7 @@ func TestVulkanExtension_SignalSemaphore(t *testing.T) {
 
 	_, err := extension.SignalSemaphore(
 		device,
-		khr_timeline_semaphore.SemaphoreSignalOptions{
+		khr_timeline_semaphore.SemaphoreSignalInfo{
 			Semaphore: semaphore,
 			Value:     uint64(13),
 		})
@@ -128,7 +128,7 @@ func TestVulkanExtension_WaitSemaphores(t *testing.T) {
 	_, err := extension.WaitSemaphores(
 		device,
 		time.Minute,
-		khr_timeline_semaphore.SemaphoreWaitOptions{
+		khr_timeline_semaphore.SemaphoreWaitInfo{
 			Flags: khr_timeline_semaphore.SemaphoreWaitAny,
 			Semaphores: []core1_0.Semaphore{
 				semaphore1,
@@ -178,10 +178,10 @@ func TestPhysicalDeviceTimelineSemaphoreFeaturesOptions(t *testing.T) {
 
 	device, _, err := physicalDevice.CreateDevice(
 		nil,
-		core1_0.DeviceCreateOptions{
-			QueueFamilies: []core1_0.DeviceQueueCreateOptions{
+		core1_0.DeviceCreateInfo{
+			QueueCreateInfos: []core1_0.DeviceQueueCreateInfo{
 				{
-					CreatedQueuePriorities: []float32{0},
+					QueuePriorities: []float32{0},
 				},
 			},
 			NextOptions: common.NextOptions{
@@ -224,7 +224,7 @@ func TestPhysicalDeviceTimelineSemaphoreFeaturesOutData(t *testing.T) {
 	var outData khr_timeline_semaphore.PhysicalDeviceTimelineSemaphoreFeatures
 	err := extension.PhysicalDeviceFeatures2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DeviceFeatures{
+		&khr_get_physical_device_properties2.PhysicalDeviceFeatures2{
 			NextOutData: common.NextOutData{&outData},
 		},
 	)
@@ -270,8 +270,8 @@ func TestSemaphoreTypeCreateOptions(t *testing.T) {
 
 	semaphore, _, err := device.CreateSemaphore(
 		nil,
-		core1_0.SemaphoreCreateOptions{
-			NextOptions: common.NextOptions{khr_timeline_semaphore.SemaphoreTypeCreateOptions{
+		core1_0.SemaphoreCreateInfo{
+			NextOptions: common.NextOptions{khr_timeline_semaphore.SemaphoreTypeCreateInfo{
 				SemaphoreType: khr_timeline_semaphore.SemaphoreTypeTimeline,
 				InitialValue:  uint64(13),
 			}},
@@ -320,12 +320,12 @@ func TestTimelineSemaphoreSubmitOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	_, err := queue.SubmitToQueue(
+	_, err := queue.Submit(
 		fence,
-		[]core1_0.SubmitOptions{
+		[]core1_0.SubmitInfo{
 			{
 				NextOptions: common.NextOptions{
-					khr_timeline_semaphore.TimelineSemaphoreSubmitOptions{
+					khr_timeline_semaphore.TimelineSemaphoreSubmitInfo{
 						WaitSemaphoreValues:   []uint64{3, 5},
 						SignalSemaphoreValues: []uint64{7, 11, 13},
 					},
@@ -360,14 +360,14 @@ func TestPhysicalDeviceTimelineSemaphoreOutData(t *testing.T) {
 		*(*driver.Uint64)(unsafe.Pointer(val.FieldByName("maxTimelineSemaphoreValueDifference").UnsafeAddr())) = driver.Uint64(3)
 	})
 
-	var outData khr_timeline_semaphore.PhysicalDeviceTimelineSemaphoreOutData
+	var outData khr_timeline_semaphore.PhysicalDeviceTimelineSemaphoreProperties
 	err := extension.PhysicalDeviceProperties2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DevicePropertiesOutData{
+		&khr_get_physical_device_properties2.PhysicalDeviceProperties2{
 			NextOutData: common.NextOutData{&outData},
 		})
 	require.NoError(t, err)
-	require.Equal(t, khr_timeline_semaphore.PhysicalDeviceTimelineSemaphoreOutData{
+	require.Equal(t, khr_timeline_semaphore.PhysicalDeviceTimelineSemaphoreProperties{
 		MaxTimelineSemaphoreValueDifference: 3,
 	}, outData)
 }

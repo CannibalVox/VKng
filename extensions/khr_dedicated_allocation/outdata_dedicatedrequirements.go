@@ -12,14 +12,14 @@ import (
 	"unsafe"
 )
 
-type MemoryDedicatedAllocationOutData struct {
-	DedicatedPreferred bool
-	DedicatedRequired  bool
+type MemoryDedicatedRequirements struct {
+	PrefersDedicatedAllocation  bool
+	RequiresDedicatedAllocation bool
 
 	common.NextOutData
 }
 
-func (o *MemoryDedicatedAllocationOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *MemoryDedicatedRequirements) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkMemoryDedicatedRequirementsKHR{})))
 	}
@@ -31,10 +31,10 @@ func (o *MemoryDedicatedAllocationOutData) PopulateHeader(allocator *cgoparam.Al
 	return preallocatedPointer, nil
 }
 
-func (o *MemoryDedicatedAllocationOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *MemoryDedicatedRequirements) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	outData := (*C.VkMemoryDedicatedRequirementsKHR)(cDataPointer)
-	o.DedicatedRequired = driver.VkBool32(outData.requiresDedicatedAllocation) != driver.VkBool32(0)
-	o.DedicatedPreferred = driver.VkBool32(outData.prefersDedicatedAllocation) != driver.VkBool32(0)
+	o.RequiresDedicatedAllocation = driver.VkBool32(outData.requiresDedicatedAllocation) != driver.VkBool32(0)
+	o.PrefersDedicatedAllocation = driver.VkBool32(outData.prefersDedicatedAllocation) != driver.VkBool32(0)
 
 	return outData.pNext, nil
 }

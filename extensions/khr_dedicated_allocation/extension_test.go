@@ -59,21 +59,21 @@ func TestDedicatedMemoryRequirementsOutData_Buffer(t *testing.T) {
 			*(*driver.VkBool32)(unsafe.Pointer(dedicated.FieldByName("requiresDedicatedAllocation").UnsafeAddr())) = driver.VkBool32(0)
 		})
 
-	var memReqs khr_dedicated_allocation.MemoryDedicatedAllocationOutData
-	var outData = khr_get_memory_requirements2.MemoryRequirementsOutData{
+	var memReqs khr_dedicated_allocation.MemoryDedicatedRequirements
+	var outData = khr_get_memory_requirements2.MemoryRequirements2{
 		NextOutData: common.NextOutData{Next: &memReqs},
 	}
-	err := extension.BufferMemoryRequirements(device,
-		khr_get_memory_requirements2.BufferMemoryRequirementsOptions{
+	err := extension.BufferMemoryRequirements2(device,
+		khr_get_memory_requirements2.BufferMemoryRequirementsInfo2{
 			Buffer: buffer,
 		}, &outData)
 	require.NoError(t, err)
-	require.False(t, memReqs.DedicatedRequired)
-	require.True(t, memReqs.DedicatedPreferred)
+	require.False(t, memReqs.RequiresDedicatedAllocation)
+	require.True(t, memReqs.PrefersDedicatedAllocation)
 
 	require.Equal(t, 1, outData.MemoryRequirements.Size)
 	require.Equal(t, 3, outData.MemoryRequirements.Alignment)
-	require.Equal(t, uint32(5), outData.MemoryRequirements.MemoryType)
+	require.Equal(t, uint32(5), outData.MemoryRequirements.MemoryTypeBits)
 }
 
 func TestDedicatedMemoryRequirementsOutData_Image(t *testing.T) {
@@ -116,21 +116,21 @@ func TestDedicatedMemoryRequirementsOutData_Image(t *testing.T) {
 			*(*driver.VkBool32)(unsafe.Pointer(dedicated.FieldByName("requiresDedicatedAllocation").UnsafeAddr())) = driver.VkBool32(0)
 		})
 
-	var memReqs khr_dedicated_allocation.MemoryDedicatedAllocationOutData
-	var outData = khr_get_memory_requirements2.MemoryRequirementsOutData{
+	var memReqs khr_dedicated_allocation.MemoryDedicatedRequirements
+	var outData = khr_get_memory_requirements2.MemoryRequirements2{
 		NextOutData: common.NextOutData{Next: &memReqs},
 	}
-	err := extension.ImageMemoryRequirements(device,
-		khr_get_memory_requirements2.ImageMemoryRequirementsOptions{
+	err := extension.ImageMemoryRequirements2(device,
+		khr_get_memory_requirements2.ImageMemoryRequirementsInfo2{
 			Image: image,
 		}, &outData)
 	require.NoError(t, err)
-	require.False(t, memReqs.DedicatedRequired)
-	require.True(t, memReqs.DedicatedPreferred)
+	require.False(t, memReqs.RequiresDedicatedAllocation)
+	require.True(t, memReqs.PrefersDedicatedAllocation)
 
 	require.Equal(t, 1, outData.MemoryRequirements.Size)
 	require.Equal(t, 3, outData.MemoryRequirements.Alignment)
-	require.Equal(t, uint32(5), outData.MemoryRequirements.MemoryType)
+	require.Equal(t, uint32(5), outData.MemoryRequirements.MemoryTypeBits)
 }
 
 func TestMemoryDedicatedAllocateOptions(t *testing.T) {
@@ -164,10 +164,10 @@ func TestMemoryDedicatedAllocateOptions(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	memory, _, err := device.AllocateMemory(nil, core1_0.MemoryAllocateOptions{
+	memory, _, err := device.AllocateMemory(nil, core1_0.MemoryAllocateInfo{
 		AllocationSize:  1,
 		MemoryTypeIndex: 3,
-		NextOptions: common.NextOptions{Next: khr_dedicated_allocation.MemoryDedicatedAllocationOptions{
+		NextOptions: common.NextOptions{Next: khr_dedicated_allocation.MemoryDedicatedAllocateInfo{
 			Buffer: buffer,
 		}},
 	})

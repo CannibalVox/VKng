@@ -12,13 +12,13 @@ import (
 	"unsafe"
 )
 
-type RenderPassInputAttachmentAspectOptions struct {
+type RenderPassInputAttachmentAspectCreateInfo struct {
 	AspectReferences []InputAttachmentAspectReference
 
 	common.NextOptions
 }
 
-func (o RenderPassInputAttachmentAspectOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o RenderPassInputAttachmentAspectCreateInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkRenderPassInputAttachmentAspectCreateInfoKHR{})))
 	}
@@ -29,7 +29,7 @@ func (o RenderPassInputAttachmentAspectOptions) PopulateCPointer(allocator *cgop
 
 	count := len(o.AspectReferences)
 	if count < 1 {
-		return nil, errors.New("options RenderPassInputAttachmentAspectOptions must include at least 1 entry in AspectReferences")
+		return nil, errors.New("options RenderPassInputAttachmentAspectCreateInfo must include at least 1 entry in AspectReferences")
 	}
 
 	createInfo.aspectReferenceCount = C.uint32_t(count)

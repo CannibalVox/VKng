@@ -37,7 +37,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 }
 
 // PhysicalDeviceFeatures2 mocks base method.
-func (m *MockExtension) PhysicalDeviceFeatures2(physicalDevice core1_0.PhysicalDevice, out *khr_get_physical_device_properties2.DeviceFeatures) error {
+func (m *MockExtension) PhysicalDeviceFeatures2(physicalDevice core1_0.PhysicalDevice, out *khr_get_physical_device_properties2.PhysicalDeviceFeatures2) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PhysicalDeviceFeatures2", physicalDevice, out)
 	ret0, _ := ret[0].(error)
@@ -51,7 +51,7 @@ func (mr *MockExtensionMockRecorder) PhysicalDeviceFeatures2(physicalDevice, out
 }
 
 // PhysicalDeviceFormatProperties2 mocks base method.
-func (m *MockExtension) PhysicalDeviceFormatProperties2(physicalDevice core1_0.PhysicalDevice, format core1_0.DataFormat, out *khr_get_physical_device_properties2.FormatPropertiesOutData) error {
+func (m *MockExtension) PhysicalDeviceFormatProperties2(physicalDevice core1_0.PhysicalDevice, format core1_0.Format, out *khr_get_physical_device_properties2.FormatProperties2) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PhysicalDeviceFormatProperties2", physicalDevice, format, out)
 	ret0, _ := ret[0].(error)
@@ -65,7 +65,7 @@ func (mr *MockExtensionMockRecorder) PhysicalDeviceFormatProperties2(physicalDev
 }
 
 // PhysicalDeviceImageFormatProperties2 mocks base method.
-func (m *MockExtension) PhysicalDeviceImageFormatProperties2(physicalDevice core1_0.PhysicalDevice, options khr_get_physical_device_properties2.ImageFormatOptions, out *khr_get_physical_device_properties2.ImageFormatPropertiesOutData) (common.VkResult, error) {
+func (m *MockExtension) PhysicalDeviceImageFormatProperties2(physicalDevice core1_0.PhysicalDevice, options khr_get_physical_device_properties2.PhysicalDeviceImageFormatInfo2, out *khr_get_physical_device_properties2.ImageFormatProperties2) (common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PhysicalDeviceImageFormatProperties2", physicalDevice, options, out)
 	ret0, _ := ret[0].(common.VkResult)
@@ -80,7 +80,7 @@ func (mr *MockExtensionMockRecorder) PhysicalDeviceImageFormatProperties2(physic
 }
 
 // PhysicalDeviceMemoryProperties2 mocks base method.
-func (m *MockExtension) PhysicalDeviceMemoryProperties2(physicalDevice core1_0.PhysicalDevice, out *khr_get_physical_device_properties2.MemoryPropertiesOutData) error {
+func (m *MockExtension) PhysicalDeviceMemoryProperties2(physicalDevice core1_0.PhysicalDevice, out *khr_get_physical_device_properties2.PhysicalDeviceMemoryProperties2) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PhysicalDeviceMemoryProperties2", physicalDevice, out)
 	ret0, _ := ret[0].(error)
@@ -94,7 +94,7 @@ func (mr *MockExtensionMockRecorder) PhysicalDeviceMemoryProperties2(physicalDev
 }
 
 // PhysicalDeviceProperties2 mocks base method.
-func (m *MockExtension) PhysicalDeviceProperties2(physicalDevice core1_0.PhysicalDevice, out *khr_get_physical_device_properties2.DevicePropertiesOutData) error {
+func (m *MockExtension) PhysicalDeviceProperties2(physicalDevice core1_0.PhysicalDevice, out *khr_get_physical_device_properties2.PhysicalDeviceProperties2) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PhysicalDeviceProperties2", physicalDevice, out)
 	ret0, _ := ret[0].(error)
@@ -108,10 +108,10 @@ func (mr *MockExtensionMockRecorder) PhysicalDeviceProperties2(physicalDevice, o
 }
 
 // PhysicalDeviceQueueFamilyProperties2 mocks base method.
-func (m *MockExtension) PhysicalDeviceQueueFamilyProperties2(physicalDevice core1_0.PhysicalDevice, outDataFactory func() *khr_get_physical_device_properties2.QueueFamilyOutData) ([]*khr_get_physical_device_properties2.QueueFamilyOutData, error) {
+func (m *MockExtension) PhysicalDeviceQueueFamilyProperties2(physicalDevice core1_0.PhysicalDevice, outDataFactory func() *khr_get_physical_device_properties2.QueueFamilyProperties2) ([]*khr_get_physical_device_properties2.QueueFamilyProperties2, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PhysicalDeviceQueueFamilyProperties2", physicalDevice, outDataFactory)
-	ret0, _ := ret[0].([]*khr_get_physical_device_properties2.QueueFamilyOutData)
+	ret0, _ := ret[0].([]*khr_get_physical_device_properties2.QueueFamilyProperties2)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -123,10 +123,10 @@ func (mr *MockExtensionMockRecorder) PhysicalDeviceQueueFamilyProperties2(physic
 }
 
 // PhysicalDeviceSparseImageFormatProperties2 mocks base method.
-func (m *MockExtension) PhysicalDeviceSparseImageFormatProperties2(physicalDevice core1_0.PhysicalDevice, options khr_get_physical_device_properties2.SparseImageFormatOptions, outDataFactory func() *khr_get_physical_device_properties2.SparseImageFormatPropertiesOutData) ([]*khr_get_physical_device_properties2.SparseImageFormatPropertiesOutData, error) {
+func (m *MockExtension) PhysicalDeviceSparseImageFormatProperties2(physicalDevice core1_0.PhysicalDevice, options khr_get_physical_device_properties2.PhysicalDeviceSparseImageFormatInfo2, outDataFactory func() *khr_get_physical_device_properties2.SparseImageFormatProperties2) ([]*khr_get_physical_device_properties2.SparseImageFormatProperties2, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PhysicalDeviceSparseImageFormatProperties2", physicalDevice, options, outDataFactory)
-	ret0, _ := ret[0].([]*khr_get_physical_device_properties2.SparseImageFormatPropertiesOutData)
+	ret0, _ := ret[0].([]*khr_get_physical_device_properties2.SparseImageFormatProperties2)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

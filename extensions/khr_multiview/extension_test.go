@@ -49,7 +49,7 @@ func TestMultiviewFeaturesOutData(t *testing.T) {
 	})
 
 	var outData khr_multiview.PhysicalDeviceMultiviewFeatures
-	features := khr_get_physical_device_properties2.DeviceFeatures{
+	features := khr_get_physical_device_properties2.PhysicalDeviceFeatures2{
 		NextOutData: common.NextOutData{&outData},
 	}
 
@@ -107,10 +107,10 @@ func TestMultiviewFeaturesOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	device, _, err := physicalDevice.CreateDevice(nil, core1_0.DeviceCreateOptions{
-		QueueFamilies: []core1_0.DeviceQueueCreateOptions{
+	device, _, err := physicalDevice.CreateDevice(nil, core1_0.DeviceCreateInfo{
+		QueueCreateInfos: []core1_0.DeviceQueueCreateInfo{
 			{
-				CreatedQueuePriorities: []float32{3, 2, 1},
+				QueuePriorities: []float32{3, 2, 1},
 			},
 		},
 		NextOptions: common.NextOptions{
@@ -153,14 +153,14 @@ func TestMultiviewPropertiesOutData(t *testing.T) {
 		*(*uint32)(unsafe.Pointer(val.FieldByName("maxMultiviewInstanceIndex").UnsafeAddr())) = uint32(3)
 	})
 
-	var outData khr_multiview.PhysicalDeviceMultiviewOutData
-	properties := khr_get_physical_device_properties2.DevicePropertiesOutData{
+	var outData khr_multiview.PhysicalDeviceMultiviewProperties
+	properties := khr_get_physical_device_properties2.PhysicalDeviceProperties2{
 		NextOutData: common.NextOutData{&outData},
 	}
 
 	err := extension.PhysicalDeviceProperties2(physicalDevice, &properties)
 	require.NoError(t, err)
-	require.Equal(t, khr_multiview.PhysicalDeviceMultiviewOutData{
+	require.Equal(t, khr_multiview.PhysicalDeviceMultiviewProperties{
 		MaxMultiviewInstanceIndex: 3,
 		MaxMultiviewViewCount:     5,
 	}, outData)
@@ -213,12 +213,12 @@ func TestRenderPassMultiviewOptions(t *testing.T) {
 		return core1_0.VKSuccess, nil
 	})
 
-	renderPass, _, err := device.CreateRenderPass(nil, core1_0.RenderPassCreateOptions{
+	renderPass, _, err := device.CreateRenderPass(nil, core1_0.RenderPassCreateInfo{
 		NextOptions: common.NextOptions{
-			khr_multiview.RenderPassMultiviewOptions{
-				SubpassViewMasks:      []uint32{1, 2, 7},
-				DependencyViewOffsets: []int{11, 13},
-				CorrelationMasks:      []uint32{17},
+			khr_multiview.RenderPassMultiviewCreateInfo{
+				ViewMasks:        []uint32{1, 2, 7},
+				ViewOffsets:      []int{11, 13},
+				CorrelationMasks: []uint32{17},
 			},
 		},
 	})

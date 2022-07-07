@@ -53,9 +53,9 @@ func TestVulkanExtension_DescriptorSetLayoutSupport(t *testing.T) {
 			*(*driver.VkBool32)(unsafe.Pointer(outDataVal.FieldByName("supported").UnsafeAddr())) = driver.VkBool32(1)
 		})
 
-	outData := &khr_maintenance3.DescriptorSetLayoutSupportOutData{}
-	err := extension.DescriptorSetLayoutSupport(device, core1_0.DescriptorSetLayoutCreateOptions{
-		Bindings: []core1_0.DescriptorLayoutBinding{
+	outData := &khr_maintenance3.DescriptorSetLayoutSupport{}
+	err := extension.DescriptorSetLayoutSupport(device, core1_0.DescriptorSetLayoutCreateInfo{
+		Bindings: []core1_0.DescriptorSetLayoutBinding{
 			{
 				Binding:         1,
 				DescriptorCount: 3,
@@ -95,8 +95,8 @@ func TestMaintenance3OutData(t *testing.T) {
 			*(*driver.Uint64)(unsafe.Pointer(maint.FieldByName("maxMemoryAllocationSize").UnsafeAddr())) = driver.Uint64(7)
 		})
 
-	maintOutData := &khr_maintenance3.PhysicalDeviceMaintenance3OutData{}
-	outData := &khr_get_physical_device_properties2.DevicePropertiesOutData{
+	maintOutData := &khr_maintenance3.PhysicalDeviceMaintenance3Properties{}
+	outData := &khr_get_physical_device_properties2.PhysicalDeviceProperties2{
 		NextOutData: common.NextOutData{Next: maintOutData},
 	}
 	err := extension.PhysicalDeviceProperties2(physicalDevice, outData)

@@ -54,7 +54,7 @@ func TestVulkanExtension_CreateMessenger(t *testing.T) {
 	instance := mocks.EasyMockInstance(ctrl, coreDriver)
 
 	calledRightFunction := false
-	var cb ext_debug_utils.CallbackFunction = func(msgType ext_debug_utils.MessageTypes, severity ext_debug_utils.MessageSeverities, data *ext_debug_utils.CallbackDataOptions) bool {
+	var cb ext_debug_utils.CallbackFunction = func(msgType ext_debug_utils.MessageTypes, severity ext_debug_utils.MessageSeverities, data *ext_debug_utils.DebugUtilsMessengerCallbackData) bool {
 		calledRightFunction = true
 		return true
 	}
@@ -86,10 +86,10 @@ func TestVulkanExtension_CreateMessenger(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	messenger, _, err := extension.CreateMessenger(instance, nil, ext_debug_utils.CreateOptions{
-		CaptureSeverities: ext_debug_utils.SeverityWarning,
-		CaptureTypes:      ext_debug_utils.TypeValidation,
-		Callback:          cb,
+	messenger, _, err := extension.CreateDebugUtilsMessenger(instance, nil, ext_debug_utils.DebugUtilsMessengerCreateInfo{
+		MessageSeverity: ext_debug_utils.SeverityWarning,
+		MessageType:     ext_debug_utils.TypeValidation,
+		UserCallback:    cb,
 	})
 	require.NoError(t, err)
 	require.NotNil(t, messenger)
@@ -104,9 +104,9 @@ func TestVulkanExtension_CmdBeginLabel(t *testing.T) {
 	extension := ext_debug_utils.CreateExtensionFromDriver(debugDriver)
 	commandBuffer := mocks.EasyMockCommandBuffer(ctrl)
 
-	label := ext_debug_utils.LabelOptions{
-		Name:  "someLabel",
-		Color: colornames.Blue,
+	label := ext_debug_utils.DebugUtilsLabel{
+		LabelName: "someLabel",
+		Color:     colornames.Blue,
 	}
 
 	debugDriver.EXPECT().VKCmdBeginDebugUtilsLabelEXT(
@@ -128,7 +128,7 @@ func TestVulkanExtension_CmdBeginLabel(t *testing.T) {
 			require.InDelta(t, float32(1), val.FieldByName("color").Index(3).Float(), 0.002)
 		})
 
-	err := extension.CmdBeginLabel(commandBuffer, label)
+	err := extension.CmdBeginDebugUtilsLabel(commandBuffer, label)
 	require.NoError(t, err)
 }
 
@@ -142,7 +142,7 @@ func TestVulkanExtension_CmdEndLabel(t *testing.T) {
 
 	debugDriver.EXPECT().VkCmdEndDebugUtilsLabelEXT(commandBuffer.Handle())
 
-	extension.CmdEndLabel(commandBuffer)
+	extension.CmdEndDebugUtilsLabel(commandBuffer)
 }
 
 func TestVulkanExtension_CmdInsertLabel(t *testing.T) {
@@ -153,9 +153,9 @@ func TestVulkanExtension_CmdInsertLabel(t *testing.T) {
 	extension := ext_debug_utils.CreateExtensionFromDriver(debugDriver)
 	commandBuffer := mocks.EasyMockCommandBuffer(ctrl)
 
-	label := ext_debug_utils.LabelOptions{
-		Name:  "otherLabel",
-		Color: colornames.Gray,
+	label := ext_debug_utils.DebugUtilsLabel{
+		LabelName: "otherLabel",
+		Color:     colornames.Gray,
 	}
 
 	debugDriver.EXPECT().VkCmdInsertDebugUtilsLabelEXT(
@@ -177,7 +177,7 @@ func TestVulkanExtension_CmdInsertLabel(t *testing.T) {
 			require.InDelta(t, float32(1), val.FieldByName("color").Index(3).Float(), 0.002)
 		})
 
-	err := extension.CmdInsertLabel(commandBuffer, label)
+	err := extension.CmdInsertDebugUtilsLabel(commandBuffer, label)
 	require.NoError(t, err)
 }
 
@@ -189,9 +189,9 @@ func TestVulkanExtension_QueueBeginLabel(t *testing.T) {
 	extension := ext_debug_utils.CreateExtensionFromDriver(debugDriver)
 	queue := mocks.EasyMockQueue(ctrl)
 
-	label := ext_debug_utils.LabelOptions{
-		Name:  "someLabel",
-		Color: colornames.Saddlebrown,
+	label := ext_debug_utils.DebugUtilsLabel{
+		LabelName: "someLabel",
+		Color:     colornames.Saddlebrown,
 	}
 
 	debugDriver.EXPECT().VkQueueBeginDebugUtilsLabelEXT(
@@ -213,7 +213,7 @@ func TestVulkanExtension_QueueBeginLabel(t *testing.T) {
 			require.InDelta(t, float32(1), val.FieldByName("color").Index(3).Float(), 0.002)
 		})
 
-	err := extension.QueueBeginLabel(queue, label)
+	err := extension.QueueBeginDebugUtilsLabel(queue, label)
 	require.NoError(t, err)
 }
 
@@ -227,7 +227,7 @@ func TestVulkanExtension_QueueEndLabel(t *testing.T) {
 
 	debugDriver.EXPECT().VkQueueEndDebugUtilsLabelEXT(queue.Handle())
 
-	extension.QueueEndLabel(queue)
+	extension.QueueEndDebugUtilsLabel(queue)
 }
 
 func TestVulkanExtension_QueueInsertLabel(t *testing.T) {
@@ -238,9 +238,9 @@ func TestVulkanExtension_QueueInsertLabel(t *testing.T) {
 	extension := ext_debug_utils.CreateExtensionFromDriver(debugDriver)
 	queue := mocks.EasyMockQueue(ctrl)
 
-	label := ext_debug_utils.LabelOptions{
-		Name:  "",
-		Color: color.RGBA{A: 0, B: 0, G: 0, R: 0},
+	label := ext_debug_utils.DebugUtilsLabel{
+		LabelName: "",
+		Color:     color.RGBA{A: 0, B: 0, G: 0, R: 0},
 	}
 
 	debugDriver.EXPECT().VkQueueInsertDebugUtilsLabelEXT(
@@ -262,7 +262,7 @@ func TestVulkanExtension_QueueInsertLabel(t *testing.T) {
 			require.InDelta(t, float32(0), val.FieldByName("color").Index(3).Float(), 0.002)
 		})
 
-	err := extension.QueueInsertLabel(queue, label)
+	err := extension.QueueInsertDebugUtilsLabel(queue, label)
 	require.NoError(t, err)
 }
 
@@ -276,10 +276,10 @@ func TestVulkanExtension_SetObjectName(t *testing.T) {
 	device := mocks.EasyMockDevice(ctrl, coreDriver)
 	commandBuffer := mocks.EasyMockCommandBuffer(ctrl)
 
-	objectName := ext_debug_utils.ObjectNameOptions{
-		Name:   "someCommandBuffer",
-		Handle: uintptr(unsafe.Pointer(commandBuffer.Handle())),
-		Type:   core1_0.ObjectTypeCommandBuffer,
+	objectName := ext_debug_utils.DebugUtilsObjectNameInfo{
+		ObjectName:   "someCommandBuffer",
+		ObjectHandle: uintptr(unsafe.Pointer(commandBuffer.Handle())),
+		ObjectType:   core1_0.ObjectTypeCommandBuffer,
 	}
 
 	debugDriver.EXPECT().VkSetDebugUtilsObjectNameEXT(
@@ -301,7 +301,7 @@ func TestVulkanExtension_SetObjectName(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	_, err := extension.SetObjectName(device, objectName)
+	_, err := extension.SetDebugUtilsObjectName(device, objectName)
 	require.NoError(t, err)
 }
 
@@ -315,11 +315,11 @@ func TestVulkanExtension_SetObjectTag(t *testing.T) {
 	device := mocks.EasyMockDevice(ctrl, coreDriver)
 	queryPool := mocks.EasyMockQueryPool(ctrl)
 
-	objectTag := ext_debug_utils.ObjectTagOptions{
-		Type:    core1_0.ObjectTypeQueryPool,
-		Handle:  uintptr(unsafe.Pointer(queryPool.Handle())),
-		TagName: 53,
-		Tag:     []byte("some tag data"),
+	objectTag := ext_debug_utils.DebugUtilsObjectTagInfo{
+		ObjectType:   core1_0.ObjectTypeQueryPool,
+		ObjectHandle: uintptr(unsafe.Pointer(queryPool.Handle())),
+		TagName:      53,
+		Tag:          []byte("some tag data"),
 	}
 
 	debugDriver.EXPECT().VkSetDebugUtilsObjectTagEXT(
@@ -343,7 +343,7 @@ func TestVulkanExtension_SetObjectTag(t *testing.T) {
 			return core1_0.VKSuccess, nil
 		})
 
-	_, err := extension.SetObjectTag(device, objectTag)
+	_, err := extension.SetDebugUtilsObjectTag(device, objectTag)
 	require.NoError(t, err)
 }
 
@@ -357,24 +357,24 @@ func TestVulkanExtension_SubmitMessage(t *testing.T) {
 	instance := mocks.EasyMockInstance(ctrl, coreDriver)
 	pipeline := mocks.EasyMockPipeline(ctrl)
 
-	callbackData := ext_debug_utils.CallbackDataOptions{
+	callbackData := ext_debug_utils.DebugUtilsMessengerCallbackData{
 		MessageIDNumber: 3,
 		MessageIDName:   "some message id",
 		Message:         "a cool message",
-		QueueLabels: []ext_debug_utils.LabelOptions{
-			{Name: "queue label 1", Color: colornames.Red},
-			{Name: "queue label 2", Color: colornames.Blue},
+		QueueLabels: []ext_debug_utils.DebugUtilsLabel{
+			{LabelName: "queue label 1", Color: colornames.Red},
+			{LabelName: "queue label 2", Color: colornames.Blue},
 		},
-		CommandBufferLabels: []ext_debug_utils.LabelOptions{
-			{Name: "cmd label 1", Color: colornames.Green},
-			{Name: "cmd label 2", Color: colornames.Yellow},
-			{Name: "cmd label 3", Color: colornames.White},
+		CmdBufLabels: []ext_debug_utils.DebugUtilsLabel{
+			{LabelName: "cmd label 1", Color: colornames.Green},
+			{LabelName: "cmd label 2", Color: colornames.Yellow},
+			{LabelName: "cmd label 3", Color: colornames.White},
 		},
-		Objects: []ext_debug_utils.ObjectNameOptions{
+		Objects: []ext_debug_utils.DebugUtilsObjectNameInfo{
 			{
-				Name:   "a object",
-				Type:   core1_0.ObjectTypePipeline,
-				Handle: uintptr(unsafe.Pointer(pipeline.Handle())),
+				ObjectName:   "a object",
+				ObjectType:   core1_0.ObjectTypePipeline,
+				ObjectHandle: uintptr(unsafe.Pointer(pipeline.Handle())),
 			},
 		},
 	}
@@ -502,6 +502,6 @@ func TestVulkanExtension_SubmitMessage(t *testing.T) {
 			require.Equal(t, expectedObjectName, actualObjectName)
 		})
 
-	err := extension.SubmitMessage(instance, ext_debug_utils.SeverityError, ext_debug_utils.TypeValidation, callbackData)
+	err := extension.SubmitDebugUtilsMessage(instance, ext_debug_utils.SeverityError, ext_debug_utils.TypeValidation, callbackData)
 	require.NoError(t, err)
 }

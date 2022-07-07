@@ -45,14 +45,14 @@ func TestPhysicalDeviceSamplerFilterMinmaxOutData(t *testing.T) {
 		*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("filterMinmaxImageComponentMapping").UnsafeAddr())) = driver.VkBool32(1)
 	})
 
-	var outData PhysicalDeviceSamplerFilterMinmaxOutData
+	var outData PhysicalDeviceSamplerFilterMinmaxProperties
 	err := extension.PhysicalDeviceProperties2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DevicePropertiesOutData{
+		&khr_get_physical_device_properties2.PhysicalDeviceProperties2{
 			NextOutData: common.NextOutData{&outData},
 		})
 	require.NoError(t, err)
-	require.Equal(t, PhysicalDeviceSamplerFilterMinmaxOutData{
+	require.Equal(t, PhysicalDeviceSamplerFilterMinmaxProperties{
 		FilterMinmaxImageComponentMapping:  true,
 		FilterMinmaxSingleComponentFormats: true,
 	}, outData)
@@ -92,8 +92,8 @@ func TestSamplerReductionModeCreateOptions(t *testing.T) {
 
 	sampler, _, err := device.CreateSampler(
 		nil,
-		core1_0.SamplerCreateOptions{
-			NextOptions: common.NextOptions{SamplerReductionModeCreateOptions{
+		core1_0.SamplerCreateInfo{
+			NextOptions: common.NextOptions{SamplerReductionModeCreateInfo{
 				ReductionMode: SamplerReductionModeMax,
 			}},
 		})

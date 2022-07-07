@@ -82,13 +82,13 @@ func TestVulkanExtension_CreateDescriptorUpdateTemplate(t *testing.T) {
 		gomock.Nil(),
 	)
 
-	template, _, err := extension.CreateDescriptorUpdateTemplate(device, khr_descriptor_update_template.DescriptorUpdateTemplateCreateOptions{
-		Entries: []khr_descriptor_update_template.DescriptorUpdateTemplateEntry{
+	template, _, err := extension.CreateDescriptorUpdateTemplate(device, khr_descriptor_update_template.DescriptorUpdateTemplateCreateInfo{
+		DescriptorUpdateEntries: []khr_descriptor_update_template.DescriptorUpdateTemplateEntry{
 			{
 				DstBinding:      1,
 				DstArrayElement: 3,
 				DescriptorCount: 5,
-				DescriptorType:  core1_0.DescriptorCombinedImageSampler,
+				DescriptorType:  core1_0.DescriptorTypeCombinedImageSampler,
 				Offset:          7,
 				Stride:          11,
 			},
@@ -96,14 +96,14 @@ func TestVulkanExtension_CreateDescriptorUpdateTemplate(t *testing.T) {
 				DstBinding:      13,
 				DstArrayElement: 17,
 				DescriptorCount: 19,
-				DescriptorType:  core1_0.DescriptorStorageBuffer,
+				DescriptorType:  core1_0.DescriptorTypeStorageBuffer,
 				Offset:          23,
 				Stride:          29,
 			},
 		},
-		TemplateType:        khr_descriptor_update_template.DescriptorTemplateTypeDescriptorSet,
+		TemplateType:        khr_descriptor_update_template.DescriptorUpdateTemplateTypeDescriptorSet,
 		DescriptorSetLayout: descriptorLayout,
-		PipelineBindPoint:   core1_0.BindGraphics,
+		PipelineBindPoint:   core1_0.PipelineBindPointGraphics,
 		PipelineLayout:      pipelineLayout,
 		Set:                 31,
 	}, nil)

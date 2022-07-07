@@ -36,9 +36,9 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 }
 
 // ExternalSemaphoreProperties mocks base method.
-func (m *MockExtension) ExternalSemaphoreProperties(physicalDevice core1_0.PhysicalDevice, o khr_external_semaphore_capabilities.ExternalSemaphoreOptions, outData *khr_external_semaphore_capabilities.ExternalSemaphoreOutData) error {
+func (m *MockExtension) PhysicalDeviceExternalSemaphoreProperties(physicalDevice core1_0.PhysicalDevice, o khr_external_semaphore_capabilities.PhysicalDeviceExternalSemaphoreInfo, outData *khr_external_semaphore_capabilities.ExternalSemaphoreProperties) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ExternalSemaphoreProperties", physicalDevice, o, outData)
+	ret := m.ctrl.Call(m, "PhysicalDeviceExternalSemaphoreProperties", physicalDevice, o, outData)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
@@ -46,5 +46,5 @@ func (m *MockExtension) ExternalSemaphoreProperties(physicalDevice core1_0.Physi
 // ExternalSemaphoreProperties indicates an expected call of ExternalSemaphoreProperties.
 func (mr *MockExtensionMockRecorder) ExternalSemaphoreProperties(physicalDevice, o, outData interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExternalSemaphoreProperties", reflect.TypeOf((*MockExtension)(nil).ExternalSemaphoreProperties), physicalDevice, o, outData)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PhysicalDeviceExternalSemaphoreProperties", reflect.TypeOf((*MockExtension)(nil).PhysicalDeviceExternalSemaphoreProperties), physicalDevice, o, outData)
 }

@@ -12,14 +12,14 @@ import (
 	"unsafe"
 )
 
-type DeviceGroupPresentCapabilitiesOutData struct {
-	PresentMask [khr_device_group_creation.MaxGroupSize]uint32
+type DeviceGroupPresentCapabilities struct {
+	PresentMask [khr_device_group_creation.MaxDeviceGroupSize]uint32
 	Modes       DeviceGroupPresentModeFlags
 
 	common.NextOutData
 }
 
-func (o *DeviceGroupPresentCapabilitiesOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *DeviceGroupPresentCapabilities) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkDeviceGroupPresentCapabilitiesKHR{})))
 	}
@@ -31,10 +31,10 @@ func (o *DeviceGroupPresentCapabilitiesOutData) PopulateHeader(allocator *cgopar
 	return preallocatedPointer, nil
 }
 
-func (o *DeviceGroupPresentCapabilitiesOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *DeviceGroupPresentCapabilities) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	info := (*C.VkDeviceGroupPresentCapabilitiesKHR)(cDataPointer)
 
-	for i := 0; i < khr_device_group_creation.MaxGroupSize; i++ {
+	for i := 0; i < khr_device_group_creation.MaxDeviceGroupSize; i++ {
 		o.PresentMask[i] = uint32(info.presentMask[i])
 	}
 	o.Modes = DeviceGroupPresentModeFlags(info.modes)

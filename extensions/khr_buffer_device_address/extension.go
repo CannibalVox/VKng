@@ -24,7 +24,7 @@ func CreateExtensionFromDriver(driver khr_buffer_device_address_driver.Driver) *
 	}
 }
 
-func (e *VulkanExtension) GetBufferDeviceAddress(device core1_0.Device, o BufferDeviceAddressOptions) (uint64, error) {
+func (e *VulkanExtension) GetBufferDeviceAddress(device core1_0.Device, o BufferDeviceAddressInfo) (uint64, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -40,7 +40,7 @@ func (e *VulkanExtension) GetBufferDeviceAddress(device core1_0.Device, o Buffer
 	return uint64(address), nil
 }
 
-func (e *VulkanExtension) GetBufferOpaqueCaptureAddress(device core1_0.Device, o BufferDeviceAddressOptions) (uint64, error) {
+func (e *VulkanExtension) GetBufferOpaqueCaptureAddress(device core1_0.Device, o BufferDeviceAddressInfo) (uint64, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -56,7 +56,7 @@ func (e *VulkanExtension) GetBufferOpaqueCaptureAddress(device core1_0.Device, o
 	return uint64(address), nil
 }
 
-func (e *VulkanExtension) GetDeviceMemoryOpaqueCaptureAddress(device core1_0.Device, o DeviceMemoryOpaqueAddressOptions) (uint64, error) {
+func (e *VulkanExtension) GetDeviceMemoryOpaqueCaptureAddress(device core1_0.Device, o DeviceMemoryOpaqueAddressInfo) (uint64, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 

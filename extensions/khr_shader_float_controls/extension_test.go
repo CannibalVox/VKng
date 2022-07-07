@@ -62,14 +62,14 @@ func TestPhysicalDeviceFloatControlsOutData(t *testing.T) {
 		*(*driver.VkBool32)(unsafe.Pointer(val.FieldByName("shaderRoundingModeRTZFloat64").UnsafeAddr())) = driver.VkBool32(1)
 	})
 
-	var outData khr_shader_float_controls.PhysicalDeviceFloatControlsOutData
+	var outData khr_shader_float_controls.PhysicalDeviceFloatControlsProperties
 	err := extension.PhysicalDeviceProperties2(
 		physicalDevice,
-		&khr_get_physical_device_properties2.DevicePropertiesOutData{
+		&khr_get_physical_device_properties2.PhysicalDeviceProperties2{
 			NextOutData: common.NextOutData{&outData},
 		})
 	require.NoError(t, err)
-	require.Equal(t, khr_shader_float_controls.PhysicalDeviceFloatControlsOutData{
+	require.Equal(t, khr_shader_float_controls.PhysicalDeviceFloatControlsProperties{
 		DenormBehaviorIndependence: khr_shader_float_controls.ShaderFloatControlsIndependence32BitOnly,
 		RoundingMoundIndependence:  khr_shader_float_controls.ShaderFloatControlsIndependenceAll,
 

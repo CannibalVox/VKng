@@ -36,9 +36,9 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 }
 
 // ExternalBufferProperties mocks base method.
-func (m *MockExtension) ExternalBufferProperties(physicalDevice core1_0.PhysicalDevice, o khr_external_memory_capabilities.ExternalBufferOptions, outData *khr_external_memory_capabilities.ExternalBufferOutData) error {
+func (m *MockExtension) PhysicalDeviceExternalBufferProperties(physicalDevice core1_0.PhysicalDevice, o khr_external_memory_capabilities.PhysicalDeviceExternalBufferInfo, outData *khr_external_memory_capabilities.ExternalBufferProperties) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ExternalBufferProperties", physicalDevice, o, outData)
+	ret := m.ctrl.Call(m, "PhysicalDeviceExternalBufferProperties", physicalDevice, o, outData)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
@@ -46,5 +46,5 @@ func (m *MockExtension) ExternalBufferProperties(physicalDevice core1_0.Physical
 // ExternalBufferProperties indicates an expected call of ExternalBufferProperties.
 func (mr *MockExtensionMockRecorder) ExternalBufferProperties(physicalDevice, o, outData interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExternalBufferProperties", reflect.TypeOf((*MockExtension)(nil).ExternalBufferProperties), physicalDevice, o, outData)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PhysicalDeviceExternalBufferProperties", reflect.TypeOf((*MockExtension)(nil).PhysicalDeviceExternalBufferProperties), physicalDevice, o, outData)
 }

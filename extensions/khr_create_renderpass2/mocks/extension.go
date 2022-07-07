@@ -38,7 +38,7 @@ func (m *MockExtension) EXPECT() *MockExtensionMockRecorder {
 }
 
 // CmdBeginRenderPass2 mocks base method.
-func (m *MockExtension) CmdBeginRenderPass2(commandBuffer core1_0.CommandBuffer, renderPassBegin core1_0.RenderPassBeginOptions, subpassBegin khr_create_renderpass2.SubpassBeginOptions) error {
+func (m *MockExtension) CmdBeginRenderPass2(commandBuffer core1_0.CommandBuffer, renderPassBegin core1_0.RenderPassBeginInfo, subpassBegin khr_create_renderpass2.SubpassBeginInfo) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CmdBeginRenderPass2", commandBuffer, renderPassBegin, subpassBegin)
 	ret0, _ := ret[0].(error)
@@ -52,7 +52,7 @@ func (mr *MockExtensionMockRecorder) CmdBeginRenderPass2(commandBuffer, renderPa
 }
 
 // CmdEndRenderPass2 mocks base method.
-func (m *MockExtension) CmdEndRenderPass2(commandBuffer core1_0.CommandBuffer, subpassEnd khr_create_renderpass2.SubpassEndOptions) error {
+func (m *MockExtension) CmdEndRenderPass2(commandBuffer core1_0.CommandBuffer, subpassEnd khr_create_renderpass2.SubpassEndInfo) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CmdEndRenderPass2", commandBuffer, subpassEnd)
 	ret0, _ := ret[0].(error)
@@ -66,7 +66,7 @@ func (mr *MockExtensionMockRecorder) CmdEndRenderPass2(commandBuffer, subpassEnd
 }
 
 // CmdNextSubpass2 mocks base method.
-func (m *MockExtension) CmdNextSubpass2(commandBuffer core1_0.CommandBuffer, subpassBegin khr_create_renderpass2.SubpassBeginOptions, subpassEnd khr_create_renderpass2.SubpassEndOptions) error {
+func (m *MockExtension) CmdNextSubpass2(commandBuffer core1_0.CommandBuffer, subpassBegin khr_create_renderpass2.SubpassBeginInfo, subpassEnd khr_create_renderpass2.SubpassEndInfo) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CmdNextSubpass2", commandBuffer, subpassBegin, subpassEnd)
 	ret0, _ := ret[0].(error)
@@ -80,7 +80,7 @@ func (mr *MockExtensionMockRecorder) CmdNextSubpass2(commandBuffer, subpassBegin
 }
 
 // CreateRenderPass2 mocks base method.
-func (m *MockExtension) CreateRenderPass2(device core1_0.Device, allocator *driver.AllocationCallbacks, options khr_create_renderpass2.RenderPassCreateOptions) (core1_0.RenderPass, common.VkResult, error) {
+func (m *MockExtension) CreateRenderPass2(device core1_0.Device, allocator *driver.AllocationCallbacks, options khr_create_renderpass2.RenderPassCreateInfo2) (core1_0.RenderPass, common.VkResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateRenderPass2", device, allocator, options)
 	ret0, _ := ret[0].(core1_0.RenderPass)

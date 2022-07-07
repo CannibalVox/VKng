@@ -12,13 +12,13 @@ import (
 	"unsafe"
 )
 
-type ImageFormatPropertiesOutData struct {
+type ImageFormatProperties2 struct {
 	ImageFormatProperties core1_0.ImageFormatProperties
 
 	common.NextOutData
 }
 
-func (o *ImageFormatPropertiesOutData) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *ImageFormatProperties2) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkImageFormatProperties2KHR{})))
 	}
@@ -30,7 +30,7 @@ func (o *ImageFormatPropertiesOutData) PopulateHeader(allocator *cgoparam.Alloca
 	return preallocatedPointer, nil
 }
 
-func (o *ImageFormatPropertiesOutData) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *ImageFormatProperties2) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	data := (*C.VkImageFormatProperties2KHR)(cDataPointer)
 	o.ImageFormatProperties.MaxExtent = core1_0.Extent3D{
 		Width:  int(data.imageFormatProperties.maxExtent.width),
@@ -39,7 +39,7 @@ func (o *ImageFormatPropertiesOutData) PopulateOutData(cDataPointer unsafe.Point
 	}
 	o.ImageFormatProperties.MaxMipLevels = int(data.imageFormatProperties.maxMipLevels)
 	o.ImageFormatProperties.MaxArrayLayers = int(data.imageFormatProperties.maxArrayLayers)
-	o.ImageFormatProperties.SampleCounts = core1_0.SampleCounts(data.imageFormatProperties.sampleCounts)
+	o.ImageFormatProperties.SampleCounts = core1_0.SampleCountFlags(data.imageFormatProperties.sampleCounts)
 	o.ImageFormatProperties.MaxResourceSize = int(data.imageFormatProperties.maxResourceSize)
 
 	return data.pNext, nil

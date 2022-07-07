@@ -7,29 +7,29 @@ package khr_external_fence_capabilities
 import "C"
 import "github.com/CannibalVox/VKng/core/common"
 
-type ExternalFenceFeatures int32
+type ExternalFenceFeatureFlags int32
 
-var externalFenceFeaturesMapping = common.NewFlagStringMapping[ExternalFenceFeatures]()
+var externalFenceFeaturesMapping = common.NewFlagStringMapping[ExternalFenceFeatureFlags]()
 
-func (f ExternalFenceFeatures) Register(str string) {
+func (f ExternalFenceFeatureFlags) Register(str string) {
 	externalFenceFeaturesMapping.Register(f, str)
 }
 
-func (f ExternalFenceFeatures) String() string {
+func (f ExternalFenceFeatureFlags) String() string {
 	return externalFenceFeaturesMapping.FlagsToString(f)
 }
 
 ////
 
-type ExternalFenceHandleTypes int32
+type ExternalFenceHandleTypeFlags int32
 
-var externalFenceHandleTypesMapping = common.NewFlagStringMapping[ExternalFenceHandleTypes]()
+var externalFenceHandleTypesMapping = common.NewFlagStringMapping[ExternalFenceHandleTypeFlags]()
 
-func (f ExternalFenceHandleTypes) Register(str string) {
+func (f ExternalFenceHandleTypeFlags) Register(str string) {
 	externalFenceHandleTypesMapping.Register(f, str)
 }
 
-func (f ExternalFenceHandleTypes) String() string {
+func (f ExternalFenceHandleTypeFlags) String() string {
 	return externalFenceHandleTypesMapping.FlagsToString(f)
 }
 
@@ -40,13 +40,13 @@ const (
 
 	LUIDSize int = C.VK_LUID_SIZE_KHR
 
-	ExternalFenceFeatureExportable ExternalFenceFeatures = C.VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT_KHR
-	ExternalFenceFeatureImportable ExternalFenceFeatures = C.VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT_KHR
+	ExternalFenceFeatureExportable ExternalFenceFeatureFlags = C.VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT_KHR
+	ExternalFenceFeatureImportable ExternalFenceFeatureFlags = C.VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT_KHR
 
-	ExternalFenceHandleTypeOpaqueFD       ExternalFenceHandleTypes = C.VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR
-	ExternalFenceHandleTypeOpaqueWin32    ExternalFenceHandleTypes = C.VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR
-	ExternalFenceHandleTypeOpaqueWin32KMT ExternalFenceHandleTypes = C.VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR
-	ExternalFenceHandleTypeSyncFD         ExternalFenceHandleTypes = C.VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT_KHR
+	ExternalFenceHandleTypeOpaqueFD       ExternalFenceHandleTypeFlags = C.VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR
+	ExternalFenceHandleTypeOpaqueWin32    ExternalFenceHandleTypeFlags = C.VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR
+	ExternalFenceHandleTypeOpaqueWin32KMT ExternalFenceHandleTypeFlags = C.VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR
+	ExternalFenceHandleTypeSyncFD         ExternalFenceHandleTypeFlags = C.VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT_KHR
 )
 
 func init() {

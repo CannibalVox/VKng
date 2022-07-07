@@ -34,7 +34,7 @@ func CreateExtensionFromDriver(driver khr_device_group_creation_driver.Driver) *
 	}
 }
 
-func (e *VulkanExtension) attemptEnumeratePhysicalDeviceGroups(instance core1_0.Instance, outDataFactory func() *DeviceGroupOutData) ([]*DeviceGroupOutData, common.VkResult, error) {
+func (e *VulkanExtension) attemptEnumeratePhysicalDeviceGroups(instance core1_0.Instance, outDataFactory func() *PhysicalDeviceGroupProperties) ([]*PhysicalDeviceGroupProperties, common.VkResult, error) {
 	arena := cgoparam.GetAlloc()
 	defer cgoparam.ReturnAlloc(arena)
 
@@ -54,16 +54,16 @@ func (e *VulkanExtension) attemptEnumeratePhysicalDeviceGroups(instance core1_0.
 		return nil, core1_0.VKSuccess, nil
 	}
 
-	outDataSlice := make([]*DeviceGroupOutData, count)
+	outDataSlice := make([]*PhysicalDeviceGroupProperties, count)
 	for i := 0; i < count; i++ {
 		if outDataFactory != nil {
 			outDataSlice[i] = outDataFactory()
 		} else {
-			outDataSlice[i] = &DeviceGroupOutData{}
+			outDataSlice[i] = &PhysicalDeviceGroupProperties{}
 		}
 	}
 
-	outData, err := common.AllocOutDataHeaderSlice[C.VkPhysicalDeviceGroupPropertiesKHR, *DeviceGroupOutData](arena, outDataSlice)
+	outData, err := common.AllocOutDataHeaderSlice[C.VkPhysicalDeviceGroupPropertiesKHR, *PhysicalDeviceGroupProperties](arena, outDataSlice)
 	if err != nil {
 		return nil, core1_0.VKErrorUnknown, err
 	}
@@ -77,7 +77,7 @@ func (e *VulkanExtension) attemptEnumeratePhysicalDeviceGroups(instance core1_0.
 		return nil, res, err
 	}
 
-	err = common.PopulateOutDataSlice[C.VkPhysicalDeviceGroupPropertiesKHR, *DeviceGroupOutData](outDataSlice, unsafe.Pointer(outData), instance)
+	err = common.PopulateOutDataSlice[C.VkPhysicalDeviceGroupPropertiesKHR, *PhysicalDeviceGroupProperties](outDataSlice, unsafe.Pointer(outData), instance)
 	if err != nil {
 		return nil, core1_0.VKErrorUnknown, err
 	}
@@ -85,8 +85,8 @@ func (e *VulkanExtension) attemptEnumeratePhysicalDeviceGroups(instance core1_0.
 	return outDataSlice, res, nil
 }
 
-func (e *VulkanExtension) PhysicalDeviceGroups(instance core1_0.Instance, outDataFactory func() *DeviceGroupOutData) ([]*DeviceGroupOutData, common.VkResult, error) {
-	var outData []*DeviceGroupOutData
+func (e *VulkanExtension) PhysicalDeviceGroups(instance core1_0.Instance, outDataFactory func() *PhysicalDeviceGroupProperties) ([]*PhysicalDeviceGroupProperties, common.VkResult, error) {
+	var outData []*PhysicalDeviceGroupProperties
 	var result common.VkResult
 	var err error
 

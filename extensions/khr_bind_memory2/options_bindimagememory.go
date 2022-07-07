@@ -12,7 +12,7 @@ import (
 	"unsafe"
 )
 
-type BindImageMemoryOptions struct {
+type BindImageMemoryInfo struct {
 	Image        core1_0.Image
 	Memory       core1_0.DeviceMemory
 	MemoryOffset uint64
@@ -20,7 +20,7 @@ type BindImageMemoryOptions struct {
 	common.NextOptions
 }
 
-func (o BindImageMemoryOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o BindImageMemoryInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkBindImageMemoryInfoKHR{})))
 	}

@@ -12,15 +12,15 @@ import (
 	"unsafe"
 )
 
-type SubpassDescriptionDepthStencilResolveOptions struct {
+type SubpassDescriptionDepthStencilResolve struct {
 	DepthResolveMode              ResolveModeFlags
 	StencilResolveMode            ResolveModeFlags
-	DepthStencilResolveAttachment *khr_create_renderpass2.AttachmentReferenceOptions
+	DepthStencilResolveAttachment *khr_create_renderpass2.AttachmentReference2
 
 	common.NextOptions
 }
 
-func (o SubpassDescriptionDepthStencilResolveOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o SubpassDescriptionDepthStencilResolve) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkSubpassDescriptionDepthStencilResolveKHR{})))
 	}

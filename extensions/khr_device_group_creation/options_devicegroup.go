@@ -13,19 +13,19 @@ import (
 	"unsafe"
 )
 
-type DeviceGroupDeviceOptions struct {
+type DeviceGroupDeviceCreateInfo struct {
 	PhysicalDevices []core1_0.PhysicalDevice
 
 	common.NextOptions
 }
 
-func (o DeviceGroupDeviceOptions) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o DeviceGroupDeviceCreateInfo) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkDeviceGroupDeviceCreateInfoKHR{})))
 	}
 
 	if len(o.PhysicalDevices) < 1 {
-		return nil, errors.New("must include at least one physical device in DeviceGroupDeviceOptions")
+		return nil, errors.New("must include at least one physical device in DeviceGroupDeviceCreateInfo")
 	}
 
 	createInfo := (*C.VkDeviceGroupDeviceCreateInfoKHR)(preallocatedPointer)

@@ -11,7 +11,7 @@ import (
 	"unsafe"
 )
 
-type PhysicalDeviceBufferAddressFeatures struct {
+type PhysicalDeviceBufferDeviceAddressFeatures struct {
 	BufferDeviceAddress              bool
 	BufferDeviceAddressCaptureReplay bool
 	BufferDeviceAddressMultiDevice   bool
@@ -20,7 +20,7 @@ type PhysicalDeviceBufferAddressFeatures struct {
 	common.NextOutData
 }
 
-func (o *PhysicalDeviceBufferAddressFeatures) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o *PhysicalDeviceBufferDeviceAddressFeatures) PopulateHeader(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceBufferDeviceAddressFeaturesKHR{})))
 	}
@@ -32,7 +32,7 @@ func (o *PhysicalDeviceBufferAddressFeatures) PopulateHeader(allocator *cgoparam
 	return preallocatedPointer, nil
 }
 
-func (o *PhysicalDeviceBufferAddressFeatures) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
+func (o *PhysicalDeviceBufferDeviceAddressFeatures) PopulateOutData(cDataPointer unsafe.Pointer, helpers ...any) (next unsafe.Pointer, err error) {
 	info := (*C.VkPhysicalDeviceBufferDeviceAddressFeaturesKHR)(cDataPointer)
 
 	o.BufferDeviceAddress = info.bufferDeviceAddress != C.VkBool32(0)
@@ -42,7 +42,7 @@ func (o *PhysicalDeviceBufferAddressFeatures) PopulateOutData(cDataPointer unsaf
 	return info.pNext, nil
 }
 
-func (o PhysicalDeviceBufferAddressFeatures) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
+func (o PhysicalDeviceBufferDeviceAddressFeatures) PopulateCPointer(allocator *cgoparam.Allocator, preallocatedPointer unsafe.Pointer, next unsafe.Pointer) (unsafe.Pointer, error) {
 	if preallocatedPointer == nil {
 		preallocatedPointer = allocator.Malloc(int(unsafe.Sizeof(C.VkPhysicalDeviceBufferDeviceAddressFeaturesKHR{})))
 	}
